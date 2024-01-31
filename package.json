@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seed": "node -r dotenv/config ./scripts/seed.js"
   },
   "dependencies": {
     "@vercel/postgres": "^0.7.2",
@@ -16,6 +17,7 @@
     "react": "^18",
     "react-dom": "^18",
     "use-debounce": "^10.0.0",
+    "uuid": "^9.0.1",
     "zod": "^3.22.4"
   },
   "devDependencies": {

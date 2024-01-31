@@ -1,6 +1,8 @@
+const { v4: uuidv4 } = require("uuid");
+
 const players = [
   {
-    id: 1,
+    id: uuidv4(),
     name: "LeBron James",
     stats: {
       ppg: 25.5,
@@ -13,7 +15,7 @@ const players = [
     hometown: "Akron, OH",
   },
   {
-    id: 2,
+    id: uuidv4(),
     name: "Stephen Curry",
     stats: {
       ppg: 30.2,
@@ -26,7 +28,7 @@ const players = [
     hometown: "Akron, OH",
   },
   {
-    id: 3,
+    id: uuidv4(),
     name: "Kevin Durant",
     stats: {
       ppg: 28.7,
@@ -39,7 +41,7 @@ const players = [
     hometown: "Washington, D.C.",
   },
   {
-    id: 4,
+    id: uuidv4(),
     name: "Giannis Antetokounmpo",
     stats: {
       ppg: 29.9,
@@ -52,7 +54,7 @@ const players = [
     hometown: "Athens, Greece",
   },
   {
-    id: 5,
+    id: uuidv4(),
     name: "Kawhi Leonard",
     stats: {
       ppg: 24.8,
@@ -65,7 +67,7 @@ const players = [
     hometown: "Los Angeles, CA",
   },
   {
-    id: 6,
+    id: uuidv4(),
     name: "Luka Dončić",
     stats: {
       ppg: 27.0,
@@ -78,7 +80,7 @@ const players = [
     hometown: "Ljubljana, Slovenia",
   },
   {
-    id: 7,
+    id: uuidv4(),
     name: "James Harden",
     stats: {
       ppg: 31.6,
@@ -91,7 +93,7 @@ const players = [
     hometown: "Los Angeles, CA",
   },
   {
-    id: 8,
+    id: uuidv4(),
     name: "Anthony Davis",
     stats: {
       ppg: 26.1,
@@ -104,7 +106,7 @@ const players = [
     hometown: "Chicago, IL",
   },
   {
-    id: 9,
+    id: uuidv4(),
     name: "Joel Embiid",
     stats: {
       ppg: 28.5,
@@ -117,7 +119,7 @@ const players = [
     hometown: "Yaoundé, Cameroon",
   },
   {
-    id: 10,
+    id: uuidv4(),
     name: "Devin Booker",
     stats: {
       ppg: 26.6,
@@ -130,7 +132,7 @@ const players = [
     hometown: "Grand Rapids, MI",
   },
   {
-    id: 11,
+    id: uuidv4(),
     name: "Jayson Tatum",
     stats: {
       ppg: 24.3,
@@ -143,7 +145,7 @@ const players = [
     hometown: "St. Louis, MO",
   },
   {
-    id: 12,
+    id: uuidv4(),
     name: "Chris Paul",
     stats: {
       ppg: 16.4,
@@ -152,5 +154,11 @@ const players = [
       plusMinus: 7,
       ciceroScore: 90,
     },
+    position: "Guard",
+    hometown: "Winston-Salem, NC",
   },
 ];
+
+module.exports = {
+  players,
+};
