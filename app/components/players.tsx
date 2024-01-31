@@ -7,7 +7,10 @@ async function Players() {
     <>
       <h1>Player's in database</h1>
       {data.map((player: any) => (
-        <h1 key={player.id}>{player.name}</h1>
+        <h1 className="flex text-xl" key={player.id}>
+          {player.name} -
+          <p className="font-bold"> Cicero Score: {player.stats.ciceroScore}</p>
+        </h1>
       ))}
     </>
   );
