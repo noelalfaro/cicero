@@ -103,7 +103,7 @@ This table is meant to query the db for general purpose info such as keeping tra
 
 - A user can have multiple transactions (`users` -> `transactions`)
 - A player can have multiple stats entries (`players` -> `player_stats`)
-- A player can have multiple sentiment scores (`players` -> `player_sentiment`)
+- A player can have multiple sentiment scores (`players` -> `cicero_scores`)
 
 **One-to-One**
 
