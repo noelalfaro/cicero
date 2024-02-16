@@ -63,12 +63,13 @@ This markdown is to note the tables that will be used and the relationships betw
 
 **cicero_scores**
 
-| Column Name   | Type    | Description                                                          |
-| ------------- | ------- | -------------------------------------------------------------------- |
-| id            | integer | Primary key                                                          |
-| player_id     | integer | Foreign key referencing the `players` table                          |
-| analysis_date | date    | Date on which the sentiment analysis was conducted                   |
-| cicero_score  | float   | A numerical score representing the sentiment + stats (e.g., 1 - 999) |
+| Column Name    | Type    | Description                                                          |
+| -------------- | ------- | -------------------------------------------------------------------- |
+| id             | integer | Primary key                                                          |
+| player_id      | integer | Foreign key referencing the `players` table                          |
+| analysis_date  | date    | Date on which the sentiment analysis was conducted                   |
+| cicero_score   | float   | A numerical score representing the sentiment + stats (e.g., 1 - 999) |
+| cicero_summary | string  | A text summary of the reason the player got this score               |
 
 <!--
 **user_investments**
