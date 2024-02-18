@@ -1,6 +1,7 @@
 import { Player } from "@/app/lib/definitions";
 import { sql } from "@vercel/postgres";
 import { unstable_noStore as noStore } from "next/cache";
+import { pool } from "./database";
 
 export async function fetchPlayerData() {
   // Add noStore() here prevent the response from being cached.
@@ -10,13 +11,14 @@ export async function fetchPlayerData() {
   try {
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    const data = await sql<Player>`SELECT * FROM players`;
+    // const data = await sql<Player>`SELECT * FROM players`;
+    const data = await pool.query(`SELECT * FROM players`);
 
     console.log("Data fetch complete after 3 seconds.");
 
     return data.rows;
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to fetch revenue data.");
+    throw new Error("Failed to fetch player data.");
   }
 }

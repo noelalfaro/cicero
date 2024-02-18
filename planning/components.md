@@ -16,14 +16,15 @@ This markdown documents the components that will be used, organized by page and 
 
 ## Explore
 
-| Component           | Phase Level | Description/Purpose                                                                       |
-| ------------------- | ----------- | ----------------------------------------------------------------------------------------- |
-| `UserLeaderboard`   | Phase 1     | This will list and rank the users who are doing best in terms of investments              |
-| `TopMovers`         | Phase 1     | This will list the players who are fluctuating in value the most, good or bad             |
-| `HowItWorks`        | Phase 1     | This static component will explain to the user how the web app works                      |
-| `Search-Bar`        | Phase 2     | This will let the user search for players and users                                       |
-| `News`              | Phase 2     | This will list relevent news about the NBA                                                |
-| `SentimentRankings` | Phase 2     | This will list and rank the players with the best sentiment rankings, regardless of stats |
+| Component            | Phase Level | Description/Purpose                                                                       |
+| -------------------- | ----------- | ----------------------------------------------------------------------------------------- |
+| `UserLeaderboard`    | Phase 1     | This will list and rank the users who are doing best in terms of investments              |
+| `TopMovers`          | Phase 1     | This will list the players who are fluctuating in value the most, good or bad             |
+| `HowItWorks`         | Phase 1     | This static component will explain to the user how the web app works                      |
+| `Search-Bar`         | Phase 2     | This will let the user search for players and users                                       |
+| `News`               | Phase 2     | This will list relevent news about the NBA                                                |
+| `SentimentRankings`  | Phase 2     | This will list and rank the players with the best sentiment rankings, regardless of stats |
+| `TopSentimentsChart` | Phase 2     | This will chart the top 10 players in cicero score in a JimmyHxghroller style view        |
 
 ## Profile
 
