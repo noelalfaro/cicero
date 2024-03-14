@@ -1,0 +1,41 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1709528779024,
+      "tag": "0000_fast_william_stryker",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1709529626547,
+      "tag": "0001_last_christian_walker",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1709536174572,
+      "tag": "0002_cool_toad_men",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1709539862790,
+      "tag": "0003_free_wither",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1710455380107,
+      "tag": "0004_military_sunfire",
+      "breakpoints": true
+    }
+  ]
+}

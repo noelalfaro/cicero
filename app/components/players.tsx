@@ -9,19 +9,19 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-type Player = {
-  id: number;
-  name: string;
-  stats: {
-    apg: number;
-    ppg: number;
-    rpg: number;
-    plusMinus: number;
-    ciceroScore: number;
-  };
-  position: string;
-  hometown: string;
-};
+// type Player = {
+//   id: number;
+//   name: string;
+//   stats: {
+//     apg: number;
+//     ppg: number;
+//     rpg: number;
+//     plusMinus: number;
+//     ciceroScore: number;
+//   };
+//   position: string;
+//   hometown: string;
+// };
 
 async function Players() {
   const data = await fetchPlayerData();
@@ -31,7 +31,7 @@ async function Players() {
     <>
       <h1>Player's in database</h1>
       <Table>
-        <TableCaption>A list player's and their cicero scores</TableCaption>
+        <TableCaption>A list of player's and their cicero scores</TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead className="w-[100px]">Position</TableHead>
@@ -43,16 +43,16 @@ async function Players() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data.map((player: Player) => (
+          {data.map((player: any) => (
             <TableRow key={player.id}>
               <TableCell className="font-medium">{player.position}</TableCell>
               <TableCell>{player.name}</TableCell>
-              <TableCell>{/* {player.stats.ppg} */}</TableCell>
+              <TableCell>{player.stats.ppg}</TableCell>
 
-              <TableCell>{/* {player.stats.apg} */}</TableCell>
+              <TableCell>{player.stats.apg}</TableCell>
               <TableCell>{player.hometown}</TableCell>
               <TableCell className="text-right">
-                {/* {player.stats.ciceroScore} */}
+                {player.stats.ciceroScore}
               </TableCell>
             </TableRow>
           ))}
