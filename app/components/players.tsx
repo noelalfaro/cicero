@@ -29,9 +29,7 @@ async function Players() {
   // console.log(data);
   return (
     <>
-      <h1>Player's in database</h1>
-      <Table>
-        <TableCaption>A list of player's and their cicero scores</TableCaption>
+      <Table className="w-full">
         <TableHeader>
           <TableRow>
             <TableHead className="w-[100px]">Position</TableHead>
@@ -57,6 +55,10 @@ async function Players() {
             </TableRow>
           ))}
         </TableBody>
+        <TableCaption>
+          A list of players and their cicero scores, seeded with Drizzle ORM to
+          Vercel Postgres.
+        </TableCaption>
       </Table>
     </>
   );

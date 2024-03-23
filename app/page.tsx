@@ -1,9 +1,13 @@
+import { ModeToggle } from "@/app/components/dark-mode-toggle";
+import Nav from "@/app/components/nav";
 import Players from "@/app/components/players";
 
 export default async function Page() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <Players />
-    </main>
+    <>
+      {/* <Players /> */}
+      {/* <Nav /> */}
+      Dashboard
+    </>
   );
 }

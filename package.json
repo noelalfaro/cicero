@@ -10,9 +10,12 @@
     "lint": "next lint",
     "generate": "drizzle-kit generate:pg",
     "seed": "tsx ./db/seed.ts",
-    "drizzle:push": "drizzle-kit push:pg"
+    "drizzle:push": "drizzle-kit push:pg",
+    "studio": "drizzle-kit studio"
   },
   "dependencies": {
+    "@radix-ui/react-dropdown-menu": "^2.0.6",
+    "@radix-ui/react-slot": "^1.0.2",
     "@tanstack/react-table": "^8.12.0",
     "@vercel/postgres": "^0.7.2",
     "class-variance-authority": "^0.7.0",
@@ -22,6 +25,7 @@
     "lucide-react": "^0.331.0",
     "next": "14.1.0",
     "next-auth": "^5.0.0-beta.15",
+    "next-themes": "^0.3.0",
     "pg": "^8.11.3",
     "postgres": "^3.4.3",
     "react": "^18",

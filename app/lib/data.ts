@@ -7,10 +7,10 @@ import { players } from "@/db/schema";
 export async function fetchPlayerData() {
   // Add noStore() here prevent the response from being cached.
   // This is equivalent to in fetch(..., {cache: 'no-store'}).
-  noStore();
+  // noStore();
 
   try {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    // await new Promise((resolve) => setTimeout(resolve, 1000));
 
     const db = drizzle(sql);
     const result = await db.select().from(players);
