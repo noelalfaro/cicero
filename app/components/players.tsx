@@ -9,20 +9,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-// type Player = {
-//   id: number;
-//   name: string;
-//   stats: {
-//     apg: number;
-//     ppg: number;
-//     rpg: number;
-//     plusMinus: number;
-//     ciceroScore: number;
-//   };
-//   position: string;
-//   hometown: string;
-// };
-
 async function Players() {
   const data = await fetchPlayerData();
 
