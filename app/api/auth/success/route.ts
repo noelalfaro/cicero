@@ -11,6 +11,7 @@ export async function GET(req: Request) {
   // const user = await getUser();
   // // const { orgCode } = await getOrganization();
   console.log("testing");
+  return NextResponse.json({ message: "all good " });
   // if (!user || !user.id || !user.email) {
   //   return NextResponse.json(
   //     { error: "User not found or missing ID" },
