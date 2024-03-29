@@ -1,0 +1,2 @@
+ALTER TABLE "account" DROP CONSTRAINT "account_provider_providerAccountId_pk";--> statement-breakpoint
+ALTER TABLE "account" ADD CONSTRAINT "account_providerAccountId_pk" PRIMARY KEY("providerAccountId");

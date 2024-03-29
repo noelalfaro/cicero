@@ -1,9 +1,10 @@
 import type { Config } from "drizzle-kit";
 
-const databaseUrl: string = process.env.POSTGRES_URL as string;
+// const databaseUrl: string = process.env.POSTGRES_URL as string;
+const databaseUrl: string = process.env.DRIZZLE_DATABASE_URL as string;
 
 export default {
-  schema: "./db/schema.ts",
+  schema: "./db/schema/*.ts",
   out: "./drizzle",
   driver: "pg",
   dbCredentials: {

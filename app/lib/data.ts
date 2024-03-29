@@ -1,8 +1,11 @@
 import { Player } from "@/app/lib/definitions";
 import { sql } from "@vercel/postgres";
 import { unstable_noStore as noStore } from "next/cache";
-import { drizzle } from "drizzle-orm/vercel-postgres";
-import { players } from "@/db/schema";
+import { drizzle } from "drizzle-orm/neon-http";
+import { players } from "@/db/schema/players";
+import { neon } from "@neondatabase/serverless";
+import { config } from "dotenv";
+config({ path: ".env" });
 
 export async function fetchPlayerData() {
   // Add noStore() here prevent the response from being cached.
@@ -12,6 +15,7 @@ export async function fetchPlayerData() {
   try {
     // await new Promise((resolve) => setTimeout(resolve, 1000));
 
+    const sql = neon(process.env.DRIZZLE_DATABASE_URL!);
     const db = drizzle(sql);
     const result = await db.select().from(players);
 
