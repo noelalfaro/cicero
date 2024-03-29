@@ -14,7 +14,7 @@ export default async function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      {(await isAuthenticated()) ? (
+      {/* {(await isAuthenticated()) ? (
         <div>
           <p className="mb-8">Well, well, well, if it isn&apos;t...</p>
           <p className="text-lg font-medium">
@@ -58,8 +58,9 @@ export default async function Home() {
               Create a new Prospect Portfolio account.
             </p>
           </RegisterLink>
-        </div>
-      )}
+        </div> 
+      )}*/}{" "}
+      Dashboard
     </main>
   );
 }
