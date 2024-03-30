@@ -51,5 +51,6 @@ export async function GET(request: Request) {
     });
   }
   console.log("route successfully ran");
-  return redirect("http://localhost:3000/dashboard");
+  return redirect("https://cicero-coral.vercel.app/dashboard");
+  // return redirect("http://localhost:3000/dashboard");
 }
