@@ -16,6 +16,10 @@ export async function GET(request: Request) {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
   console.log(user);
+  const redirectURL =
+    process.env.NODE_ENV === "production"
+      ? "https://cicero-coral.vercel.app/dashboard"
+      : "http://localhost:3000/dashboard";
 
   if (!user || !user.id || !user.email) {
     return NextResponse.json(
@@ -24,7 +28,7 @@ export async function GET(request: Request) {
     );
   }
 
-  console.log("you've reached your destination");
+  // console.log("you've reached your destination");
 
   if (!user || !user.id || !user.email) {
     return NextResponse.json(
@@ -39,7 +43,7 @@ export async function GET(request: Request) {
     .where(eq(users.id, user.id))
     .limit(1);
 
-  console.log(dbUser);
+  // console.log(dbUser);
   // If the user doesn't exist, add them to the database
   if (dbUser.length === 0) {
     await db.insert(users).values({
@@ -50,7 +54,6 @@ export async function GET(request: Request) {
       image: user.picture,
     });
   }
-  console.log("route successfully ran");
-  return redirect("https://cicero-coral.vercel.app/dashboard");
-  // return redirect("http://localhost:3000/dashboard");
+  // console.log("route successfully ran");
+  return redirect(redirectURL);
 }
