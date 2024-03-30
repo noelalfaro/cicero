@@ -6,7 +6,7 @@ config({ path: ".env.local" });
 
 const databaseUrl: string = process.env.DRIZZLE_DATABASE_URL as string;
 
-const sql = neon(databaseUrl);
-export const db = drizzle(sql);
+const sql = neon(process.env.DRIZZLE_DATABASE_URL!);
+const db = drizzle(sql);
 
 await migrate(db, { migrationsFolder: "drizzle" });

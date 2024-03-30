@@ -9,12 +9,12 @@ import {
 } from "@kinde-oss/kinde-auth-nextjs/server";
 
 export default async function Home() {
-  // const { getUser, isAuthenticated } = getKindeServerSession();
-  // const user = await getUser();
+  const { getUser, isAuthenticated } = getKindeServerSession();
+  const user = await getUser();
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      {/* {(await isAuthenticated()) ? (
+      {(await isAuthenticated()) ? (
         <div>
           <p className="mb-8">Well, well, well, if it isn&apos;t...</p>
           <p className="text-lg font-medium">
@@ -29,10 +29,7 @@ export default async function Home() {
         </div>
       ) : (
         <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
-          <LoginLink
-            postLoginRedirectURL="/dashboard"
-            className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          >
+          <LoginLink className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30">
             <h2 className={`mb-3 text-2xl font-semibold`}>
               Login{" "}
               <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
@@ -44,10 +41,7 @@ export default async function Home() {
             </p>
           </LoginLink>
 
-          <RegisterLink
-            postLoginRedirectURL="/dashboard"
-            className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          >
+          <RegisterLink className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30">
             <h2 className={`mb-3 text-2xl font-semibold`}>
               Register{" "}
               <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
@@ -58,9 +52,9 @@ export default async function Home() {
               Create a new Prospect Portfolio account.
             </p>
           </RegisterLink>
-        </div> 
-      )}*/}{" "}
-      Dashboard
+        </div>
+      )}
+      {/* Dashboard */}
     </main>
   );
 }

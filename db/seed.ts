@@ -24,7 +24,7 @@ import { drizzle } from "drizzle-orm/neon-http";
 import { players } from "./schema/players";
 import { players_data } from "../app/lib/placeholder-data";
 import { config } from "dotenv";
-config({ path: ".env" });
+config({ path: ".env.local" });
 
 const main = async () => {
   try {

@@ -9,8 +9,8 @@
     "start": "next start",
     "lint": "next lint",
     "seed": "tsx ./db/seed.ts",
-    "db:migrate": "tsx ./db/index.ts",
     "drizzle:generate": "drizzle-kit generate:pg",
+    "db:migrate": "tsx ./db/index.ts",
     "drizzle:push": "drizzle-kit push:pg",
     "studio": "drizzle-kit studio"
   },
