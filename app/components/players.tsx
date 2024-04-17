@@ -43,7 +43,7 @@ async function Players() {
         </TableBody>
         <TableCaption>
           A list of players and their cicero scores, seeded with Drizzle ORM to
-          Vercel Postgres.
+          Neon Postgres.
         </TableCaption>
       </Table>
     </>

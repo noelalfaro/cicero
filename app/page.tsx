@@ -7,28 +7,24 @@ import {
   getKindeServerSession,
   LogoutLink,
 } from "@kinde-oss/kinde-auth-nextjs/server";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 export default async function Home() {
-  const { getUser, isAuthenticated } = getKindeServerSession();
-  const user = await getUser();
-
+  // const { getUser, isAuthenticated } = getKindeServerSession();
+  // const user = await getUser();
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      {(await isAuthenticated()) ? (
-        <div>
-          <p className="mb-8">Well, well, well, if it isn&apos;t...</p>
-          <p className="text-lg font-medium">
-            {user!.given_name} {user!.family_name}
-          </p>
-          <pre className="mt-4 rounded-sm bg-slate-950 p-4 font-mono text-sm text-cyan-200">
-            {JSON.stringify(user, null, 2)}
-          </pre>
-          <LogoutLink className="mt-8 inline-block text-blue-500 underline">
-            Logout
-          </LogoutLink>
-        </div>
-      ) : (
-        <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
+    <main className="flex w-full max-w-5xl  flex-col items-start justify-center  text-left ">
+      <div className="flex h-screen flex-col  items-start justify-center gap-8">
+        <h1 className="text-8xl font-bold">PROSPECT PORTFOLIO</h1>
+        <h2 className="text-2xl font-bold">
+          You think they're the next big thing? Prove it.
+        </h2>
+        <div className="mb-32 flex w-full justify-end text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
           <LoginLink className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30">
             <h2 className={`mb-3 text-2xl font-semibold`}>
               Login{" "}
@@ -53,8 +49,43 @@ export default async function Home() {
             </p>
           </RegisterLink>
         </div>
-      )}
-      {/* Dashboard */}
+      </div>
+      <h1 className="mb-2 mt-2 text-3xl font-bold">Learn</h1>
+      <Accordion type="single" collapsible className="w-full">
+        <AccordionItem value="item-1">
+          <AccordionTrigger>What is Prospect Portfolio?</AccordionTrigger>
+          <AccordionContent>
+            Prospect Portfolio is a web app for users to invest in their
+            favorite NBA players potential. This works through a web interface
+            that users can log into, browse/search different players and
+            “Invest” into their current score.
+          </AccordionContent>
+        </AccordionItem>
+        <AccordionItem value="item-2">
+          <AccordionTrigger>How do I Invest?</AccordionTrigger>
+          <AccordionContent>
+            You invest by making an account and clicking the "Invest" button on
+            a player's page. Cicero will then attempt to make the transction
+            based on how many Cicero Bucks you have in your balance. If the
+            transaction is successful then it will reflect into your account and
+            add it to your list of investments
+          </AccordionContent>
+        </AccordionItem>
+        <AccordionItem value="item-3">
+          <AccordionTrigger>
+            What Dictates a Player's Cicero Stock Price?
+          </AccordionTrigger>
+          <AccordionContent>
+            We run a seperate web app that takes in player data such as stats
+            from the latest game and also take in sentiment surrounding a player
+            by analyzing social media posts made about said player. This gets
+            run through our ML model to determine a new stock price for each
+            day. For a complete list of stats tracked and type of sentiment
+            tracked, refer below.
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+      <footer> </footer>
     </main>
   );
 }

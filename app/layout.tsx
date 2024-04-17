@@ -26,7 +26,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <main className="container flex w-full max-w-7xl flex-col items-center justify-between p-4">
+          <main className="container flex h-screen w-full max-w-7xl flex-col items-center ">
             <Nav />
             {children}
           </main>

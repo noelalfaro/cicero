@@ -10,7 +10,7 @@ config({ path: ".env" });
 export async function fetchPlayerData() {
   // Add noStore() here prevent the response from being cached.
   // This is equivalent to in fetch(..., {cache: 'no-store'}).
-  // noStore();
+  noStore();
 
   try {
     // await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -19,7 +19,7 @@ export async function fetchPlayerData() {
     const db = drizzle(sql);
     const result = await db.select().from(players);
 
-    console.log("Data fetch complete after 1 second(s).");
+    // console.log("Data fetch complete after 1 second(s).");
 
     return result;
   } catch (error) {
