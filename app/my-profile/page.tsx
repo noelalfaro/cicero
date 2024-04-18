@@ -10,8 +10,8 @@ export default async function Page() {
   const user = await getUser();
   const redirectURL =
     process.env.NODE_ENV === "production"
-      ? "https://cicero-coral.vercel.app/"
-      : "http://localhost:3000/";
+      ? "https://cicero-coral.vercel.app"
+      : "http://localhost:3000";
   return (
     <main className="flex w-full max-w-5xl flex-col items-start justify-between gap-4 ">
       {(await isAuthenticated()) ? (
