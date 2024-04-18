@@ -59,6 +59,7 @@ export async function GET(request: Request) {
   // console.log(dbUser);
   // If the user doesn't exist, add them to the database
   if (dbUser.length === 0) {
+    console.log(dbUser);
     await db.insert(users).values({
       id: user.id.toString(),
       firstName: user.given_name,
