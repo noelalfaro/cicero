@@ -8,8 +8,10 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 export default async function Page() {
   const { getUser, isAuthenticated } = getKindeServerSession();
   const user = await getUser();
-
-  // const session = await auth();
+  const redirectURL =
+    process.env.NODE_ENV === "production"
+      ? "https://cicero-coral.vercel.app/"
+      : "http://localhost:3000/";
   return (
     <main className="flex w-full max-w-5xl flex-col items-start justify-between gap-4 ">
       {(await isAuthenticated()) ? (
@@ -25,11 +27,11 @@ export default async function Page() {
           </div>
           <ModeToggle />
           <LogoutLink
-            postLogoutRedirectURL="http://localhost:3000/"
+            postLogoutRedirectURL={redirectURL}
             className=" inline-block text-blue-500 underline"
           >
             <Button>Logout</Button>
-          </LogoutLink>{" "}
+          </LogoutLink>
         </>
       ) : (
         <div>Not Authenticated</div>
