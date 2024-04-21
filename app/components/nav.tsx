@@ -9,7 +9,11 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import {
+  getKindeServerSession,
+  LoginLink,
+} from "@kinde-oss/kinde-auth-nextjs/server";
+import { Button } from "@/components/ui/button";
 
 const Nav = async () => {
   const { getUser, isAuthenticated } = getKindeServerSession();
@@ -19,12 +23,12 @@ const Nav = async () => {
       {(await isAuthenticated()) ? (
         <nav className="flex h-auto min-h-24 w-full max-w-5xl items-center justify-between ">
           <Link href="/dashboard">
-            <p className="text-2xl font-extrabold">Prospect Portfolio</p>
+            <p className="text-2xl font-extrabold">PROSPECT PORTFOLIO</p>
           </Link>
 
           <div className="flex w-1/4 items-center justify-between  rounded-lg py-6">
             <Link className=" flex flex-col items-center" href="/dashboard">
-              <TooltipProvider>
+              <TooltipProvider delayDuration={100}>
                 <Tooltip>
                   <TooltipTrigger>
                     <Home absoluteStrokeWidth />
@@ -34,7 +38,7 @@ const Nav = async () => {
               </TooltipProvider>
             </Link>
             <Link className=" flex flex-col items-center" href="/explore">
-              <TooltipProvider>
+              <TooltipProvider delayDuration={100}>
                 <Tooltip>
                   <TooltipTrigger>
                     <Search absoluteStrokeWidth />
@@ -44,7 +48,7 @@ const Nav = async () => {
               </TooltipProvider>
             </Link>
             <Link className=" flex flex-col items-center" href="/notifications">
-              <TooltipProvider>
+              <TooltipProvider delayDuration={100}>
                 <Tooltip>
                   <TooltipTrigger>
                     <Bell absoluteStrokeWidth />
@@ -53,24 +57,28 @@ const Nav = async () => {
                 </Tooltip>
               </TooltipProvider>
             </Link>
-            <Link className=" flex flex-col items-center" href="/my-profile">
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger>
-                    <Avatar>
-                      <AvatarImage
-                        src={user?.picture ?? "default-avatar.png"}
-                        alt={user?.given_name + ".png"}
-                      />
-                      <AvatarFallback>NA</AvatarFallback>
-                    </Avatar>
-                  </TooltipTrigger>
-                  <TooltipContent>My Profile</TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            </Link>
-
-            {/* <ModeToggle /> */}
+            {(await isAuthenticated()) ? (
+              <Link className=" flex flex-col items-center" href="/my-profile">
+                <TooltipProvider delayDuration={100}>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <Avatar>
+                        <AvatarImage
+                          src={user?.picture ?? "default-avatar.png"}
+                          alt={user?.given_name + ".png"}
+                        />
+                        <AvatarFallback>NA</AvatarFallback>
+                      </Avatar>
+                    </TooltipTrigger>
+                    <TooltipContent>My Profile</TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </Link>
+            ) : (
+              <LoginLink>
+                <Button>Log In</Button>
+              </LoginLink>
+            )}
           </div>
         </nav>
       ) : (
