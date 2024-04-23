@@ -30,13 +30,13 @@ async function Players() {
           {data.map((player: any) => (
             <TableRow key={player.id}>
               <TableCell className="font-medium">{player.position}</TableCell>
-              <TableCell>{player.name}</TableCell>
+              <TableCell>{player.given_name}</TableCell>
               <TableCell>{player.stats.ppg}</TableCell>
 
               <TableCell>{player.stats.apg}</TableCell>
               <TableCell>{player.hometown}</TableCell>
               <TableCell className="text-right">
-                {player.stats.ciceroScore}
+                {player.stats.cicero_score}
               </TableCell>
             </TableRow>
           ))}

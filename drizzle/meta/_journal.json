@@ -232,6 +232,27 @@
       "when": 1711771890018,
       "tag": "0032_abandoned_adam_warlock",
       "breakpoints": true
+    },
+    {
+      "idx": 33,
+      "version": "5",
+      "when": 1713902659881,
+      "tag": "0033_furry_zaladane",
+      "breakpoints": true
+    },
+    {
+      "idx": 34,
+      "version": "5",
+      "when": 1713902726422,
+      "tag": "0034_icy_epoch",
+      "breakpoints": true
+    },
+    {
+      "idx": 35,
+      "version": "5",
+      "when": 1713902896497,
+      "tag": "0035_violet_kinsey_walden",
+      "breakpoints": true
     }
   ]
 }

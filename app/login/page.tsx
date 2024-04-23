@@ -17,8 +17,8 @@ export default async function Login() {
   // const user = await getUser();
   return (
     <main className="flex w-full max-w-5xl  flex-col items-start justify-center  text-left ">
-      <div className="flex h-screen flex-col items-start justify-center gap-20">
-        <div className="">
+      <div className="flex h-screen w-full flex-col items-start justify-center gap-20">
+        <div className="flex flex-col gap-2">
           <h1 className="text-8xl font-bold">PROSPECT PORTFOLIO</h1>
           <h2 className="text-4xl font-bold">
             You think they're the next big thing? <br /> Prove it.
@@ -35,7 +35,9 @@ export default async function Login() {
           </RegisterLink>
         </div>
       </div>
-      <h1 className="mb-2 mt-2 text-3xl font-bold">Learn</h1>
+      <h1 className="mb-2 mt-2 scroll-m-20 border-b pb-2 text-4xl font-bold">
+        Learn
+      </h1>
       <Accordion type="single" collapsible className="w-full">
         <AccordionItem value="item-1">
           <AccordionTrigger>What is Prospect Portfolio?</AccordionTrigger>
