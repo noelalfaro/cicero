@@ -27,3 +27,22 @@ export async function fetchPlayerData() {
     throw new Error("Failed to fetch player data.");
   }
 }
+
+export async function fetchNewsArticles() {
+  const url = "https://nba-latest-news.p.rapidapi.com/articles";
+  const options = {
+    method: "GET",
+    headers: {
+      "X-RapidAPI-Key": "29f91628f6msha019ba4790427d6p106d57jsn552857faeac5",
+      "X-RapidAPI-Host": "nba-latest-news.p.rapidapi.com",
+    },
+  };
+
+  try {
+    const response = await fetch(url, options);
+
+    return response;
+  } catch (error) {
+    console.error("error fetching news articles", error);
+  }
+}

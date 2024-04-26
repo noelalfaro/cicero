@@ -30,7 +30,7 @@ export default async function Page() {
             postLogoutRedirectURL={redirectURL}
             className=" inline-block text-blue-500 underline"
           >
-            <Button>Logout</Button>
+            <Button variant={"destructive"}>Logout</Button>
           </LogoutLink>
         </>
       ) : (

@@ -25,7 +25,7 @@ export default async function Login() {
   // const { getUser, isAuthenticated } = getKindeServerSession();
   // const user = await getUser();
   return (
-    <main className="flex w-full max-w-5xl flex-col items-start justify-center  text-left ">
+    <main className="flex w-full max-w-5xl flex-col items-start justify-center text-left">
       <div className="flex h-screen w-full flex-col items-start justify-center gap-20">
         <div className="flex flex-col gap-2">
           <h1 className="text-8xl font-bold">PROSPECT PORTFOLIO</h1>
@@ -36,11 +36,11 @@ export default async function Login() {
 
         <div className="mb-32 flex w-full justify-end gap-4 text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
           <LoginLink className="">
-            <Button className="p-6 text-xl font-semibold">Log In</Button>
+            <Button className="p-6 text-xl ">Log In</Button>
           </LoginLink>
 
           <RegisterLink>
-            <Button variant={"secondary"} className="p-6 text-xl font-semibold">
+            <Button variant={"secondary"} className="p-6 text-xl ">
               Register
             </Button>
           </RegisterLink>

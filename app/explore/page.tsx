@@ -1,3 +1,4 @@
+import Articles from "@/app/components/articles";
 import Players from "@/app/components/players";
 
 export default async function Page() {
@@ -14,6 +15,7 @@ export default async function Page() {
         </div>
 
         <Players />
+        <Articles />
       </main>
     </>
   );
