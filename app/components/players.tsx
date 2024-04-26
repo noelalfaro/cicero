@@ -15,6 +15,12 @@ async function Players() {
   // console.log(data);
   return (
     <>
+      <h2 className="my-2 text-2xl font-bold">Top Trenders</h2>
+      {/* <p>
+        This table will be set to showcase the top trenders. Green Badges
+        indicate they're trending upwards, while red indicates trending
+        downwards
+      </p> */}
       <Table className="w-full">
         <TableHeader>
           <TableRow>

@@ -33,7 +33,7 @@ export async function fetchNewsArticles() {
   const options = {
     method: "GET",
     headers: {
-      "X-RapidAPI-Key": "29f91628f6msha019ba4790427d6p106d57jsn552857faeac5",
+      "X-RapidAPI-Key": process.env.rapid_api_key!,
       "X-RapidAPI-Host": "nba-latest-news.p.rapidapi.com",
     },
   };
