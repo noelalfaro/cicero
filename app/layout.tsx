@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/app/components/theme-provider";
 import Nav from "@/app/components/nav";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { ViewTransitions } from "next-view-transitions";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,20 +20,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <main className="container flex h-screen w-full max-w-7xl flex-col items-center">
-            <Nav />
-            {children}
-          </main>
-        </ThemeProvider>
-      </body>
-    </html>
+    <ViewTransitions>
+      <html lang="en">
+        <body className={inter.className}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <main className="container flex h-screen w-full max-w-7xl flex-col items-center">
+              <Nav />
+              {children}
+            </main>
+          </ThemeProvider>
+        </body>
+      </html>
+    </ViewTransitions>
   );
 }

@@ -1,7 +1,7 @@
 import { ModeToggle } from "@/app/components/dark-mode-toggle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Home, Search, Bell } from "lucide-react";
-import Link from "next/link";
+// import Link from "next/link";
 import React from "react";
 import {
   Tooltip,
@@ -14,6 +14,7 @@ import {
   LoginLink,
 } from "@kinde-oss/kinde-auth-nextjs/server";
 import { Button } from "@/components/ui/button";
+import { Link } from "next-view-transitions";
 
 const Nav = async () => {
   const { getUser, isAuthenticated } = getKindeServerSession();

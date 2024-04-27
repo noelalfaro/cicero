@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/server";
+import { Link } from "next-view-transitions";
 
 export default async function Page() {
   // const session = await auth();
@@ -23,7 +24,13 @@ export default async function Page() {
   return (
     <main className="flex  flex-col items-center justify-start">
       {(await isAuthenticated()) ? (
-        <div>Dashboard for {user?.given_name}</div>
+        <>
+          <div>Dashboard for {user?.given_name}</div>
+          <p>Demo For Next-View-Transitions</p>
+          <Link href="/my-profile">
+            Demo For Next-View-Transitions Go to /my-profile
+          </Link>
+        </>
       ) : (
         <div> Not Logged In</div>
       )}

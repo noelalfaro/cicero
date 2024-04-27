@@ -15,7 +15,7 @@ export default async function Articles() {
 
   return (
     <>
-      <h2 className="my-2 text-4xl font-bold">News</h2>
+      <h2 className="my-2 text-2xl font-bold">News</h2>
       <div className="grid grid-cols-1 gap-4 py-4 md:grid-cols-2">
         {result.map((result: any) => (
           <Link href={result.url} key={result.url}>
