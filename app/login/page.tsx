@@ -36,14 +36,20 @@ export default async function Login() {
 
         <div className="mb-32 flex w-full justify-end gap-4 text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
           <LoginLink className="">
-            <Button className="p-6 text-xl ">Log In</Button>
+            <Button className="p-6 text-xl">Log In</Button>
           </LoginLink>
 
           <RegisterLink>
-            <Button variant={"secondary"} className="p-6 text-xl ">
+            <Button variant={"secondary"} className="p-6 text-xl">
               Register
             </Button>
           </RegisterLink>
+          {/* <Button variant={"outline"} className="p-6 text-xl">
+            Outline
+          </Button> */}
+          <Button variant={"ghost"} className="p-6 text-xl">
+            Ghost
+          </Button>
         </div>
       </div>
       <div className="flex h-screen w-full flex-col">
