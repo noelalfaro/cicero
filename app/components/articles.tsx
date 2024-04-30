@@ -7,6 +7,7 @@ import {
   CardContent,
   CardDescription,
 } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 export default async function Articles() {
   const data: any = await fetchNewsArticles();
@@ -19,13 +20,18 @@ export default async function Articles() {
       <div className="grid grid-cols-1 gap-4 py-4 md:grid-cols-2">
         {result.map((result: any) => (
           <Link href={result.url} key={result.url}>
-            <Card className="bg-secondary hover:bg-muted">
+            <Card className="border-none bg-secondary hover:bg-secondary/10 hover:ease-in-out">
               <CardHeader>
                 <CardTitle className="text-2xl font-bold">
                   {result.title}
                 </CardTitle>
               </CardHeader>
-              <CardContent>{result.source}</CardContent>
+
+              <CardContent>
+                <Button className="font-semibold uppercase">
+                  {result.source}
+                </Button>
+              </CardContent>
             </Card>
           </Link>
         ))}
