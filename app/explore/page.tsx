@@ -14,7 +14,7 @@ export default async function Page() {
           </p>
         </div>
 
-        <Search placeholder="Search for Players" />
+        {/* <Search placeholder="Search for Players" /> */}
         <Players />
         <Articles />
       </main>
