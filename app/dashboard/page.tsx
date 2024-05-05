@@ -9,17 +9,13 @@ export default async function Page() {
 
   return (
     <main className="flex  flex-col items-center justify-start">
-      {(await isAuthenticated()) ? (
-        <>
-          <div>Dashboard for {user?.given_name}</div>
-          <p>Demo For Next-View-Transitions</p>
-          <Link href="/my-profile">
-            Demo For Next-View-Transitions Go to /my-profile
-          </Link>
-        </>
-      ) : (
-        <div> Not Logged In</div>
-      )}
+      <>
+        <div>Dashboard for {user?.given_name}</div>
+        <p>Demo For Next-View-Transitions</p>
+        <Link href="/my-profile">
+          Demo For Next-View-Transitions Go to /my-profile
+        </Link>
+      </>
     </main>
   );
 }

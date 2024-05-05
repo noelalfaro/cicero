@@ -20,7 +20,7 @@ export default async function Articles() {
       <div className="grid grid-cols-1 gap-4 py-4 md:grid-cols-2">
         {result.map((result: any) => (
           <Link href={result.url} key={result.url}>
-            <Card className="border-none bg-secondary hover:bg-secondary/10 hover:ease-in-out">
+            <Card className="border-none bg-secondary transition-colors hover:bg-muted/40">
               <CardHeader>
                 <CardTitle className="text-2xl font-bold">
                   {result.title}
@@ -28,7 +28,7 @@ export default async function Articles() {
               </CardHeader>
 
               <CardContent>
-                <Button className="font-semibold uppercase">
+                <Button className="font-semibold capitalize">
                   {result.source}
                 </Button>
               </CardContent>

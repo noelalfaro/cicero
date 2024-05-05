@@ -11,8 +11,8 @@ import {
 import { redirect } from "next/navigation";
 
 export default async function Home() {
-  const { getUser, isAuthenticated } = getKindeServerSession();
-  // const user = await getUser();
+  const { isAuthenticated } = getKindeServerSession();
+
   return (
     <>
       {(await isAuthenticated()) ? redirect(`/dashboard`) : redirect(`/login`)}

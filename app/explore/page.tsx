@@ -1,5 +1,6 @@
 import Articles from "@/app/components/articles";
 import Players from "@/app/components/players";
+import Search from "@/app/components/search";
 
 export default async function Page() {
   return (
@@ -13,6 +14,7 @@ export default async function Page() {
           </p>
         </div>
 
+        <Search placeholder="Search for Players" />
         <Players />
         <Articles />
       </main>

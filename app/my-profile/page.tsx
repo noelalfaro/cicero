@@ -1,6 +1,4 @@
-// import { auth, signOut } from "@/auth";
 import { ModeToggle } from "@/app/components/dark-mode-toggle";
-import SignOutButton from "@/app/my-profile/SignOutButton";
 import { Button } from "@/components/ui/button";
 import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
