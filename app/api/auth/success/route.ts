@@ -13,22 +13,6 @@ export async function GET(request: Request) {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
-  // When I get a secure connection, you have to verify wether you can get the user info from kind while in localhost
-  // currently, I get a message from kind saying I have to set the correct callback
-  // Allowed callback URLs
-  // https://cicero-coral.vercel.app/api/auth/kinde_callback
-  // Allowed logout redirect URLs
-  // https://cicero-coral.vercel.app
-  // To mitigate this, am just gonna user a user object with my info
-
-  // const user = {
-  //   family_name: "Alfaro",
-  //   given_name: "Noel",
-  //   picture: "https://avatars.githubusercontent.com/u/56320635?v=4",
-  //   email: "ndalfaro333@gmail.com",
-  //   id: "kp_6106225af72a4ab49924fe041daf90fb",
-  // };
-  console.log(user);
   const redirectURL =
     process.env.NODE_ENV === "production"
       ? "https://cicero-coral.vercel.app/dashboard"
@@ -41,14 +25,6 @@ export async function GET(request: Request) {
     );
   }
 
-  // console.log("you've reached your destination");
-
-  // if (!user || !user.id || !user.email) {
-  //   return NextResponse.json(
-  //     { error: "User not found or missing ID" },
-  //     { status: 401 },
-  //   ); // Adjust error handling as needed
-  // }
   // Find if a user exists
   const dbUser = await db
     .select()
@@ -56,7 +32,6 @@ export async function GET(request: Request) {
     .where(eq(users.id, user.id))
     .limit(1);
 
-  // console.log(dbUser);
   // If the user doesn't exist, add them to the database
   if (dbUser.length === 0) {
     console.log(dbUser);
@@ -68,7 +43,7 @@ export async function GET(request: Request) {
       image: user.picture,
     });
   }
-  // console.log("route successfully ran");
+
   return redirect(redirectURL);
 }
 

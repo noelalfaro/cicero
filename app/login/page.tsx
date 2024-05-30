@@ -35,7 +35,7 @@ export default async function Login() {
         </div>
 
         <div className="mb-32 flex w-full justify-end gap-4 text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
-          <LoginLink className="">
+          <LoginLink>
             <Button className="p-6 text-xl">Log In</Button>
           </LoginLink>
 
@@ -44,9 +44,7 @@ export default async function Login() {
               Register
             </Button>
           </RegisterLink>
-          {/* <Button variant={"outline"} className="p-6 text-xl">
-            Outline
-          </Button> */}
+
           <Button variant={"ghost"} className="p-6 text-xl">
             Ghost
           </Button>

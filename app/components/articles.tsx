@@ -10,8 +10,15 @@ import {
 import { Button } from "@/components/ui/button";
 
 export default async function Articles() {
-  const data: any = await fetchNewsArticles();
-  const result = await data.json();
+  // const data: any = await fetchNewsArticles();
+  // const result = await data.json();
+  const result = [
+    {
+      url: "placeholder URL",
+      title: "Placeholder Title",
+      source: "placeholder Source",
+    },
+  ];
   // console.log(result);
 
   return (
@@ -20,7 +27,7 @@ export default async function Articles() {
       <div className="grid grid-cols-1 gap-4 py-4 md:grid-cols-2">
         {result.map((result: any) => (
           <Link href={result.url} key={result.url}>
-            <Card className="border-none bg-secondary transition-colors hover:bg-muted/40">
+            <Card className="bg-muted transition-colors hover:bg-muted/40">
               <CardHeader>
                 <CardTitle className="text-2xl font-bold">
                   {result.title}
