@@ -2,10 +2,16 @@ import { Player } from "@/app/lib/definitions";
 import { fetchPlayerDataByID } from "@/app/lib/data";
 
 export default async function PlayerDetails({ params }: { params: Player }) {
-  const player = await fetchPlayerDataByID(params.player_id);
-  if (!player) {
-    return <div>Player not found</div>;
-  }
+  const player: Player | null = await fetchPlayerDataByID(params.player_id);
+
+  if (!player)
+    return (
+      <div className="h-screen content-center">
+        <h1 className="text-4xl font-bold">
+          Technical Foul! Player not found. 🫠
+        </h1>
+      </div>
+    );
   return (
     <div>
       <h1>
