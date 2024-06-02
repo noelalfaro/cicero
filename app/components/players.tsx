@@ -36,12 +36,12 @@ async function Players() {
             <TableRow key={player.player_id}>
               <TableCell className="font-medium">{player.position}</TableCell>
               <TableCell>
-                {player.given_name} {player.family_name}
+                {player.firstname} {player.lastname}
               </TableCell>
-              <TableCell>{player.stats.ppg}</TableCell>
-              <TableCell>{player.stats.apg}</TableCell>
-              <TableCell>{player.hometown}</TableCell>
-              <TableCell>{player.stats.cicero_score}</TableCell>
+              <TableCell>{player.stats?.points}</TableCell>
+              <TableCell>{player.stats?.assists}</TableCell>
+              <TableCell>{player.birth_country}</TableCell>
+              {/* <TableCell>{player.stats.cicero_score}</TableCell> */}
               <TableCell>
                 <Link href={`/players/${player.player_id}`}>
                   <Button>View More</Button>

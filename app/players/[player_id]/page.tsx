@@ -15,17 +15,17 @@ export default async function PlayerDetails({ params }: { params: Player }) {
   return (
     <div>
       <h1>
-        {player.given_name} {player.family_name}
+        {player.firstname} {player.lastname}
       </h1>
       <p>Position: {player.position}</p>
-      <p>Hometown: {player.hometown}</p>
+      <p>Hometown: {player.birth_country}</p>
       <h2>Stats</h2>
       <ul>
-        <li>PPG: {player.stats.ppg}</li>
-        <li>APG: {player.stats.apg}</li>
-        <li>RPG: {player.stats.rpg}</li>
-        <li>Plus/Minus: {player.stats.plus_minus}</li>
-        <li>Cicero Score: {player.stats.cicero_score}</li>
+        <li>PPG: {player.stats?.points}</li>
+        <li>APG: {player.stats?.assists}</li>
+        <li>RPG: {player.stats?.defReb}</li>
+        <li>Plus/Minus: {player.stats?.plusMinus}</li>
+        {/* <li>Cicero Score: {player.stats.}</li> */}
       </ul>
     </div>
   );

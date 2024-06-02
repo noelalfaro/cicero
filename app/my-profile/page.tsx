@@ -5,6 +5,7 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 export default async function Page() {
   const { getUser, isAuthenticated } = getKindeServerSession();
+
   const user = await getUser();
   const redirectURL =
     process.env.NODE_ENV === "production"

@@ -9,8 +9,8 @@
     "start": "next start",
     "lint": "next lint",
     "seed": "tsx ./db/seed.ts",
-    "drizzle:generate": "drizzle-kit generate:pg",
-    "drizzle:push": "drizzle-kit push:pg",
+    "generate": "drizzle-kit generate",
+    "drizzle:push": "drizzle-kit push",
     "studio": "drizzle-kit studio"
   },
   "dependencies": {

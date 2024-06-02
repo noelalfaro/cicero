@@ -19,6 +19,7 @@ import { Link } from "next-view-transitions";
 const Nav = async () => {
   const { getUser, isAuthenticated } = getKindeServerSession();
   const user = await getUser();
+  // console.log(user);
   return (
     <>
       {(await isAuthenticated()) ? (
@@ -40,7 +41,7 @@ const Nav = async () => {
                 </Tooltip>
               </TooltipProvider>
             </Link>
-            <Link className=" flex flex-col items-center" href="/explore">
+            <Link className="flex flex-col items-center" href="/explore">
               <TooltipProvider delayDuration={100}>
                 <Tooltip>
                   <TooltipTrigger>
@@ -50,7 +51,7 @@ const Nav = async () => {
                 </Tooltip>
               </TooltipProvider>
             </Link>
-            <Link className=" flex flex-col items-center" href="/notifications">
+            <Link className="flex flex-col items-center" href="/notifications">
               <TooltipProvider delayDuration={100}>
                 <Tooltip>
                   <TooltipTrigger>
@@ -60,15 +61,15 @@ const Nav = async () => {
                 </Tooltip>
               </TooltipProvider>
             </Link>
-            {(await isAuthenticated()) ? (
-              <Link className=" flex flex-col items-center" href="/my-profile">
+            {user ? (
+              <Link className="flex flex-col items-center" href="/my-profile">
                 <TooltipProvider delayDuration={100}>
                   <Tooltip>
                     <TooltipTrigger>
                       <Avatar>
                         <AvatarImage
-                          src={user?.picture ?? "default-avatar.png"}
-                          alt={user?.given_name + ".png"}
+                          src={user.picture ?? "default-avatar.png"}
+                          alt={user.given_name + ".png"}
                         />
                         <AvatarFallback>NA</AvatarFallback>
                       </Avatar>

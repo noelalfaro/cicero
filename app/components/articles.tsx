@@ -8,24 +8,16 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { NewsArticle } from "@/app/lib/definitions";
 
 export default async function Articles() {
-  // const data: any = await fetchNewsArticles();
-  // const result = await data.json();
-  const result = [
-    {
-      url: "placeholder URL",
-      title: "Placeholder Title",
-      source: "placeholder Source",
-    },
-  ];
-  // console.log(result);
+  const data: NewsArticle[] = await fetchNewsArticles();
 
   return (
     <>
       <h2 className="my-2 text-2xl font-bold">News</h2>
       <div className="grid grid-cols-1 gap-4 py-4 md:grid-cols-2">
-        {result.map((result: any) => (
+        {data.map((result: NewsArticle) => (
           <Link href={result.url} key={result.url}>
             <Card className="bg-muted transition-colors hover:bg-muted/40">
               <CardHeader>

@@ -1,21 +1,58 @@
 import { z } from "zod";
 
-const statsSchema = z.object({
-  ppg: z.number(),
-  apg: z.number(),
-  rpg: z.number(),
-  plus_minus: z.number(),
-  cicero_score: z.number(),
+const playerStatsSchema = z.object({
+  stat_id: z.number(),
+  player_id: z.number(),
+  points: z.number(),
+  min: z.string(),
+  fgm: z.number(),
+  fga: z.number(),
+  fgp: z.string(),
+  ftm: z.number(),
+  fta: z.number(),
+  ftp: z.string(),
+  tpm: z.number(),
+  tpa: z.number(),
+  tpp: z.string(),
+  offReb: z.number(),
+  defReb: z.number(),
+  totReb: z.number(),
+  assists: z.number(),
+  pFouls: z.number(),
+  steals: z.number(),
+  turnovers: z.number(),
+  blocks: z.number(),
+  plusMinus: z.string(),
 });
-
 const playerSchema = z.object({
   player_id: z.number(),
-  family_name: z.string(),
-  given_name: z.string(),
-  stats: statsSchema,
+  firstname: z.string(),
+  lastname: z.string(),
+  birth_date: z.string(), // Adjust type if necessary
+  birth_country: z.string(),
+  nba_start: z.number(),
+  nba_pro: z.number(),
+  height_feet: z.number(),
+  height_inches: z.number(),
+  height_meters: z.string(), // Adjust type if necessary
+  weight_pounds: z.number(),
+  weight_kilograms: z.string(), // Adjust type if necessary
+  college: z.string(),
+  affiliation: z.string(),
+  jersey: z.number(),
+  active: z.boolean(),
   position: z.string(),
-  hometown: z.string().nullable(),
+  stats: playerStatsSchema.nullable(),
 });
 
-export { statsSchema, playerSchema };
+export { playerSchema, playerStatsSchema };
 export type Player = z.infer<typeof playerSchema>;
+export type PlayerStats = z.infer<typeof playerStatsSchema>;
+
+export const newsArticleSchema = z.object({
+  title: z.string(),
+  url: z.string(),
+  source: z.string(),
+  // Add other properties based on the API response
+});
+export type NewsArticle = z.infer<typeof newsArticleSchema>;
