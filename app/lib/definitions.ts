@@ -56,3 +56,15 @@ export const newsArticleSchema = z.object({
   // Add other properties based on the API response
 });
 export type NewsArticle = z.infer<typeof newsArticleSchema>;
+
+const teamSchema = z.object({
+  team_id: z.number(),
+  name: z.string(),
+  nickname: z.string(),
+  code: z.string(),
+  city: z.string(),
+  logo: z.string(),
+});
+
+export { teamSchema };
+export type Team = z.infer<typeof teamSchema>;
