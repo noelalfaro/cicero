@@ -34,13 +34,15 @@ async function Players() {
         <TableBody>
           {data.map((player) => (
             <TableRow key={player.player_id}>
-              <TableCell className="font-medium">{player.position}</TableCell>
+              <TableCell className="font-medium">
+                {player.leagues.pos}
+              </TableCell>
               <TableCell>
                 {player.firstname} {player.lastname}
               </TableCell>
-              <TableCell>{player.stats?.points}</TableCell>
-              <TableCell>{player.stats?.assists}</TableCell>
-              <TableCell>{player.birth_country}</TableCell>
+              {/* <TableCell>{player.stats?.points}</TableCell> */}
+              {/* <TableCell>{player.stats?.assists}</TableCell> */}
+              <TableCell>{player.birth.country}</TableCell>
               {/* <TableCell>{player.stats.cicero_score}</TableCell> */}
               <TableCell>
                 <Link href={`/players/${player.player_id}`}>

@@ -28,21 +28,25 @@ const playerSchema = z.object({
   player_id: z.number(),
   firstname: z.string(),
   lastname: z.string(),
-  birth_date: z.string(), // Adjust type if necessary
-  birth_country: z.string(),
+  team_id: z.string(),
+  leagues: z.object({
+    jersey: z.number(),
+    active: z.boolean(),
+    pos: z.boolean(),
+  }),
+  height: z.object({
+    feets: z.string(),
+    inches: z.string(),
+    meters: z.string(),
+  }),
+  weight: z.object({
+    pounds: z.string(),
+    kilograms: z.string(),
+  }),
+  birth: z.object({ date: z.string(), country: z.string() }),
   nba_start: z.number(),
   nba_pro: z.number(),
-  height_feet: z.number(),
-  height_inches: z.number(),
-  height_meters: z.string(), // Adjust type if necessary
-  weight_pounds: z.number(),
-  weight_kilograms: z.string(), // Adjust type if necessary
   college: z.string(),
-  affiliation: z.string(),
-  jersey: z.number(),
-  active: z.boolean(),
-  position: z.string(),
-  stats: playerStatsSchema.nullable(),
 });
 
 export { playerSchema, playerStatsSchema };

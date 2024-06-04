@@ -51,10 +51,10 @@ async function fetchTeamDataFromAPI() {
       );
     console.log(`Total number of NBA franchises: ${NbaTeams.length}`);
     console.log(NbaTeams);
-    const sql = neon(process.env.DRIZZLE_DATABASE_URL!);
-    const db = drizzle(sql);
-    await db.insert(teams).values(NbaTeams);
-    console.log("Seed done");
+    // const sql = neon(process.env.DRIZZLE_DATABASE_URL!);
+    // const db = drizzle(sql);
+    // await db.insert(teams).values(NbaTeams);
+    // console.log("Seed done");
   } catch (error) {
     console.error(error);
   }

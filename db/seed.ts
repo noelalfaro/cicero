@@ -9,7 +9,7 @@ const main = async () => {
   try {
     const sql = neon(process.env.DRIZZLE_DATABASE_URL!);
     const db = drizzle(sql);
-    await db.insert(players).values(players_data);
+    // await db.insert(players).values(players_data);
     console.log("Seed done");
   } catch (error) {
     console.log("error: " + error);
