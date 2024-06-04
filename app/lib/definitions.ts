@@ -32,7 +32,7 @@ const playerSchema = z.object({
   leagues: z.object({
     jersey: z.number(),
     active: z.boolean(),
-    pos: z.boolean(),
+    pos: z.string(),
   }),
   height: z.object({
     feets: z.string(),
@@ -47,6 +47,7 @@ const playerSchema = z.object({
   nba_start: z.number(),
   nba_pro: z.number(),
   college: z.string(),
+  stats: playerStatsSchema,
 });
 
 export { playerSchema, playerStatsSchema };

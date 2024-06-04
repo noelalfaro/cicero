@@ -92,19 +92,19 @@ export async function fetchNewsArticles(): Promise<NewsArticle[]> {
 
     const data = await response.json();
 
-    return data.map((article: NewsArticle) => newsArticleSchema.parse(article));
-    // return [
-    //   {
-    //     url: "placeholder URL",
-    //     title: "Placeholder Title",
-    //     source: "placeholder Source",
-    //   },
-    //   {
-    //     url: "placeholder URL",
-    //     title: "Placeholder Title",
-    //     source: "placeholder Source",
-    //   },
-    // ];
+    // return data.map((article: NewsArticle) => newsArticleSchema.parse(article));
+    return [
+      {
+        title: "Placeholder Title",
+        url: "placeholder URL",
+        source: "placeholder Source",
+      },
+      {
+        title: "Placeholder Title",
+        url: "placeholder URL",
+        source: "placeholder Source",
+      },
+    ];
   } catch (error) {
     throw new Error("Failed to fetch articles data.");
   }

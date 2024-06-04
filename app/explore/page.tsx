@@ -21,7 +21,7 @@ export default async function Page() {
           <Players />
         </Suspense>
 
-        <Articles />
+        {/* <Articles /> */}
       </main>
     </>
   );
