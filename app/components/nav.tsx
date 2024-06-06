@@ -23,7 +23,7 @@ const Nav = async () => {
   return (
     <>
       {(await isAuthenticated()) ? (
-        <nav className="flex h-auto min-h-24 w-full max-w-5xl items-center justify-between">
+        <nav className="flex h-auto min-h-24 w-full  items-center justify-between">
           <div className="w-3/5">
             <Link href="/dashboard">
               <p className="text-2xl font-extrabold">PROSPECT PORTFOLIO</p>

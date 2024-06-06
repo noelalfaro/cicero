@@ -1,9 +1,22 @@
-import { Player } from "@/app/lib/definitions";
-import { fetchPlayerDataByID } from "@/app/lib/data";
+import { NewsArticle, Player } from "@/app/lib/definitions";
+import {
+  FetchNewsArticlesByPlayerID,
+  fetchPlayerDataByID,
+} from "@/app/lib/data";
+import { Link } from "next-view-transitions";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 export default async function PlayerDetails({ params }: { params: Player }) {
   const player: Player | null = await fetchPlayerDataByID(params.id);
   // console.log(player);
+
+  const data: NewsArticle[] = await FetchNewsArticlesByPlayerID(
+    player!.first_name,
+    player!.last_name,
+  );
+
+  // console.log(player.first_name + player.last_name);
 
   if (!player)
     return (
@@ -14,11 +27,33 @@ export default async function PlayerDetails({ params }: { params: Player }) {
       </div>
     );
   return (
-    <div>
+    <div className="flex w-full flex-col">
       <h1 className="text-4xl font-bold">
         {player.first_name} {player.last_name}
       </h1>
-      <h2 className="text-2xl font-semibold">{player.id}</h2>
+      <h2 className="font-semibold">{player.id}</h2>
+      <div className="flex w-full">
+        <h2 className="my-5 text-2xl font-semibold">
+          Notable News About {player.first_name}
+        </h2>
+      </div>
+      {data.map((result: NewsArticle) => (
+        <Link href={result.url} key={result.url}>
+          <Card className="w-96 bg-muted transition-colors hover:bg-muted/40">
+            <CardHeader>
+              <CardTitle className="text-2xl font-bold">
+                {result.title}
+              </CardTitle>
+            </CardHeader>
+
+            <CardContent>
+              <Button className="font-semibold capitalize">
+                {result.source}
+              </Button>
+            </CardContent>
+          </Card>
+        </Link>
+      ))}
       {/* <p>Position: {player.leagues.pos}</p>
       <p>Hometown: {player.birth.country}</p>
       <p>Player Id: {player.player_id}</p>

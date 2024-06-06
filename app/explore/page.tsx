@@ -7,7 +7,7 @@ import { Suspense } from "react";
 export default async function Page() {
   return (
     <>
-      <main className="w-full max-w-5xl">
+      <main className="w-full ">
         <div className=" flex flex-col gap-2">
           <h3 className="text-4xl font-bold">Explore</h3>
           <p>

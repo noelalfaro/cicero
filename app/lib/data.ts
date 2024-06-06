@@ -75,7 +75,7 @@ export async function fetchPlayerData(): Promise<Player[]> {
 }
 
 export async function fetchNewsArticles(): Promise<NewsArticle[]> {
-  const url = "https://nba-latest-news.p.rapidapi.com/articles";
+  const url = "https://nba-latest-news.p.rapidapi.com/articles?limit=10";
   const options = {
     method: "GET",
     headers: {
@@ -97,6 +97,37 @@ export async function fetchNewsArticles(): Promise<NewsArticle[]> {
     // console.log("Fetched data: ", data);
 
     // Assuming 'data' is an array of articles
+    return data.map((article: any) => newsArticleSchema.parse(article));
+  } catch (error) {
+    console.error("Error fetching articles: ", error);
+    throw new Error("Failed to fetch articles data.");
+  }
+}
+
+export async function FetchNewsArticlesByPlayerID(
+  first_name: string,
+  last_name: string,
+): Promise<NewsArticle[]> {
+  // console.log(first_name + last_name);
+  const url = `https://nba-latest-news.p.rapidapi.com/articles?player=${first_name.toLowerCase()}-${last_name.toLowerCase()}&limit=5`;
+  // console.log(url);
+  const options = {
+    method: "GET",
+    headers: {
+      "X-RapidAPI-Key": process.env.RAPID_API_KEY!,
+      "X-RapidAPI-Host": "nba-latest-news.p.rapidapi.com",
+    },
+  };
+  noStore();
+  try {
+    // console.log("Fetching Data");
+    const response = await fetch(url, options);
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    // console.log(data);
     return data.map((article: any) => newsArticleSchema.parse(article));
   } catch (error) {
     console.error("Error fetching articles: ", error);
