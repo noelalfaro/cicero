@@ -30,7 +30,7 @@ const playerSchema = z.object({
   first_name: z.string(),
   last_name: z.string(),
   is_active: z.boolean(),
-  stats: playerStatsSchema,
+  // stats: playerStatsSchema,
 });
 
 export { playerSchema, playerStatsSchema };

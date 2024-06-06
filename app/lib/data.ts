@@ -13,7 +13,7 @@ import {
   PlayerStats,
 } from "@/app/lib/definitions";
 import { config } from "dotenv";
-config({ path: ".env" });
+config({ path: ".env.local" });
 
 export async function fetchPlayerData(): Promise<Player[]> {
   noStore();
