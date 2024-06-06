@@ -6,6 +6,7 @@ import {
 import { Link } from "next-view-transitions";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 export default async function PlayerDetails({ params }: { params: Player }) {
   const player: Player | null = await fetchPlayerDataByID(params.id);
@@ -17,6 +18,8 @@ export default async function PlayerDetails({ params }: { params: Player }) {
   );
 
   // console.log(player.first_name + player.last_name);
+  const defaultPictureUrl =
+    "https://cdn.freebiesupply.com/images/large/2x/nba-logo-transparent.png";
 
   if (!player)
     return (
@@ -32,6 +35,12 @@ export default async function PlayerDetails({ params }: { params: Player }) {
         {player.first_name} {player.last_name}
       </h1>
       <h2 className="font-semibold">{player.id}</h2>
+      <Image
+        src={player.picture || defaultPictureUrl}
+        alt={`${player.id}.png`}
+        width={260} // Add appropriate width and height
+        height={190} // Add appropriate width and height
+      ></Image>
       <div className="flex w-full">
         <h2 className="my-5 text-2xl font-semibold">
           Notable News About {player.first_name}
