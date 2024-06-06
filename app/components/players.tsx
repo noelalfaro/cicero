@@ -22,30 +22,21 @@ async function Players() {
       <Table className="w-full gap-4">
         <TableHeader>
           <TableRow>
-            <TableHead>Position</TableHead>
-            <TableHead>Name</TableHead>
-            <TableHead>PPG</TableHead>
-            <TableHead>APG</TableHead>
-            <TableHead>Hometown</TableHead>
-            <TableHead>Score</TableHead>
-            {/* <TableHead className="text-right">Link</TableHead> */}
+            <TableHead>First Name</TableHead>
+            <TableHead>Last Name</TableHead>
+            <TableHead>Is Active?</TableHead>
+            <TableHead>Player ID</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data.map((player) => (
-            <TableRow key={player.player_id}>
-              <TableCell className="font-medium">
-                {player.leagues.pos}
-              </TableCell>
+          {data.map((player: Player) => (
+            <TableRow key={player.id}>
+              <TableCell className="font-medium">{player.first_name}</TableCell>
+              <TableCell className="font-medium">{player.last_name}</TableCell>
+              <TableCell>{player.is_active ? <>Yes</> : <>No</>}</TableCell>
+              <TableCell>{player.id}</TableCell>
               <TableCell>
-                {player.firstname} {player.lastname}
-              </TableCell>
-              {/* <TableCell>{player.stats?.points}</TableCell> */}
-              {/* <TableCell>{player.stats?.assists}</TableCell> */}
-              <TableCell>{player.birth.country}</TableCell>
-              {/* <TableCell>{player.stats.cicero_score}</TableCell> */}
-              <TableCell>
-                <Link href={`/players/${player.player_id}`}>
+                <Link href={`/players/${player.id}`}>
                   <Button>View More</Button>
                 </Link>
               </TableCell>

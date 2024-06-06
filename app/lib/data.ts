@@ -3,7 +3,7 @@ import { drizzle } from "drizzle-orm/neon-http";
 import { players } from "@/db/schema/players";
 import { playerStats } from "@/db/schema/player_stats";
 import { neon } from "@neondatabase/serverless";
-import { eq, desc } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import {
   playerSchema,
   Player,
@@ -23,7 +23,8 @@ export async function fetchPlayerData(): Promise<Player[]> {
     const result = await db
       .select()
       .from(players)
-      .leftJoin(playerStats, eq(players.player_id, playerStats.player_id));
+      .leftJoin(playerStats, eq(players.id, playerStats.player_id))
+      .limit(10);
 
     // console.log(result);
 
@@ -34,7 +35,7 @@ export async function fetchPlayerData(): Promise<Player[]> {
 
       // If stats is null, provide default values
       const defaultStats: PlayerStats = {
-        player_id: player.player_id,
+        player_id: player.id,
         stat_id: 0,
         points: 23,
         min: "",
@@ -76,7 +77,7 @@ export async function fetchNewsArticles(): Promise<NewsArticle[]> {
   const options = {
     method: "GET",
     headers: {
-      "X-RapidAPI-Key": process.env.rapid_api_key!,
+      "X-RapidAPI-Key": process.env.RAPID_API_KEY!,
       "X-RapidAPI-Host": "nba-latest-news.p.rapidapi.com",
     },
   };
@@ -91,34 +92,22 @@ export async function fetchNewsArticles(): Promise<NewsArticle[]> {
     }
 
     const data = await response.json();
+    // console.log("Fetched data: ", data);
 
-    // return data.map((article: NewsArticle) => newsArticleSchema.parse(article));
-    return [
-      {
-        title: "Placeholder Title",
-        url: "placeholder URL",
-        source: "placeholder Source",
-      },
-      {
-        title: "Placeholder Title",
-        url: "placeholder URL",
-        source: "placeholder Source",
-      },
-    ];
+    // Assuming 'data' is an array of articles
+    return data.map((article: any) => newsArticleSchema.parse(article));
   } catch (error) {
+    console.error("Error fetching articles: ", error);
     throw new Error("Failed to fetch articles data.");
   }
 }
 
-export async function fetchPlayerDataByID(
-  player_id: number,
-): Promise<Player | null> {
+export async function fetchPlayerDataByID(id: number): Promise<Player | null> {
   const sql = neon(process.env.DRIZZLE_DATABASE_URL!);
   const db = drizzle(sql);
-  const result = await db
-    .select()
-    .from(players)
-    .where(eq(players.player_id, player_id));
+  const result = await db.select().from(players).where(eq(players.id, id));
+
+  // console.log(result);
 
   try {
     if (result.length === 0) {
@@ -133,7 +122,7 @@ export async function fetchPlayerDataByID(
 
       // If stats is null, provide default values
       const defaultStats: PlayerStats = {
-        player_id: player.player_id,
+        player_id: player.id,
         stat_id: 0,
         points: 23,
         min: "",
@@ -165,7 +154,7 @@ export async function fetchPlayerDataByID(
     });
     // console.log(combinedResult);
 
-    return playerSchema.parse(combinedResult[0]);
+    return playerSchema.parse(result[0]);
   } catch (error) {
     throw new Error("Failed to fetch player data by id");
   }

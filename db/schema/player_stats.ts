@@ -12,7 +12,7 @@ import { players } from "@/db/schema/players";
 export const playerStats = pgTable("player_stats", {
   stat_id: serial("stat_id").primaryKey(),
   player_id: integer("player_id")
-    .references(() => players.player_id)
+    .references(() => players.id)
     .notNull(),
   points: integer("points").notNull(),
   min: text("min").notNull(),

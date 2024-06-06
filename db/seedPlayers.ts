@@ -94,9 +94,9 @@ async function fetchPlayerDataFromAPI() {
     console.log(`Total unique players: ${formattedPlayers.length}`);
 
     // Insert into the database
-    const sql = neon(process.env.DRIZZLE_DATABASE_URL!);
-    const db = drizzle(sql);
-    await db.insert(players).values(formattedPlayers);
+    // const sql = neon(process.env.DRIZZLE_DATABASE_URL!);
+    // const db = drizzle(sql);
+    // await db.insert(players).values(formattedPlayers);
     console.log("Seed done");
   } catch (error) {
     console.error(error);

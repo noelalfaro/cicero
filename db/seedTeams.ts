@@ -44,9 +44,11 @@ async function fetchTeamDataFromAPI() {
           team_id: team.id,
           name: team.name,
           nickname: team.nickname,
-          code: team.code,
           logo: team.logo,
           city: team.city,
+          abbreviation: team.abbreviation,
+          state: team.state,
+          year_founded: team.year_founded,
         }),
       );
     console.log(`Total number of NBA franchises: ${NbaTeams.length}`);

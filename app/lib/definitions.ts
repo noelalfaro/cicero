@@ -25,28 +25,11 @@ const playerStatsSchema = z.object({
   plusMinus: z.string(),
 });
 const playerSchema = z.object({
-  player_id: z.number(),
-  firstname: z.string(),
-  lastname: z.string(),
-  team_id: z.string(),
-  leagues: z.object({
-    jersey: z.number(),
-    active: z.boolean(),
-    pos: z.string(),
-  }),
-  height: z.object({
-    feets: z.string(),
-    inches: z.string(),
-    meters: z.string(),
-  }),
-  weight: z.object({
-    pounds: z.string(),
-    kilograms: z.string(),
-  }),
-  birth: z.object({ date: z.string(), country: z.string() }),
-  nba_start: z.number(),
-  nba_pro: z.number(),
-  college: z.string(),
+  id: z.number(),
+  full_name: z.string(),
+  first_name: z.string(),
+  last_name: z.string(),
+  is_active: z.boolean(),
   stats: playerStatsSchema,
 });
 
@@ -66,9 +49,11 @@ const teamSchema = z.object({
   team_id: z.number(),
   name: z.string(),
   nickname: z.string(),
-  code: z.string(),
-  city: z.string(),
   logo: z.string(),
+  city: z.string(),
+  abbreviation: z.string(),
+  state: z.string(),
+  year_founded: z.number(),
 });
 
 export { teamSchema };
