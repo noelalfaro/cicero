@@ -12,6 +12,8 @@ import {
   playerStatsSchema,
   PlayerStats,
 } from "@/app/lib/definitions";
+import { config } from "dotenv";
+config({ path: ".env" });
 
 export async function fetchPlayerData(): Promise<Player[]> {
   noStore();
