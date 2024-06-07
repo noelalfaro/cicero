@@ -143,6 +143,7 @@ export async function fetchPlayerDataByID(id: number): Promise<Player | null> {
   const pictureUrl = `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${id}.png`;
 
   // console.log(result);
+  noStore();
 
   try {
     if (result.length === 0) {
