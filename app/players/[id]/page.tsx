@@ -10,7 +10,7 @@ import Image from "next/image";
 
 export default async function PlayerDetails({ params }: { params: Player }) {
   const player: Player | null = await fetchPlayerDataByID(params.id);
-  // console.log(player);
+  console.log(player);
 
   const data: NewsArticle[] = await FetchNewsArticlesByPlayerID(
     player!.first_name,
@@ -40,7 +40,9 @@ export default async function PlayerDetails({ params }: { params: Player }) {
         alt={`${player.id}.png`}
         width={260} // Add appropriate width and height
         height={190} // Add appropriate width and height
-      ></Image>
+        priority
+      />
+      <h3>{player.stats.points}</h3>
       <div className="flex w-full">
         <h2 className="my-5 text-2xl font-semibold">
           Notable News About {player.first_name}

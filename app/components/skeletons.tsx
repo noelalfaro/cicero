@@ -13,16 +13,17 @@ export default function ExploreTableSkeleton() {
       <Table className="w-full gap-4">
         <TableHeader>
           <TableRow>
-            <TableHead>Position</TableHead>
-            <TableHead>Name</TableHead>
-            <TableHead>PPG</TableHead>
-            <TableHead>APG</TableHead>
-            <TableHead>Hometown</TableHead>
-            <TableHead>Score</TableHead>
+            <TableHead>First Name</TableHead>
+            <TableHead>Last Name</TableHead>
+            <TableHead>Is Active?</TableHead>
+            <TableHead>Player Id</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           <TableRow>
+            <TableCell>Loading</TableCell>
+            <TableCell>Loading</TableCell>
+            <TableCell>Loading</TableCell>
             <TableCell>Loading</TableCell>
           </TableRow>
         </TableBody>

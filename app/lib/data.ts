@@ -138,11 +138,16 @@ export async function FetchNewsArticlesByPlayerID(
 export async function fetchPlayerDataByID(id: number): Promise<Player | null> {
   const sql = neon(process.env.DRIZZLE_DATABASE_URL!);
   const db = drizzle(sql);
-  const result = await db.select().from(players).where(eq(players.id, id));
+  const result = await db
+    .select()
+    .from(players)
+    .where(eq(players.id, id))
+    .leftJoin(playerStats, eq(players.id, playerStats.player_id));
+  // .leftJoin(playerStats, eq(players.id, playerStats.player_id))
 
   const pictureUrl = `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${id}.png`;
 
-  // console.log(result);
+  console.log(result);
   noStore();
 
   try {
@@ -150,44 +155,54 @@ export async function fetchPlayerDataByID(id: number): Promise<Player | null> {
       return null;
     }
 
+    const combinedResult = result.map((dbPlayer) => {
+      const player = dbPlayer["players"];
+      const stats: PlayerStats | null = dbPlayer["player_stats"];
+      const defaultStats: PlayerStats = {
+        player_id: player.id,
+        stat_id: 0,
+        points: 23,
+        min: "",
+        fgm: 0,
+        fga: 0,
+        fgp: "",
+        ftm: 0,
+        fta: 0,
+        ftp: "",
+        tpm: 0,
+        tpa: 0,
+        tpp: "",
+        offReb: 0,
+        defReb: 0,
+        totReb: 0,
+        assists: 0,
+        pFouls: 0,
+        steals: 0,
+        turnovers: 0,
+        blocks: 0,
+        plusMinus: "",
+      };
+
+      return {
+        ...player,
+        stats: stats || defaultStats,
+        picture: pictureUrl,
+      };
+    });
     // console.log(result[0]);
 
-    const player = result[0];
+    // const player = result[0];
     // const stats: PlayerStats ;
 
     // If stats is null, provide default values
-    const defaultStats: PlayerStats = {
-      player_id: player.id,
-      stat_id: 0,
-      points: 23,
-      min: "",
-      fgm: 0,
-      fga: 0,
-      fgp: "",
-      ftm: 0,
-      fta: 0,
-      ftp: "",
-      tpm: 0,
-      tpa: 0,
-      tpp: "",
-      offReb: 0,
-      defReb: 0,
-      totReb: 0,
-      assists: 0,
-      pFouls: 0,
-      steals: 0,
-      turnovers: 0,
-      blocks: 0,
-      plusMinus: "",
-    };
 
-    const combinedResult = {
-      ...player,
-      stats: defaultStats,
-      picture: pictureUrl,
-    };
+    // const combinedResult = {
+    //   ...player,
+    //   stats: defaultStats,
+    //   picture: pictureUrl,
+    // };
     // console.log(combinedResult);
-    return playerSchema.parse(combinedResult);
+    return playerSchema.parse(combinedResult[0]);
   } catch (error) {
     throw new Error("Failed to fetch player data by id");
   }
