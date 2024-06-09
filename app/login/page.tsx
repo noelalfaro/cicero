@@ -44,10 +44,6 @@ export default async function Login() {
               Register
             </Button>
           </RegisterLink>
-
-          <Button variant={"ghost"} className="p-6 text-xl">
-            Ghost
-          </Button>
         </div>
       </div>
       <div className="flex h-screen w-full flex-col">

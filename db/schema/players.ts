@@ -25,7 +25,7 @@ import { number } from "zod";
 // });
 
 export const players = pgTable("players", {
-  id: integer("id").primaryKey(),
+  id: serial("id").primaryKey(),
   first_name: text("FIRST_NAME").notNull(),
   last_name: text("LAST_NAME").notNull(),
   display_first_last: text("DISPLAY_FIRST_LAST").notNull(),
@@ -67,4 +67,5 @@ export const players = pgTable("players", {
   draft_round: text("DRAFT_ROUND"),
   draft_number: text("DRAFT_NUMBER"),
   is_active: text("IS_ACTIVE"),
+  averages: jsonb("averages"),
 });

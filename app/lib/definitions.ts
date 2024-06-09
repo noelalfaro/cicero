@@ -59,7 +59,31 @@ const playerSchema = z.object({
   draft_round: z.string(),
   draft_number: z.string(),
   is_active: z.string(),
-  picture: z.string().optional(), // optional field
+  picture: z.string().optional(),
+  averages: z
+    .object({
+      points: z.number(),
+      min: z.string(),
+      fgm: z.number(),
+      fga: z.number(),
+      fgp: z.string(),
+      ftm: z.number(),
+      fta: z.number(),
+      ftp: z.string(),
+      tpm: z.number(),
+      tpa: z.number(),
+      tpp: z.string(),
+      offReb: z.number(),
+      defReb: z.number(),
+      totReb: z.number(),
+      assists: z.number(),
+      pFouls: z.number(),
+      steals: z.number(),
+      turnovers: z.number(),
+      blocks: z.number(),
+      plusMinus: z.string(),
+    })
+    .nullable(),
   stats: playerStatsSchema, // assuming stats is another schema
 });
 
