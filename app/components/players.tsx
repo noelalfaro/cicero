@@ -22,19 +22,21 @@ async function Players() {
       <Table className="w-full gap-4">
         <TableHeader>
           <TableRow>
-            <TableHead>First Name</TableHead>
-            <TableHead>Last Name</TableHead>
-            <TableHead>Is Active?</TableHead>
-            <TableHead>Player ID</TableHead>
+            <TableHead>Name</TableHead>
+            <TableHead>School</TableHead>
+            <TableHead>Position</TableHead>
+            <TableHead>Team</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {data.map((player: Player) => (
             <TableRow key={player.id}>
-              <TableCell className="font-medium">{player.first_name}</TableCell>
-              <TableCell className="font-medium">{player.last_name}</TableCell>
-              <TableCell>{player.is_active ? <>Yes</> : <>No</>}</TableCell>
-              <TableCell>{player.id}</TableCell>
+              <TableCell className="font-medium">
+                {player.display_fi_last}
+              </TableCell>
+              <TableCell className="font-medium">{player.school}</TableCell>
+              <TableCell>{player.position}</TableCell>
+              <TableCell>{player.team_name}</TableCell>
               <TableCell>
                 <Link href={`/players/${player.id}`}>
                   <Button>View More</Button>

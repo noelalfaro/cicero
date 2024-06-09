@@ -145,7 +145,7 @@ export async function fetchPlayerDataByID(id: number): Promise<Player | null> {
     .leftJoin(playerStats, eq(players.id, playerStats.player_id));
   // .leftJoin(playerStats, eq(players.id, playerStats.player_id))
 
-  const pictureUrl = `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${id}.png`;
+  const pictureUrl = `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/1040x760/${id}.png`;
 
   console.log(result);
   noStore();
@@ -158,6 +158,9 @@ export async function fetchPlayerDataByID(id: number): Promise<Player | null> {
     const combinedResult = result.map((dbPlayer) => {
       const player = dbPlayer["players"];
       const stats: PlayerStats | null = dbPlayer["player_stats"];
+      // const birthdate = new Date(dbPlayer["players"].birthdate);
+      // console.log("Date: " + birthdate);
+
       const defaultStats: PlayerStats = {
         player_id: player.id,
         stat_id: 0,

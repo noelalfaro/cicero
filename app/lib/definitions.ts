@@ -1,8 +1,7 @@
 import { z } from "zod";
-
 const playerStatsSchema = z.object({
-  stat_id: z.number(),
   player_id: z.number(),
+  stat_id: z.number(),
   points: z.number(),
   min: z.string(),
   fgm: z.number(),
@@ -24,17 +23,51 @@ const playerStatsSchema = z.object({
   blocks: z.number(),
   plusMinus: z.string(),
 });
+
+// Export the player stats schema
+export { playerStatsSchema };
 const playerSchema = z.object({
   id: z.number(),
-  full_name: z.string(),
   first_name: z.string(),
   last_name: z.string(),
-  is_active: z.boolean(),
-  picture: z.string().optional(),
-  stats: playerStatsSchema,
+  display_first_last: z.string(),
+  display_last_comma_first: z.string(),
+  display_fi_last: z.string(),
+  player_slug: z.string(),
+  birthdate: z.string(),
+  school: z.string(),
+  country: z.string(),
+  last_affiliation: z.string(),
+  height: z.string(),
+  weight: z.string(),
+  season_exp: z.number(),
+  jersey: z.string(),
+  position: z.string(),
+  rosterstatus: z.string(),
+  team_id: z.number(),
+  team_name: z.string(),
+  team_abbreviation: z.string(),
+  team_code: z.string(),
+  team_city: z.string(),
+  playercode: z.string(),
+  from_year: z.number(),
+  to_year: z.number(),
+  dleague_flag: z.string(),
+  nba_flag: z.string(),
+  games_played_flag: z.string(),
+  draft_year: z.string(),
+  draft_round: z.string(),
+  draft_number: z.string(),
+  is_active: z.string(),
+  picture: z.string().optional(), // optional field
+  stats: playerStatsSchema, // assuming stats is another schema
 });
 
-export { playerSchema, playerStatsSchema };
+// Export the schema
+export { playerSchema };
+
+// Example of a playerStatsSchema, adjust accordingly
+
 export type Player = z.infer<typeof playerSchema>;
 export type PlayerStats = z.infer<typeof playerStatsSchema>;
 

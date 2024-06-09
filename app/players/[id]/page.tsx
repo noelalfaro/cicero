@@ -10,12 +10,14 @@ import Image from "next/image";
 
 export default async function PlayerDetails({ params }: { params: Player }) {
   const player: Player | null = await fetchPlayerDataByID(params.id);
-  console.log(player);
+  // console.log(player);
 
   const data: NewsArticle[] = await FetchNewsArticlesByPlayerID(
     player!.first_name,
     player!.last_name,
   );
+
+  const formattedDate = new Date(player!.birthdate);
 
   // console.log(player.first_name + player.last_name);
   const defaultPictureUrl =
@@ -40,9 +42,18 @@ export default async function PlayerDetails({ params }: { params: Player }) {
         alt={`${player.id}.png`}
         width={260} // Add appropriate width and height
         height={190} // Add appropriate width and height
-        priority
+        priority={true}
       />
-      <h3>{player.stats.points}</h3>
+      <h3 className="text-2xl font-semibold">{player.stats.points}</h3>
+      <h3 className="text-2xl font-semibold">{player.team_city}</h3>
+      <h3 className="text-2xl font-semibold">
+        Year Drafted: {player.draft_year}
+      </h3>
+      <h3 className="text-2xl font-semibold">Round: {player.draft_round}</h3>
+      <h3 className="text-2xl font-semibold">Pick #: {player.draft_number}</h3>
+      <h3 className="text-2xl font-semibold">
+        DOB: {formattedDate.toLocaleDateString()}
+      </h3>
       <div className="flex w-full">
         <h2 className="my-5 text-2xl font-semibold">
           Notable News About {player.first_name}
