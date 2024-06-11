@@ -116,3 +116,15 @@ const teamSchema = z.object({
 
 export { teamSchema };
 export type Team = z.infer<typeof teamSchema>;
+
+const userSchema = z.object({
+  family_name: z.string().nullable(),
+  given_name: z.string().nullable(),
+  picture: z.string().nullable(),
+  email: z.string().nullable(),
+  id: z.string(),
+  username: z.string().nullable(),
+});
+
+export { userSchema };
+export type User = z.infer<typeof userSchema>;
