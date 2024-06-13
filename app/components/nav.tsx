@@ -35,7 +35,7 @@ const Nav = async () => {
     email: idToken.email,
     id: idToken.sub,
   };
-  // console.log(user);
+  console.log(user);
 
   // console.log(user);
   return (

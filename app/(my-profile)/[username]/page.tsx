@@ -7,12 +7,12 @@ import { LogoutLink } from '@kinde-oss/kinde-auth-nextjs/components';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { User, userSchema } from '@/app/lib/definitions';
 
-export default async function Page({ params }: { params: number }) {
+export default async function Page({ params }: { params: string }) {
   const { getUser, isAuthenticated, getIdToken } = getKindeServerSession();
 
   // const kindeUser = await getUser();
   const idToken = (await getIdToken()) as ExtendedKindeIdToken; // Use the extended type
-  console.log(idToken);
+  // console.log(idToken);
 
   // const user: User = {
   //   family_name: idToken.family_name,
