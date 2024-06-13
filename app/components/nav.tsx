@@ -17,6 +17,7 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'next-view-transitions';
 import { ExtendedKindeIdToken } from '@/app/lib/types';
 import { User } from '@/app/lib/definitions';
+import { fetchUserDataById } from '@/app/lib/data';
 
 const Nav = async () => {
   // const { getUser, isAuthenticated } = getKindeServerSession();
@@ -24,7 +25,15 @@ const Nav = async () => {
   const { getUser, isAuthenticated, getIdToken } = getKindeServerSession();
 
   const kindeUser = await getUser();
-  const idToken = (await getIdToken()) as ExtendedKindeIdToken; // Use the extended type
+  console.log(kindeUser);
+  // const idToken = (await getIdToken()) as ExtendedKindeIdToken; // Use the extended type
+
+  if (!kindeUser) {
+    return <>No User Found</>;
+  }
+
+  const user: User | null = await fetchUserDataById(kindeUser?.id);
+
   // console.log(idToken);
 
   // const user: User = {
@@ -79,18 +88,18 @@ const Nav = async () => {
                 </Tooltip>
               </TooltipProvider>
             </Link>
-            {idToken ? (
+            {user ? (
               <Link
                 className="flex flex-col items-center"
-                href={`./${idToken.preferred_username}`}
+                href={`./${user.username}`}
               >
                 <TooltipProvider delayDuration={100}>
                   <Tooltip>
                     <TooltipTrigger>
                       <Avatar>
                         <AvatarImage
-                          src={idToken.picture ?? 'default-avatar.png'}
-                          alt={idToken.given_name + '.png'}
+                          src={user.picture ?? 'default-avatar.png'}
+                          alt={user.given_name + '.png'}
                         />
                         <AvatarFallback>NA</AvatarFallback>
                       </Avatar>

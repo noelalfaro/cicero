@@ -235,7 +235,7 @@ export async function createUser(user: User): Promise<string> {
   }
 }
 
-export async function fetchUserData(username: string): Promise<User> {
+export async function fetchUserDataByUsername(username: string): Promise<User> {
   const sql = neon(process.env.DRIZZLE_DATABASE_URL!);
   const db = drizzle(sql);
 
@@ -243,6 +243,20 @@ export async function fetchUserData(username: string): Promise<User> {
     .select()
     .from(users)
     .where(eq(users.username, username))
+    .limit(1);
+  // console.log(existingUser);
+
+  return existingUser[0];
+}
+
+export async function fetchUserDataById(id: string): Promise<User | null> {
+  const sql = neon(process.env.DRIZZLE_DATABASE_URL!);
+  const db = drizzle(sql);
+
+  const existingUser: User[] = await db
+    .select()
+    .from(users)
+    .where(eq(users.id, id))
     .limit(1);
   // console.log(existingUser);
 

@@ -7,7 +7,7 @@ import { LogoutLink } from '@kinde-oss/kinde-auth-nextjs/components';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { User, userSchema } from '@/app/lib/definitions';
 import NotFound from '@/app/(my-profile)/[username]/not-found';
-import { fetchUserData } from '@/app/lib/data';
+import { fetchUserDataByUsername } from '@/app/lib/data';
 
 export default async function Page({
   params,
@@ -21,7 +21,7 @@ export default async function Page({
   // console.log(idToken);
   // console.log(params.username);
 
-  const user: User = await fetchUserData(params.username);
+  const user: User = await fetchUserDataByUsername(params.username);
 
   // const userList = ['noel', 'bryan', 'chris'];
   // console.log(userList);
