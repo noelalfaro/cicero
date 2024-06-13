@@ -6,14 +6,24 @@ import { Button } from '@/components/ui/button';
 import { LogoutLink } from '@kinde-oss/kinde-auth-nextjs/components';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { User, userSchema } from '@/app/lib/definitions';
+import NotFound from '@/app/(my-profile)/[username]/not-found';
 
-export default async function Page() {
+export default async function Page({
+  params,
+}: {
+  params: { username: string };
+}) {
   const { getUser, isAuthenticated, getIdToken } = getKindeServerSession();
 
   // const kindeUser = await getUser();
   // const idToken = (await getIdToken()) as ExtendedKindeIdToken; // Use the extended type
   // console.log(idToken);
+  // console.log(params.username);
 
+  const userList = ['noel', 'bryan', 'chris'];
+  // console.log(userList);
+
+  if (!userList.includes(params.username)) return NotFound();
   // const user: User = {
   //   family_name: idToken.family_name,
   //   given_name: idToken.given_name,
@@ -38,7 +48,7 @@ export default async function Page() {
             <div>
               <p className="mb-8">Well, well, well, if it isn&apos;t...</p>
               <pre className="mt-4 rounded-sm bg-slate-950 p-4 font-mono text-sm text-cyan-200">
-                {JSON.stringify({ test: 'user' }, null, 2)}
+                {JSON.stringify(params, null, 2)}
               </pre>
             </div>
           </div>
