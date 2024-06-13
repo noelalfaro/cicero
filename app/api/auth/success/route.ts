@@ -1,10 +1,13 @@
-import { users } from "@/db/schema/users";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import { eq } from "drizzle-orm";
-import { NextResponse } from "next/server";
-import { redirect } from "next/navigation";
-import { drizzle } from "drizzle-orm/neon-http";
-import { neon } from "@neondatabase/serverless";
+import { users } from '@/db/schema/users';
+import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
+import { eq } from 'drizzle-orm';
+import { NextResponse } from 'next/server';
+import { redirect } from 'next/navigation';
+import { drizzle } from 'drizzle-orm/neon-http';
+import { neon } from '@neondatabase/serverless';
+import { ExtendedKindeIdToken } from '@/app/lib/types';
+import { User } from '@/app/lib/definitions';
+import { createUser } from '@/app/lib/data';
 
 export async function GET(request: Request) {
   // check if user exists
@@ -14,34 +17,31 @@ export async function GET(request: Request) {
   const user = await getUser();
 
   const redirectURL =
-    process.env.NODE_ENV === "production"
-      ? "https://cicero-coral.vercel.app/dashboard"
-      : "http://localhost:3000/dashboard";
+    process.env.NODE_ENV === 'production'
+      ? 'https://cicero-coral.vercel.app/dashboard'
+      : 'http://localhost:3000/dashboard';
 
-  if (!user || !user.id || !user.email) {
-    return NextResponse.json(
-      { error: "User not found or missing ID" },
-      { status: 401 },
-    );
-  }
+  const { isAuthenticated, getIdToken } = getKindeServerSession();
 
-  // Find if a user exists
-  const dbUser = await db
-    .select()
-    .from(users)
-    .where(eq(users.id, user.id))
-    .limit(1);
+  if (await isAuthenticated()) {
+    const idToken = (await getIdToken()) as ExtendedKindeIdToken;
+    // console.log('middleware: ');
+    // console.log(idToken);
 
-  // If the user doesn't exist, add them to the database
-  if (dbUser.length === 0) {
-    console.log(dbUser);
-    await db.insert(users).values({
-      id: user.id.toString(),
-      firstName: user.given_name,
-      lastName: user.family_name,
-      email: user.email,
-      image: user.picture,
-    });
+    if (idToken) {
+      const user: User = {
+        family_name: idToken.family_name,
+        given_name: idToken.given_name,
+        username: idToken.preferred_username,
+        picture: idToken.picture,
+        email: idToken.email,
+        id: idToken.sub,
+      };
+
+      // Call the createUser function directly
+      const result = await createUser(user);
+      console.log(result);
+    }
   }
 
   return redirect(redirectURL);
