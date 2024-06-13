@@ -1,34 +1,23 @@
-import { NewsArticle, Player } from "@/app/lib/definitions";
+import { NewsArticle, Player } from '@/app/lib/definitions';
 import {
   FetchNewsArticlesByPlayerID,
   fetchPlayerDataByID,
-} from "@/app/lib/data";
-import { Link } from "next-view-transitions";
+} from '@/app/lib/data';
+import { Link } from 'next-view-transitions';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
+} from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import Image from 'next/image';
+import { Avatar, AvatarImage } from '@/components/ui/avatar';
 
 export default async function PlayerDetails({ params }: { params: Player }) {
   const player: Player | null = await fetchPlayerDataByID(params.id);
   console.log(player);
-
-  const data: NewsArticle[] = await FetchNewsArticlesByPlayerID(
-    player!.first_name,
-    player!.last_name,
-  );
-
-  const formattedDate = new Date(player!.birthdate);
-
-  // console.log(player.first_name + player.last_name);
-  const defaultPictureUrl =
-    "https://cdn.freebiesupply.com/images/large/2x/nba-logo-transparent.png";
 
   if (!player)
     return (
@@ -38,6 +27,17 @@ export default async function PlayerDetails({ params }: { params: Player }) {
         </h1>
       </div>
     );
+
+  const data: NewsArticle[] = await FetchNewsArticlesByPlayerID(
+    player.first_name,
+    player.last_name,
+  );
+  const formattedDate = new Date(player.birthdate);
+
+  // console.log(player.first_name + player.last_name);
+  const defaultPictureUrl =
+    'https://cdn.freebiesupply.com/images/large/2x/nba-logo-transparent.png';
+
   return (
     <div className="flex w-full flex-col">
       <div className="flex w-full">
@@ -45,7 +45,7 @@ export default async function PlayerDetails({ params }: { params: Player }) {
           {player.first_name} {player.last_name}
         </h1>
         <Button>Buy</Button>
-        <Button variant={"destructive"}>Sell</Button>
+        <Button variant={'destructive'}>Sell</Button>
         {/* <h2 className="font-semibold">{player.id}</h2> */}
       </div>
 

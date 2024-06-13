@@ -23,19 +23,19 @@ const Nav = async () => {
   // const user = await getUser();
   const { getUser, isAuthenticated, getIdToken } = getKindeServerSession();
 
-  // const kindeUser = await getUser();
+  const kindeUser = await getUser();
   const idToken = (await getIdToken()) as ExtendedKindeIdToken; // Use the extended type
   // console.log(idToken);
 
-  const user: User = {
-    family_name: idToken.family_name,
-    given_name: idToken.given_name,
-    username: idToken.preferred_username,
-    picture: idToken.picture,
-    email: idToken.email,
-    id: idToken.sub,
-  };
-  console.log(user);
+  // const user: User = {
+  //   family_name: idToken.family_name,
+  //   given_name: idToken.given_name,
+  //   username: idToken.preferred_username,
+  //   picture: idToken.picture,
+  //   email: idToken.email,
+  //   id: idToken.sub,
+  // };
+  // console.log(user);
 
   // console.log(user);
   return (
@@ -79,18 +79,18 @@ const Nav = async () => {
                 </Tooltip>
               </TooltipProvider>
             </Link>
-            {user ? (
+            {idToken ? (
               <Link
                 className="flex flex-col items-center"
-                href={`./${user.username}`}
+                href={`./${idToken.preferred_username}`}
               >
                 <TooltipProvider delayDuration={100}>
                   <Tooltip>
                     <TooltipTrigger>
                       <Avatar>
                         <AvatarImage
-                          src={user.picture ?? 'default-avatar.png'}
-                          alt={user.given_name + '.png'}
+                          src={idToken.picture ?? 'default-avatar.png'}
+                          alt={idToken.given_name + '.png'}
                         />
                         <AvatarFallback>NA</AvatarFallback>
                       </Avatar>

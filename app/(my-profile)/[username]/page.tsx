@@ -7,11 +7,11 @@ import { LogoutLink } from '@kinde-oss/kinde-auth-nextjs/components';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { User, userSchema } from '@/app/lib/definitions';
 
-export default async function Page({ params }: { params: User }) {
+export default async function Page() {
   const { getUser, isAuthenticated, getIdToken } = getKindeServerSession();
 
   // const kindeUser = await getUser();
-  const idToken = (await getIdToken()) as ExtendedKindeIdToken; // Use the extended type
+  // const idToken = (await getIdToken()) as ExtendedKindeIdToken; // Use the extended type
   // console.log(idToken);
 
   // const user: User = {
@@ -38,7 +38,7 @@ export default async function Page({ params }: { params: User }) {
             <div>
               <p className="mb-8">Well, well, well, if it isn&apos;t...</p>
               <pre className="mt-4 rounded-sm bg-slate-950 p-4 font-mono text-sm text-cyan-200">
-                {JSON.stringify(params, null, 2)}
+                {JSON.stringify({ test: 'user' }, null, 2)}
               </pre>
             </div>
           </div>
