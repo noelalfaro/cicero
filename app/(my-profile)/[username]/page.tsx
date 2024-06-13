@@ -7,7 +7,7 @@ import { LogoutLink } from '@kinde-oss/kinde-auth-nextjs/components';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { User, userSchema } from '@/app/lib/definitions';
 
-export default async function Page({ params }: { params: string }) {
+export default async function Page({ params }: { params: User }) {
   const { getUser, isAuthenticated, getIdToken } = getKindeServerSession();
 
   // const kindeUser = await getUser();
