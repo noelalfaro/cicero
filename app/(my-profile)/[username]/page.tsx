@@ -21,7 +21,7 @@ export default async function Page({
   // console.log(idToken);
   // console.log(params.username);
 
-  const user: User = await fetchUserDataByUsername(params.username);
+  const user: User | null = await fetchUserDataByUsername(params.username);
 
   // const userList = ['noel', 'bryan', 'chris'];
   // console.log(userList);
@@ -51,7 +51,7 @@ export default async function Page({
             <div>
               <p className="mb-8">Well, well, well, if it isn&apos;t...</p>
               <pre className="mt-4 rounded-sm bg-slate-950 p-4 font-mono text-sm text-cyan-200">
-                {JSON.stringify(user, null, 2)}
+                {!user ? <>No user found</> : JSON.stringify(user, null, 2)}
               </pre>
             </div>
           </div>

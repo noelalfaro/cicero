@@ -235,7 +235,9 @@ export async function createUser(user: User): Promise<string> {
   }
 }
 
-export async function fetchUserDataByUsername(username: string): Promise<User> {
+export async function fetchUserDataByUsername(
+  username: string,
+): Promise<User | null> {
   const sql = neon(process.env.DRIZZLE_DATABASE_URL!);
   const db = drizzle(sql);
 

@@ -18,6 +18,7 @@ import { Link } from 'next-view-transitions';
 import { ExtendedKindeIdToken } from '@/app/lib/types';
 import { User } from '@/app/lib/definitions';
 import { fetchUserDataById } from '@/app/lib/data';
+import { redirect } from 'next/dist/server/api-utils';
 
 const Nav = async () => {
   // const { getUser, isAuthenticated } = getKindeServerSession();
@@ -25,11 +26,11 @@ const Nav = async () => {
   const { getUser, isAuthenticated, getIdToken } = getKindeServerSession();
 
   const kindeUser = await getUser();
-  console.log(kindeUser);
+  // console.log(kindeUser);
   // const idToken = (await getIdToken()) as ExtendedKindeIdToken; // Use the extended type
 
   if (!kindeUser) {
-    return <>No User Found</>;
+    return <></>;
   }
 
   const user: User | null = await fetchUserDataById(kindeUser?.id);
@@ -99,7 +100,7 @@ const Nav = async () => {
                       <Avatar>
                         <AvatarImage
                           src={user.picture ?? 'default-avatar.png'}
-                          alt={user.given_name + '.png'}
+                          alt={user.username + '.png'}
                         />
                         <AvatarFallback>NA</AvatarFallback>
                       </Avatar>
