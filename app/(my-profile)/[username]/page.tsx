@@ -7,6 +7,7 @@ import { LogoutLink } from '@kinde-oss/kinde-auth-nextjs/components';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { User, userSchema } from '@/app/lib/definitions';
 import NotFound from '@/app/(my-profile)/[username]/not-found';
+import { fetchUserData } from '@/app/lib/data';
 
 export default async function Page({
   params,
@@ -20,10 +21,12 @@ export default async function Page({
   // console.log(idToken);
   // console.log(params.username);
 
-  const userList = ['noel', 'bryan', 'chris'];
+  const user: User = await fetchUserData(params.username);
+
+  // const userList = ['noel', 'bryan', 'chris'];
   // console.log(userList);
 
-  if (!userList.includes(params.username)) return NotFound();
+  // if (!userList.includes(params.username)) return NotFound();
   // const user: User = {
   //   family_name: idToken.family_name,
   //   given_name: idToken.given_name,
@@ -48,7 +51,7 @@ export default async function Page({
             <div>
               <p className="mb-8">Well, well, well, if it isn&apos;t...</p>
               <pre className="mt-4 rounded-sm bg-slate-950 p-4 font-mono text-sm text-cyan-200">
-                {JSON.stringify(params, null, 2)}
+                {JSON.stringify(user, null, 2)}
               </pre>
             </div>
           </div>

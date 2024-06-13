@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod';
 const playerStatsSchema = z.object({
   player_id: z.number(),
   stat_id: z.number(),
@@ -118,12 +118,12 @@ export { teamSchema };
 export type Team = z.infer<typeof teamSchema>;
 
 const userSchema = z.object({
-  family_name: z.string().nullable(),
-  given_name: z.string().nullable(),
-  picture: z.string().nullable(),
-  email: z.string().nullable(),
   id: z.string(),
+  given_name: z.string().nullable(),
+  family_name: z.string().nullable(),
   username: z.string().nullable(),
+  email: z.string().nullable(),
+  picture: z.string().nullable(),
 });
 
 export { userSchema };

@@ -4,14 +4,13 @@ import {
   text,
   integer,
   primaryKey,
-} from "drizzle-orm/pg-core";
+} from 'drizzle-orm/pg-core';
 
-export const users = pgTable("user", {
-  id: text("id").notNull().primaryKey(),
-  firstName: text("first_name"),
-  lastName: text("last_name"),
-  username: text("username"),
-  email: text("email").notNull(),
-  emailVerified: timestamp("emailVerified", { mode: "date" }),
-  image: text("image"),
+export const users = pgTable('users', {
+  id: text('id').notNull().primaryKey(),
+  given_name: text('given_name'),
+  family_name: text('family_name'),
+  username: text('username'),
+  email: text('email'),
+  picture: text('picture'),
 });
