@@ -8,6 +8,20 @@ import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { User, userSchema } from '@/app/lib/definitions';
 import NotFound from '@/app/(my-profile)/[username]/not-found';
 import { fetchUserDataByUsername } from '@/app/lib/data';
+import { notFound } from 'next/navigation';
+import Image from 'next/image';
+import { UserCodeBlock } from '@/app/components/user-code-block';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import { MoreHorizontal } from 'lucide-react';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
 
 export default async function Page({
   params,
@@ -16,12 +30,13 @@ export default async function Page({
 }) {
   const { getUser, isAuthenticated, getIdToken } = getKindeServerSession();
 
-  // const kindeUser = await getUser();
-  // const idToken = (await getIdToken()) as ExtendedKindeIdToken; // Use the extended type
+  // const loggedInUser = await getUser();
+  const idToken = (await getIdToken()) as ExtendedKindeIdToken; // Use the extended type
   // console.log(idToken);
   // console.log(params.username);
 
   const user: User | null = await fetchUserDataByUsername(params.username);
+  // console.log(user);
 
   // const userList = ['noel', 'bryan', 'chris'];
   // console.log(userList);
@@ -37,6 +52,9 @@ export default async function Page({
   // };
   // console.log(user);
   // const user = params;
+  const defaultUserImageUrl =
+    'https://i.pinimg.com/originals/25/ee/de/25eedef494e9b4ce02b14990c9b5db2d.jpg';
+  if (!user) return notFound();
 
   const redirectURL =
     process.env.NODE_ENV === 'production'
@@ -44,24 +62,58 @@ export default async function Page({
       : 'http://localhost:3000';
 
   return (
-    <main className="flex w-full max-w-5xl flex-col items-start justify-between gap-4">
+    <main className="flex w-full flex-col items-start justify-between gap-2">
       {(await isAuthenticated()) ? (
         <>
-          <div className="flex w-full flex-col">
-            <div>
-              <p className="mb-8">Well, well, well, if it isn&apos;t...</p>
-              <pre className="mt-4 rounded-sm bg-slate-950 p-4 font-mono text-sm text-cyan-200">
-                {!user ? <>No user found</> : JSON.stringify(user, null, 2)}
-              </pre>
+          <div className="flex w-full">
+            <div className="col flex w-fit flex-col gap-2 rounded-md">
+              <Image
+                src={user?.picture || defaultUserImageUrl}
+                alt={`${user?.username}.png`}
+                width={200}
+                height={200}
+                className="rounded-full object-cover"
+              />
+              <p className="text-2xl font-bold">
+                {user.given_name + ' ' + user.family_name}
+              </p>
+              <p className="font-semibold">@{user.username}</p>
             </div>
           </div>
-          <ModeToggle />
-          <LogoutLink
-            postLogoutRedirectURL={redirectURL}
-            className="inline-block text-blue-500 underline"
-          >
-            <Button variant={'destructive'}>Logout</Button>
-          </LogoutLink>
+
+          {params.username === idToken.preferred_username ? (
+            <>
+              <Dialog>
+                <DialogTrigger>
+                  <MoreHorizontal />
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[425px]">
+                  <DialogHeader>
+                    <DialogTitle>Settings</DialogTitle>
+                    <DialogDescription>
+                      Make changes to your profile here.
+                    </DialogDescription>
+                    <div className="grid w-full gap-4 py-4">
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="name" className="text-right">
+                          Appearence
+                        </Label>
+                        <ModeToggle />
+                      </div>
+                    </div>
+                    <LogoutLink
+                      postLogoutRedirectURL={redirectURL}
+                      className="inline-block text-blue-500 underline"
+                    >
+                      <Button variant={'destructive'}>Logout</Button>
+                    </LogoutLink>
+                  </DialogHeader>
+                </DialogContent>
+              </Dialog>
+            </>
+          ) : null}
+
+          <UserCodeBlock user={user} />
         </>
       ) : (
         <div>Not Authenticated</div>

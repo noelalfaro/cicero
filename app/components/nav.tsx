@@ -60,7 +60,7 @@ const Nav = async () => {
 
           <div className="flex w-1/4 items-center justify-between rounded-lg py-6">
             <Link className="flex flex-col items-center" href="/dashboard">
-              <TooltipProvider delayDuration={100}>
+              <TooltipProvider delayDuration={50}>
                 <Tooltip>
                   <TooltipTrigger>
                     <Home absoluteStrokeWidth />
@@ -70,7 +70,7 @@ const Nav = async () => {
               </TooltipProvider>
             </Link>
             <Link className="flex flex-col items-center" href="/explore">
-              <TooltipProvider delayDuration={100}>
+              <TooltipProvider delayDuration={50}>
                 <Tooltip>
                   <TooltipTrigger>
                     <Search absoluteStrokeWidth />
@@ -80,7 +80,7 @@ const Nav = async () => {
               </TooltipProvider>
             </Link>
             <Link className="flex flex-col items-center" href="/notifications">
-              <TooltipProvider delayDuration={100}>
+              <TooltipProvider delayDuration={50}>
                 <Tooltip>
                   <TooltipTrigger>
                     <Bell absoluteStrokeWidth />
@@ -94,7 +94,7 @@ const Nav = async () => {
                 className="flex flex-col items-center"
                 href={`./${user.username}`}
               >
-                <TooltipProvider delayDuration={100}>
+                <TooltipProvider delayDuration={50}>
                   <Tooltip>
                     <TooltipTrigger>
                       <Avatar>
