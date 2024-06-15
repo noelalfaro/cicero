@@ -47,9 +47,6 @@ const Nav = async () => {
   // };
   // console.log(user);
 
-  console.log(user);
-  console.log(user?.given_name?.substring(0, 1));
-  console.log(user?.family_name?.substring(0, 1));
   return (
     <>
       {(await isAuthenticated()) ? (
@@ -105,8 +102,8 @@ const Nav = async () => {
                           alt={user.username + '.png'}
                         />
                         <AvatarFallback>
-                          {user.given_name?.substring(0, 1)} +
-                          {user.family_name?.substring(0, 1)}
+                          {user.given_name?.substring(0, 1).toUpperCase()}
+                          {user.family_name?.substring(0, 1).toUpperCase()}
                         </AvatarFallback>
                       </Avatar>
                     </TooltipTrigger>
