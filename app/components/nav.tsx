@@ -92,7 +92,7 @@ const Nav = async () => {
             {user ? (
               <Link
                 className="flex flex-col items-center"
-                href={`./${user.username}`}
+                href={`/${user.username}`}
               >
                 <TooltipProvider delayDuration={50}>
                   <Tooltip>

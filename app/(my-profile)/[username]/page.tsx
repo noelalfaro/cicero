@@ -66,7 +66,7 @@ export default async function Page({
       {(await isAuthenticated()) ? (
         <>
           <div className="flex w-full">
-            <div className="col flex w-fit flex-col gap-2 rounded-md">
+            <div className="col flex w-fit flex-col rounded-md border border-input bg-card/20 p-4">
               <Image
                 src={user?.picture || defaultUserImageUrl}
                 alt={`${user?.username}.png`}
@@ -74,10 +74,10 @@ export default async function Page({
                 height={200}
                 className="rounded-full object-cover"
               />
-              <p className="text-2xl font-bold">
+              <p className="text-2xl font-semibold">
                 {user.given_name + ' ' + user.family_name}
               </p>
-              <p className="font-semibold">@{user.username}</p>
+              <p className="">@{user.username}</p>
             </div>
           </div>
 
@@ -94,10 +94,16 @@ export default async function Page({
                       Make changes to your profile here.
                     </DialogDescription>
                     <div className="grid w-full gap-4 py-4">
-                      <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="name" className="text-right">
-                          Appearence
-                        </Label>
+                      <div className="flex items-center justify-between gap-4">
+                        <div className="flex flex-col items-start">
+                          <Label htmlFor="theme-toggle" className="text-right">
+                            Appearence
+                          </Label>
+                          <p className="text-muted-text text-xs">
+                            Change the color theme
+                          </p>
+                        </div>
+
                         <ModeToggle />
                       </div>
                     </div>

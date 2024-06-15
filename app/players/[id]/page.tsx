@@ -69,7 +69,7 @@ export default async function PlayerDetails({ params }: { params: Player }) {
           height={190} // Add appropriate width and height
           priority={true}
         />
-        <Card className="w-96 bg-muted transition-colors hover:bg-muted/40">
+        <Card className="w-96 bg-card/20 transition-colors">
           <CardHeader>
             <CardTitle className="text-2xl font-bold">
               AI Summary of Score
