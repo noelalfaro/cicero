@@ -47,7 +47,9 @@ const Nav = async () => {
   // };
   // console.log(user);
 
-  // console.log(user);
+  console.log(user);
+  console.log(user?.given_name?.substring(0, 1));
+  console.log(user?.family_name?.substring(0, 1));
   return (
     <>
       {(await isAuthenticated()) ? (
@@ -102,7 +104,10 @@ const Nav = async () => {
                           src={user.picture ?? 'default-avatar.png'}
                           alt={user.username + '.png'}
                         />
-                        <AvatarFallback>NA</AvatarFallback>
+                        <AvatarFallback>
+                          {user.given_name?.substring(0, 1)} +
+                          {user.family_name?.substring(0, 1)}
+                        </AvatarFallback>
                       </Avatar>
                     </TooltipTrigger>
                     <TooltipContent>My Profile</TooltipContent>
