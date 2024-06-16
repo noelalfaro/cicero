@@ -1,4 +1,6 @@
+import 'server-only';
 import { unstable_noStore as noStore } from 'next/cache';
+
 import { drizzle } from 'drizzle-orm/neon-http';
 import { players } from '@/db/schema/players';
 import { users } from '@/db/schema/users';
@@ -78,7 +80,7 @@ export async function fetchPlayerData(): Promise<Player[]> {
   }
 }
 
-export async function fetchNewsArticles(): Promise<NewsArticle[]> {
+export async function fetchNewsArticles(): Promise<NewsArticle[] | null> {
   const url = 'https://nba-latest-news.p.rapidapi.com/articles?limit=10';
   const options = {
     method: 'GET',
@@ -103,17 +105,18 @@ export async function fetchNewsArticles(): Promise<NewsArticle[]> {
     // Assuming 'data' is an array of articles
     return data.map((article: any) => newsArticleSchema.parse(article));
   } catch (error) {
-    console.error('Error fetching articles: ', error);
-    throw new Error('Failed to fetch articles data.');
+    return null;
+    // console.error('Error fetching articles: ', error);
+    // throw new Error('Failed to fetch articles data.');
   }
 }
 
 export async function FetchNewsArticlesByPlayerID(
   first_name: string,
   last_name: string,
-): Promise<NewsArticle[]> {
+): Promise<NewsArticle[] | null> {
   // console.log(first_name + last_name);
-  const url = `https://nba-latest-news.p.rapidapi.com/articles?player=${first_name.toLowerCase()}-${last_name.toLowerCase()}&limit=5`;
+  const url = `https://nba-latest-news.p.rapidapi.com/articles?player=${first_name.toLowerCase()}-${last_name.toLowerCase()}&limit=10`;
   // console.log(url);
   const options = {
     method: 'GET',
@@ -134,8 +137,9 @@ export async function FetchNewsArticlesByPlayerID(
     // console.log(data);
     return data.map((article: any) => newsArticleSchema.parse(article));
   } catch (error) {
-    console.error('Error fetching articles: ', error);
-    throw new Error('Failed to fetch articles data.');
+    // console.error('Error fetching articles: ', error);
+    // throw new Error('Failed to fetch articles data.');
+    return null;
   }
 }
 
@@ -151,8 +155,8 @@ export async function fetchPlayerDataByID(id: number): Promise<Player | null> {
 
   const pictureUrl = `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/1040x760/${id}.png`;
 
-  console.log(result);
-  noStore();
+  // console.log(result);
+  // noStore();
 
   try {
     if (result.length === 0) {

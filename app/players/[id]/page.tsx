@@ -14,10 +14,18 @@ import {
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel';
+import useEmblaCarousel from 'embla-carousel-react';
 
 export default async function PlayerDetails({ params }: { params: Player }) {
   const player: Player | null = await fetchPlayerDataByID(params.id);
-  console.log(player);
+  // console.log(player);
 
   if (!player)
     return (
@@ -28,7 +36,7 @@ export default async function PlayerDetails({ params }: { params: Player }) {
       </div>
     );
 
-  const data: NewsArticle[] = await FetchNewsArticlesByPlayerID(
+  const data: NewsArticle[] | null = await FetchNewsArticlesByPlayerID(
     player.first_name,
     player.last_name,
   );
@@ -61,7 +69,7 @@ export default async function PlayerDetails({ params }: { params: Player }) {
 
       <h3 className="font-semibold">{player.averages?.points}</h3>
 
-      <div className="flex w-full">
+      <div className="flex w-full flex-col">
         <Image
           src={player.picture || defaultPictureUrl}
           alt={`${player.id}.png`}
@@ -88,40 +96,44 @@ export default async function PlayerDetails({ params }: { params: Player }) {
       <h2 className="my-5 text-2xl font-semibold">
         Notable News About {player.first_name}
       </h2>
-      <div className="flex w-full flex-wrap gap-2">
-        {data.map((result: NewsArticle) => (
-          <div className="flex w-fit" key={result.url}>
-            <Link href={result.url} className="w-fit">
-              <Card className="w-96 bg-muted transition-colors hover:bg-muted/40">
-                <CardHeader>
-                  <CardTitle className="text-2xl font-bold">
-                    {result.title}
-                  </CardTitle>
-                </CardHeader>
+      {/* <div className="bg-red-300 px-12">
+        <Carousel
+          opts={{
+            align: 'center',
+            skipSnaps: true,
+          }}
+          className="min-w-sm w-full"
+        >
+          <CarouselContent>
+            {data.map((result: NewsArticle) => (
+              <CarouselItem
+                className="md:basis-1/2 lg:basis-1/3"
+                key={result.url}
+              >
+                <Link href={result.url} className="">
+                  <Card className="min-h-52 justify-between bg-muted transition-colors">
+                    <CardHeader>
+                      <CardTitle className="text-xl font-bold">
+                        {result.title}
+                      </CardTitle>
+                    </CardHeader>
 
-                <CardContent>
-                  <Button className="font-semibold capitalize">
-                    {result.source}
-                  </Button>
-                </CardContent>
-              </Card>
-            </Link>
-          </div>
-        ))}
-      </div>
+                    <CardContent className="flex items-start">
+                      <Button className="font-semibold capitalize">
+                        {result.source}
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </Link>
+              </CarouselItem>
+            ))}
 
-      {/* <p>Position: {player.leagues.pos}</p>
-      <p>Hometown: {player.birth.country}</p>
-      <p>Player Id: {player.player_id}</p>
-      <p>Api ID: {player.api_id}</p> */}
-      {/* <h2 className="text-2xl font-bold">Stats</h2> */}
-      <ul>
-        {/* <li>PPG: {player.stats?.points}</li>
-        <li>APG: {player.stats?.assists}</li>
-        <li>RPG: {player.stats?.defReb}</li>
-        <li>Plus/Minus: {player.stats?.plusMinus}</li> */}
-        {/* <li>Cicero Score: {player.stats.}</li> */}
-      </ul>
+          
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
+      </div> */}
     </div>
   );
 }

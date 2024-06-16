@@ -96,7 +96,10 @@ export default async function Page({
                     <div className="grid w-full gap-4 py-4">
                       <div className="flex items-center justify-between gap-4">
                         <div className="flex flex-col items-start">
-                          <Label htmlFor="theme-toggle" className="text-right">
+                          <Label
+                            htmlFor="theme-toggle"
+                            className="mb-1 text-right"
+                          >
                             Appearence
                           </Label>
                           <p className="text-muted-text text-xs">
