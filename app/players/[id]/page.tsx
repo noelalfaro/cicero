@@ -36,10 +36,10 @@ export default async function PlayerDetails({ params }: { params: Player }) {
       </div>
     );
 
-  const data: NewsArticle[] | null = await FetchNewsArticlesByPlayerID(
-    player.first_name,
-    player.last_name,
-  );
+  // const data: NewsArticle[] | null = await FetchNewsArticlesByPlayerID(
+  //   player.first_name,
+  //   player.last_name,
+  // );
   const formattedDate = new Date(player.birthdate);
 
   // console.log(player.first_name + player.last_name);

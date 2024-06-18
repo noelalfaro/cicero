@@ -65,8 +65,8 @@ export default async function Page({
     <main className="flex w-full flex-col items-start justify-between gap-2">
       {(await isAuthenticated()) ? (
         <>
-          <div className="flex w-full">
-            <div className="col flex w-fit flex-col rounded-md border border-input bg-card/20 p-4">
+          <div className="flex w-full gap-2">
+            <div className="col flex w-2/12 flex-col rounded-md border border-input bg-card/20 p-4">
               <Image
                 src={user?.picture || defaultUserImageUrl}
                 alt={`${user?.username}.png`}
@@ -77,7 +77,11 @@ export default async function Page({
               <p className="text-2xl font-semibold">
                 {user.given_name + ' ' + user.family_name}
               </p>
-              <p className="">@{user.username}</p>
+              <p className="text-muted-foreground">{user.username}</p>
+              <p>User Bio: </p>
+            </div>
+            <div className="w-10/12 rounded-md border border-input bg-card/20 p-4">
+              <h2 className="text-2xl font-bold">My Top Perfomers</h2>
             </div>
           </div>
 
@@ -102,7 +106,7 @@ export default async function Page({
                           >
                             Appearence
                           </Label>
-                          <p className="text-muted-text text-xs">
+                          <p className="text-xs text-muted-text">
                             Change the color theme
                           </p>
                         </div>
