@@ -6,10 +6,10 @@
   :root {
     /* background-image: url("../blurry-background.svg");*/
 
-    --background: 0 0% 98%;
+    --background: 120 30% 98%;
     --foreground: 120 38% 5%;
 
-    --card: 210 10% 68%;
+    --card: 140 25% 100%;
     --card-foreground: 222.2 84% 4.9%;
 
     --popover: 120 2% 98%;
@@ -27,13 +27,15 @@
     --muted-foreground: 215.4 0% 50%;
     --muted-text: 120 2% 55%;
 
-    --accent: 45 93% 58%;
+    /* --accent: 45 93% 58%; */
+    --accent: 21, 89%, 52%;
     --accent-foreground: 222.2 47.4% 11.2%;
 
     --destructive: 0 84.2% 60.2%;
+    /* --destructive: 5 88% 57%; */
     --destructive-foreground: 210 40% 98%;
 
-    --border: 0 0% 15%;
+    --border: 0 0% 75%;
     --input: 0 0% 85%;
     --ring: 222.2 84% 4.9%;
 
@@ -41,10 +43,12 @@
   }
 
   .dark {
-    --background: 120 2% 9%;
+    --background: 0 0% 4%;
+    /* --background: 140 10% 0%; */
     --foreground: 265 40% 98%;
 
-    --card: 222.2 84% 4.9%;
+    --card: 0 0% 6%;
+    /* --card: 120 2% 9%; */
     --card-foreground: 210 40% 98%;
 
     --popover: 0 0% 10%;
@@ -61,7 +65,8 @@
     --muted: 0 0% 20%;
     --muted-foreground: 0 0% 75%;
 
-    --accent: 45 93% 58%;
+    /* --accent: 45 93% 58%; */
+    --accent: 21, 89%, 52%;
     --accent-foreground: 222.2 47.4% 98.2%;
 
     --destructive: 0 62.8% 30.6%;

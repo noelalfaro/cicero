@@ -23,6 +23,23 @@ import { MoreHorizontal } from 'lucide-react';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+
 export default async function Page({
   params,
 }: {
@@ -66,24 +83,70 @@ export default async function Page({
       {(await isAuthenticated()) ? (
         <>
           <div className="flex w-full gap-2">
-            <div className="col flex w-2/12 flex-col rounded-md border border-input bg-card/20 p-4">
-              <Image
-                src={user?.picture || defaultUserImageUrl}
-                alt={`${user?.username}.png`}
-                width={200}
-                height={200}
-                className="rounded-full object-cover"
-              />
-              <p className="text-2xl font-semibold">
-                {user.given_name + ' ' + user.family_name}
-              </p>
-              <p className="text-muted-foreground">{user.username}</p>
-              <p>User Bio: </p>
-            </div>
-            <div className="w-10/12 rounded-md border border-input bg-card/20 p-4">
-              <h2 className="text-2xl font-bold">My Top Perfomers</h2>
-            </div>
+            <Card className="flex w-3/12 flex-col">
+              <CardHeader>
+                <Image
+                  src={user?.picture || defaultUserImageUrl}
+                  alt={`${user?.username}.png`}
+                  width={200}
+                  height={200}
+                  style={{
+                    width: '100%',
+                    height: 'auto',
+                  }}
+                  className="rounded-full object-cover"
+                />
+                <CardTitle>
+                  {user.given_name + ' ' + user.family_name}
+                </CardTitle>
+                <CardDescription>@{user.username}</CardDescription>
+                <CardDescription className="text-base text-current">
+                  This is an example Bio
+                </CardDescription>
+              </CardHeader>
+            </Card>
+            <Card className="w-9/12">
+              <CardHeader>
+                <CardTitle className="">My Top Perfomers</CardTitle>
+              </CardHeader>
+            </Card>
           </div>
+          {/* <Card className="w-[350px] bg-card">
+            <CardHeader>
+              <CardTitle>Create project</CardTitle>
+              <CardDescription>
+                Deploy your new project in one-click.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <form>
+                <div className="grid w-full items-center gap-4">
+                  <div className="flex flex-col space-y-1.5">
+                    <Label htmlFor="name">Name</Label>
+                    <Input id="name" placeholder="Name of your project" />
+                  </div>
+                  <div className="flex flex-col space-y-1.5">
+                    <Label htmlFor="framework">Framework</Label>
+                    <Select>
+                      <SelectTrigger id="framework">
+                        <SelectValue placeholder="Select" />
+                      </SelectTrigger>
+                      <SelectContent position="popper">
+                        <SelectItem value="next">Next.js</SelectItem>
+                        <SelectItem value="sveltekit">SvelteKit</SelectItem>
+                        <SelectItem value="astro">Astro</SelectItem>
+                        <SelectItem value="nuxt">Nuxt.js</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+              </form>
+            </CardContent>
+            <CardFooter className="flex justify-between">
+              <Button variant="outline">Cancel</Button>
+              <Button>Deploy</Button>
+            </CardFooter>
+          </Card> */}
 
           {params.username === idToken.preferred_username ? (
             <>
