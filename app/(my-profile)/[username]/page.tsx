@@ -19,9 +19,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { MoreHorizontal } from 'lucide-react';
+import { MoreHorizontal, MoreVertical } from 'lucide-react';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
+import { redirect } from 'next/navigation';
 
 import {
   Card,
@@ -31,6 +32,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { Dot } from 'lucide-react';
 
 import {
   Select,
@@ -39,6 +41,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { Separator } from '@/components/ui/separator';
 
 export default async function Page({
   params,
@@ -84,7 +87,7 @@ export default async function Page({
         <>
           <div className="flex w-full gap-2">
             <Card className="flex w-3/12 flex-col">
-              <CardHeader>
+              <CardHeader className="gap-1">
                 <Image
                   src={user?.picture || defaultUserImageUrl}
                   alt={`${user?.username}.png`}
@@ -96,13 +99,109 @@ export default async function Page({
                   }}
                   className="rounded-full object-cover"
                 />
-                <CardTitle>
-                  {user.given_name + ' ' + user.family_name}
-                </CardTitle>
-                <CardDescription>@{user.username}</CardDescription>
+                <div>
+                  <CardTitle>
+                    {user.given_name + ' ' + user.family_name}
+                  </CardTitle>
+                  <div className="flex gap-1">
+                    <CardDescription>@{user.username}</CardDescription>
+                    <Separator orientation="vertical" />
+                    <CardDescription>he/him</CardDescription>
+                  </div>
+                </div>
+
                 <CardDescription className="text-base text-current">
-                  This is an example Bio
+                  This is an example bio
                 </CardDescription>
+
+                {params.username === idToken.preferred_username ? (
+                  <div className="flex justify-between gap-1">
+                    <Button variant={'outline'} className="w-11/12">
+                      Edit Profile
+                    </Button>
+
+                    <Dialog>
+                      <DialogTrigger>
+                        <Button variant={'outline'} className="p-1">
+                          <MoreVertical />
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent className="sm:max-w-[425px]">
+                        <DialogHeader>
+                          <DialogTitle>Settings</DialogTitle>
+                          <DialogDescription>
+                            Make changes to your profile here.
+                          </DialogDescription>
+                          <div className="grid w-full gap-4 py-4">
+                            <div className="flex items-center justify-between gap-4">
+                              <div className="flex flex-col items-start">
+                                <Label
+                                  htmlFor="theme-toggle"
+                                  className="mb-1 text-right"
+                                >
+                                  Appearence
+                                </Label>
+                                <p className="text-xs text-muted-text">
+                                  Change the color theme
+                                </p>
+                              </div>
+
+                              <ModeToggle />
+                            </div>
+                          </div>
+                          <LogoutLink
+                            postLogoutRedirectURL={redirectURL}
+                            className="inline-block text-blue-500 underline"
+                          >
+                            <Button variant={'destructive'}>Logout</Button>
+                          </LogoutLink>
+                        </DialogHeader>
+                      </DialogContent>
+                    </Dialog>
+                  </div>
+                ) : (
+                  <div className="flex justify-between gap-1">
+                    <Button className="w-11/12">Follow</Button>
+                    <Dialog>
+                      <DialogTrigger>
+                        <Button variant={'outline'} className="p-1">
+                          <MoreVertical />
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent className="sm:max-w-[425px]">
+                        <DialogHeader>
+                          <DialogTitle>Block</DialogTitle>
+                          <DialogDescription>
+                            Make changes to your profile here.
+                          </DialogDescription>
+                          <div className="grid w-full gap-4 py-4">
+                            <div className="flex items-center justify-between gap-4">
+                              <div className="flex flex-col items-start">
+                                <Label
+                                  htmlFor="theme-toggle"
+                                  className="mb-1 text-right"
+                                >
+                                  Appearence
+                                </Label>
+                                <p className="text-xs text-muted-text">
+                                  Change the color theme
+                                </p>
+                              </div>
+
+                              <ModeToggle />
+                            </div>
+                          </div>
+                          <LogoutLink
+                            postLogoutRedirectURL={redirectURL}
+                            className="inline-block text-blue-500 underline"
+                          >
+                            <Button variant={'destructive'}>Logout</Button>
+                          </LogoutLink>
+                        </DialogHeader>
+                      </DialogContent>
+                    </Dialog>
+                  </div>
+                )}
               </CardHeader>
             </Card>
             <Card className="w-9/12">
@@ -148,51 +247,10 @@ export default async function Page({
             </CardFooter>
           </Card> */}
 
-          {params.username === idToken.preferred_username ? (
-            <>
-              <Dialog>
-                <DialogTrigger>
-                  <MoreHorizontal />
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px]">
-                  <DialogHeader>
-                    <DialogTitle>Settings</DialogTitle>
-                    <DialogDescription>
-                      Make changes to your profile here.
-                    </DialogDescription>
-                    <div className="grid w-full gap-4 py-4">
-                      <div className="flex items-center justify-between gap-4">
-                        <div className="flex flex-col items-start">
-                          <Label
-                            htmlFor="theme-toggle"
-                            className="mb-1 text-right"
-                          >
-                            Appearence
-                          </Label>
-                          <p className="text-xs text-muted-text">
-                            Change the color theme
-                          </p>
-                        </div>
-
-                        <ModeToggle />
-                      </div>
-                    </div>
-                    <LogoutLink
-                      postLogoutRedirectURL={redirectURL}
-                      className="inline-block text-blue-500 underline"
-                    >
-                      <Button variant={'destructive'}>Logout</Button>
-                    </LogoutLink>
-                  </DialogHeader>
-                </DialogContent>
-              </Dialog>
-            </>
-          ) : null}
-
           <UserCodeBlock user={user} />
         </>
       ) : (
-        <div>Not Authenticated</div>
+        redirect('/')
       )}
     </main>
   );

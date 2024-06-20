@@ -9,7 +9,7 @@ export async function UserCodeBlock({ user }: { user: User }) {
         <h2 className="text-2xl font-semibold">
           Well, well, well, if it isn&apos;t...
         </h2>
-        <pre className="mt-4 rounded-sm bg-slate-950 p-4 font-mono text-sm text-cyan-200">
+        <pre className="mt-4 rounded-sm bg-background p-4 font-mono text-sm text-current">
           {!user ? notFound() : JSON.stringify(user, null, 2)}
         </pre>
       </div>
