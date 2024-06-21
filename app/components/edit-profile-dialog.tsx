@@ -90,7 +90,7 @@ export const EditProfileDialog = ({
                         className="rounded-full object-cover"
                       />
                     </FormItem>
-                    <div className="absolute flex h-[200] w-[200] cursor-pointer justify-center self-center rounded-full bg-secondary p-2 opacity-0 transition-opacity hover:opacity-80">
+                    <div className="absolute flex h-[200px] w-[200px] cursor-pointer justify-center self-center rounded-full bg-secondary p-2 opacity-0 transition-opacity hover:opacity-80">
                       <Upload className="self-center transition-opacity" />
                     </div>
                   </div>
