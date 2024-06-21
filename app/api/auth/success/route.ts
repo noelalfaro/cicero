@@ -36,6 +36,7 @@ export async function GET(request: Request) {
         picture: idToken.picture,
         email: idToken.email,
         id: idToken.sub,
+        display_name: idToken.given_name + ' ' + idToken.family_name,
       };
 
       // Call the createUser function directly

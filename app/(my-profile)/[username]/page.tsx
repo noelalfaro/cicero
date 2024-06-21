@@ -19,7 +19,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { MoreHorizontal, MoreVertical } from 'lucide-react';
+import {
+  MoreHorizontal,
+  MoreVertical,
+  ShieldX,
+  Copy,
+  UserCheck,
+  EditIcon,
+} from 'lucide-react';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { redirect } from 'next/navigation';
@@ -34,14 +41,11 @@ import {
 } from '@/components/ui/card';
 import { Dot } from 'lucide-react';
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
+
+import { z } from 'zod';
+import { UserSettings } from '@/app/components/user-settings-dialog';
+import { EditProfileDialog } from '@/app/components/edit-profile-dialog';
 
 export default async function Page({
   params,
@@ -76,17 +80,12 @@ export default async function Page({
     'https://i.pinimg.com/originals/25/ee/de/25eedef494e9b4ce02b14990c9b5db2d.jpg';
   if (!user) return notFound();
 
-  const redirectURL =
-    process.env.NODE_ENV === 'production'
-      ? 'https://cicero-coral.vercel.app'
-      : 'http://localhost:3000';
-
   return (
     <main className="flex w-full flex-col items-start justify-between gap-2">
       {(await isAuthenticated()) ? (
         <>
-          <div className="flex w-full gap-2">
-            <Card className="flex w-3/12 flex-col">
+          <div className="flex w-full flex-col gap-2 md:flex-row">
+            <Card className="flex w-full flex-col sm:w-6/12 md:w-3/12">
               <CardHeader className="gap-1">
                 <Image
                   src={user?.picture || defaultUserImageUrl}
@@ -100,9 +99,7 @@ export default async function Page({
                   className="rounded-full object-cover"
                 />
                 <div>
-                  <CardTitle>
-                    {user.given_name + ' ' + user.family_name}
-                  </CardTitle>
+                  <CardTitle>{user.display_name}</CardTitle>
                   <div className="flex gap-1">
                     <CardDescription>@{user.username}</CardDescription>
                     <Separator orientation="vertical" />
@@ -116,87 +113,74 @@ export default async function Page({
 
                 {params.username === idToken.preferred_username ? (
                   <div className="flex justify-between gap-1">
-                    <Button variant={'outline'} className="w-11/12">
-                      Edit Profile
-                    </Button>
-
-                    <Dialog>
-                      <DialogTrigger>
-                        <Button variant={'outline'} className="p-1">
-                          <MoreVertical />
-                        </Button>
-                      </DialogTrigger>
-                      <DialogContent className="sm:max-w-[425px]">
-                        <DialogHeader>
-                          <DialogTitle>Settings</DialogTitle>
-                          <DialogDescription>
-                            Make changes to your profile here.
-                          </DialogDescription>
-                          <div className="grid w-full gap-4 py-4">
-                            <div className="flex items-center justify-between gap-4">
-                              <div className="flex flex-col items-start">
-                                <Label
-                                  htmlFor="theme-toggle"
-                                  className="mb-1 text-right"
-                                >
-                                  Appearence
-                                </Label>
-                                <p className="text-xs text-muted-text">
-                                  Change the color theme
-                                </p>
-                              </div>
-
-                              <ModeToggle />
-                            </div>
-                          </div>
-                          <LogoutLink
-                            postLogoutRedirectURL={redirectURL}
-                            className="inline-block text-blue-500 underline"
-                          >
-                            <Button variant={'destructive'}>Logout</Button>
-                          </LogoutLink>
-                        </DialogHeader>
-                      </DialogContent>
-                    </Dialog>
+                    <EditProfileDialog user={user} />
+                    <UserSettings user={user} />
                   </div>
                 ) : (
                   <div className="flex justify-between gap-1">
                     <Button className="w-11/12">Follow</Button>
                     <Dialog>
-                      <DialogTrigger>
-                        <Button variant={'outline'} className="p-1">
-                          <MoreVertical />
-                        </Button>
+                      <DialogTrigger className="inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md border border-input bg-background px-1 py-2 text-sm font-medium text-foreground ring-offset-background transition-colors hover:bg-secondary/50 hover:text-secondary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
+                        <MoreVertical />
                       </DialogTrigger>
                       <DialogContent className="sm:max-w-[425px]">
                         <DialogHeader>
-                          <DialogTitle>Block</DialogTitle>
+                          <DialogTitle className="">
+                            {user.given_name}'s Account
+                          </DialogTitle>
                           <DialogDescription>
-                            Make changes to your profile here.
+                            Follow, Share, Block.
                           </DialogDescription>
                           <div className="grid w-full gap-4 py-4">
                             <div className="flex items-center justify-between gap-4">
                               <div className="flex flex-col items-start">
                                 <Label
-                                  htmlFor="theme-toggle"
+                                  htmlFor="follow"
                                   className="mb-1 text-right"
                                 >
-                                  Appearence
+                                  Follow
                                 </Label>
                                 <p className="text-xs text-muted-text">
-                                  Change the color theme
+                                  Follow @{user.username}
                                 </p>
                               </div>
-
-                              <ModeToggle />
+                              <Button variant={'ghost'}>
+                                <UserCheck />
+                              </Button>
+                            </div>
+                            <div className="flex items-center justify-between gap-4">
+                              <div className="flex flex-col items-start">
+                                <Label
+                                  htmlFor="share"
+                                  className="mb-1 text-right"
+                                >
+                                  Share
+                                </Label>
+                                <p className="text-xs text-muted-text">
+                                  Copy Link To {user.given_name}'s profile.
+                                </p>
+                              </div>
+                              <Button variant={'ghost'}>
+                                <Copy />
+                              </Button>
+                            </div>
+                            <div className="flex items-center justify-between gap-4">
+                              <div className="flex flex-col items-start">
+                                <Label
+                                  htmlFor="block"
+                                  className="mb-1 text-right"
+                                >
+                                  Block
+                                </Label>
+                                <p className="text-xs text-muted-text">
+                                  Block this account.
+                                </p>
+                              </div>
+                              <Button variant={'ghostdestructive'}>
+                                <ShieldX />
+                              </Button>
                             </div>
                           </div>
-                          <LogoutLink
-                            postLogoutRedirectURL={redirectURL}
-                            className="inline-block text-blue-500 underline"
-                          >
-                            <Button variant={'destructive'}>Logout</Button>
-                          </LogoutLink>
                         </DialogHeader>
                       </DialogContent>
                     </Dialog>
@@ -204,7 +188,7 @@ export default async function Page({
                 )}
               </CardHeader>
             </Card>
-            <Card className="w-9/12">
+            <Card className="md:w-9/12">
               <CardHeader>
                 <CardTitle className="">My Top Perfomers</CardTitle>
               </CardHeader>
@@ -247,7 +231,7 @@ export default async function Page({
             </CardFooter>
           </Card> */}
 
-          <UserCodeBlock user={user} />
+          {/* <UserCodeBlock user={user} /> */}
         </>
       ) : (
         redirect('/')

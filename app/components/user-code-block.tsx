@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 export async function UserCodeBlock({ user }: { user: User }) {
   // console.log(user);
   return (
-    <div className="flex w-full flex-col">
+    <div className="flex w-full flex-col flex-wrap">
       <div>
         <h2 className="text-2xl font-semibold">
           Well, well, well, if it isn&apos;t...

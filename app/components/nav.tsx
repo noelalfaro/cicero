@@ -51,13 +51,13 @@ const Nav = async () => {
     <>
       {(await isAuthenticated()) ? (
         <nav className="flex h-auto min-h-24 w-full items-center justify-between">
-          <div className="w-3/5">
+          <div className="w-1/2 lg:w-3/5">
             <Link href="/dashboard">
               <p className="text-2xl font-extrabold">PROSPECT PORTFOLIO</p>
             </Link>
           </div>
 
-          <div className="flex w-1/4 items-center justify-between rounded-lg py-6">
+          <div className="flex w-1/2 items-center justify-between rounded-lg py-6 lg:w-1/4">
             <Link className="flex flex-col items-center" href="/dashboard">
               <TooltipProvider delayDuration={50}>
                 <Tooltip>
