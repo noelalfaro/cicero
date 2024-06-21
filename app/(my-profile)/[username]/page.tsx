@@ -113,7 +113,10 @@ export default async function Page({
 
                 {params.username === idToken.preferred_username ? (
                   <div className="flex justify-between gap-1">
-                    <EditProfileDialog user={user} />
+                    <EditProfileDialog
+                      user={user}
+                      defaultPicture={defaultUserImageUrl}
+                    />
                     <UserSettings user={user} />
                   </div>
                 ) : (

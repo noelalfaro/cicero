@@ -134,6 +134,7 @@ const userSchema = z.object({
 });
 const updateUserFormSchema = z.object({
   id: z.string(),
+  picture: z.string(),
   display_name: z
     .string()
     .min(2, { message: 'Display must be at least 2 characters.' }),

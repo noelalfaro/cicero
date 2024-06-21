@@ -27,12 +27,21 @@ import {
 import { Input } from '@/components/ui/input';
 import { updateUserProfile } from '@/app/actions/updateUserProfile';
 import { useState } from 'react';
+import Image from 'next/image';
+import { Upload } from 'lucide-react';
 
-export const EditProfileDialog = ({ user }: { user: User }) => {
+export const EditProfileDialog = ({
+  user,
+  defaultPicture,
+}: {
+  user: User;
+  defaultPicture: string;
+}) => {
   const form = useForm<z.infer<typeof updateUserFormSchema>>({
     resolver: zodResolver(updateUserFormSchema),
     defaultValues: {
       id: user.id,
+      picture: user.picture || defaultPicture,
       display_name: user.display_name || '',
     },
   });
@@ -65,8 +74,29 @@ export const EditProfileDialog = ({ user }: { user: User }) => {
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className="flex flex-col space-y-6 text-start"
+              className="flex w-full flex-col space-y-6 text-start"
             >
+              <FormField
+                control={form.control}
+                name="picture"
+                render={({ field }) => (
+                  <div className="flex items-end justify-center">
+                    <FormItem className="cursor-pointer self-center rounded-full object-cover hover:opacity-50">
+                      <Image
+                        src={user.picture ?? defaultPicture}
+                        alt={`${user.username}.png`}
+                        width={200}
+                        height={200}
+                        className="rounded-full object-cover"
+                      />
+                    </FormItem>
+                    <div className="absolute flex h-[200] w-[200] cursor-pointer justify-center self-center rounded-full bg-secondary p-2 opacity-0 transition-opacity hover:opacity-80">
+                      <Upload className="self-center transition-opacity" />
+                    </div>
+                  </div>
+                )}
+              />
+
               <FormField
                 control={form.control}
                 name="display_name"
