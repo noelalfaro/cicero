@@ -119,16 +119,18 @@ export type Team = z.infer<typeof teamSchema>;
 
 const userSchema = z.object({
   id: z.string(),
-  given_name: z.string(),
-  family_name: z.string(),
+  given_name: z.string().nullable(),
+  family_name: z.string().nullable(),
   username: z
     .string()
-    .min(2, { message: 'Username must be at least 2 characters.' }),
-  email: z.string().email({ message: 'Invalid email address' }),
-  picture: z.string(),
+    .min(2, { message: 'Username must be at least 2 characters.' })
+    .nullable(),
+  email: z.string().email({ message: 'Invalid email address' }).nullable(),
+  picture: z.string().nullable(),
   display_name: z
     .string()
-    .min(2, { message: 'Display must be at least 2 characters.' }),
+    .min(2, { message: 'Display must be at least 2 characters.' })
+    .nullable(),
 });
 const updateUserFormSchema = z.object({
   id: z.string(),
