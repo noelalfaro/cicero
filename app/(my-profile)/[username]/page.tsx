@@ -86,18 +86,25 @@ export default async function Page({
         <>
           <div className="flex w-full flex-col gap-2 md:flex-row">
             <Card className="flex w-full flex-col sm:w-6/12 md:w-3/12">
-              <CardHeader className="gap-1">
-                <Image
-                  src={user?.picture || defaultUserImageUrl}
-                  alt={`${user?.username}.png`}
-                  width={200}
-                  height={200}
-                  style={{
-                    width: '100%',
-                    height: 'auto',
-                  }}
-                  className="rounded-full object-cover"
-                />
+              <CardHeader className="w-full gap-1 text-start">
+                <div className="relative flex h-[250px] w-[250px] self-center">
+                  <Image
+                    src={user?.picture || defaultUserImageUrl}
+                    alt={`${user?.username}.png`}
+                    fill={true}
+                    className="rounded-full object-cover"
+                  />
+                </div>
+                {/* <div className="relative h-auto w-full">
+                  <Image
+                    src={user?.picture || defaultUserImageUrl}
+                    alt={`${user?.username}.png`}
+                    width={200}
+                    height={200}
+                    // fill={true}
+                    className="rounded-full"
+                  /> 
+                </div>*/}
                 <div>
                   <CardTitle>{user.display_name}</CardTitle>
                   <div className="flex gap-1">

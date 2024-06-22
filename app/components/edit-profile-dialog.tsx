@@ -1,7 +1,7 @@
 'use client';
 
 import { User } from '@/app/lib/definitions';
-import { userSchema, updateUserFormSchema } from '@/app/lib/definitions';
+import { updateUserFormSchema } from '@/app/lib/definitions';
 import {
   Dialog,
   DialogContent,
@@ -29,6 +29,9 @@ import { updateUserProfile } from '@/app/actions/updateUserProfile';
 import { useState } from 'react';
 import Image from 'next/image';
 import { Upload } from 'lucide-react';
+import { UploadButton } from '@/utils/uploadthing';
+import { CustomUpload } from '@/app/components/custom-upload';
+import { Separator } from '@/components/ui/separator';
 
 export const EditProfileDialog = ({
   user,
@@ -41,7 +44,6 @@ export const EditProfileDialog = ({
     resolver: zodResolver(updateUserFormSchema),
     defaultValues: {
       id: user.id,
-      picture: user.picture || defaultPicture,
       display_name: user.display_name || '',
     },
   });
@@ -61,60 +63,75 @@ export const EditProfileDialog = ({
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger className="inline-flex w-11/12 items-center justify-center whitespace-nowrap rounded-md border border-input bg-background text-sm font-medium text-foreground ring-offset-background transition-colors hover:bg-secondary/50 hover:text-secondary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
-        Edit Profile
-      </DialogTrigger>
-      <DialogContent className="text-start sm:max-w-[425px]">
-        <DialogHeader className="text-start">
-          <DialogTitle>Edit Profile</DialogTitle>
-          <DialogDescription>
-            Change details about your profile
-          </DialogDescription>
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="flex w-full flex-col space-y-6 text-start"
-            >
-              <FormField
-                control={form.control}
-                name="picture"
-                render={({ field }) => (
-                  <div className="flex items-end justify-center">
-                    <FormItem className="cursor-pointer self-center rounded-full object-cover hover:opacity-50">
-                      <Image
-                        src={user.picture ?? defaultPicture}
-                        alt={`${user.username}.png`}
-                        width={200}
-                        height={200}
-                        className="rounded-full object-cover"
-                      />
-                    </FormItem>
-                    <div className="absolute flex h-[200px] w-[200px] cursor-pointer justify-center self-center rounded-full bg-secondary p-2 opacity-0 transition-opacity hover:opacity-80">
-                      <Upload className="self-center transition-opacity" />
+    <>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger className="inline-flex w-11/12 items-center justify-center whitespace-nowrap rounded-md border border-input bg-background text-sm font-medium text-foreground ring-offset-background transition-colors hover:bg-secondary/50 hover:text-secondary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
+          Edit Profile
+        </DialogTrigger>
+        <DialogContent className="text-start sm:max-w-[425px]">
+          <DialogHeader className="text-start">
+            <DialogTitle>Edit Profile</DialogTitle>
+            <DialogDescription>
+              Change details about your profile
+            </DialogDescription>
+            <div className="grid place-items-center items-center justify-center">
+              <div className="relative my-2 flex h-[200px] w-[200px] self-center">
+                <Image
+                  src={user?.picture || defaultPicture}
+                  alt={`${user?.username}.png`}
+                  // width={200}
+                  // height={200}
+                  fill={true}
+                  className="rounded-full object-cover"
+                />
+              </div>
+
+              <CustomUpload />
+            </div>
+
+            {/* <Separator orientation="horizontal" /> */}
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="flex w-full flex-col space-y-6 text-start"
+              >
+                {/* <FormField
+                  control={form.control}
+                  name="picture"
+                  render={({ field }) => (
+                    <div className="flex items-end justify-center">
+                      <FormItem className="cursor-pointer self-center rounded-full object-cover hover:opacity-50">
+                        <Image
+                          src={user.picture ?? defaultPicture}
+                          alt={`${user.username}.png`}
+                          width={200}
+                          height={200}
+                          className="rounded-full object-cover"
+                        />
+                      </FormItem>
+                      <CustomUpload />
                     </div>
-                  </div>
-                )}
-              />
+                  )}
+                /> */}
 
-              <FormField
-                control={form.control}
-                name="display_name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Display Name</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Best GM" {...field} />
-                    </FormControl>
-                    <FormDescription>
-                      This is your public display name.
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                <FormField
+                  control={form.control}
+                  name="display_name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Display Name</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Best GM" {...field} />
+                      </FormControl>
+                      <FormDescription>
+                        This is your public display name.
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-              {/* <FormField
+                {/* <FormField
                 control={form.control}
                 name="picture"
                 render={({ field }) => (
@@ -130,23 +147,24 @@ export const EditProfileDialog = ({
                   </FormItem>
                 )}
               /> */}
-              <div className="flex justify-between gap-1">
-                <Button
-                  variant={'ghostdestructive'}
-                  onClick={() => setOpen(false)}
-                  type="reset"
-                  className="w-1/2"
-                >
-                  Cancel
-                </Button>
-                <Button variant={'ghost'} type="submit" className="w-1/2">
-                  Submit
-                </Button>
-              </div>
-            </form>
-          </Form>
-        </DialogHeader>
-      </DialogContent>
-    </Dialog>
+                <div className="flex justify-between gap-1">
+                  <Button
+                    variant={'ghostdestructive'}
+                    onClick={() => setOpen(false)}
+                    type="reset"
+                    className="w-1/2"
+                  >
+                    Cancel
+                  </Button>
+                  <Button variant={'default'} type="submit" className="w-1/2">
+                    Submit
+                  </Button>
+                </div>
+              </form>
+            </Form>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };
