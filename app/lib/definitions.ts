@@ -27,30 +27,7 @@ const playerStatsSchema = z.object({
 // Export the player stats schema
 export { playerStatsSchema };
 
-const averagesSchema = z
-  .object({
-    points: z.number().optional(),
-    min: z.string().optional(),
-    fgm: z.number().optional(),
-    fga: z.number().optional(),
-    fgp: z.string().optional(),
-    ftm: z.number().optional(),
-    fta: z.number().optional(),
-    ftp: z.string().optional(),
-    tpm: z.number().optional(),
-    tpa: z.number().optional(),
-    tpp: z.string().optional(),
-    offReb: z.number().optional(),
-    defReb: z.number().optional(),
-    totReb: z.number().optional(),
-    assists: z.number().optional(),
-    pFouls: z.number().optional(),
-    steals: z.number().optional(),
-    turnovers: z.number().optional(),
-    blocks: z.number().optional(),
-    plusMinus: z.string().optional(),
-  })
-  .optional();
+// const averagesSchema = z.optional();
 
 const playerSchema = z.object({
   id: z.number(),
@@ -86,12 +63,34 @@ const playerSchema = z.object({
   draft_number: z.string().nullable(),
   is_active: z.string(),
   picture: z.string().optional(),
-  averages: z.union([averagesSchema, z.object({})]).nullable(),
+  averages: z.object({
+    ppg: z.number().optional(),
+    minutes: z.string().optional(),
+    fgm: z.number().optional(),
+    fga: z.number().optional(),
+    fgp: z.number().optional(),
+    ftm: z.number().optional(),
+    fta: z.number().optional(),
+    ftp: z.number().optional(),
+    tpm: z.number().optional(),
+    tpa: z.number().optional(),
+    tpp: z.number().optional(),
+    offReb: z.number().optional(),
+    defReb: z.number().optional(),
+    totReb: z.number().optional(),
+    assists: z.number().optional(),
+    pFouls: z.number().optional(),
+    steals: z.number().optional(),
+    turnovers: z.number().optional(),
+    blocks: z.number().optional(),
+    plusMinus: z.string().optional(),
+  }),
   stats: playerStatsSchema, // assuming stats is another schema
 });
 
 // Export the schema
 export { playerSchema };
+// export type Averages = z.infer<typeof averagesSchema>;
 
 // Example of a playerStatsSchema, adjust accordingly
 

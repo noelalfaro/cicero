@@ -42,6 +42,8 @@ export async function fetchPlayerData(): Promise<Player[]> {
       // console.log(player);
       const stats: PlayerStats | null = dbPlayer['player_stats'];
 
+      // const defaultAverages:  =
+
       // If stats is null, provide default values
       const defaultStats: PlayerStats = {
         player_id: player.id,

@@ -25,7 +25,7 @@ import useEmblaCarousel from 'embla-carousel-react';
 
 export default async function PlayerDetails({ params }: { params: Player }) {
   const player: Player | null = await fetchPlayerDataByID(params.id);
-  // console.log(player);
+  console.log(player);
 
   if (!player)
     return (
@@ -67,7 +67,7 @@ export default async function PlayerDetails({ params }: { params: Player }) {
         </h3>
       </div>
 
-      <h3 className="font-semibold">{player.averages?.points}</h3>
+      <h3 className="font-semibold">{player.averages.ppg}</h3>
 
       <div className="flex w-full flex-col">
         <Image
