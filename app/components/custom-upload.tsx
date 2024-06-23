@@ -14,18 +14,23 @@ import { revalidateUserProfile } from '@/app/actions/actions';
 export function CustomUpload() {
   const [files, setFiles] = useState<File[]>([]);
   const [isUploading, setIsUploading] = useState(false);
+  const [fileSizeError, setFileSizeError] = useState(false);
 
   const { startUpload, permittedFileInfo } = useUploadThing('profilePicture', {
     onClientUploadComplete: async () => {
       setIsUploading(false);
       setFiles([]);
+      setFileSizeError(false);
       // Revalidate the user profile data
       await revalidateUserProfile();
 
       // Refresh the current route
     },
-    onUploadError: () => {
+    onUploadError: (error: Error) => {
       setIsUploading(false);
+      if (error.message === 'Invalid config: FileSizeMismatch')
+        setFileSizeError(true);
+      // setFileSizeError(false);
     },
     onUploadBegin: () => {
       setIsUploading(true);
@@ -50,27 +55,32 @@ export function CustomUpload() {
   });
 
   return (
-    <div
-      {...getRootProps()}
-      className={`absolute flex h-[200px] w-[200px] cursor-pointer justify-center self-center rounded-full bg-secondary p-2 transition-opacity ${
-        isDragActive || isUploading
-          ? 'opacity-100'
-          : 'opacity-0 hover:opacity-80'
-      }`}
-    >
-      <input {...getInputProps()} />
-      {isUploading ? (
-        <RotateLoader
-          color={'#ffffff'}
-          loading={true}
-          size={15}
-          aria-label="Loading Spinner"
-          data-testid="loader"
-          className="self-center"
-        />
-      ) : (
-        <Upload className="self-center transition-opacity" />
-      )}
-    </div>
+    <>
+      <div
+        {...getRootProps()}
+        className={`absolute flex h-[200px] w-[200px] cursor-pointer justify-center self-center rounded-full bg-secondary transition-opacity ${
+          isDragActive || isUploading
+            ? 'opacity-100'
+            : 'opacity-0 hover:opacity-80'
+        }`}
+      >
+        <input {...getInputProps()} />
+        {isUploading ? (
+          <RotateLoader
+            color={'#ffffff'}
+            loading={true}
+            size={15}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+            className="self-center"
+          />
+        ) : (
+          <Upload className="self-center transition-opacity" />
+        )}
+      </div>
+      {fileSizeError ? (
+        <p className="relative font-semibold text-red-600">File Size Too Big</p>
+      ) : null}
+    </>
   );
 }

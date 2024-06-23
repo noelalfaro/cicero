@@ -26,6 +26,32 @@ const playerStatsSchema = z.object({
 
 // Export the player stats schema
 export { playerStatsSchema };
+
+const averagesSchema = z
+  .object({
+    points: z.number().optional(),
+    min: z.string().optional(),
+    fgm: z.number().optional(),
+    fga: z.number().optional(),
+    fgp: z.string().optional(),
+    ftm: z.number().optional(),
+    fta: z.number().optional(),
+    ftp: z.string().optional(),
+    tpm: z.number().optional(),
+    tpa: z.number().optional(),
+    tpp: z.string().optional(),
+    offReb: z.number().optional(),
+    defReb: z.number().optional(),
+    totReb: z.number().optional(),
+    assists: z.number().optional(),
+    pFouls: z.number().optional(),
+    steals: z.number().optional(),
+    turnovers: z.number().optional(),
+    blocks: z.number().optional(),
+    plusMinus: z.string().optional(),
+  })
+  .optional();
+
 const playerSchema = z.object({
   id: z.number(),
   first_name: z.string(),
@@ -50,40 +76,17 @@ const playerSchema = z.object({
   team_code: z.string(),
   team_city: z.string(),
   playercode: z.string(),
-  from_year: z.number(),
-  to_year: z.number(),
+  from_year: z.number().nullable(),
+  to_year: z.number().nullable(),
   dleague_flag: z.string(),
   nba_flag: z.string(),
   games_played_flag: z.string(),
   draft_year: z.string(),
-  draft_round: z.string(),
-  draft_number: z.string(),
+  draft_round: z.string().nullable(),
+  draft_number: z.string().nullable(),
   is_active: z.string(),
   picture: z.string().optional(),
-  averages: z
-    .object({
-      points: z.number(),
-      min: z.string(),
-      fgm: z.number(),
-      fga: z.number(),
-      fgp: z.string(),
-      ftm: z.number(),
-      fta: z.number(),
-      ftp: z.string(),
-      tpm: z.number(),
-      tpa: z.number(),
-      tpp: z.string(),
-      offReb: z.number(),
-      defReb: z.number(),
-      totReb: z.number(),
-      assists: z.number(),
-      pFouls: z.number(),
-      steals: z.number(),
-      turnovers: z.number(),
-      blocks: z.number(),
-      plusMinus: z.string(),
-    })
-    .nullable(),
+  averages: z.union([averagesSchema, z.object({})]).nullable(),
   stats: playerStatsSchema, // assuming stats is another schema
 });
 

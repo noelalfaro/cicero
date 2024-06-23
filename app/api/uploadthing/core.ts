@@ -12,6 +12,7 @@ import { withAuth } from '@kinde-oss/kinde-auth-nextjs/middleware';
 // import { createKindeManagementAPIClient } from '@kinde-oss/kinde-auth-nextjs/server';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { revalidatePath } from 'next/cache';
+import { revalidateUserProfile } from '@/app/actions/actions';
 
 const f = createUploadthing();
 
@@ -64,6 +65,8 @@ export const ourFileRouter = {
         .update(users)
         .set({ picture: file.url })
         .where(eq(users.id, metadata.userId));
+
+      await revalidateUserProfile();
 
       // Return any additional data to the client
       return { uploadedBy: metadata.userId };

@@ -74,7 +74,7 @@ export const EditProfileDialog = ({
             <DialogDescription>
               Change details about your profile
             </DialogDescription>
-            <div className="grid place-items-center items-center justify-center">
+            <div className="grid place-items-center">
               <div className="relative my-2 flex h-[200px] w-[200px] self-center">
                 <Image
                   src={user?.picture || defaultPicture}

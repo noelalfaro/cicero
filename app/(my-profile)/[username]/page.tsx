@@ -107,13 +107,18 @@ export default async function Page({
                 </div>*/}
                 <div>
                   <CardTitle>{user.display_name}</CardTitle>
-                  <div className="flex gap-1">
+                  <div className="flex justify-start">
                     <CardDescription>@{user.username}</CardDescription>
-                    <Separator orientation="vertical" />
+                    {/* <Separator
+                      orientation="vertical"
+                      className="h-full text-current"
+                    /> */}
                     <CardDescription>he/him</CardDescription>
                   </div>
+                  {/* <Separator orientation="vertical" className="text-current" /> */}
                 </div>
 
+                {/* <Separator orientation="horizontal" className="text-current" /> */}
                 <CardDescription className="text-base text-current">
                   This is an example bio
                 </CardDescription>

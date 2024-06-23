@@ -39,6 +39,7 @@ export async function fetchPlayerData(): Promise<Player[]> {
     // Combine the player and stats data, handling null stats
     const combinedResult = result.map((dbPlayer) => {
       const player = dbPlayer['players'];
+      // console.log(player);
       const stats: PlayerStats | null = dbPlayer['player_stats'];
 
       // If stats is null, provide default values
