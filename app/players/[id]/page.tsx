@@ -22,6 +22,7 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel';
 import useEmblaCarousel from 'embla-carousel-react';
+import { Car } from 'lucide-react';
 
 export default async function PlayerDetails({ params }: { params: Player }) {
   const player: Player | null = await fetchPlayerDataByID(params.id);
@@ -67,7 +68,23 @@ export default async function PlayerDetails({ params }: { params: Player }) {
         </h3>
       </div>
 
-      <h3 className="font-semibold">{player.averages.ppg}</h3>
+      {/* <h3 className="font-semibold">PPG:{player.averages.ppg?.toFixed(1)}</h3> */}
+      <Card>
+        <CardContent>
+          <CardHeader>
+            <CardTitle>{player.display_first_last}</CardTitle>
+            <CardDescription>
+              PPG: {player.averages.ppg?.toFixed(1)}
+            </CardDescription>
+            <CardDescription>
+              APG: {player.averages.assists?.toFixed(1)}
+            </CardDescription>
+            <CardDescription>
+              RPG: {player.averages.totReb?.toFixed(1)}
+            </CardDescription>
+          </CardHeader>
+        </CardContent>
+      </Card>
 
       <div className="flex w-full flex-col">
         <Image
