@@ -74,8 +74,8 @@ export const EditProfileDialog = ({
             <DialogDescription>
               Change details about your profile
             </DialogDescription>
-            <div className="grid place-items-center">
-              <div className="relative my-2 flex h-[200px] w-[200px] self-center">
+            {/* <div className="grid place-items-center"> */}
+            {/* <div className="relative my-2 flex h-[200px] w-[200px] self-center">
                 <Image
                   src={user?.picture || defaultPicture}
                   alt={`${user?.username}.png`}
@@ -84,10 +84,10 @@ export const EditProfileDialog = ({
                   fill={true}
                   className="rounded-full object-cover"
                 />
-              </div>
+              </div> */}
 
-              <CustomUpload />
-            </div>
+            <CustomUpload user={user} defaultPicture={defaultPicture} />
+            {/* </div> */}
 
             {/* <Separator orientation="horizontal" /> */}
             <Form {...form}>
