@@ -22,7 +22,7 @@ export const config = {
     '/dashboard',
     '/notifications',
     '/explore',
-    '/players/:id*',
-    '/:username*',
+    // '/players/:id*',
+    // '/:username*',
   ],
 };
