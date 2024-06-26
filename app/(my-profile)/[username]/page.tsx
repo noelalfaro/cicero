@@ -109,11 +109,10 @@ export default async function Page({
                   <CardTitle>{user.display_name}</CardTitle>
                   <div className="flex justify-start">
                     <CardDescription>@{user.username}</CardDescription>
-                    {/* <Separator
+                    <Separator
                       orientation="vertical"
                       className="h-full text-current"
-                    /> */}
-                    <CardDescription>he/him</CardDescription>
+                    />
                   </div>
                   {/* <Separator orientation="vertical" className="text-current" /> */}
                 </div>

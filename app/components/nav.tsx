@@ -118,9 +118,7 @@ const Nav = async () => {
             )}
           </div>
         </nav>
-      ) : (
-        ''
-      )}
+      ) : null}
     </>
   );
 };

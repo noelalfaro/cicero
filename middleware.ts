@@ -18,5 +18,11 @@ export function middleware(request: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ['/dashboard', '/notifications', '/explore'],
+  matcher: [
+    '/dashboard',
+    '/notifications',
+    '/explore',
+    '/players/:id*',
+    '/:username*',
+  ],
 };

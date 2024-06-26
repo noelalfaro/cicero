@@ -26,7 +26,7 @@ import { Car } from 'lucide-react';
 
 export default async function PlayerDetails({ params }: { params: Player }) {
   const player: Player | null = await fetchPlayerDataByID(params.id);
-  console.log(player);
+  // console.log(player);
 
   if (!player)
     return (
