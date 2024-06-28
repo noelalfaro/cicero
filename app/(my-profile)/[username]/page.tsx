@@ -84,8 +84,8 @@ export default async function Page({
     <main className="flex w-full flex-col items-start justify-between gap-2">
       {(await isAuthenticated()) ? (
         <>
-          <div className="flex w-full flex-col gap-2 md:flex-row">
-            <Card className="flex w-full flex-col sm:w-6/12 md:w-3/12">
+          <div className="flex w-full flex-col gap-2 sm:flex-row">
+            <Card className="flex w-full flex-col sm:w-6/12 lg:w-4/12">
               <CardHeader className="w-full gap-1 text-start">
                 <div className="relative flex h-[250px] w-[250px] self-center">
                   <Image
@@ -95,16 +95,7 @@ export default async function Page({
                     className="rounded-full object-cover"
                   />
                 </div>
-                {/* <div className="relative h-auto w-full">
-                  <Image
-                    src={user?.picture || defaultUserImageUrl}
-                    alt={`${user?.username}.png`}
-                    width={200}
-                    height={200}
-                    // fill={true}
-                    className="rounded-full"
-                  /> 
-                </div>*/}
+
                 <div>
                   <CardTitle>{user.display_name}</CardTitle>
                   <div className="flex justify-start">
@@ -202,49 +193,12 @@ export default async function Page({
                 )}
               </CardHeader>
             </Card>
-            <Card className="md:w-9/12">
+            <Card className="w-full sm:w-6/12 lg:w-8/12">
               <CardHeader>
                 <CardTitle className="">My Top Perfomers</CardTitle>
               </CardHeader>
             </Card>
           </div>
-          {/* <Card className="w-[350px] bg-card">
-            <CardHeader>
-              <CardTitle>Create project</CardTitle>
-              <CardDescription>
-                Deploy your new project in one-click.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form>
-                <div className="grid w-full items-center gap-4">
-                  <div className="flex flex-col space-y-1.5">
-                    <Label htmlFor="name">Name</Label>
-                    <Input id="name" placeholder="Name of your project" />
-                  </div>
-                  <div className="flex flex-col space-y-1.5">
-                    <Label htmlFor="framework">Framework</Label>
-                    <Select>
-                      <SelectTrigger id="framework">
-                        <SelectValue placeholder="Select" />
-                      </SelectTrigger>
-                      <SelectContent position="popper">
-                        <SelectItem value="next">Next.js</SelectItem>
-                        <SelectItem value="sveltekit">SvelteKit</SelectItem>
-                        <SelectItem value="astro">Astro</SelectItem>
-                        <SelectItem value="nuxt">Nuxt.js</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-              </form>
-            </CardContent>
-            <CardFooter className="flex justify-between">
-              <Button variant="outline">Cancel</Button>
-              <Button>Deploy</Button>
-            </CardFooter>
-          </Card> */}
-
           {/* <UserCodeBlock user={user} /> */}
         </>
       ) : (

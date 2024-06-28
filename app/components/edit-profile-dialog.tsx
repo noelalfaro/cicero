@@ -74,46 +74,14 @@ export const EditProfileDialog = ({
             <DialogDescription>
               Change details about your profile
             </DialogDescription>
-            {/* <div className="grid place-items-center"> */}
-            {/* <div className="relative my-2 flex h-[200px] w-[200px] self-center">
-                <Image
-                  src={user?.picture || defaultPicture}
-                  alt={`${user?.username}.png`}
-                  // width={200}
-                  // height={200}
-                  fill={true}
-                  className="rounded-full object-cover"
-                />
-              </div> */}
 
             <CustomUpload user={user} defaultPicture={defaultPicture} />
-            {/* </div> */}
 
-            {/* <Separator orientation="horizontal" /> */}
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="flex w-full flex-col space-y-6 text-start"
               >
-                {/* <FormField
-                  control={form.control}
-                  name="picture"
-                  render={({ field }) => (
-                    <div className="flex items-end justify-center">
-                      <FormItem className="cursor-pointer self-center rounded-full object-cover hover:opacity-50">
-                        <Image
-                          src={user.picture ?? defaultPicture}
-                          alt={`${user.username}.png`}
-                          width={200}
-                          height={200}
-                          className="rounded-full object-cover"
-                        />
-                      </FormItem>
-                      <CustomUpload />
-                    </div>
-                  )}
-                /> */}
-
                 <FormField
                   control={form.control}
                   name="display_name"
@@ -131,22 +99,6 @@ export const EditProfileDialog = ({
                   )}
                 />
 
-                {/* <FormField
-                control={form.control}
-                name="picture"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Profile Picture URL</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="https://example.com/pic.jpg"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              /> */}
                 <div className="flex justify-between gap-1">
                   <Button
                     variant={'ghostdestructive'}

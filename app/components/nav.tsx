@@ -57,7 +57,7 @@ const Nav = async () => {
             </Link>
           </div>
 
-          <div className="flex w-1/2 items-center justify-between rounded-lg py-6 lg:w-1/4">
+          <div className="flex w-1/2 items-center justify-between rounded-lg py-6 md:w-2/5 lg:w-1/4">
             <Link className="flex flex-col items-center" href="/dashboard">
               <TooltipProvider delayDuration={50}>
                 <Tooltip>
