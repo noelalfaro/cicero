@@ -5,6 +5,7 @@ import { ModeToggle } from '@/app/components/dark-mode-toggle';
 import { Button } from '@/components/ui/button';
 import { LogoutLink } from '@kinde-oss/kinde-auth-nextjs/components';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
+
 import { User, userSchema } from '@/app/lib/definitions';
 import NotFound from '@/app/(my-profile)/[username]/not-found';
 import { fetchUserDataByUsername } from '@/app/lib/data';
@@ -56,6 +57,8 @@ export default async function Page({
 
   // const loggedInUser = await getUser();
   const idToken = (await getIdToken()) as ExtendedKindeIdToken; // Use the extended type
+
+  // const { login, register } = useKindeAuth();
   // console.log(idToken);
   // console.log(params.username);
 
@@ -84,10 +87,10 @@ export default async function Page({
     <main className="flex w-full flex-col items-start justify-between gap-2">
       {(await isAuthenticated()) ? (
         <>
-          <div className="flex w-full flex-col gap-2 sm:flex-row">
-            <Card className="flex w-full flex-col sm:w-6/12 lg:w-4/12">
+          <div className="flex w-full flex-col gap-2 md:flex-row">
+            <Card className="flex w-full flex-col md:w-6/12 lg:w-4/12 xl:w-3/12">
               <CardHeader className="w-full gap-1 text-start">
-                <div className="relative flex h-[250px] w-[250px] self-center">
+                <div className="relative flex h-[250px] w-full max-w-[250px] self-center">
                   <Image
                     src={user?.picture || defaultUserImageUrl}
                     alt={`${user?.username}.png`}
@@ -193,12 +196,13 @@ export default async function Page({
                 )}
               </CardHeader>
             </Card>
-            <Card className="w-full sm:w-6/12 lg:w-8/12">
+            <Card className="w-full md:w-6/12 lg:w-8/12 xl:w-9/12">
               <CardHeader>
                 <CardTitle className="">My Top Perfomers</CardTitle>
               </CardHeader>
             </Card>
           </div>
+
           {/* <UserCodeBlock user={user} /> */}
         </>
       ) : (

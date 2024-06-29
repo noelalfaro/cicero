@@ -3,15 +3,15 @@ import {
   LoginLink,
   getKindeServerSession,
   LogoutLink,
-} from "@kinde-oss/kinde-auth-nextjs/server";
+} from '@kinde-oss/kinde-auth-nextjs/server';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
-import { link } from "fs";
+} from '@/components/ui/accordion';
+import { Button } from '@/components/ui/button';
+import { link } from 'fs';
 import {
   Card,
   CardContent,
@@ -19,7 +19,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from '@/components/ui/card';
 
 export default async function Login() {
   // const { getUser, isAuthenticated } = getKindeServerSession();
@@ -40,7 +40,7 @@ export default async function Login() {
           </LoginLink>
 
           <RegisterLink>
-            <Button variant={"secondary"} className="p-6 text-xl">
+            <Button variant={'secondary'} className="p-6 text-xl">
               Register
             </Button>
           </RegisterLink>
