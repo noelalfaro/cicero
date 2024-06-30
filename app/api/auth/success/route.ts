@@ -26,7 +26,7 @@ export async function GET(request: Request) {
   if (await isAuthenticated()) {
     const idToken = (await getIdToken()) as ExtendedKindeIdToken;
     // console.log('middleware: ');
-    // console.log(idToken);
+    console.log(idToken);
 
     if (idToken) {
       const user: User = {
@@ -36,12 +36,12 @@ export async function GET(request: Request) {
         picture: idToken.picture,
         email: idToken.email,
         id: idToken.sub,
-        display_name: idToken.given_name + ' ' + idToken.family_name,
+        display_name: idToken.preferred_username,
       };
 
       // Call the createUser function directly
       const result = await createUser(user);
-      console.log(result);
+      // console.log(result);
     }
   }
 

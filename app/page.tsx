@@ -40,11 +40,11 @@ export default async function Home() {
                 <Button className="p-6 text-xl">Log In</Button>
               </Link>
 
-              <RegisterLink>
+              <Link href={'/register'}>
                 <Button variant={'secondary'} className="p-6 text-xl">
                   Register
                 </Button>
-              </RegisterLink>
+              </Link>
             </div>
           </div>
           <div className="flex h-screen w-full flex-col">

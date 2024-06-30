@@ -12,6 +12,7 @@ import {
 import {
   getKindeServerSession,
   LoginLink,
+  LogoutLink,
 } from '@kinde-oss/kinde-auth-nextjs/server';
 import { Button } from '@/components/ui/button';
 import { Link } from 'next-view-transitions';
@@ -33,7 +34,8 @@ const Nav = async () => {
     return <></>;
   }
 
-  const user: User | null = await fetchUserDataById(kindeUser?.id);
+  const user: User | null = await fetchUserDataById(kindeUser.id);
+  console.log(user);
 
   // console.log(idToken);
 
@@ -112,13 +114,32 @@ const Nav = async () => {
                 </TooltipProvider>
               </Link>
             ) : (
-              <LoginLink>
-                <Button>Log In</Button>
-              </LoginLink>
+              <>
+                <Link href={'/login'}>
+                  <Button>Log In</Button>
+                </Link>
+                <LogoutLink>Logout</LogoutLink>
+              </>
             )}
           </div>
         </nav>
-      ) : null}
+      ) : (
+        <>
+          <nav className="flex h-auto min-h-24 w-full items-center justify-between">
+            <div className="w-1/2 lg:w-3/5">
+              <Link href="/">
+                <p className="text-2xl font-extrabold">PROSPECT PORTFOLIO</p>
+              </Link>
+            </div>
+
+            <div className="flex w-1/2 items-center justify-end rounded-lg py-6 md:w-2/5 lg:w-1/4">
+              <Link href={'/login'}>
+                <Button>Log In</Button>
+              </Link>
+            </div>
+          </nav>
+        </>
+      )}
     </>
   );
 };

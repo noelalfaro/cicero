@@ -1,4 +1,5 @@
-import 'server-only';
+// import 'server-only';
+'use server';
 import { unstable_noStore as noStore } from 'next/cache';
 
 import { drizzle } from 'drizzle-orm/neon-http';
@@ -234,8 +235,8 @@ export async function createUser(user: User): Promise<string> {
     .where(eq(users.id, user.id));
   // console.log(existingUser);
   if (!existingUser[0]) {
-    const result = await db.insert(users).values(user).returning();
-    console.log(result);
+    const result = await db.insert(users).values(user);
+    // console.log(result);
     return 'Successfully inserted user to user database';
   } else {
     return 'User already in database';
@@ -270,4 +271,53 @@ export async function fetchUserDataById(id: string): Promise<User | null> {
   // console.log(existingUser);
 
   return existingUser[0];
+}
+
+export async function checkIfEmailIsValid(email: string) {
+  const sql = neon(process.env.DRIZZLE_DATABASE_URL!);
+  const db = drizzle(sql);
+
+  const result = await db
+    .select()
+    .from(users)
+    .where(eq(users.email, email))
+    .limit(1);
+  console.log(result);
+
+  if (result.length > 0) return true;
+
+  return false;
+}
+
+export async function checkIfUsernameIsValid(username: string) {
+  const sql = neon(process.env.DRIZZLE_DATABASE_URL!);
+  const db = drizzle(sql);
+
+  if (username.includes('fuck')) return false;
+  // else return true;
+  // console.log(username);
+
+  // const result = await db
+  //   .select()
+  //   .from(users)
+  //   .where(eq(users.email, email))
+  //   .limit(1);
+  // console.log(result);
+
+  // if (result.length > 0) return true;
+
+  return true;
+}
+
+export async function insertUsernameToUser(username: string, email: string) {
+  const sql = neon(process.env.DRIZZLE_DATABASE_URL!);
+  const db = drizzle(sql);
+
+  console.log('values:', { username: username, email: email });
+  // const result = await db
+  //   .update(users)
+  //   .set({ username: username })
+  //   .where(eq(users.email, email));
+
+  // console.log(result);
 }

@@ -15,6 +15,7 @@ export default async function Page() {
         <Link href="/my-profile">
           Demo For Next-View-Transitions Go to /my-profile
         </Link>
+        <LogoutLink>Logout</LogoutLink>
       </>
     </div>
   );
