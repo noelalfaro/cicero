@@ -318,11 +318,12 @@ export async function insertUsernameToUser(username: string, email: string) {
     .from(users)
     .where(eq(users.email, email));
 
-  if (existingUser) console.log('User does exist:' + existingUser);
+  // if (existingUser[0]) console.log('User does exist:');
 
-  if (!existingUser) console.log('User not in db');
+  // if (!existingUser[0]) console.log('User not in db');
 
-  console.log('values:', { username: username, email: email });
+  // console.log(existingUser[0]);
+  // console.log('values:', { username: username, email: email });
   // const result = await db
   //   .update(users)
   //   .set({ username: username })

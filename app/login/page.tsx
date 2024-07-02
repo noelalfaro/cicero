@@ -72,26 +72,5 @@ export default async function Login() {
         </Card>
       </div>
     </div>
-
-    // <div className="flex w-full max-w-5xl flex-col items-start justify-center text-left">
-    //   <div className="flex h-screen w-full items-center justify-center gap-20">
-    //     {connections
-    //       ?.filter((conn: any) => conn.strategy.includes('oauth2'))
-    //       .map((connection: any) => (
-    //         <LoginLink
-    //           key={connection.id}
-    //           authUrlParams={{ connection_id: connection.id }}
-    //         >
-    //           <OAuthIcon provider={connection.display_name} />
-    //         </LoginLink>
-    //       ))}
-
-    //     <RegisterLink>
-    //       <Button variant={'secondary'} className="p-6 text-xl">
-    //         Register
-    //       </Button>
-    //     </RegisterLink>
-    //   </div>
-    // </div>
   );
 }

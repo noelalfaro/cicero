@@ -26,7 +26,7 @@ export async function GET(request: Request) {
   if (await isAuthenticated()) {
     const idToken = (await getIdToken()) as ExtendedKindeIdToken;
     // console.log('middleware: ');
-    console.log(idToken);
+    // console.log(idToken);
 
     if (idToken) {
       const user: User = {
