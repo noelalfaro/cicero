@@ -313,6 +313,15 @@ export async function insertUsernameToUser(username: string, email: string) {
   const sql = neon(process.env.DRIZZLE_DATABASE_URL!);
   const db = drizzle(sql);
 
+  const existingUser = await db
+    .select()
+    .from(users)
+    .where(eq(users.email, email));
+
+  if (existingUser) console.log('User does exist:' + existingUser);
+
+  if (!existingUser) console.log('User not in db');
+
   console.log('values:', { username: username, email: email });
   // const result = await db
   //   .update(users)
