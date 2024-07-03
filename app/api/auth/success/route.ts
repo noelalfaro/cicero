@@ -11,10 +11,13 @@ import { createUser } from '@/app/lib/data';
 
 export async function GET(request: Request) {
   // check if user exists
-  const sql = neon(process.env.DRIZZLE_DATABASE_URL!);
-  const db = drizzle(sql);
+
+  // console.log(request.url);
+  // const sql = neon(process.env.DRIZZLE_DATABASE_URL!);
+  // const db = drizzle(sql);
   const { getUser } = getKindeServerSession();
   const user = await getUser();
+  console.log('user' + JSON.stringify(user, null, 2));
 
   const redirectURL =
     process.env.NODE_ENV === 'production'
@@ -24,9 +27,11 @@ export async function GET(request: Request) {
   const { isAuthenticated, getIdToken } = getKindeServerSession();
 
   if (await isAuthenticated()) {
+    const rawUser = await getIdToken();
+
     const idToken = (await getIdToken()) as ExtendedKindeIdToken;
     // console.log('middleware: ');
-    // console.log(idToken);
+    console.log('ID Token: ' + JSON.stringify(rawUser, null, 2));
 
     if (idToken) {
       const user: User = {

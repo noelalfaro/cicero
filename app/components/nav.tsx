@@ -35,7 +35,7 @@ const Nav = async () => {
   }
 
   const user: User | null = await fetchUserDataById(kindeUser.id);
-  console.log(user);
+  // console.log(user);
 
   // console.log(idToken);
 
