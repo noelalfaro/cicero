@@ -7,12 +7,19 @@ import { drizzle } from 'drizzle-orm/neon-http';
 import { neon } from '@neondatabase/serverless';
 import { ExtendedKindeIdToken } from '@/app/lib/types';
 import { User } from '@/app/lib/definitions';
-import { createUser } from '@/app/lib/data';
+import { createUser, updateUserUsername } from '@/app/lib/data';
+import { cookies } from 'next/headers';
 
 export async function GET(request: Request) {
-  // check if user exists
+  const cookieStore = cookies();
+  const username = cookieStore.get('temp_username')?.value;
+  console.log('Username: ' + username);
+  const { searchParams } = new URL(request.url);
+  console.log('Search Params: ' + searchParams);
+  const email = searchParams.get('login_hint');
+  console.log('email: ' + email);
 
-  // console.log(request.url);
+  console.log(request);
   // const sql = neon(process.env.DRIZZLE_DATABASE_URL!);
   // const db = drizzle(sql);
   const { getUser } = getKindeServerSession();
@@ -43,10 +50,17 @@ export async function GET(request: Request) {
         id: idToken.sub,
         display_name: idToken.preferred_username,
       };
+      console.log(user);
 
       // Call the createUser function directly
       const result = await createUser(user);
       // console.log(result);
+
+      if (username) {
+        await updateUserUsername(user.id, username);
+      }
+
+      cookieStore.delete('temp_username');
     }
   }
 

@@ -27,7 +27,7 @@ import { EmailLogin } from '@/app/components/email-login';
 
 export default async function Login() {
   const connections = await getConnections();
-  console.log(connections);
+  // console.log(connections);
   const emailConnectionId = connections?.find(
     (conn) => conn.strategy === 'email:otp',
   )?.id;

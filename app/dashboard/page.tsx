@@ -6,6 +6,7 @@ import Chart from '@/app/components/chart';
 export default async function Page() {
   const { getUser, isAuthenticated } = getKindeServerSession();
   const user = await getUser();
+  // console.log(user);
 
   return (
     <div className="flex flex-col items-center justify-start">

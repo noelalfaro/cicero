@@ -309,14 +309,14 @@ export async function checkIfUsernameIsValid(username: string) {
   return true;
 }
 
-export async function insertUsernameToUser(username: string, email: string) {
+export async function updateUserUsername(userId: string, username: string) {
   const sql = neon(process.env.DRIZZLE_DATABASE_URL!);
   const db = drizzle(sql);
 
-  const existingUser = await db
-    .select()
-    .from(users)
-    .where(eq(users.email, email));
+  await db
+    .update(users)
+    .set({ username: username, display_name: username })
+    .where(eq(users.id, userId));
 
   // if (existingUser[0]) console.log('User does exist:');
 

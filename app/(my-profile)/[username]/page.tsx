@@ -55,12 +55,13 @@ export default async function Page({
 }) {
   const { getUser, isAuthenticated, getIdToken } = getKindeServerSession();
 
-  // const loggedInUser = await getUser();
+  const loggedInUser = await getUser();
   const idToken = (await getIdToken()) as ExtendedKindeIdToken; // Use the extended type
 
   // const { login, register } = useKindeAuth();
-  // console.log(idToken);
-  // console.log(params.username);
+  console.log('Id Token: ' + JSON.stringify(idToken, null, 2));
+  console.log('params username: ' + params.username);
+  console.log('logged in user: ' + JSON.stringify(loggedInUser, null, 2));
 
   const user: User | null = await fetchUserDataByUsername(params.username);
   // console.log(user);
@@ -134,7 +135,7 @@ export default async function Page({
                       <DialogContent className="sm:max-w-[425px]">
                         <DialogHeader>
                           <DialogTitle className="">
-                            {user.given_name}'s Account
+                            {user.username}'s Account
                           </DialogTitle>
                           <DialogDescription>
                             Follow, Share, Block.

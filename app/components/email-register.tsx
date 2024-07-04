@@ -20,7 +20,7 @@ import {
 } from '@/components/ui/form';
 import { checkIfUsernameIsValid } from '@/app/lib/data';
 import { Divider } from '@mui/material';
-import { insertUsernameToUser } from '@/app/lib/data';
+import { setCookie } from 'cookies-next';
 
 const formSchema = z.object({
   email: z
@@ -53,10 +53,18 @@ export const EmailRegister = (props: {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    await insertUsernameToUser(values.username, values.email);
-    // router.push(`/api/auth/register?connection_id=${props.emailConnectionId}`);
+    try {
+      // Set a cookie with the username
+      setCookie('temp_username', values.username, { maxAge: 300 }); // expires in 5 minutes
+
+      // Navigate to the registration page with username as a parameter
+      router.push(
+        `/api/auth/register?connection_id=${props.emailConnectionId}`,
+      );
+    } catch (error) {
+      console.error('Error during registration:', error);
+      // Handle error (e.g., show error message to user)
+    }
   }
 
   return (
@@ -110,15 +118,15 @@ export const EmailRegister = (props: {
                 </FormItem>
               )}
             />
-            <RegisterLink
+            {/* <RegisterLink
               authUrlParams={{
                 connection_id: props.emailConnectionId!,
               }}
-            >
-              <Button className="w-full" type="submit">
-                Sign Up
-              </Button>
-            </RegisterLink>
+            > */}
+            <Button className="w-full" type="submit">
+              Sign Up
+            </Button>
+            {/* </RegisterLink> */}
           </form>
         </Form>
         {/* <RegisterLink
