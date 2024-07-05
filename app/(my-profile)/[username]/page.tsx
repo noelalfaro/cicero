@@ -59,9 +59,9 @@ export default async function Page({
   const idToken = (await getIdToken()) as ExtendedKindeIdToken; // Use the extended type
 
   // const { login, register } = useKindeAuth();
-  console.log('Id Token: ' + JSON.stringify(idToken, null, 2));
-  console.log('params username: ' + params.username);
-  console.log('logged in user: ' + JSON.stringify(loggedInUser, null, 2));
+  // console.log('Id Token: ' + JSON.stringify(idToken, null, 2));
+  // console.log('params username: ' + params.username);
+  // console.log('logged in user: ' + JSON.stringify(loggedInUser, null, 2));
 
   const user: User | null = await fetchUserDataByUsername(params.username);
   // console.log(user);
