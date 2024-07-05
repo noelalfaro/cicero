@@ -3,7 +3,7 @@ import { LoginLink, RegisterLink } from '@kinde-oss/kinde-auth-nextjs/server';
 import { OAuthIcon } from '@/app/components/oAuthButton';
 
 import { getConnections } from '@/app/lib/misc';
-import Link from 'next/link';
+import { Link } from 'next-view-transitions';
 
 import {
   Card,
@@ -67,6 +67,5 @@ export default async function Register() {
         </Card>
       </div>
     </div>
-    // <>testing</>
   );
 }

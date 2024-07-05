@@ -10,7 +10,7 @@ import { OAuthIcon } from '@/app/components/oAuthButton';
 import { Button } from '@/components/ui/button';
 
 import { getConnections } from '@/app/lib/misc';
-import Link from 'next/link';
+import { Link } from 'next-view-transitions';
 
 import {
   Card,

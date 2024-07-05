@@ -117,7 +117,8 @@ export default async function Page({
                   This is an example bio
                 </CardDescription>
 
-                {params.username === idToken.preferred_username ? (
+                {params.username === idToken.preferred_username ||
+                idToken.ext_provider.claims.profile.login ? (
                   <div className="flex justify-between gap-1">
                     <EditProfileDialog
                       user={user}

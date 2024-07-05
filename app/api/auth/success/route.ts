@@ -9,22 +9,23 @@ import { ExtendedKindeIdToken } from '@/app/lib/types';
 import { User } from '@/app/lib/definitions';
 import { createUser, updateUserUsername } from '@/app/lib/data';
 import { cookies } from 'next/headers';
+import { KindeIdToken } from '@kinde-oss/kinde-auth-nextjs/types';
 
 export async function GET(request: Request) {
   const cookieStore = cookies();
   const username = cookieStore.get('temp_username')?.value;
-  console.log('Username: ' + username);
-  const { searchParams } = new URL(request.url);
-  console.log('Search Params: ' + searchParams);
-  const email = searchParams.get('login_hint');
-  console.log('email: ' + email);
+  // console.log('Username: ' + username);
+  // const { searchParams } = new URL(request.url);
+  // console.log('Search Params: ' + searchParams);
+  // const email = searchParams.get('login_hint');
+  // console.log('email: ' + email);
 
-  console.log(request);
+  // console.log(request);
   // const sql = neon(process.env.DRIZZLE_DATABASE_URL!);
   // const db = drizzle(sql);
   const { getUser } = getKindeServerSession();
   const user = await getUser();
-  console.log('user' + JSON.stringify(user, null, 2));
+  // console.log('user' + JSON.stringify(user, null, 2));
 
   const redirectURL =
     process.env.NODE_ENV === 'production'
@@ -35,20 +36,23 @@ export async function GET(request: Request) {
 
   if (await isAuthenticated()) {
     const rawUser = await getIdToken();
+    // console.log(rawUser);
 
     const idToken = (await getIdToken()) as ExtendedKindeIdToken;
     // console.log('middleware: ');
-    console.log('ID Token: ' + JSON.stringify(rawUser, null, 2));
+    // console.log('ID Token: ' + JSON.stringify(rawUser, null, 2));
 
     if (idToken) {
       const user: User = {
         family_name: idToken.family_name,
         given_name: idToken.given_name,
-        username: idToken.preferred_username,
+        username:
+          idToken.preferred_username ||
+          idToken.ext_provider.claims.profile.login,
         picture: idToken.picture,
         email: idToken.email,
         id: idToken.sub,
-        display_name: idToken.preferred_username,
+        display_name: idToken.name,
       };
       console.log(user);
 
