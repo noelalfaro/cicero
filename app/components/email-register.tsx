@@ -59,7 +59,7 @@ export const EmailRegister = (props: {
 
       // Navigate to the registration page with username as a parameter
       router.push(
-        `/api/auth/register?connection_id=${props.emailConnectionId}`,
+        `/api/auth/register?connection_id=${props.emailConnectionId}&login_hint=${values.email}`,
       );
     } catch (error) {
       console.error('Error during registration:', error);

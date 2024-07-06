@@ -2,11 +2,10 @@
 'use server';
 import { unstable_noStore as noStore } from 'next/cache';
 
-import { drizzle } from 'drizzle-orm/neon-http';
 import { players } from '@/db/schema/players';
 import { users } from '@/db/schema/users';
 import { playerStats } from '@/db/schema/player_stats';
-import { neon } from '@neondatabase/serverless';
+
 import { eq } from 'drizzle-orm';
 import {
   playerSchema,
@@ -18,16 +17,12 @@ import {
   User,
   userSchema,
 } from '@/app/lib/definitions';
-// import { config } from 'dotenv';
-// config({ path: '.env.local' });
-// import { User } from '@/app/lib/definitions';
+
+import { db } from '@/db';
 
 export async function fetchPlayerData(): Promise<Player[]> {
   noStore();
   try {
-    const sql = neon(process.env.DRIZZLE_DATABASE_URL!);
-    const db = drizzle(sql);
-
     // Perform a join between players and player_stats
     const result = await db
       .select()
@@ -148,8 +143,6 @@ export async function FetchNewsArticlesByPlayerID(
 }
 
 export async function fetchPlayerDataByID(id: number): Promise<Player | null> {
-  const sql = neon(process.env.DRIZZLE_DATABASE_URL!);
-  const db = drizzle(sql);
   const result = await db
     .select()
     .from(players)
@@ -224,9 +217,6 @@ export async function fetchPlayerDataByID(id: number): Promise<Player | null> {
 }
 
 export async function createUser(user: User): Promise<string> {
-  const sql = neon(process.env.DRIZZLE_DATABASE_URL!);
-  const db = drizzle(sql);
-
   // console.log('user received: ');
   // console.log(user);
   const existingUser = await db
@@ -246,9 +236,6 @@ export async function createUser(user: User): Promise<string> {
 export async function fetchUserDataByUsername(
   username: string,
 ): Promise<User | null> {
-  const sql = neon(process.env.DRIZZLE_DATABASE_URL!);
-  const db = drizzle(sql);
-
   const existingUser: User[] = await db
     .select()
     .from(users)
@@ -260,9 +247,6 @@ export async function fetchUserDataByUsername(
 }
 
 export async function fetchUserDataById(id: string): Promise<User | null> {
-  const sql = neon(process.env.DRIZZLE_DATABASE_URL!);
-  const db = drizzle(sql);
-
   const existingUser: User[] = await db
     .select()
     .from(users)
@@ -274,9 +258,6 @@ export async function fetchUserDataById(id: string): Promise<User | null> {
 }
 
 export async function checkIfEmailIsValid(email: string) {
-  const sql = neon(process.env.DRIZZLE_DATABASE_URL!);
-  const db = drizzle(sql);
-
   const result = await db
     .select()
     .from(users)
@@ -290,9 +271,6 @@ export async function checkIfEmailIsValid(email: string) {
 }
 
 export async function checkIfUsernameIsValid(username: string) {
-  const sql = neon(process.env.DRIZZLE_DATABASE_URL!);
-  const db = drizzle(sql);
-
   if (username.includes('fuck')) return false;
   // else return true;
   // console.log(username);
@@ -310,9 +288,6 @@ export async function checkIfUsernameIsValid(username: string) {
 }
 
 export async function updateUserUsername(userId: string, username: string) {
-  const sql = neon(process.env.DRIZZLE_DATABASE_URL!);
-  const db = drizzle(sql);
-
   await db
     .update(users)
     .set({ username: username, display_name: username })
@@ -329,5 +304,10 @@ export async function updateUserUsername(userId: string, username: string) {
   //   .set({ username: username })
   //   .where(eq(users.email, email));
 
+  // console.log(result);
+}
+
+export async function testDB() {
+  const result = await db.select().from(players).where(eq(players.id, 2544));
   // console.log(result);
 }

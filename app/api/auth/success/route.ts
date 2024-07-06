@@ -1,15 +1,10 @@
 import { users } from '@/db/schema/users';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
-import { eq } from 'drizzle-orm';
-import { NextResponse } from 'next/server';
 import { redirect } from 'next/navigation';
-import { drizzle } from 'drizzle-orm/neon-http';
-import { neon } from '@neondatabase/serverless';
 import { ExtendedKindeIdToken } from '@/app/lib/types';
 import { User } from '@/app/lib/definitions';
 import { createUser, updateUserUsername } from '@/app/lib/data';
 import { cookies } from 'next/headers';
-import { KindeIdToken } from '@kinde-oss/kinde-auth-nextjs/types';
 
 export async function GET(request: Request) {
   const cookieStore = cookies();
@@ -36,11 +31,11 @@ export async function GET(request: Request) {
 
   if (await isAuthenticated()) {
     const rawUser = await getIdToken();
-    // console.log(rawUser);
+    console.log(rawUser);
 
     const idToken = (await getIdToken()) as ExtendedKindeIdToken;
     // console.log('middleware: ');
-    // console.log('ID Token: ' + JSON.stringify(rawUser, null, 2));
+    console.log('ID Token: ' + JSON.stringify(rawUser, null, 2));
 
     if (idToken) {
       const user: User = {
@@ -48,7 +43,7 @@ export async function GET(request: Request) {
         given_name: idToken.given_name,
         username:
           idToken.preferred_username ||
-          idToken.ext_provider.claims.profile.login,
+          idToken.ext_provider.claims?.profile?.login,
         picture: idToken.picture,
         email: idToken.email,
         id: idToken.sub,

@@ -8,7 +8,7 @@ import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 
 import { User, userSchema } from '@/app/lib/definitions';
 import NotFound from '@/app/(my-profile)/[username]/not-found';
-import { fetchUserDataByUsername } from '@/app/lib/data';
+import { fetchUserDataByUsername, testDB } from '@/app/lib/data';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { UserCodeBlock } from '@/app/components/user-code-block';
@@ -47,6 +47,7 @@ import { Separator } from '@/components/ui/separator';
 import { z } from 'zod';
 import { UserSettings } from '@/app/components/user-settings-dialog';
 import { EditProfileDialog } from '@/app/components/edit-profile-dialog';
+import { param } from 'drizzle-orm';
 
 export default async function Page({
   params,
@@ -55,16 +56,21 @@ export default async function Page({
 }) {
   const { getUser, isAuthenticated, getIdToken } = getKindeServerSession();
 
-  const loggedInUser = await getUser();
+  // const loggedInUser = await getUser();
   const idToken = (await getIdToken()) as ExtendedKindeIdToken; // Use the extended type
 
+  // const dbCall = await testDB();
+  // console.log();
+
   // const { login, register } = useKindeAuth();
-  // console.log('Id Token: ' + JSON.stringify(idToken, null, 2));
+  console.log('Id Token: ' + JSON.stringify(idToken, null, 2));
   // console.log('params username: ' + params.username);
   // console.log('logged in user: ' + JSON.stringify(loggedInUser, null, 2));
 
+  const loggedInUser = await getUser();
+  console.log('logged in user:' + JSON.stringify(loggedInUser, null, 2));
   const user: User | null = await fetchUserDataByUsername(params.username);
-  // console.log(user);
+  console.log('Were visiting: ' + JSON.stringify(user, null, 2));
 
   // const userList = ['noel', 'bryan', 'chris'];
   // console.log(userList);
@@ -117,8 +123,7 @@ export default async function Page({
                   This is an example bio
                 </CardDescription>
 
-                {params.username === idToken.preferred_username ||
-                idToken.ext_provider.claims.profile.login ? (
+                {user.id === loggedInUser?.id ? (
                   <div className="flex justify-between gap-1">
                     <EditProfileDialog
                       user={user}
