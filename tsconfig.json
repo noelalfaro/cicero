@@ -15,13 +15,13 @@
     "incremental": true,
     "plugins": [
       {
-        "name": "next",
-      },
+        "name": "next"
+      }
     ],
     "paths": {
-      "@/*": ["./*"],
+      "@/*": ["./*"]
     },
-    "outDir": "dist",
+    "outDir": "dist"
   },
   "include": [
     "next-env.d.ts",
@@ -29,6 +29,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "db",
+    "config.js"
   ],
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules"]
 }

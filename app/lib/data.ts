@@ -17,6 +17,8 @@ import {
   User,
   userSchema,
 } from '@/app/lib/definitions';
+import Filter from 'bad-words';
+import { BLACKLISTED_TERMS } from '@/config.js';
 
 import { db } from '@/db';
 
@@ -270,21 +272,11 @@ export async function checkIfEmailIsValid(email: string) {
   return false;
 }
 
-export async function checkIfUsernameIsValid(username: string) {
-  if (username.includes('fuck')) return false;
-  // else return true;
-  // console.log(username);
+export async function checkIfUsernameIsInBlacklist(username: string) {
+  const filter = new Filter();
+  BLACKLISTED_TERMS.forEach((term) => filter.addWords(term));
 
-  // const result = await db
-  //   .select()
-  //   .from(users)
-  //   .where(eq(users.email, email))
-  //   .limit(1);
-  // console.log(result);
-
-  // if (result.length > 0) return true;
-
-  return true;
+  return !filter.isProfane(username);
 }
 
 export async function updateUserUsername(userId: string, username: string) {

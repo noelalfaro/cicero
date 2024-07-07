@@ -18,9 +18,19 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { checkIfUsernameIsValid } from '@/app/lib/data';
+import { checkIfUsernameIsInBlacklist } from '@/app/lib/data';
 import { Divider } from '@mui/material';
 import { setCookie } from 'cookies-next';
+import Filter from 'bad-words';
+
+const reservedRoutes = [
+  'dashboard',
+  'notifications',
+  'explore',
+  'settings',
+  'register',
+  'login',
+];
 
 const formSchema = z.object({
   email: z
@@ -30,11 +40,17 @@ const formSchema = z.object({
   username: z
     .string()
     .min(3, { message: 'Username must be at least 3 characters' })
-    .refine((e) => {
-      // Where checkIfEmailIsValid makes a request to the backend
-      // to see if the email is valid.
-      return checkIfUsernameIsValid(e);
-    }, 'This username is not appropriate'),
+    .refine((username) => !reservedRoutes.includes(username.toLowerCase()), {
+      message: 'This username is reserved and cannot be used',
+    })
+    // You can add more refine methods here if needed
+    .refine(
+      (username) => {
+        // Your custom backend validation if needed
+        return checkIfUsernameIsInBlacklist(username);
+      },
+      { message: 'This username contains inappropriate language' },
+    ),
 });
 
 export const EmailRegister = (props: {
