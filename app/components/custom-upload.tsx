@@ -68,7 +68,7 @@ export function CustomUpload({
           className={`relative flex h-[200px] w-[200px] cursor-pointer place-items-center justify-center rounded-full transition-opacity`}
         >
           <Image
-            src={user?.picture || defaultPicture}
+            src={user.picture}
             alt={`${user?.username}.png`}
             // width={200}
             // height={200}

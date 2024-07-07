@@ -128,7 +128,7 @@ const userSchema = z.object({
     .min(2, { message: 'Username must be at least 2 characters.' })
     .nullable(),
   email: z.string().email({ message: 'Invalid email address' }).nullable(),
-  picture: z.string().nullable(),
+  picture: z.string(),
   display_name: z
     .string()
     .min(2, { message: 'Display must be at least 2 characters.' })

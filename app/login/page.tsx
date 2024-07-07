@@ -7,8 +7,6 @@ import {
 import { FaGoogle } from 'react-icons/fa';
 import { OAuthIcon } from '@/app/components/oAuthButton';
 
-import { Button } from '@/components/ui/button';
-
 import { getConnections } from '@/app/lib/misc';
 import { Link } from 'next-view-transitions';
 
@@ -19,10 +17,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Separator } from '@/components/ui/separator';
-import { Divider } from '@mui/material';
+
 import { EmailLogin } from '@/app/components/email-login';
 
 export default async function Login() {

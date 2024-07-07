@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { RegisterLink } from '@kinde-oss/kinde-auth-nextjs/components';
+
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -29,7 +29,7 @@ const formSchema = z.object({
     .email({ message: 'This is not a valid email' }),
   username: z
     .string()
-    .min(3, { message: 'username must be at least 3 characters' })
+    .min(3, { message: 'Username must be at least 3 characters' })
     .refine((e) => {
       // Where checkIfEmailIsValid makes a request to the backend
       // to see if the email is valid.
@@ -56,6 +56,7 @@ export const EmailRegister = (props: {
     try {
       // Set a cookie with the username
       setCookie('temp_username', values.username, { maxAge: 300 }); // expires in 5 minutes
+      // setCookie('temp_display_name', values)
 
       // Navigate to the registration page with username as a parameter
       router.push(
@@ -118,6 +119,7 @@ export const EmailRegister = (props: {
                 </FormItem>
               )}
             />
+
             {/* <RegisterLink
               authUrlParams={{
                 connection_id: props.emailConnectionId!,

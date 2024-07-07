@@ -9,18 +9,11 @@ import { cookies } from 'next/headers';
 export async function GET(request: Request) {
   const cookieStore = cookies();
   const username = cookieStore.get('temp_username')?.value;
-  // console.log('Username: ' + username);
-  // const { searchParams } = new URL(request.url);
-  // console.log('Search Params: ' + searchParams);
-  // const email = searchParams.get('login_hint');
-  // console.log('email: ' + email);
-
-  // console.log(request);
-  // const sql = neon(process.env.DRIZZLE_DATABASE_URL!);
-  // const db = drizzle(sql);
   const { getUser } = getKindeServerSession();
   const user = await getUser();
-  // console.log('user' + JSON.stringify(user, null, 2));
+
+  const defaultUserImageUrl =
+    'https://i.pinimg.com/originals/25/ee/de/25eedef494e9b4ce02b14990c9b5db2d.jpg';
 
   const redirectURL =
     process.env.NODE_ENV === 'production'
@@ -35,7 +28,7 @@ export async function GET(request: Request) {
 
     const idToken = (await getIdToken()) as ExtendedKindeIdToken;
     // console.log('middleware: ');
-    console.log('ID Token: ' + JSON.stringify(rawUser, null, 2));
+    // console.log('ID Token: ' + JSON.stringify(rawUser, null, 2));
 
     if (idToken) {
       const user: User = {
@@ -44,16 +37,15 @@ export async function GET(request: Request) {
         username:
           idToken.preferred_username ||
           idToken.ext_provider.claims?.profile?.login,
-        picture: idToken.picture,
+        picture: idToken.picture || defaultUserImageUrl,
         email: idToken.email,
         id: idToken.sub,
         display_name: idToken.name,
       };
-      console.log(user);
+      // console.log(user);
 
       // Call the createUser function directly
-      const result = await createUser(user);
-      // console.log(result);
+      await createUser(user);
 
       if (username) {
         await updateUserUsername(user.id, username);

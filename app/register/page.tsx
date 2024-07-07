@@ -1,4 +1,4 @@
-import { LoginLink, RegisterLink } from '@kinde-oss/kinde-auth-nextjs/server';
+import { RegisterLink } from '@kinde-oss/kinde-auth-nextjs/server';
 
 import { OAuthIcon } from '@/app/components/oAuthButton';
 
@@ -12,12 +12,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-// import { Separator } from '@radix-ui/react-dropdown-menu';
-import { Separator } from '@/components/ui/separator';
-import { Button } from '@/components/ui/button';
-import Divider from '@mui/material/Divider';
 import { EmailRegister } from '@/app/components/email-register';
 
 export default async function Register() {

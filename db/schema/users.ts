@@ -12,6 +12,6 @@ export const users = pgTable('users', {
   family_name: text('family_name'),
   username: text('username'),
   email: text('email'),
-  picture: text('picture'),
+  picture: text('picture').notNull(),
   display_name: text('display_name'),
 });

@@ -172,7 +172,7 @@ export default async function Page({
                                   Share
                                 </Label>
                                 <p className="text-xs text-muted-text">
-                                  Copy Link To {user.given_name}'s profile.
+                                  Copy Link To {user.username}'s profile.
                                 </p>
                               </div>
                               <Button variant={'ghost'}>
