@@ -18,7 +18,13 @@ import {
   userSchema,
 } from '@/app/lib/definitions';
 import Filter from 'bad-words';
-import { BLACKLISTED_TERMS } from '@/config.js';
+// import { BLACKLISTED_TERMS } from '@/config.js';
+import {
+  DataSet,
+  RegExpMatcher,
+  englishDataset,
+  englishRecommendedTransformers,
+} from 'obscenity';
 
 import { db } from '@/db';
 
@@ -272,11 +278,17 @@ export async function checkIfEmailIsValid(email: string) {
   return false;
 }
 
-export async function checkIfUsernameIsInBlacklist(username: string) {
-  const filter = new Filter();
-  BLACKLISTED_TERMS.forEach((term) => filter.addWords(term));
+const matcher = new RegExpMatcher({
+  ...englishDataset.build(),
+  ...englishRecommendedTransformers,
+});
 
-  return !filter.isProfane(username);
+export async function checkIfUsernameIsInBlacklist(username: string) {
+  // const filter = new Filter();
+  // BLACKLISTED_TERMS.forEach((term) => filter.addWords(term));
+
+  // return !filter.isProfane(username);
+  return !matcher.hasMatch(username);
 }
 
 export async function updateUserUsername(userId: string, username: string) {
@@ -284,19 +296,6 @@ export async function updateUserUsername(userId: string, username: string) {
     .update(users)
     .set({ username: username, display_name: username })
     .where(eq(users.id, userId));
-
-  // if (existingUser[0]) console.log('User does exist:');
-
-  // if (!existingUser[0]) console.log('User not in db');
-
-  // console.log(existingUser[0]);
-  // console.log('values:', { username: username, email: email });
-  // const result = await db
-  //   .update(users)
-  //   .set({ username: username })
-  //   .where(eq(users.email, email));
-
-  // console.log(result);
 }
 
 export async function testDB() {

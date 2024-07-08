@@ -22,6 +22,11 @@ import { checkIfUsernameIsInBlacklist } from '@/app/lib/data';
 import { Divider } from '@mui/material';
 import { setCookie } from 'cookies-next';
 import Filter from 'bad-words';
+import {
+  RegExpMatcher,
+  englishDataset,
+  englishRecommendedTransformers,
+} from 'obscenity';
 
 const reservedRoutes = [
   'dashboard',
