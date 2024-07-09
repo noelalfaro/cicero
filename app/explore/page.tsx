@@ -1,7 +1,7 @@
-import Articles from '@/app/components/articles';
-import Players from '@/app/components/players';
-import Search from '@/app/components/search';
-import ExploreTableSkeleton from '@/app/components/skeletons';
+import Articles from '@/components/articles';
+import Players from '@/components/players';
+import Search from '@/components/search';
+import ExploreTableSkeleton from '@/components/skeletons';
 import { Suspense } from 'react';
 
 export default async function Page() {

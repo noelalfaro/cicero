@@ -1,6 +1,6 @@
-import { ModeToggle } from '@/app/components/dark-mode-toggle';
-import Nav from '@/app/components/nav';
-import Players from '@/app/components/players';
+import { ModeToggle } from '@/components/dark-mode-toggle';
+import Nav from '@/components/nav';
+import Players from '@/components/players';
 import {
   Accordion,
   AccordionContent,

@@ -1,7 +1,7 @@
 // Import the extended type
 import { ExtendedKindeIdToken } from '@/app/lib/types';
 
-import { ModeToggle } from '@/app/components/dark-mode-toggle';
+import { ModeToggle } from '@/components/dark-mode-toggle';
 import { Button } from '@/components/ui/button';
 import { LogoutLink } from '@kinde-oss/kinde-auth-nextjs/components';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
@@ -11,7 +11,7 @@ import NotFound from '@/app/(my-profile)/[username]/not-found';
 import { fetchUserDataByUsername, testDB } from '@/app/lib/data';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import { UserCodeBlock } from '@/app/components/user-code-block';
+import { UserCodeBlock } from '@/components/user-code-block';
 import {
   Dialog,
   DialogContent,
@@ -45,8 +45,8 @@ import { Dot } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 
 import { z } from 'zod';
-import { UserSettings } from '@/app/components/user-settings-dialog';
-import { EditProfileDialog } from '@/app/components/edit-profile-dialog';
+import { UserSettings } from '@/components/user-settings-dialog';
+import { EditProfileDialog } from '@/components/edit-profile-dialog';
 import { param } from 'drizzle-orm';
 
 export default async function Page({

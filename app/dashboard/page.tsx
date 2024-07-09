@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { LogoutLink } from '@kinde-oss/kinde-auth-nextjs/server';
 import { Link } from 'next-view-transitions';
-import Chart from '@/app/components/chart';
+import Chart from '@/components/chart';
 export default async function Page() {
   const { getUser, isAuthenticated } = getKindeServerSession();
   const user = await getUser();

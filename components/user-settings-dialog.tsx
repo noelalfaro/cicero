@@ -12,7 +12,7 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { MoreVertical } from 'lucide-react';
 import { LogoutLink } from '@kinde-oss/kinde-auth-nextjs/components';
-import { ModeToggle } from '@/app/components/dark-mode-toggle';
+import { ModeToggle } from '@/components/dark-mode-toggle';
 
 export const UserSettings = ({ user }: { user: User }) => {
   const redirectURL =

@@ -5,7 +5,7 @@ import {
   LogoutLink,
 } from '@kinde-oss/kinde-auth-nextjs/server';
 import { FaGoogle } from 'react-icons/fa';
-import { OAuthIcon } from '@/app/components/oAuthButton';
+import { OAuthIcon } from '@/components/oAuthButton';
 
 import { getConnections } from '@/app/lib/misc';
 import { Link } from 'next-view-transitions';
@@ -18,7 +18,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 
-import { EmailLogin } from '@/app/components/email-login';
+import { EmailLogin } from '@/components/email-login';
 
 export default async function Login() {
   const connections = await getConnections();

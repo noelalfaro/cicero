@@ -30,7 +30,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { Upload } from 'lucide-react';
 import { UploadButton } from '@/utils/uploadthing';
-import { CustomUpload } from '@/app/components/custom-upload';
+import { CustomUpload } from '@/components/custom-upload';
 import { Separator } from '@/components/ui/separator';
 
 export const EditProfileDialog = ({

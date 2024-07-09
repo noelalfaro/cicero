@@ -1,4 +1,4 @@
-import { ModeToggle } from '@/app/components/dark-mode-toggle';
+import { ModeToggle } from '@/components/dark-mode-toggle';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Home, Search, Bell } from 'lucide-react';
 // import Link from "next/link";

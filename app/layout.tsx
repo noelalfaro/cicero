@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import { ThemeProvider } from '@/app/components/theme-provider';
-import Nav from '@/app/components/nav';
+import { ThemeProvider } from '@/components/theme-provider';
+import Nav from '@/components/nav';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { ViewTransitions } from 'next-view-transitions';
 
