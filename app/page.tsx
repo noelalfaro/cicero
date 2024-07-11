@@ -1,6 +1,3 @@
-import { ModeToggle } from '@/components/dark-mode-toggle';
-import Nav from '@/components/nav';
-import Players from '@/components/players';
 import {
   Accordion,
   AccordionContent,
@@ -8,12 +5,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
-import {
-  RegisterLink,
-  LoginLink,
-  getKindeServerSession,
-  LogoutLink,
-} from '@kinde-oss/kinde-auth-nextjs/server';
+import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { Link } from 'next-view-transitions';
 
 import { redirect } from 'next/navigation';

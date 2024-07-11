@@ -26,7 +26,6 @@ import { Car } from 'lucide-react';
 
 export default async function PlayerDetails({ params }: { params: Player }) {
   const player: Player | null = await fetchPlayerDataByID(params.id);
-  // console.log(player);
 
   if (!player)
     return (
@@ -36,14 +35,8 @@ export default async function PlayerDetails({ params }: { params: Player }) {
         </h1>
       </div>
     );
-
-  // const data: NewsArticle[] | null = await FetchNewsArticlesByPlayerID(
-  //   player.first_name,
-  //   player.last_name,
-  // );
   const formattedDate = new Date(player.birthdate);
 
-  // console.log(player.first_name + player.last_name);
   const defaultPictureUrl =
     'https://cdn.freebiesupply.com/images/large/2x/nba-logo-transparent.png';
 
@@ -68,7 +61,6 @@ export default async function PlayerDetails({ params }: { params: Player }) {
         </h3>
       </div>
 
-      {/* <h3 className="font-semibold">PPG:{player.averages.ppg?.toFixed(1)}</h3> */}
       <Card>
         <CardContent>
           <CardHeader>
@@ -113,44 +105,6 @@ export default async function PlayerDetails({ params }: { params: Player }) {
       <h2 className="my-5 text-2xl font-semibold">
         Notable News About {player.first_name}
       </h2>
-      {/* <div className="bg-red-300 px-12">
-        <Carousel
-          opts={{
-            align: 'center',
-            skipSnaps: true,
-          }}
-          className="min-w-sm w-full"
-        >
-          <CarouselContent>
-            {data.map((result: NewsArticle) => (
-              <CarouselItem
-                className="md:basis-1/2 lg:basis-1/3"
-                key={result.url}
-              >
-                <Link href={result.url} className="">
-                  <Card className="min-h-52 justify-between bg-muted transition-colors">
-                    <CardHeader>
-                      <CardTitle className="text-xl font-bold">
-                        {result.title}
-                      </CardTitle>
-                    </CardHeader>
-
-                    <CardContent className="flex items-start">
-                      <Button className="font-semibold capitalize">
-                        {result.source}
-                      </Button>
-                    </CardContent>
-                  </Card>
-                </Link>
-              </CarouselItem>
-            ))}
-
-          
-          </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
-        </Carousel>
-      </div> */}
     </div>
   );
 }

@@ -16,12 +16,9 @@ export default async function Page() {
           </p>
         </div>
 
-        {/* <Search placeholder="Search for Players" /> */}
         <Suspense fallback={<ExploreTableSkeleton />}>
           <Players />
         </Suspense>
-
-        {/* <Articles /> */}
       </main>
     </>
   );

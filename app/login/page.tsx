@@ -1,10 +1,4 @@
-import {
-  RegisterLink,
-  LoginLink,
-  getKindeServerSession,
-  LogoutLink,
-} from '@kinde-oss/kinde-auth-nextjs/server';
-import { FaGoogle } from 'react-icons/fa';
+import { LoginLink } from '@kinde-oss/kinde-auth-nextjs/server';
 import { OAuthIcon } from '@/components/oAuthButton';
 
 import { getConnections } from '@/app/lib/misc';
@@ -34,7 +28,7 @@ export default async function Login() {
           <CardHeader>
             <CardTitle className="text-2xl">Login</CardTitle>
             <CardDescription>
-              Enter your email or login via Google or Github below.
+              Enter your email or login via Github below.
             </CardDescription>
           </CardHeader>
           <CardContent>

@@ -3,7 +3,6 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
 import Nav from '@/components/nav';
-import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { ViewTransitions } from 'next-view-transitions';
 
 const inter = Inter({ subsets: ['latin'] });
