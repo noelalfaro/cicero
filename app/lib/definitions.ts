@@ -121,8 +121,8 @@ export type Team = z.infer<typeof teamSchema>;
 
 const userSchema = z.object({
   id: z.string(),
-  given_name: z.string().nullable(),
-  family_name: z.string().nullable(),
+  given_name: z.string().nullable().optional(),
+  family_name: z.string().nullable().optional(),
   username: z
     .string()
     .min(2, { message: 'Username must be at least 2 characters.' })

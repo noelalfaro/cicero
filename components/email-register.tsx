@@ -12,21 +12,17 @@ import { z } from 'zod';
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { checkIfUsernameIsInBlacklist } from '@/app/lib/data';
+import {
+  checkIfUsernameIsInBlacklist,
+  checkIfUsernameIsTaken,
+  doesEmailExistCheck,
+} from '@/app/lib/data';
 import { Divider } from '@mui/material';
 import { setCookie } from 'cookies-next';
-import Filter from 'bad-words';
-import {
-  RegExpMatcher,
-  englishDataset,
-  englishRecommendedTransformers,
-} from 'obscenity';
 
 const reservedRoutes = [
   'dashboard',
@@ -41,20 +37,33 @@ const formSchema = z.object({
   email: z
     .string()
     .min(1, { message: 'This field has to be filled' })
-    .email({ message: 'This is not a valid email' }),
+    .email({ message: 'This is not a valid email' })
+    .refine(
+      async (email) => {
+        return !(await doesEmailExistCheck(email));
+      },
+      { message: 'This email already has an account, try logging in instead.' },
+    ),
   username: z
     .string()
     .min(3, { message: 'Username must be at least 3 characters' })
-    .refine((username) => !reservedRoutes.includes(username.toLowerCase()), {
-      message: 'This username is reserved and cannot be used',
-    })
-    // You can add more refine methods here if needed
     .refine(
-      (username) => {
-        // Your custom backend validation if needed
-        return checkIfUsernameIsInBlacklist(username);
+      async (username) => !reservedRoutes.includes(username.toLowerCase()),
+      {
+        message: 'This username is reserved and cannot be used',
+      },
+    )
+    .refine(
+      async (username) => {
+        return await checkIfUsernameIsInBlacklist(username);
       },
       { message: 'This username contains inappropriate language' },
+    )
+    .refine(
+      async (username) => {
+        return !(await checkIfUsernameIsTaken(username));
+      },
+      { message: 'This username is already taken.' },
     ),
 });
 
@@ -76,8 +85,9 @@ export const EmailRegister = (props: {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       // Set a cookie with the username
-      setCookie('temp_username', values.username, { maxAge: 300 }); // expires in 5 minutes
-      // setCookie('temp_display_name', values)
+      setCookie('temp_username', values.username, {
+        maxAge: 300, // 5 minutes
+      }); // expires in 5 minutes
 
       // Navigate to the registration page with username as a parameter
       router.push(

@@ -23,17 +23,12 @@ export async function GET(request: Request) {
   const { isAuthenticated, getIdToken } = getKindeServerSession();
 
   if (await isAuthenticated()) {
-    const rawUser = await getIdToken();
-    console.log(rawUser);
-
     const idToken = (await getIdToken()) as ExtendedKindeIdToken;
     // console.log('middleware: ');
     // console.log('ID Token: ' + JSON.stringify(rawUser, null, 2));
 
     if (idToken) {
       const user: User = {
-        family_name: idToken.family_name,
-        given_name: idToken.given_name,
         username:
           idToken.preferred_username ||
           idToken.ext_provider.claims?.profile?.login,
@@ -42,9 +37,7 @@ export async function GET(request: Request) {
         id: idToken.sub,
         display_name: idToken.name,
       };
-      // console.log(user);
 
-      // Call the createUser function directly
       await createUser(user);
 
       if (username) {

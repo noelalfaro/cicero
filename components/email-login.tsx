@@ -18,7 +18,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { checkIfEmailIsValid } from '@/app/lib/data';
+import { checkIfEmailIsValid, doesEmailExistCheck } from '@/app/lib/data';
 import { Divider } from '@mui/material';
 
 const formSchema = z.object({
@@ -26,10 +26,10 @@ const formSchema = z.object({
     .string()
     .min(1, { message: 'This field has to be filled' })
     .email({ message: 'This is not a valid email' })
-    .refine(async (e) => {
+    .refine(async (email) => {
       // Where checkIfEmailIsValid makes a request to the backend
       // to see if the email is valid.
-      return await checkIfEmailIsValid(e);
+      return await doesEmailExistCheck(email);
     }, 'This email is not in our database'),
 });
 

@@ -33,13 +33,7 @@ import { UploadButton } from '@/utils/uploadthing';
 import { CustomUpload } from '@/components/custom-upload';
 import { Separator } from '@/components/ui/separator';
 
-export const EditProfileDialog = ({
-  user,
-  defaultPicture,
-}: {
-  user: User;
-  defaultPicture: string;
-}) => {
+export const EditProfileDialog = ({ user }: { user: User }) => {
   const form = useForm<z.infer<typeof updateUserFormSchema>>({
     resolver: zodResolver(updateUserFormSchema),
     defaultValues: {
@@ -75,7 +69,7 @@ export const EditProfileDialog = ({
               Change details about your profile
             </DialogDescription>
 
-            <CustomUpload user={user} defaultPicture={defaultPicture} />
+            <CustomUpload user={user} />
 
             <Form {...form}>
               <form

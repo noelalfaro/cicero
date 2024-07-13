@@ -1,6 +1,4 @@
-import Articles from '@/components/articles';
 import Players from '@/components/players';
-import Search from '@/components/search';
 import ExploreTableSkeleton from '@/components/skeletons';
 import { Suspense } from 'react';
 

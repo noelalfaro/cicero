@@ -11,13 +11,7 @@ import { revalidateUserProfile } from '@/app/actions/actions';
 import { User } from '@/app/lib/definitions';
 import Image from 'next/image';
 
-export function CustomUpload({
-  user,
-  defaultPicture,
-}: {
-  user: User;
-  defaultPicture: string;
-}) {
+export function CustomUpload({ user }: { user: User }) {
   const [files, setFiles] = useState<File[]>([]);
   const [isUploading, setIsUploading] = useState(false);
   const [fileSizeError, setFileSizeError] = useState(false);

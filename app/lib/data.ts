@@ -241,9 +241,7 @@ export async function createUser(user: User): Promise<string> {
   }
 }
 
-export async function fetchUserDataByUsername(
-  username: string,
-): Promise<User | null> {
+export async function fetchUserDataByUsername(username: string): Promise<User> {
   const existingUser: User[] = await db
     .select()
     .from(users)
@@ -284,13 +282,25 @@ const matcher = new RegExpMatcher({
 });
 
 export async function checkIfUsernameIsInBlacklist(username: string) {
-  // const filter = new Filter();
-  // BLACKLISTED_TERMS.forEach((term) => filter.addWords(term));
-
-  // return !filter.isProfane(username);
   return !matcher.hasMatch(username);
 }
 
+export async function doesEmailExistCheck(email: string): Promise<boolean> {
+  const result = await db.select().from(users).where(eq(users.email, email));
+  console.log(result);
+  if (result.length > 0) return true;
+  else return false;
+}
+
+export async function checkIfUsernameIsTaken(
+  username: string,
+): Promise<boolean> {
+  const result = await db
+    .select()
+    .from(users)
+    .where(eq(users.username, username));
+  return result.length > 0;
+}
 export async function updateUserUsername(userId: string, username: string) {
   await db
     .update(users)

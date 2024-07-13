@@ -54,40 +54,13 @@ export default async function Page({
 }: {
   params: { username: string };
 }) {
-  const { getUser, isAuthenticated, getIdToken } = getKindeServerSession();
-
-  // const loggedInUser = await getUser();
-  const idToken = (await getIdToken()) as ExtendedKindeIdToken; // Use the extended type
-
-  // const dbCall = await testDB();
-  // console.log();
-
-  // const { login, register } = useKindeAuth();
-  console.log('Id Token: ' + JSON.stringify(idToken, null, 2));
-  // console.log('params username: ' + params.username);
-  // console.log('logged in user: ' + JSON.stringify(loggedInUser, null, 2));
-
+  const { getUser, isAuthenticated } = getKindeServerSession();
   const loggedInUser = await getUser();
-  console.log('logged in user:' + JSON.stringify(loggedInUser, null, 2));
-  const user: User | null = await fetchUserDataByUsername(params.username);
-  console.log('Were visiting: ' + JSON.stringify(user, null, 2));
+  console.log('Logged in user:' + JSON.stringify(loggedInUser, null, 2));
 
-  // const userList = ['noel', 'bryan', 'chris'];
-  // console.log(userList);
+  const user: User = await fetchUserDataByUsername(params.username);
+  console.log('We are visiting: ' + JSON.stringify(user, null, 2));
 
-  // if (!userList.includes(params.username)) return NotFound();
-  // const user: User = {
-  //   family_name: idToken.family_name,
-  //   given_name: idToken.given_name,
-  //   username: idToken.preferred_username,
-  //   picture: idToken.picture,
-  //   email: idToken.email,
-  //   id: idToken.sub,
-  // };
-  // console.log(user);
-  // const user = params;
-  const defaultUserImageUrl =
-    'https://i.pinimg.com/originals/25/ee/de/25eedef494e9b4ce02b14990c9b5db2d.jpg';
   if (!user) return notFound();
 
   return (
@@ -99,7 +72,7 @@ export default async function Page({
               <CardHeader className="w-full gap-1 text-start">
                 <div className="relative flex h-[250px] w-full max-w-[250px] self-center">
                   <Image
-                    src={user?.picture || defaultUserImageUrl}
+                    src={user?.picture}
                     alt={`${user?.username}.png`}
                     fill={true}
                     className="rounded-full object-cover"
@@ -125,10 +98,7 @@ export default async function Page({
 
                 {user.id === loggedInUser?.id ? (
                   <div className="flex justify-between gap-1">
-                    <EditProfileDialog
-                      user={user}
-                      defaultPicture={defaultUserImageUrl}
-                    />
+                    <EditProfileDialog user={user} />
                     <UserSettings user={user} />
                   </div>
                 ) : (
