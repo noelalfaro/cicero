@@ -24,7 +24,7 @@ export default async function Login() {
   return (
     <div className="flex h-full w-full flex-col items-start justify-center text-left">
       <div className="flex w-full items-center justify-center gap-20">
-        <Card className="mx-auto max-w-md">
+        <Card className="mx-auto w-4/12 max-w-lg">
           <CardHeader>
             <CardTitle className="text-2xl">Login</CardTitle>
             <CardDescription>

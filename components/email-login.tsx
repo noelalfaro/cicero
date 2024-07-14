@@ -24,13 +24,13 @@ import { Divider } from '@mui/material';
 const formSchema = z.object({
   email: z
     .string()
-    .min(1, { message: 'This field has to be filled' })
-    .email({ message: 'This is not a valid email' })
+    .min(1, { message: 'This field has to be filled.' })
+    .email({ message: 'This is not a valid email.' })
     .refine(async (email) => {
       // Where checkIfEmailIsValid makes a request to the backend
       // to see if the email is valid.
       return await doesEmailExistCheck(email);
-    }, 'This email is not in our database'),
+    }, 'This email is not in our database.'),
 });
 
 export const EmailLogin = (props: {

@@ -36,8 +36,9 @@ const reservedRoutes = [
 const formSchema = z.object({
   email: z
     .string()
-    .min(1, { message: 'This field has to be filled' })
-    .email({ message: 'This is not a valid email' })
+    .min(1, { message: 'This field has to be filled.' })
+    .email({ message: 'This is not a valid email.' })
+    .transform((email) => email.trim().toLowerCase())
     .refine(
       async (email) => {
         return !(await doesEmailExistCheck(email));
@@ -46,18 +47,19 @@ const formSchema = z.object({
     ),
   username: z
     .string()
-    .min(3, { message: 'Username must be at least 3 characters' })
+    .min(3, { message: 'Username must be at least 3 characters.' })
+    .transform((username) => username.trim()) // Trim whitespace
     .refine(
       async (username) => !reservedRoutes.includes(username.toLowerCase()),
       {
-        message: 'This username is reserved and cannot be used',
+        message: 'This username is reserved and cannot be used.',
       },
     )
     .refine(
       async (username) => {
         return await checkIfUsernameIsInBlacklist(username);
       },
-      { message: 'This username contains inappropriate language' },
+      { message: 'This username contains inappropriate language.' },
     )
     .refine(
       async (username) => {
