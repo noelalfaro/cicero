@@ -1,17 +1,9 @@
-// Import the extended type
-import { ExtendedKindeIdToken } from '@/app/lib/types';
-
-import { ModeToggle } from '@/components/dark-mode-toggle';
 import { Button } from '@/components/ui/button';
-import { LogoutLink } from '@kinde-oss/kinde-auth-nextjs/components';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
-
-import { User, userSchema } from '@/app/lib/definitions';
-import NotFound from '@/app/(my-profile)/[username]/not-found';
+import { User } from '@/app/lib/definitions';
 import { fetchUserDataByUsername, testDB } from '@/app/lib/data';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import { UserCodeBlock } from '@/components/user-code-block';
 import {
   Dialog,
   DialogContent,
@@ -20,34 +12,18 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import {
-  MoreHorizontal,
-  MoreVertical,
-  ShieldX,
-  Copy,
-  UserCheck,
-  EditIcon,
-} from 'lucide-react';
+import { MoreVertical, ShieldX, Copy, UserCheck } from 'lucide-react';
 import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
 import { redirect } from 'next/navigation';
-
 import {
   Card,
-  CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Dot } from 'lucide-react';
-
 import { Separator } from '@/components/ui/separator';
-
-import { z } from 'zod';
 import { UserSettings } from '@/components/user-settings-dialog';
 import { EditProfileDialog } from '@/components/edit-profile-dialog';
-import { param } from 'drizzle-orm';
 
 export default async function Page({
   params,
@@ -88,10 +64,8 @@ export default async function Page({
                       className="h-full text-current"
                     />
                   </div>
-                  {/* <Separator orientation="vertical" className="text-current" /> */}
                 </div>
 
-                {/* <Separator orientation="horizontal" className="text-current" /> */}
                 <CardDescription className="text-base text-current">
                   This is an example bio
                 </CardDescription>
@@ -179,8 +153,6 @@ export default async function Page({
               </CardHeader>
             </Card>
           </div>
-
-          {/* <UserCodeBlock user={user} /> */}
         </>
       ) : (
         redirect('/')
