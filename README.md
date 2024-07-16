@@ -4,7 +4,7 @@
 
 Cicero is a web app for users to invest in their favorite NBA players potential. This works through a web interface that users can log into, browse/search different players and “Invest” into their current score.
 
-This **_score_** is defined through both the players performance through stats in game as well as the sentiment analysis of the players online reputation such as what people and analysts are tweeting about them.
+This **_score_** is defined through both the players performance through stats in game as well as the sentiment analysis of the players online reputation such as what people and analysts are posting about them online on social media sites like reddit, threads, or potentially X.
 
 Therefore there are two main components to this application.
 
