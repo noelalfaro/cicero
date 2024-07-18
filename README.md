@@ -18,7 +18,8 @@ Therefore there are two main components to this application.
 1. **Database Design**
 
    - Design detailed database schema (include entities like Users, Players, Investments, Transactions).
-   - Choose a database provider (Vercel, Railway, or alternative).
+   - Choose a database provider - Neon PostgreSQL.
+   - Choose ORM - DrizzleORM
 
 2. **Wireframing & UI Basics**
 
@@ -26,15 +27,15 @@ Therefore there are two main components to this application.
    - Set up basic Next.js project structure with routing for these views.
 
 3. **Authentication**
-   - Select an authentication mechanism (e.g., email/password, social, Auth0).
+   - Select an authentication provider, Kinde Auth.
    - Implement secure authentication within the Next.js app.
 
 **Phase 2: Next.js App Development**
 
 1. **Develop Static Components**
 
-   - Develop each route and their components that will contain static data
-   - Style the components and theme toggle using TailwindCSS
+   - Develop each route and their components that will contain static data.
+   - Style the components and theme toggle using TailwindCSS.
 
 2. **Data Fetching (NBA API)**
 
