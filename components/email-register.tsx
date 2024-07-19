@@ -164,15 +164,6 @@ export const EmailRegister = (props: {
             {/* </RegisterLink> */}
           </form>
         </Form>
-        {/* <RegisterLink
-          authUrlParams={{
-            connection_id: props.emailConnectionId!,
-          }}
-        >
-          <Button className="w-full" type="submit">
-            Sign Up
-          </Button>
-        </RegisterLink> */}
       </div>
       <Divider className="text-sm text-muted-foreground">Or</Divider>
     </>
