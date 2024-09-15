@@ -85,7 +85,7 @@ const playerSchema = z.object({
     blocks: z.number().optional(),
     plusMinus: z.string().optional(),
   }),
-  stats: playerStatsSchema, // assuming stats is another schema
+  stats: z.array(playerStatsSchema).optional(), // assuming stats is another schema
 });
 
 // Export the schema

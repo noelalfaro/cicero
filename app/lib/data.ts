@@ -32,59 +32,183 @@ export async function fetchPlayerData(): Promise<Player[]> {
   noStore();
   try {
     // Perform a join between players and player_stats
-    const result = await db
-      .select()
-      .from(players)
-      .leftJoin(playerStats, eq(players.id, playerStats.player_id))
-      .limit(10);
+    const result = await db.select().from(players).limit(10);
 
-    // console.log(result);
+    // Group stats by player_id
+    // const playersWithStats = result.reduce((acc: any, row) => {
+    //   const playerId = row.players.id;
+    //   const stats = row.player_stats;
+
+    //   if (!acc[playerId]) {
+    //     acc[playerId] = { ...row.players, stats: [] };
+    //   }
+
+    //   if (stats) {
+    //     acc[playerId].stats.push(stats);
+    //   }
+
+    //   return acc;
+    // }, {});
 
     // Combine the player and stats data, handling null stats
-    const combinedResult = result.map((dbPlayer) => {
-      const player = dbPlayer['players'];
-      // console.log(player);
-      const stats: PlayerStats | null = dbPlayer['player_stats'];
+    // const combinedResult = result.map((dbPlayer) => {
+    //   const player = dbPlayer['players'];
+    //   // console.log(player);
+    //   const stats: PlayerStats | null = dbPlayer['player_stats'];
 
-      // const defaultAverages:  =
+    //   // const defaultAverages:  =
 
-      // If stats is null, provide default values
-      const defaultStats: PlayerStats = {
-        player_id: player.id,
-        stat_id: 0,
-        points: 23,
-        min: '',
-        fgm: 0,
-        fga: 0,
-        fgp: '',
-        ftm: 0,
-        fta: 0,
-        ftp: '',
-        tpm: 0,
-        tpa: 0,
-        tpp: '',
-        offReb: 0,
-        defReb: 0,
-        totReb: 0,
-        assists: 0,
-        pFouls: 0,
-        steals: 0,
-        turnovers: 0,
-        blocks: 0,
-        plusMinus: '',
-      };
+    //   // If stats is null, provide default values
+    //   const defaultStats: PlayerStats = {
+    //     player_id: player.id,
+    //     stat_id: 0,
+    //     points: 23,
+    //     min: '',
+    //     fgm: 0,
+    //     fga: 0,
+    //     fgp: '',
+    //     ftm: 0,
+    //     fta: 0,
+    //     ftp: '',
+    //     tpm: 0,
+    //     tpa: 0,
+    //     tpp: '',
+    //     offReb: 0,
+    //     defReb: 0,
+    //     totReb: 0,
+    //     assists: 0,
+    //     pFouls: 0,
+    //     steals: 0,
+    //     turnovers: 0,
+    //     blocks: 0,
+    //     plusMinus: '',
+    //   };
 
-      // Combine player and stats, using defaultStats if stats is null
-      return {
-        ...player,
-        stats: stats || defaultStats,
-      };
+    //   // Combine player and stats, using defaultStats if stats is null
+    //   return {
+    //     ...player,
+    //     stats: stats || defaultStats,
+    //   };
+    // });
+
+    // Convert the grouped data into an array and add picture URLs
+    // Add picture URLs
+    const playersWithPictures = result.map((player) => {
+      const pictureUrl = `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/1040x760/${player.id}.png`;
+      return { ...player, picture: pictureUrl };
     });
+
+    // Parse each player object using the schema
+    return playersWithPictures.map((playerData) =>
+      playerSchema.parse(playerData),
+    );
+
     // console.log(combinedResult);
-    return combinedResult.map((dbPlayer) => playerSchema.parse(dbPlayer));
+    // return combinedResult.map((dbPlayer) => playerSchema.parse(dbPlayer));
+    // Parse each player object using the schema
   } catch (error) {
-    throw new Error('Failed to fetch player data: ' + error);
+    throw new Error(
+      'Failed to fetch players data - Function: fetchPlayerData()' + error,
+    );
   }
+}
+
+export async function fetchPlayerDataByID(id: number): Promise<Player | null> {
+  const playerResult = await db
+    .select()
+    .from(players)
+    .where(eq(players.id, id));
+  // .leftJoin(playerStats, eq(players.id, playerStats.player_id));
+  // .leftJoin(playerStats, eq(players.id, playerStats.player_id))
+
+  if (playerResult.length === 0) {
+    return null;
+  }
+  const player = playerResult[0];
+  // console.log('player' + JSON.stringify(player));
+
+  const statsResult = await db
+    .select()
+    .from(playerStats)
+    .where(eq(playerStats.player_id, id));
+
+  const pictureUrl = `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/1040x760/${id}.png`;
+
+  // console.log(result);
+  // noStore();
+
+  try {
+    const combinedResult = {
+      ...player,
+      stats: statsResult || [], // An array of stats or an empty array if no stats found
+      picture: pictureUrl,
+    };
+
+    // console.log(combinedResult);
+    return playerSchema.parse(combinedResult);
+  } catch (error) {
+    throw new Error('Failed to fetch player data by id');
+  }
+
+  // try {
+  //   if (result.length === 0) {
+  //     return null;
+  //   }
+
+  //   const combinedResult = result.map((dbPlayer) => {
+  //     const player = dbPlayer['players'];
+  //     const stats: PlayerStats | null = dbPlayer['player_stats'];
+  //     // const birthdate = new Date(dbPlayer["players"].birthdate);
+  //     // console.log("Date: " + birthdate);
+
+  //     const defaultStats: PlayerStats = {
+  //       player_id: player.id,
+  //       stat_id: 0,
+  //       points: 23,
+  //       min: '',
+  //       fgm: 0,
+  //       fga: 0,
+  //       fgp: '',
+  //       ftm: 0,
+  //       fta: 0,
+  //       ftp: '',
+  //       tpm: 0,
+  //       tpa: 0,
+  //       tpp: '',
+  //       offReb: 0,
+  //       defReb: 0,
+  //       totReb: 0,
+  //       assists: 0,
+  //       pFouls: 0,
+  //       steals: 0,
+  //       turnovers: 0,
+  //       blocks: 0,
+  //       plusMinus: '',
+  //     };
+
+  //     return {
+  //       ...player,
+  //       stats: stats || defaultStats,
+  //       picture: pictureUrl,
+  //     };
+  //   });
+  //   // console.log(result[0]);
+
+  //   // const player = result[0];
+  //   // const stats: PlayerStats ;
+
+  //   // If stats is null, provide default values
+
+  //   // const combinedResult = {
+  //   //   ...player,
+  //   //   stats: defaultStats,
+  //   //   picture: pictureUrl,
+  //   // };
+  //   console.log(combinedResult);
+  //   return playerSchema.parse(combinedResult[0]);
+  // } catch (error) {
+  //   throw new Error('Failed to fetch player data by id');
+  // }
 }
 
 export async function fetchNewsArticles(): Promise<NewsArticle[] | null> {
@@ -147,80 +271,6 @@ export async function FetchNewsArticlesByPlayerID(
     // console.error('Error fetching articles: ', error);
     // throw new Error('Failed to fetch articles data.');
     return null;
-  }
-}
-
-export async function fetchPlayerDataByID(id: number): Promise<Player | null> {
-  const result = await db
-    .select()
-    .from(players)
-    .where(eq(players.id, id))
-    .leftJoin(playerStats, eq(players.id, playerStats.player_id));
-  // .leftJoin(playerStats, eq(players.id, playerStats.player_id))
-
-  const pictureUrl = `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/1040x760/${id}.png`;
-
-  // console.log(result);
-  // noStore();
-
-  try {
-    if (result.length === 0) {
-      return null;
-    }
-
-    const combinedResult = result.map((dbPlayer) => {
-      const player = dbPlayer['players'];
-      const stats: PlayerStats | null = dbPlayer['player_stats'];
-      // const birthdate = new Date(dbPlayer["players"].birthdate);
-      // console.log("Date: " + birthdate);
-
-      const defaultStats: PlayerStats = {
-        player_id: player.id,
-        stat_id: 0,
-        points: 23,
-        min: '',
-        fgm: 0,
-        fga: 0,
-        fgp: '',
-        ftm: 0,
-        fta: 0,
-        ftp: '',
-        tpm: 0,
-        tpa: 0,
-        tpp: '',
-        offReb: 0,
-        defReb: 0,
-        totReb: 0,
-        assists: 0,
-        pFouls: 0,
-        steals: 0,
-        turnovers: 0,
-        blocks: 0,
-        plusMinus: '',
-      };
-
-      return {
-        ...player,
-        stats: stats || defaultStats,
-        picture: pictureUrl,
-      };
-    });
-    // console.log(result[0]);
-
-    // const player = result[0];
-    // const stats: PlayerStats ;
-
-    // If stats is null, provide default values
-
-    // const combinedResult = {
-    //   ...player,
-    //   stats: defaultStats,
-    //   picture: pictureUrl,
-    // };
-    // console.log(combinedResult);
-    return playerSchema.parse(combinedResult[0]);
-  } catch (error) {
-    throw new Error('Failed to fetch player data by id');
   }
 }
 

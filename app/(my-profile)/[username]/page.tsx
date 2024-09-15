@@ -149,7 +149,7 @@ export default async function Page({
             </Card>
             <Card className="w-full md:w-6/12 lg:w-8/12 xl:w-9/12">
               <CardHeader>
-                <CardTitle className="">My Top Perfomers</CardTitle>
+                <CardTitle className="">My Watchlist</CardTitle>
               </CardHeader>
             </Card>
           </div>

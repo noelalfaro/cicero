@@ -7,7 +7,6 @@ import {
 import { Button } from '@/components/ui/button';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { Link } from 'next-view-transitions';
-
 import { redirect } from 'next/navigation';
 
 export default async function Home() {
@@ -27,7 +26,7 @@ export default async function Home() {
               </h2>
             </div>
 
-            <div className="mb-32 flex w-full justify-end gap-4 text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
+            <div className="flex w-full justify-end gap-4 text-center lg:grid-cols-4 lg:text-left">
               <Link href={'/login'}>
                 <Button className="p-6 text-xl">Log In</Button>
               </Link>
