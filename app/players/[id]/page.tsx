@@ -12,7 +12,7 @@ import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { PlayerStatsChart } from '@/components/player-stats-chart';
 import { Divider } from '@mui/material';
-import { Car } from 'lucide-react';
+import { ArrowDownIcon, ArrowUpIcon, Car } from 'lucide-react';
 // import { Avatar, AvatarImage } from '@/components/ui/avatar';
 // import {
 //   Carousel,
@@ -41,58 +41,51 @@ export default async function PlayerDetails({ params }: { params: Player }) {
 
   const latestGame = player.stats!.length - 1;
 
-  const defaultPictureUrl =
-    'https://cdn.freebiesupply.com/images/large/2x/nba-logo-transparent.png';
+  // const defaultPictureUrl =
+  //   'https://cdn.freebiesupply.com/images/large/2x/nba-logo-transparent.png';
 
   return (
     <div className="flex w-full flex-col gap-2">
-      <div className="flex w-full flex-col">
-        <h1 className="text-4xl font-bold">
-          {player.first_name} {player.last_name}
-        </h1>
-        <h3 className="color text-xl font-semibold text-muted-foreground">
-          {player.team_name}
-        </h3>
-        {/* <Button>Buy</Button>
-        <Button variant={'destructive'}>Sell</Button> */}
-      </div>
-
       {player.stats && player.stats.length > 0 && (
         <>
           <div className="flex w-full gap-2">
-            <div className="w-3/5">
-              <PlayerStatsChart stats={player.stats} />
-            </div>
-            <div className="flex w-2/5">
-              <Card className="w-full">
-                {/* <CardHeader></CardHeader> */}
-                <CardContent className="h-full">
-                  <div className="flex h-full flex-col content-center items-center justify-center gap-6">
-                    <h1 className="text-8xl font-bold">
-                      {player.stats[latestGame].points}
-                    </h1>
-                    {/* <Image
-                      src={player.picture || defaultPictureUrl}
-                      alt={`${player.id}.png`}
-                      width={260} // Add appropriate width and height
-                      height={190} // Add appropriate width and height
-                      priority={true}
-                    /> */}
-                    <Button className="w-full">Buy</Button>
-                    {/* <Divider></Divider> */}
-                    <Button className="w-full" variant={'destructive'}>
-                      Sell
-                    </Button>
-                  </div>
+            <Card className="flex w-full flex-col justify-center md:w-6/12 lg:w-4/12 xl:w-3/12">
+              <CardHeader>
+                <CardContent className="w-full max-w-full pb-0">
+                  <Image
+                    src={player.picture!}
+                    alt={`${player.id}.png`}
+                    width={260} // Add appropriate width and height
+                    height={190} // Add appropriate width and height
+                    // fill={true}
+                    priority={true}
+                  />
                 </CardContent>
-              </Card>
+
+                <CardTitle>
+                  {player.first_name} {player.last_name}
+                </CardTitle>
+                <CardDescription className="text-base text-current">
+                  {player.team_city} {player.team_name}
+                </CardDescription>
+                <Button variant={'secondary'}>Add to Watchlist</Button>
+              </CardHeader>
+
+              {/* <CardHeader className="w-full gap-1 pt-1 text-start text-4xl font-bold">
+                {player.first_name} {player.last_name}
+                <h3 className="color text-xl font-semibold text-muted-foreground">
+                  {player.team_city} {player.team_name}
+                </h3>
+              </CardHeader> */}
+            </Card>
+            <div className="w-full md:w-6/12 lg:w-8/12 xl:w-9/12">
+              <PlayerStatsChart stats={player.stats} />
             </div>
           </div>
         </>
       )}
 
       <Card>
-        {/* <CardContent> */}
         <CardHeader className="text-2xl font-semibold">
           More Information
         </CardHeader>
@@ -105,7 +98,6 @@ export default async function PlayerDetails({ params }: { params: Player }) {
             DOB: {formattedDate.toLocaleDateString()}
           </h3>
         </CardContent>
-        {/* </CardContent> */}
       </Card>
 
       {/* <Card>

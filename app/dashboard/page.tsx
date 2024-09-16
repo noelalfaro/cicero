@@ -5,6 +5,7 @@ import { Link } from 'next-view-transitions';
 // import Chart from '@/components/chart';
 import { ChartContainer, type ChartConfig } from '@/components/ui/chart';
 import { Bar, BarChart } from 'recharts';
+import { Button } from '@/components/ui/button';
 
 export default async function Page() {
   const { getUser, isAuthenticated } = getKindeServerSession();
@@ -33,11 +34,18 @@ export default async function Page() {
   return (
     <div className="flex flex-col items-center justify-start">
       <div>Dashboard for {user?.given_name}</div>
-      <p>Demo For Next-View-Transitions</p>
-      <Link href="/my-profile">
-        Demo For Next-View-Transitions Go to /my-profile
-      </Link>
-      <LogoutLink>Logout</LogoutLink>
+
+      <Button variant={'link'}>
+        <Link href={'/players/2544'}>Link to Lebron's Page</Link>
+      </Button>
+
+      <Button variant={'link'}>
+        <Link href={'/players/201142'}>Link to Durant's Page</Link>
+      </Button>
+      <Button variant={'destructive'}>
+        <LogoutLink>Logout</LogoutLink>
+      </Button>
+
       {/* <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
         <BarChart accessibilityLayer data={chartData}>
           <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
