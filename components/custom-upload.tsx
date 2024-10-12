@@ -10,6 +10,7 @@ import RotateLoader from 'react-spinners/RotateLoader';
 import { revalidateUserProfile } from '@/app/actions/actions';
 import { User } from '@/app/lib/definitions';
 import Image from 'next/image';
+import React from 'react';
 
 export function CustomUpload({ user }: { user: User }) {
   const [files, setFiles] = useState<File[]>([]);

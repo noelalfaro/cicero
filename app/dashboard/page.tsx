@@ -4,6 +4,7 @@ import { Link } from 'next-view-transitions';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardContent } from '@/components/ui/card';
 import { redirect } from 'next/navigation';
+import React from 'react';
 
 export default async function Page() {
   const { getUser, isAuthenticated } = getKindeServerSession();

@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { Link } from 'next-view-transitions';
 import { redirect } from 'next/navigation';
+import React from 'react';
 
 export default async function Home() {
   const { isAuthenticated } = getKindeServerSession();
