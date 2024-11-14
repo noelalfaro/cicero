@@ -17,7 +17,7 @@ import {
   User,
   userSchema,
 } from '@/app/lib/definitions';
-import Filter from 'bad-words';
+
 // import { BLACKLISTED_TERMS } from '@/config.js';
 import {
   DataSet,
