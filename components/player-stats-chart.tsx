@@ -32,11 +32,23 @@ interface PlayerStatsChartProps {
   stats: PlayerStats[];
 }
 
+const chartConfig = {
+  desktop: {
+    label: 'Desktop',
+    color: 'hsl(var(--chart-1))',
+  },
+} satisfies ChartConfig;
+
 export function PlayerStatsChart({ stats }: PlayerStatsChartProps) {
+  if (!stats || stats.length === 0) {
+    return <div>No stats available</div>;
+  }
+
   const chartData = stats.map((stat) => ({
     game: `Game ${stat.stat_id}`,
     points: stat.points,
   }));
+  // console.log('chart data: ' + JSON.stringify(stats));
 
   const latestGame = stats!.length - 1;
 
@@ -52,30 +64,46 @@ export function PlayerStatsChart({ stats }: PlayerStatsChartProps) {
     return [0, Math.max(fixedMax, maxValue)];
   };
 
-  const chartConfig = {
-    desktop: {
-      label: 'Desktop',
-      color: 'hsl(var(--chart-1))',
-    },
-  } satisfies ChartConfig;
+  console.log('length of stats: ' + stats.length);
+  console.log('Latest Game: ' + latestGame);
+  console.log('Average Points: ' + averagePoints);
+  console.log('Last Game Points: ' + lastGamePoints);
+  console.log('Points Difference: ' + pointsDifference);
+  console.log('Percentage Difference: ' + percentageDifference);
+
   return (
     <>
-      <Card>
-        <CardHeader>
-          <CardTitle>Points Per Game</CardTitle>
+      {/* <Card> */}
+      <div className="w-full md:w-4/6">
+        <CardHeader className="p-1 md:p-4 lg:px-6">
+          <CardTitle className="text-3xl">Pulse Rating (PR)</CardTitle>
           <CardDescription>Last {stats.length} games</CardDescription>
         </CardHeader>
 
-        <CardContent className="flex">
-          <ResponsiveContainer width="75%" height={300}>
-            <ChartContainer config={chartConfig}>
+        <CardContent className="flex flex-col items-start justify-start p-1 md:flex-row md:p-4 lg:px-6">
+          <ResponsiveContainer
+            width="100%"
+            height={'min-h-[fit-content]'}
+            style={{ padding: '0' }}
+          >
+            <ChartContainer
+              config={chartConfig}
+              className="flex items-center justify-start"
+            >
               <LineChart data={chartData} accessibilityLayer>
-                <CartesianGrid vertical={false} stroke="hsl(var(--border))" />
-                <XAxis dataKey="game" tickLine={false} axisLine={false} />
+                <CartesianGrid
+                  vertical={false}
+                  stroke="hsl(var(--border))"
+                  syncWithTicks
+                />
+                <XAxis dataKey={'none'} tickLine={false} axisLine={false} />
                 <YAxis
-                  domain={getDomain(chartData)}
+                  width={25}
                   tickLine={false}
                   axisLine={false}
+                  tickMargin={1}
+                  tickCount={5}
+                  className="p-0"
                 />
                 <ChartTooltip
                   cursor={false}
@@ -91,11 +119,11 @@ export function PlayerStatsChart({ stats }: PlayerStatsChartProps) {
               </LineChart>
             </ChartContainer>
           </ResponsiveContainer>
-          <CardContent className="flex h-full w-1/4 flex-col items-center justify-center gap-2">
+          <CardContent className="flex w-full flex-col justify-start gap-2 p-0 md:w-1/4 md:p-0">
             <CardHeader className="text-center text-8xl font-bold">
               {stats[latestGame].points}
               <div className="text-sm text-muted-foreground">
-                Latest Game Points
+                Pulse Rating (PR)
               </div>
             </CardHeader>
             <Button className="w-full">
@@ -106,22 +134,8 @@ export function PlayerStatsChart({ stats }: PlayerStatsChartProps) {
             </Button>
           </CardContent>
         </CardContent>
-        {/* <CardContent className="flex h-full flex-col items-center justify-center gap-2">
-            <CardHeader className="text-8xl font-bold">
-              {stats[latestGame].points}
-              <div className="text-sm text-muted-foreground">
-                Latest Game Points
-              </div>
-            </CardHeader>
-            <Button className="w-1/2">
-              Buy <ArrowUpIcon className="ml-2 h-4 w-4" />
-            </Button>
-            <Button className="w-1/2" variant={'destructive'}>
-              Sell <ArrowDownIcon className="ml-2 h-4 w-4" />
-            </Button>
-          </CardContent> */}
 
-        <CardFooter className="flex-col items-start gap-2 text-sm">
+        <CardFooter className="flex-col items-start gap-2 p-1 text-sm md:p-4 lg:pt-0">
           <div className="flex gap-2 font-medium leading-none">
             {pointsDifference >= 0 ? 'Up' : 'Down'} by{' '}
             {Math.abs(percentageDifference).toFixed(1)}% from average
@@ -134,7 +148,8 @@ export function PlayerStatsChart({ stats }: PlayerStatsChartProps) {
             {averagePoints.toFixed(1)})
           </div>
         </CardFooter>
-      </Card>
+      </div>
+      {/* </Card> */}
     </>
   );
 }

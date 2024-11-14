@@ -8,7 +8,7 @@ import { cookies } from 'next/headers';
 
 export async function GET(request: Request) {
   const cookieStore = cookies();
-  const username = cookieStore.get('temp_username')?.value;
+  const username = (await cookieStore).get('temp_username')?.value;
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
@@ -23,7 +23,7 @@ export async function GET(request: Request) {
   const { isAuthenticated, getIdToken } = getKindeServerSession();
 
   if (await isAuthenticated()) {
-    const idToken = (await getIdToken()) as ExtendedKindeIdToken;
+    const idToken = (await getIdToken()) as unknown as ExtendedKindeIdToken;
 
     if (idToken) {
       const user: User = {
@@ -42,7 +42,7 @@ export async function GET(request: Request) {
         await updateUserUsername(user.id, username);
       }
 
-      cookieStore.delete('temp_username');
+      (await cookieStore).delete('temp_username');
     }
   }
 

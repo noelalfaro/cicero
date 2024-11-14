@@ -43,7 +43,7 @@ export default async function Page({
     <main className="flex w-full flex-col items-start justify-between gap-2">
       {(await isAuthenticated()) ? (
         <>
-          <div className="flex w-full flex-col gap-2 md:flex-row">
+          <div className="flex w-full flex-col gap-2 lg:flex-row">
             <Card className="flex w-full flex-col md:w-6/12 lg:w-4/12 xl:w-3/12">
               <CardHeader className="w-full gap-1 text-start">
                 <div className="relative flex h-[250px] w-full max-w-[250px] self-center">
