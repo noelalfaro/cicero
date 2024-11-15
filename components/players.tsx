@@ -1,5 +1,5 @@
-import { fetchPlayerData } from "@/app/lib/data";
-import { Player } from "@/app/lib/definitions";
+import { fetchPlayerData } from '@/app/lib/data';
+import { Player } from '@/app/lib/definitions';
 import {
   Table,
   TableBody,
@@ -8,10 +8,10 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from '@/components/ui/table';
 
-import { Link } from "next-view-transitions";
-import { Button } from "@/components/ui/button";
+import { Link } from 'next-view-transitions';
+import { Button } from '@/components/ui/button';
 
 async function Players() {
   const data: Player[] = await fetchPlayerData();
