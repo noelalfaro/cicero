@@ -81,7 +81,6 @@
     "@types/pg": "^8.11.10",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "autoprefixer": "^10.4.20",
     "drizzle-kit": "^0.26.2",
     "esbuild-register": "^3.6.0",
     "eslint": "^9",
