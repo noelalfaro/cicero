@@ -29,13 +29,13 @@ import { fetchUserDataByUsername } from '@/app/lib/data';
 export default async function Page({
   params,
 }: {
-  params: { username: string };
+  params: Promise<{ username: string }>;
 }) {
   const { getUser, isAuthenticated } = getKindeServerSession();
   const loggedInUser = await getUser();
   console.log('Logged in user:' + JSON.stringify(loggedInUser, null, 2));
 
-  const user: User = await fetchUserDataByUsername(params.username);
+  const user: User = await fetchUserDataByUsername((await params).username);
   console.log('We are visiting: ' + JSON.stringify(user, null, 2));
 
   if (!user) return notFound();

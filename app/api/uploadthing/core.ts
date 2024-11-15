@@ -13,22 +13,24 @@ import { withAuth } from '@kinde-oss/kinde-auth-nextjs/middleware';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { revalidatePath } from 'next/cache';
 import { revalidateUserProfile } from '@/app/actions/actions';
+import { NextRequest } from 'next/server';
 
 const f = createUploadthing();
 
 // Replace this with your actual authentication logic
-const auth = async (req: Request) => {
+const auth = async (req: NextRequest) => {
   try {
     // Get the Kinde server session
-    const session = getKindeServerSession(req);
+    const { getUser, isAuthenticated } = getKindeServerSession();
+    const user = await getUser();
 
     // Check if the user is authenticated
-    if (!session || !session.isAuthenticated) {
+    if (!isAuthenticated()) {
       throw new UploadThingError('User is not authenticated');
     }
 
     // Return the authenticated user
-    return session.getUser();
+    return user;
   } catch (error) {
     throw new UploadThingError('Authentication failed');
   }
@@ -43,7 +45,7 @@ export const ourFileRouter = {
       // This code runs on your server before upload
       // console.log(req.body);
       // const result = await auth(req);
-      const user = await auth(req);
+      const user = await auth(req as unknown as NextRequest);
 
       console.log(user);
 

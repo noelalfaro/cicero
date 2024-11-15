@@ -13,7 +13,11 @@ import { PlayerStatsChart } from '@/components/player-stats-chart';
 import { Divider } from '@mui/material';
 import { ArrowDownIcon, ArrowUpIcon, Car } from 'lucide-react';
 
-export default async function PlayerDetails({ params }: { params: Player }) {
+export default async function PlayerDetails({
+  params,
+}: {
+  params: Promise<Player>;
+}) {
   const { id } = await params;
   const player: Player | null = await fetchPlayerDataByID(id);
 
