@@ -17,31 +17,35 @@ export function CustomUpload({ user }: { user: User }) {
   const [isUploading, setIsUploading] = useState(false);
   const [fileSizeError, setFileSizeError] = useState(false);
 
-  const { startUpload, permittedFileInfo } = useUploadThing('profilePicture', {
-    onClientUploadComplete: async () => {
-      setIsUploading(false);
-      setFiles([]);
-      setFileSizeError(false);
-      // Revalidate the user profile data
-      await revalidateUserProfile();
+  const { startUpload, isUploading: isUploadingThing } = useUploadThing(
+    'profilePicture',
+    {
+      onClientUploadComplete: async () => {
+        setIsUploading(false);
+        setFiles([]);
+        setFileSizeError(false);
+        // Revalidate the user profile data
+        await revalidateUserProfile();
 
-      // Refresh the current route
+        // Refresh the current route
+      },
+      onUploadError: (error: Error) => {
+        setIsUploading(false);
+        if (error.message === 'Invalid config: FileSizeMismatch')
+          setFileSizeError(true);
+        // setFileSizeError(false);
+      },
+      onUploadBegin: () => {
+        setIsUploading(true);
+      },
     },
-    onUploadError: (error: Error) => {
-      setIsUploading(false);
-      if (error.message === 'Invalid config: FileSizeMismatch')
-        setFileSizeError(true);
-      // setFileSizeError(false);
-    },
-    onUploadBegin: () => {
-      setIsUploading(true);
-    },
-  });
+  );
 
-  const fileTypes = permittedFileInfo?.config
-    ? Object.keys(permittedFileInfo?.config)
-    : [];
+  // const fileTypes = permittedFileInfo?.config
+  //   ? Object.keys(permittedFileInfo?.config)
+  //   : [];
 
+  const fileTypes = ['image/jpeg', 'image/png', 'image/gif'];
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
       setFiles(acceptedFiles);
@@ -52,7 +56,7 @@ export function CustomUpload({ user }: { user: User }) {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    accept: fileTypes ? generateClientDropzoneAccept(fileTypes) : undefined,
+    accept: generateClientDropzoneAccept(fileTypes),
   });
 
   return (
