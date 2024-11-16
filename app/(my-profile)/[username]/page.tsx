@@ -26,6 +26,7 @@ import { UserSettings } from '@/components/user-settings-dialog';
 import { EditProfileDialog } from '@/components/edit-profile-dialog';
 import { fetchUserDataByUsername } from '@/app/lib/data';
 
+// Rest of your page code
 export default async function Page({
   params,
 }: {
@@ -68,7 +69,7 @@ export default async function Page({
                 </div>
 
                 <CardDescription className="text-base text-current">
-                  This is an example bio
+                  {/* This is an example bio */}
                 </CardDescription>
 
                 {user.id === loggedInUser?.id ? (

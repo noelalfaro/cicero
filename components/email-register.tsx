@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
-import { useRouter } from 'next/navigation';
+import { unstable_rethrow, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -89,8 +89,7 @@ export const EmailRegister = (props: {
       // Set a cookie with the username
       setCookie('temp_username', values.username, {
         maxAge: 300, // 5 minutes
-      }); // expires in 5 minutes
-
+      });
       // Navigate to the registration page with username as a parameter
       router.push(
         `/api/auth/register?connection_id=${props.emailConnectionId}&login_hint=${values.email}`,

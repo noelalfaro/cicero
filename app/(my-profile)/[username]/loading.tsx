@@ -12,22 +12,7 @@ export default async function Loading() {
       <div className="flex w-full flex-col gap-2 md:flex-row">
         <Card className="flex w-full flex-col md:w-6/12 lg:w-4/12 xl:w-3/12">
           <CardHeader className="w-full gap-1 text-start">
-            <div className="relative flex h-[250px] w-full max-w-[250px] self-center">
-              {/* <Image
-                src={user?.picture}
-                
-                alt={`${user?.username}.png`}
-                fill={true}
-                className="rounded-full object-cover"
-              /> */}
-            </div>
-
-            {/* <div>
-              <CardTitle>{user.display_name}</CardTitle>
-              <div className="flex justify-start">
-                <CardDescription>@{user.username}</CardDescription>
-              </div>
-            </div> */}
+            <div className="relative flex h-[250px] w-full max-w-[250px] self-center"></div>
             <div className="flex flex-col space-y-3">
               <Skeleton className="h-[125px] w-[250px] rounded-xl" />
               <div className="space-y-2">
@@ -37,13 +22,13 @@ export default async function Loading() {
             </div>
 
             <CardDescription className="text-base text-current">
-              This is an example bio
+              {/* This is an example bio */}
             </CardDescription>
           </CardHeader>
         </Card>
         <Card className="w-full md:w-6/12 lg:w-8/12 xl:w-9/12">
           <CardHeader>
-            <CardTitle>My Top Perfomers</CardTitle>
+            <CardTitle>My Watchlist</CardTitle>
           </CardHeader>
         </Card>
       </div>
