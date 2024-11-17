@@ -13,6 +13,8 @@ import {
 import { Link } from 'next-view-transitions';
 import { Button } from '@/components/ui/button';
 
+// Add revalidate to the component level as well
+
 async function Players() {
   const data: Player[] = await fetchPlayerData();
   // console.log(data);

@@ -1,12 +1,12 @@
 // import 'server-only';
 'use server';
-import { unstable_noStore as noStore } from 'next/cache';
+import { unstable_noStore as noStore, unstable_cache } from 'next/cache';
 
 import { players } from '@/db/schema/players';
 import { users } from '@/db/schema/users';
 import { playerStats } from '@/db/schema/player_stats';
 
-import { eq } from 'drizzle-orm';
+import { eq, desc } from 'drizzle-orm';
 import {
   playerSchema,
   Player,
@@ -27,89 +27,62 @@ import {
 } from 'obscenity';
 
 import { db } from '@/db';
+import { cache } from 'react';
+
+// export async function fetchPlayerData(): Promise<Player[]> {
+//   noStore();
+//   try {
+//     // Perform a join between players and player_stats
+//     const result = await db.select().from(players).limit(10);
+
+//     // Convert the grouped data into an array and add picture URLs
+//     // Add picture URLs
+//     const playersWithPictures = result.map((player) => {
+//       const pictureUrl = `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/1040x760/${player.id}.png`;
+//       return { ...player, picture: pictureUrl };
+//     });
+
+//     // Parse each player object using the schema
+//     return playersWithPictures.map((playerData) =>
+//       playerSchema.parse(playerData),
+//     );
+
+//   } catch (error) {
+//     throw new Error(
+//       'Failed to fetch players data - Function: fetchPlayerData()' + error,
+//     );
+//   }
+// }
+// Cache the database call using React's cache function
+// Cache the top players query for 24 hours
+const getTopScoringPlayers = unstable_cache(
+  async () => {
+    try {
+      // Assuming you have a player_stats table and a relation to players
+      const result = await db.select().from(players).limit(10);
+
+      return result;
+    } catch (error) {
+      throw new Error('Failed to fetch top scoring players: ' + error);
+    }
+  },
+  ['top-scorers-cache'],
+  {
+    revalidate: 86400, // 24 hours in seconds
+    tags: ['top-scorers'], // For manual revalidation if needed
+  },
+);
 
 export async function fetchPlayerData(): Promise<Player[]> {
-  noStore();
   try {
-    // Perform a join between players and player_stats
-    const result = await db.select().from(players).limit(10);
+    const topPlayers = await getTopScoringPlayers();
 
-    // Group stats by player_id
-    // const playersWithStats = result.reduce((acc: any, row) => {
-    //   const playerId = row.players.id;
-    //   const stats = row.player_stats;
-
-    //   if (!acc[playerId]) {
-    //     acc[playerId] = { ...row.players, stats: [] };
-    //   }
-
-    //   if (stats) {
-    //     acc[playerId].stats.push(stats);
-    //   }
-
-    //   return acc;
-    // }, {});
-
-    // Combine the player and stats data, handling null stats
-    // const combinedResult = result.map((dbPlayer) => {
-    //   const player = dbPlayer['players'];
-    //   // console.log(player);
-    //   const stats: PlayerStats | null = dbPlayer['player_stats'];
-
-    //   // const defaultAverages:  =
-
-    //   // If stats is null, provide default values
-    //   const defaultStats: PlayerStats = {
-    //     player_id: player.id,
-    //     stat_id: 0,
-    //     points: 23,
-    //     min: '',
-    //     fgm: 0,
-    //     fga: 0,
-    //     fgp: '',
-    //     ftm: 0,
-    //     fta: 0,
-    //     ftp: '',
-    //     tpm: 0,
-    //     tpa: 0,
-    //     tpp: '',
-    //     offReb: 0,
-    //     defReb: 0,
-    //     totReb: 0,
-    //     assists: 0,
-    //     pFouls: 0,
-    //     steals: 0,
-    //     turnovers: 0,
-    //     blocks: 0,
-    //     plusMinus: '',
-    //   };
-
-    //   // Combine player and stats, using defaultStats if stats is null
-    //   return {
-    //     ...player,
-    //     stats: stats || defaultStats,
-    //   };
-    // });
-
-    // Convert the grouped data into an array and add picture URLs
-    // Add picture URLs
-    const playersWithPictures = result.map((player) => {
+    return topPlayers.map((player) => {
       const pictureUrl = `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/1040x760/${player.id}.png`;
-      return { ...player, picture: pictureUrl };
+      return playerSchema.parse({ ...player, picture: pictureUrl });
     });
-
-    // Parse each player object using the schema
-    return playersWithPictures.map((playerData) =>
-      playerSchema.parse(playerData),
-    );
-
-    // console.log(combinedResult);
-    // return combinedResult.map((dbPlayer) => playerSchema.parse(dbPlayer));
-    // Parse each player object using the schema
   } catch (error) {
-    throw new Error(
-      'Failed to fetch players data - Function: fetchPlayerData()' + error,
-    );
+    throw new Error('Failed to fetch players data: ' + error);
   }
 }
 

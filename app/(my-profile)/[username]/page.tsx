@@ -34,10 +34,10 @@ export default async function Page({
 }) {
   const { getUser, isAuthenticated } = getKindeServerSession();
   const loggedInUser = await getUser();
-  console.log('Logged in user:' + JSON.stringify(loggedInUser, null, 2));
+  // console.log('Logged in user:' + JSON.stringify(loggedInUser, null, 2));
 
   const user: User = await fetchUserDataByUsername((await params).username);
-  console.log('We are visiting: ' + JSON.stringify(user, null, 2));
+  // console.log('We are visiting: ' + JSON.stringify(user, null, 2));
 
   if (!user) return notFound();
 

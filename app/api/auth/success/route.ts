@@ -6,8 +6,8 @@ import { createUser, updateUserUsername } from '@/app/lib/data';
 import { cookies } from 'next/headers';
 
 export async function GET(request: Request) {
-  const cookieStore = cookies();
-  const username = (await cookieStore).get('temp_username')?.value;
+  const cookieStore = await cookies();
+  const username = cookieStore.get('temp_username')?.value;
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
@@ -41,7 +41,7 @@ export async function GET(request: Request) {
         await updateUserUsername(user.id, username);
       }
 
-      (await cookieStore).delete('temp_username');
+      cookieStore.delete('temp_username');
     }
   }
 
