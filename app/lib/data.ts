@@ -29,62 +29,61 @@ import {
 import { db } from '@/db';
 import { cache } from 'react';
 
-// export async function fetchPlayerData(): Promise<Player[]> {
-//   noStore();
-//   try {
-//     // Perform a join between players and player_stats
-//     const result = await db.select().from(players).limit(10);
-
-//     // Convert the grouped data into an array and add picture URLs
-//     // Add picture URLs
-//     const playersWithPictures = result.map((player) => {
-//       const pictureUrl = `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/1040x760/${player.id}.png`;
-//       return { ...player, picture: pictureUrl };
-//     });
-
-//     // Parse each player object using the schema
-//     return playersWithPictures.map((playerData) =>
-//       playerSchema.parse(playerData),
-//     );
-
-//   } catch (error) {
-//     throw new Error(
-//       'Failed to fetch players data - Function: fetchPlayerData()' + error,
-//     );
-//   }
-// }
-// Cache the database call using React's cache function
-// Cache the top players query for 24 hours
-const getTopScoringPlayers = unstable_cache(
-  async () => {
-    try {
-      // Assuming you have a player_stats table and a relation to players
-      const result = await db.select().from(players).limit(10);
-
-      return result;
-    } catch (error) {
-      throw new Error('Failed to fetch top scoring players: ' + error);
-    }
-  },
-  ['top-scorers-cache'],
-  {
-    revalidate: 86400, // 24 hours in seconds
-    tags: ['top-scorers'], // For manual revalidation if needed
-  },
-);
-
 export async function fetchPlayerData(): Promise<Player[]> {
+  noStore();
   try {
-    const topPlayers = await getTopScoringPlayers();
+    // Perform a join between players and player_stats
+    const result = await db.select().from(players).limit(10);
 
-    return topPlayers.map((player) => {
+    // Convert the grouped data into an array and add picture URLs
+    // Add picture URLs
+    const playersWithPictures = result.map((player) => {
       const pictureUrl = `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/1040x760/${player.id}.png`;
-      return playerSchema.parse({ ...player, picture: pictureUrl });
+      return { ...player, picture: pictureUrl };
     });
+
+    // Parse each player object using the schema
+    return playersWithPictures.map((playerData) =>
+      playerSchema.parse(playerData),
+    );
   } catch (error) {
-    throw new Error('Failed to fetch players data: ' + error);
+    throw new Error(
+      'Failed to fetch players data - Function: fetchPlayerData()' + error,
+    );
   }
 }
+// Cache the database call using React's cache function
+// Cache the top players query for 24 hours
+// const getTopScoringPlayers = unstable_cache(
+//   async () => {
+//     try {
+//       // Assuming you have a player_stats table and a relation to players
+//       const result = await db.select().from(players).limit(10);
+
+//       return result;
+//     } catch (error) {
+//       throw new Error('Failed to fetch top scoring players: ' + error);
+//     }
+//   },
+//   ['top-scorers-cache'],
+//   {
+//     revalidate: 86400, // 24 hours in seconds
+//     tags: ['top-scorers'], // For manual revalidation if needed
+//   },
+// );
+
+// export async function fetchPlayerData(): Promise<Player[]> {
+//   try {
+//     const topPlayers = await getTopScoringPlayers();
+
+//     return topPlayers.map((player) => {
+//       const pictureUrl = `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/1040x760/${player.id}.png`;
+//       return playerSchema.parse({ ...player, picture: pictureUrl });
+//     });
+//   } catch (error) {
+//     throw new Error('Failed to fetch players data: ' + error);
+//   }
+// }
 
 export async function fetchPlayerDataByID(id: number): Promise<Player | null> {
   const playerResult = await db

@@ -73,14 +73,13 @@ export function PlayerStatsChart({ stats }: PlayerStatsChartProps) {
 
   return (
     <>
-      {/* <Card> */}
       <div className="w-full md:w-4/6">
-        <CardHeader className="p-1 md:p-4 lg:px-6">
+        <CardHeader className="p-1 md:p-4 lg:px-4 lg:py-0">
           <CardTitle className="text-3xl">Pulse Rating (PR)</CardTitle>
           <CardDescription>Last {stats.length} games</CardDescription>
         </CardHeader>
 
-        <CardContent className="flex flex-col items-start justify-start p-1 md:flex-row md:p-4 lg:px-6">
+        <CardContent className="flex flex-col items-start justify-start p-1 md:flex-row md:p-4 lg:px-4">
           <ResponsiveContainer
             width="100%"
             height={'min-h-[fit-content]'}
@@ -135,7 +134,7 @@ export function PlayerStatsChart({ stats }: PlayerStatsChartProps) {
           </CardContent>
         </CardContent>
 
-        <CardFooter className="flex-col items-start gap-2 p-1 text-sm md:p-4 lg:pt-0">
+        <CardFooter className="flex-col items-start gap-2 p-1 text-sm md:p-4 lg:px-4 lg:pt-0">
           <div className="flex gap-2 font-medium leading-none">
             {pointsDifference >= 0 ? 'Up' : 'Down'} by{' '}
             {Math.abs(percentageDifference).toFixed(1)}% from average
@@ -149,7 +148,6 @@ export function PlayerStatsChart({ stats }: PlayerStatsChartProps) {
           </div>
         </CardFooter>
       </div>
-      {/* </Card> */}
     </>
   );
 }

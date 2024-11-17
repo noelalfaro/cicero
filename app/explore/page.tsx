@@ -1,5 +1,5 @@
 import Players from '@/components/players';
-import ExploreTableSkeleton from '@/components/skeletons';
+import { ExploreTableSkeleton } from '@/components/skeletons';
 import { Suspense } from 'react';
 
 export default async function Page() {

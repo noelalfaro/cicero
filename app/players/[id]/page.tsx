@@ -10,14 +10,14 @@ import {
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { PlayerStatsChart } from '@/components/player-stats-chart';
-import { Divider } from '@mui/material';
-import { ArrowDownIcon, ArrowUpIcon, Car } from 'lucide-react';
+import { PlayerCardSkeleton } from '@/components/skeletons';
 
 export default async function PlayerDetails({
   params,
 }: {
   params: Promise<Player>;
 }) {
+  // unstable_noStore();
   const { id } = await params;
   const player: Player | null = await fetchPlayerDataByID(id);
 
@@ -35,8 +35,8 @@ export default async function PlayerDetails({
   const latestGame = player.stats!.length - 1;
 
   return (
-    <Card className="flex w-full flex-col items-center gap-1 p-2 md:flex-row">
-      <CardHeader className="w-full gap-1 p-1 md:w-2/6 md:gap-0 md:p-2 lg:p-6">
+    <Card className="flex h-fit w-full flex-col items-center gap-1 p-2 md:flex-row lg:min-h-[550px]">
+      <CardHeader className="w-full gap-1 p-1 md:h-full md:w-2/6 md:justify-center md:gap-1 md:p-2 lg:p-6">
         <CardContent className="flex max-w-full justify-center pb-0">
           <div className="relative flex h-[250px] w-full max-w-[250px] self-center">
             <Image
@@ -55,12 +55,12 @@ export default async function PlayerDetails({
           {player.team_city} {player.team_name}
         </CardDescription>
         <Button variant={'secondary'}>Add to Watchlist</Button>
+        <Button variant={'secondary'}>More Info</Button>
       </CardHeader>
 
       <PlayerStatsChart stats={player.stats ?? []} />
     </Card>
-    // {/* <div className="w-full md:w-6/12 lg:w-8/12 xl:w-9/12">
-    //   <PlayerStatsChart stats={player.stats ?? []} />
-    // </div> */}
+
+    // <PlayerCardSkeleton />
   );
 }
