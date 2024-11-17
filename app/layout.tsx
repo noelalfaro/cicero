@@ -32,7 +32,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <main className="container flex h-screen w-full max-w-7xl flex-col items-center">
-              <NavWrapper />
+              <Nav />
               {children}
             </main>
           </ThemeProvider>
