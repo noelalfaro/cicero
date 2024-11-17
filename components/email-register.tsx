@@ -87,9 +87,7 @@ export const EmailRegister = (props: {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       // Set a cookie with the username
-      setCookie('temp_username', values.username, {
-        maxAge: 300, // 5 minutes
-      });
+      setCookie('temp_username', values.username);
       // Navigate to the registration page with username as a parameter
       router.push(
         `/api/auth/register?connection_id=${props.emailConnectionId}&login_hint=${values.email}`,
