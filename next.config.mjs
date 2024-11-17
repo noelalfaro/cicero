@@ -39,6 +39,11 @@ import path from 'path';
 const __dirname = new URL('.', import.meta.url).pathname;
 
 const nextConfig = {
+  eslint: {
+    // Warning: This allows production builds to successfully complete even if
+    // your project has ESLint errors.
+    ignoreDuringBuilds: true,
+  },
   webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,

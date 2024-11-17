@@ -2,7 +2,10 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
+// import Nav from '@/components/nav';
+// import NavWrapper from '@/components/nav-wrapper';
 import Nav from '@/components/nav';
+import NavWrapper from '@/components/nav-wrapper';
 import { ViewTransitions } from 'next-view-transitions';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -29,7 +32,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <main className="container flex h-screen w-full max-w-7xl flex-col items-center">
-              <Nav />
+              <NavWrapper />
               {children}
             </main>
           </ThemeProvider>

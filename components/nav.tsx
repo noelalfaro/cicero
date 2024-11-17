@@ -14,7 +14,6 @@ import {
 import { Button } from '@/components/ui/button';
 import { Link } from 'next-view-transitions';
 
-// Add force-dynamic since we're using authentication
 export const dynamic = 'force-dynamic';
 
 const Nav = async () => {
