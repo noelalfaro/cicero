@@ -1,11 +1,10 @@
 import type { Metadata } from 'next';
+import { GeistSans } from 'geist/font/sans';
+import { GeistMono } from 'geist/font/mono';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
-// import Nav from '@/components/nav';
-// import NavWrapper from '@/components/nav-wrapper';
 import Nav from '@/components/nav';
-import NavWrapper from '@/components/nav-wrapper';
 import { ViewTransitions } from 'next-view-transitions';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -31,7 +30,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <main className="container flex h-screen w-full max-w-7xl flex-col items-center">
+            <main className="container flex min-h-screen w-full max-w-7xl flex-col px-[1rem] lg:px-[2rem]">
               <Nav />
               {children}
             </main>
