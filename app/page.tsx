@@ -14,9 +14,9 @@ export default async function Home() {
       {/* Container for the page */}
       <div className="flex min-h-screen flex-col">
         {/* Hero section */}
-        <section className="flex min-h-screen w-full flex-col items-start justify-center gap-2">
+        <section className="flex min-h-screen w-full flex-col items-start justify-end gap-2 pb-20 md:justify-center md:gap-2 md:pb-0">
           <div className="flex w-fit flex-col">
-            <h1 className="w-full text-5xl font-bold md:text-8xl">
+            <h1 className={`w-full text-5xl font-bold md:text-8xl lg:text-9xl`}>
               PROSPECT <br /> PORTFOLIO
             </h1>
             <h2 className="lg:text-2xl">

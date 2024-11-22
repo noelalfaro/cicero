@@ -6,7 +6,6 @@ import './globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
 import Nav from '@/components/nav';
 import { ViewTransitions } from 'next-view-transitions';
-
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -23,7 +22,7 @@ export default function RootLayout({
   return (
     <ViewTransitions>
       <html lang="en">
-        <body className={inter.className}>
+        <body className={` ${inter.className}`}>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
