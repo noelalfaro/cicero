@@ -14,7 +14,7 @@ export default async function Home() {
       {/* Container for the page */}
       <div className="flex min-h-screen flex-col">
         {/* Hero section */}
-        <section className="flex min-h-screen w-full flex-col items-start justify-end gap-4 pb-10 text-left md:gap-2 md:pb-0">
+        <section className="flex min-h-screen w-full flex-col items-start justify-end gap-4 pb-10 text-left md:justify-center md:gap-2 md:pb-0">
           <div className="flex w-fit flex-col">
             <h1 className={`w-full text-5xl font-bold md:text-8xl lg:text-9xl`}>
               PROSPECT <br /> PORTFOLIO
@@ -27,7 +27,7 @@ export default async function Home() {
 
           <div className="flex w-full justify-start gap-2 self-end text-center md:w-fit md:justify-end md:gap-2 lg:grid-cols-4 lg:text-left">
             <Link href={'/login'} className="w-1/2">
-              <Button className="w-full rounded-xl p-6 text-base">
+              <Button className="w-full rounded-xl p-6 text-base md:rounded-md">
                 Log In
               </Button>
             </Link>
@@ -35,7 +35,7 @@ export default async function Home() {
             <Link href={'/register'} className="w-1/2">
               <Button
                 variant={'secondary'}
-                className="w-full rounded-xl p-6 text-base"
+                className="w-full rounded-xl p-6 text-base md:rounded-md"
               >
                 Register
               </Button>

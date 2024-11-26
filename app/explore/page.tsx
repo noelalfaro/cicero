@@ -5,19 +5,17 @@ import { Suspense } from 'react';
 export default async function Page() {
   return (
     <>
-      <main className="w-full">
-        <div className="flex flex-col gap-2">
-          <h3 className="text-4xl font-bold">Explore</h3>
-          <p>
-            This page will showcase Top Trenders, News Articles, and list
-            notable players.
-          </p>
-        </div>
+      <div className="flex flex-col gap-2">
+        <h3 className="text-4xl font-bold">Explore</h3>
+        <p>
+          This page will showcase Top Trenders, News Articles, and list notable
+          players.
+        </p>
+      </div>
 
-        <Suspense fallback={<ExploreTableSkeleton />}>
-          <Players />
-        </Suspense>
-      </main>
+      <Suspense fallback={<ExploreTableSkeleton />}>
+        <Players />
+      </Suspense>
     </>
   );
 }
