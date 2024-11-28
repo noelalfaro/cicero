@@ -73,18 +73,14 @@ export function PlayerStatsChart({ stats }: PlayerStatsChartProps) {
 
   return (
     <>
-      <div className="w-full md:w-4/6">
-        <CardHeader className="p-1 md:p-4 lg:px-4 lg:py-0">
-          <CardTitle className="text-3xl">Pulse Rating (PR)</CardTitle>
+      <Card className="flex flex-grow flex-col">
+        <CardHeader className="">
+          <CardTitle className="text-2xl">Pulse Rating (PR)</CardTitle>
           <CardDescription>Last {stats.length} games</CardDescription>
         </CardHeader>
 
-        <CardContent className="flex flex-col items-start justify-start p-1 md:flex-row md:p-4 lg:px-4">
-          <ResponsiveContainer
-            width="100%"
-            height={'min-h-[fit-content]'}
-            style={{ padding: '0' }}
-          >
+        <CardContent className="flex flex-grow flex-col items-start justify-start md:flex-row">
+          <ResponsiveContainer width="100%" style={{ padding: '0' }}>
             <ChartContainer
               config={chartConfig}
               className="flex items-center justify-start"
@@ -118,8 +114,8 @@ export function PlayerStatsChart({ stats }: PlayerStatsChartProps) {
               </LineChart>
             </ChartContainer>
           </ResponsiveContainer>
-          <CardContent className="flex w-full flex-col justify-start gap-2 p-0 md:w-1/4 md:p-0">
-            <CardHeader className="text-center text-8xl font-bold">
+          <CardContent className="flex h-full w-full flex-col justify-start gap-2 p-0 md:w-1/4 md:p-0">
+            <CardHeader className="text-center text-7xl font-bold">
               {stats[latestGame].points}
               <div className="text-sm text-muted-foreground">
                 Pulse Rating (PR)
@@ -134,7 +130,7 @@ export function PlayerStatsChart({ stats }: PlayerStatsChartProps) {
           </CardContent>
         </CardContent>
 
-        <CardFooter className="flex-col items-start gap-2 p-1 text-sm md:p-4 lg:px-4 lg:pt-0">
+        <CardFooter className="flex-col items-start gap-2 text-sm">
           <div className="flex gap-2 font-medium leading-none">
             {pointsDifference >= 0 ? 'Up' : 'Down'} by{' '}
             {Math.abs(percentageDifference).toFixed(1)}% from average
@@ -147,7 +143,7 @@ export function PlayerStatsChart({ stats }: PlayerStatsChartProps) {
             {averagePoints.toFixed(1)})
           </div>
         </CardFooter>
-      </div>
+      </Card>
     </>
   );
 }

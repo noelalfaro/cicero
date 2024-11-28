@@ -35,32 +35,36 @@ export default async function PlayerDetails({
   const latestGame = player.stats!.length - 1;
 
   return (
-    <Card className="flex h-fit w-full flex-col items-center gap-1 p-2 md:flex-row lg:min-h-[550px]">
-      <CardHeader className="w-full gap-1 p-1 md:h-full md:w-2/6 md:justify-center md:gap-1 md:p-2 lg:p-6">
-        <CardContent className="flex max-w-full justify-center pb-0">
-          <div className="relative flex h-[250px] w-full max-w-[250px] self-center">
-            <Image
-              src={player.picture!}
-              alt={`${player.id}.png`}
-              fill={true}
-              className="rounded-full object-cover"
-              priority={true}
-            />
-          </div>
-        </CardContent>
-        <CardTitle>
-          {player.first_name} {player.last_name}
-        </CardTitle>
-        <CardDescription className="">
-          {player.team_city} {player.team_name}
-        </CardDescription>
-        <Button variant={'secondary'}>Add to Watchlist</Button>
-        <Button variant={'secondary'}>More Info</Button>
-      </CardHeader>
+    <>
+      <div className="flex w-full flex-col gap-2 lg:flex-row">
+        <Card className="flex w-full flex-col gap-1 rounded-xl border bg-card text-card-foreground shadow-sm md:w-[300px]">
+          <CardHeader className="flex w-full flex-col pb-0 md:justify-center md:gap-1">
+            <div className="relative flex h-[250px] w-full max-w-[250px] self-center">
+              <Image
+                src={player.picture!}
+                alt={`${player.id}.png`}
+                fill={true}
+                className="rounded-full object-cover"
+                priority={true}
+              />
+            </div>
+            <CardTitle>
+              {player.first_name} {player.last_name}
+            </CardTitle>
+            <CardDescription className="flex-grow text-current">
+              {player.team_city} {player.team_name}
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="flex flex-col">
+            <Button variant={'secondary'}>Add to Watchlist</Button>
+            {/* <Button variant={'secondary'}>More Info</Button> */}
+          </CardContent>
+        </Card>
 
-      <PlayerStatsChart stats={player.stats ?? []} />
-    </Card>
+        <PlayerStatsChart stats={player.stats ?? []} />
 
-    // <PlayerCardSkeleton />
+        {/* <PlayerCardSkeleton /> */}
+      </div>
+    </>
   );
 }
