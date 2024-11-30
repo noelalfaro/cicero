@@ -20,7 +20,7 @@ export default async function Page() {
   return (
     <div className="flex w-full flex-col items-center justify-start">
       <Card className="w-full">
-        <CardHeader className="text-4xl font-bold">
+        <CardHeader className="text-3xl font-bold">
           Dashboard For{' '}
           <Link href={`/${user?.username}`}>
             <p className="font-mono hover:text-primary hover:underline">

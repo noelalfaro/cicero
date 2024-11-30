@@ -44,8 +44,8 @@ export default async function Page({
 
   return (
     <>
-      <div className="flex w-full flex-col gap-2 lg:flex-row">
-        <Card className="flex w-full flex-col md:w-[300px]">
+      <div className="flex w-full flex-col gap-2 md:flex-row">
+        <Card className="flex w-full flex-col gap-1 md:w-[300px]">
           <CardHeader className="w-full gap-1 pb-0 text-start">
             <div className="relative flex h-[250px] w-full max-w-[250px] self-center">
               <Image
@@ -58,19 +58,15 @@ export default async function Page({
 
             <div className="flex flex-col">
               <CardTitle>{user.display_name}</CardTitle>
-              <div className="flex justify-start">
-                <CardDescription>@{user.username}</CardDescription>
-                <Separator
-                  orientation="vertical"
-                  className="h-full text-current"
-                />
-              </div>
+              {/* <div className="flex justify-start"> */}
+              <CardDescription>@{user.username}</CardDescription>
+              {/* </div> */}
             </div>
           </CardHeader>
           <CardContent className="flex flex-col">
-            <CardDescription className="my-2 flex-grow text-base text-current">
+            {/* <CardDescription className="my-2 flex-grow text-base text-current">
               This is an example bio
-            </CardDescription>
+            </CardDescription> */}
 
             {user.id === loggedInUser?.id ? (
               <div className="flex justify-between gap-1">

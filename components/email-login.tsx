@@ -19,7 +19,8 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { checkIfEmailIsValid, doesEmailExistCheck } from '@/app/lib/data';
-import { Divider } from '@mui/material';
+// import { Divider } from '@mui/material';
+import { Separator } from '@/components/ui/separator';
 
 const formSchema = z.object({
   email: z
@@ -101,7 +102,11 @@ export const EmailLogin = (props: {
           </form>
         </Form>
       </div>
-      <Divider className="text-sm text-muted-foreground">Or</Divider>
+      <div className="flex w-full flex-wrap items-center justify-center gap-2 text-xs text-muted-foreground">
+        <Separator orientation="horizontal" className="w-1/4"></Separator>
+        OR
+        <Separator orientation="horizontal" className="w-1/4"></Separator>
+      </div>
     </>
   );
 };

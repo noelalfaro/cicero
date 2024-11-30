@@ -21,7 +21,7 @@ import {
   checkIfUsernameIsTaken,
   doesEmailExistCheck,
 } from '@/app/lib/data';
-import { Divider } from '@mui/material';
+// import { Divider } from '@mui/material';
 import { setCookie } from 'cookies-next';
 
 const reservedRoutes = [
@@ -162,7 +162,7 @@ export const EmailRegister = (props: {
           </form>
         </Form>
       </div>
-      <Divider className="text-sm text-muted-foreground">Or</Divider>
+      {/* <Divider className="text-sm text-muted-foreground">Or</Divider> */}
     </>
   );
 };

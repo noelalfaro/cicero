@@ -36,8 +36,8 @@ export default async function PlayerDetails({
 
   return (
     <>
-      <div className="flex w-full flex-col gap-2 lg:flex-row">
-        <Card className="flex w-full flex-col gap-1 rounded-xl border bg-card text-card-foreground shadow-sm md:w-[300px]">
+      <div className="flex w-full flex-col gap-2 pb-4 md:flex-row">
+        <Card className="flex max-h-fit w-full flex-col gap-1 rounded-xl border bg-card text-card-foreground shadow-sm md:w-[300px]">
           <CardHeader className="flex w-full flex-col pb-0 md:justify-center md:gap-1">
             <div className="relative flex h-[250px] w-full max-w-[250px] self-center">
               <Image
@@ -48,22 +48,21 @@ export default async function PlayerDetails({
                 priority={true}
               />
             </div>
-            <CardTitle>
-              {player.first_name} {player.last_name}
-            </CardTitle>
-            <CardDescription className="flex-grow text-current">
-              {player.team_city} {player.team_name}
-            </CardDescription>
+            <div className="flex flex-col">
+              <CardTitle>
+                {player.first_name} {player.last_name}
+              </CardTitle>
+              <CardDescription>
+                {player.team_city} {player.team_name}
+              </CardDescription>
+            </div>
           </CardHeader>
           <CardContent className="flex flex-col">
             <Button variant={'secondary'}>Add to Watchlist</Button>
-            {/* <Button variant={'secondary'}>More Info</Button> */}
           </CardContent>
         </Card>
 
         <PlayerStatsChart stats={player.stats ?? []} />
-
-        {/* <PlayerCardSkeleton /> */}
       </div>
     </>
   );
