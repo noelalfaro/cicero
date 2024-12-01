@@ -6,10 +6,12 @@ import { createUser, updateUserUsername } from '@/app/lib/data';
 import { cookies } from 'next/headers';
 
 export async function GET(request: Request) {
+  console.log(request);
   const cookieStore = await cookies();
   const username = cookieStore.get('temp_username')?.value;
   const { getUser } = getKindeServerSession();
   const user = await getUser();
+  console.log(user);
 
   const defaultUserImageUrl =
     'https://i.pinimg.com/originals/25/ee/de/25eedef494e9b4ce02b14990c9b5db2d.jpg';

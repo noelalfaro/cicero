@@ -1,17 +1,10 @@
 import { createUploadthing, type FileRouter } from 'uploadthing/next';
 import { UploadThingError } from 'uploadthing/server';
-// import { db } from '@/db/index'; // Adjust the import path as needed
-// import { users } from '@/db/schema'; // Adjust the import path as needed
 import { users } from '@/db/schema/users';
 import { eq } from 'drizzle-orm';
 import { neon } from '@neondatabase/serverless';
 import { drizzle } from 'drizzle-orm/neon-http';
-import { withAuth } from '@kinde-oss/kinde-auth-nextjs/middleware';
-
-// import { KindeClient } from '@kinde-oss/kinde-auth';
-// import { createKindeManagementAPIClient } from '@kinde-oss/kinde-auth-nextjs/server';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
-import { revalidatePath } from 'next/cache';
 import { revalidateUserProfile } from '@/app/actions/actions';
 import { NextRequest } from 'next/server';
 
@@ -21,6 +14,8 @@ const f = createUploadthing();
 const auth = async (req: NextRequest) => {
   try {
     // Get the Kinde server session
+    console.log(req);
+
     const { getUser, isAuthenticated } = getKindeServerSession();
     const user = await getUser();
 
@@ -32,6 +27,7 @@ const auth = async (req: NextRequest) => {
     // Return the authenticated user
     return user;
   } catch (error) {
+    console.log(error);
     throw new UploadThingError('Authentication failed');
   }
 };

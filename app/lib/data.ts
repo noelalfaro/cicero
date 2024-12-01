@@ -1,33 +1,28 @@
 // import 'server-only';
 'use server';
-import { unstable_noStore as noStore, unstable_cache } from 'next/cache';
+import { unstable_noStore as noStore } from 'next/cache';
 
 import { players } from '@/db/schema/players';
 import { users } from '@/db/schema/users';
 import { playerStats } from '@/db/schema/player_stats';
 
-import { eq, desc } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 import {
   playerSchema,
   Player,
   NewsArticle,
   newsArticleSchema,
-  playerStatsSchema,
-  PlayerStats,
   User,
-  userSchema,
 } from '@/app/lib/definitions';
 
 // import { BLACKLISTED_TERMS } from '@/config.js';
 import {
-  DataSet,
   RegExpMatcher,
   englishDataset,
   englishRecommendedTransformers,
 } from 'obscenity';
 
 import { db } from '@/db';
-import { cache } from 'react';
 
 export async function fetchPlayerData(): Promise<Player[]> {
   noStore();
@@ -119,6 +114,7 @@ export async function fetchPlayerDataByID(id: number): Promise<Player | null> {
     // console.log(combinedResult);
     return playerSchema.parse(combinedResult);
   } catch (error) {
+    console.log(error);
     throw new Error('Failed to fetch player data by id');
   }
 
@@ -239,7 +235,7 @@ export async function FetchNewsArticlesByPlayerID(
     const data = await response.json();
     // console.log(data);
     return data.map((article: any) => newsArticleSchema.parse(article));
-  } catch (error) {
+  } catch (error: any) {
     // console.error('Error fetching articles: ', error);
     // throw new Error('Failed to fetch articles data.');
     return null;
@@ -256,7 +252,7 @@ export async function createUser(user: User): Promise<string> {
   // console.log(existingUser);
   if (!existingUser[0]) {
     const result = await db.insert(users).values(user);
-    // console.log(result);
+    console.log(result);
     return 'Successfully inserted user to user database';
   } else {
     return 'User already in database';
@@ -330,7 +326,7 @@ export async function updateUserUsername(userId: string, username: string) {
     .where(eq(users.id, userId));
 }
 
-export async function testDB() {
-  const result = await db.select().from(players).where(eq(players.id, 2544));
-  // console.log(result);
-}
+// export async function testDB() {
+//   const result = await db.select().from(players).where(eq(players.id, 2544));
+//   // console.log(result);
+// }

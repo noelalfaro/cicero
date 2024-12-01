@@ -1,7 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { User } from '@/app/lib/definitions';
-
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import {
@@ -14,7 +13,6 @@ import {
 } from '@/components/ui/dialog';
 import { MoreVertical, ShieldX, Copy, UserCheck } from 'lucide-react';
 import { Label } from '@/components/ui/label';
-import { redirect } from 'next/navigation';
 import {
   Card,
   CardDescription,
@@ -22,7 +20,6 @@ import {
   CardContent,
   CardTitle,
 } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
 import { UserSettings } from '@/components/user-settings-dialog';
 import { EditProfileDialog } from '@/components/edit-profile-dialog';
 import { fetchUserDataByUsername } from '@/app/lib/data';
@@ -33,7 +30,7 @@ export default async function Page({
 }: {
   params: Promise<{ username: string }>;
 }) {
-  const { getUser, isAuthenticated } = getKindeServerSession();
+  const { getUser } = getKindeServerSession();
   const loggedInUser = await getUser();
   // console.log('Logged in user:' + JSON.stringify(loggedInUser, null, 2));
 
