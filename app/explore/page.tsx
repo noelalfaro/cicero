@@ -7,6 +7,7 @@ import {
   CardDescription,
   CardHeader,
 } from '@/components/ui/card';
+import NbaNews from '@/components/nba-news';
 
 export default async function Page() {
   return (
@@ -24,6 +25,9 @@ export default async function Page() {
         <Suspense fallback={<ExploreTableSkeleton />}>
           <Players />
         </Suspense>
+        {/* <Suspense> */}
+        <NbaNews />
+        {/* </Suspense> */}
       </div>
     </>
   );

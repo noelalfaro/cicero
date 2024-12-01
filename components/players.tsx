@@ -26,7 +26,7 @@ async function Players() {
   // console.log(data);
   return (
     <>
-      <Card className="mb-3">
+      <Card>
         <CardHeader className="pb-1">
           <h2 className="text-2xl font-bold">Top Trenders</h2>
         </CardHeader>

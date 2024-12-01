@@ -7,8 +7,13 @@ import {
 import { Button } from '@/components/ui/button';
 import { Link } from 'next-view-transitions';
 import React from 'react';
+import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
+import { redirect } from 'next/navigation';
 
 export default async function Home() {
+  const { isAuthenticated } = getKindeServerSession();
+
+  (await isAuthenticated()) ? redirect('/dashboard') : null;
   return (
     <>
       {/* Container for the page */}
