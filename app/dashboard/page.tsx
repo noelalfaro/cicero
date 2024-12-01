@@ -29,12 +29,10 @@ export default async function Page() {
           </Link>
         </CardHeader>
         <CardContent className="flex flex-col">
-          <div className="text-balance">
-            Welcome to Prospect Portfolio! <br /> We're still under active
-            development. <br /> I welcome you to navigate to the different pages
-            in the nav above or click on a link below to explore what a player's
-            individual page currently looks like.
-          </div>
+          Welcome to Prospect Portfolio! <br /> We're still under active
+          development. <br /> I welcome you to navigate to the different pages
+          in the nav above or click on a link below to explore what a player's
+          individual page currently looks like.
           <div className="flex w-full flex-col justify-center md:flex-row">
             <Link href={'/players/2544'}>
               <Button variant={'link'}>Link to Lebron's Page</Button>

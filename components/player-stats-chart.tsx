@@ -27,6 +27,8 @@ import {
   ChartConfig,
 } from '@/components/ui/chart';
 import { Button } from '@/components/ui/button';
+import NumberFlow from '@number-flow/react';
+import PlayerTicker from '@/components/player-ticker';
 
 interface PlayerStatsChartProps {
   stats: PlayerStats[];
@@ -118,9 +120,11 @@ export function PlayerStatsChart({ stats }: PlayerStatsChartProps) {
               </LineChart>
             </ChartContainer>
           </ResponsiveContainer>
-          <div className="flex h-full w-full flex-grow flex-col items-center justify-center gap-3 px-2 md:w-1/4 md:gap-1">
+          <PlayerTicker latestScore={stats[latestGame].points} />
+          {/* <div className="flex h-full w-full flex-grow flex-col items-center justify-center gap-3 px-2 md:w-1/4 md:gap-1">
             <CardHeader className="p-0 text-center text-8xl font-bold md:text-6xl">
               {stats[latestGame].points}
+
               <div className="text-sm text-muted-foreground">
                 Pulse Rating (PR)
               </div>
@@ -131,7 +135,7 @@ export function PlayerStatsChart({ stats }: PlayerStatsChartProps) {
             <Button className="w-full rounded-md" variant={'destructive'}>
               Sell <ArrowDownIcon className="ml-2 h-4 w-4" />
             </Button>
-          </div>
+          </div> */}
         </CardContent>
 
         <CardFooter className="flex-col items-start gap-2 text-sm">
