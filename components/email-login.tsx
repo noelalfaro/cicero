@@ -18,7 +18,10 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { checkIfEmailIsValid, doesEmailExistCheck } from '@/app/lib/data';
+import {
+  checkIfEmailIsValid,
+  doesEmailExistCheck,
+} from '@/app/lib/data/registration';
 // import { Divider } from '@mui/material';
 import { Separator } from '@/components/ui/separator';
 

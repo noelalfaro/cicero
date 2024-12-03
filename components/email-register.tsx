@@ -20,7 +20,7 @@ import {
   checkIfUsernameIsInBlacklist,
   checkIfUsernameIsTaken,
   doesEmailExistCheck,
-} from '@/app/lib/data';
+} from '@/app/lib/data/registration';
 // import { Divider } from '@mui/material';
 import { setCookie } from 'cookies-next';
 
