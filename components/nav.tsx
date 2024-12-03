@@ -62,7 +62,6 @@ async function DynamicUserProfile() {
         <Link href={'/login'}>
           <Button>Log In</Button>
         </Link>
-        <LogoutLink>Logout</LogoutLink>
       </>
     );
   }
