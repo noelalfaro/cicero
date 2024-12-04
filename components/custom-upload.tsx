@@ -7,8 +7,8 @@ import { useUploadThing } from '@/utils/uploadthing';
 import { Upload } from 'lucide-react';
 import RotateLoader from 'react-spinners/RotateLoader';
 
-import { revalidateUserProfile } from '@/app/actions/actions';
-import { User } from '@/app/lib/definitions';
+import { revalidateUserProfile } from '@/app/(main)/actions/actions';
+import { User } from '@/app/(main)/lib/definitions';
 import Image from 'next/image';
 import React from 'react';
 

@@ -1,26 +1,26 @@
-import { config } from "dotenv";
-config({ path: ".env.local" });
-import { Player, playerSchema } from "@/app/lib/definitions";
-import { neon } from "@neondatabase/serverless";
-import { drizzle } from "drizzle-orm/neon-http";
-import { players } from "@/db/schema/players";
-import { z } from "zod";
+import { config } from 'dotenv';
+config({ path: '.env.local' });
+import { Player, playerSchema } from '@/app/(main)/lib/definitions';
+import { neon } from '@neondatabase/serverless';
+import { drizzle } from 'drizzle-orm/neon-http';
+import { players } from '@/db/schema/players';
+import { z } from 'zod';
 
 async function fetchPlayerDataFromAPI() {
   const apiKey = process.env.RAPID_API_KEY;
 
   if (!apiKey) {
     throw new Error(
-      "RAPID_API_KEY is not defined in the environment variables",
+      'RAPID_API_KEY is not defined in the environment variables',
     );
   }
 
-  const baseUrl = "https://api-nba-v1.p.rapidapi.com/players?";
+  const baseUrl = 'https://api-nba-v1.p.rapidapi.com/players?';
   const options = {
-    method: "GET",
+    method: 'GET',
     headers: {
-      "X-RapidAPI-Key": apiKey,
-      "X-RapidAPI-Host": "api-nba-v1.p.rapidapi.com",
+      'X-RapidAPI-Key': apiKey,
+      'X-RapidAPI-Host': 'api-nba-v1.p.rapidapi.com',
     },
   };
 
@@ -68,24 +68,24 @@ async function fetchPlayerDataFromAPI() {
           leagues: {
             jersey: player.leagues?.standard?.jersey ?? 0, // Default to 0 if not provided
             active: player.leagues?.standard?.active ?? false, // Default to false if not provided
-            pos: player.leagues?.standard?.pos ?? "", // Default to empty string if not provided
+            pos: player.leagues?.standard?.pos ?? '', // Default to empty string if not provided
           },
           birth: {
-            date: player.birth?.date ?? "",
-            country: player.birth?.country ?? "",
+            date: player.birth?.date ?? '',
+            country: player.birth?.country ?? '',
           },
           nba_start: player.nba?.start ?? 0,
           nba_pro: player.nba?.pro ?? 0, // Default to 0 if not provided
           height: {
-            feets: player.height?.feets ?? "",
-            inches: player.height?.inches ?? "",
-            meters: player.height?.meters ?? "",
+            feets: player.height?.feets ?? '',
+            inches: player.height?.inches ?? '',
+            meters: player.height?.meters ?? '',
           },
           weight: {
-            pounds: player.weight?.pounds ?? "",
-            kilograms: player.weight?.kilograms ?? "",
+            pounds: player.weight?.pounds ?? '',
+            kilograms: player.weight?.kilograms ?? '',
           },
-          college: player.college ?? "",
+          college: player.college ?? '',
         });
       }
     }
@@ -97,7 +97,7 @@ async function fetchPlayerDataFromAPI() {
     // const sql = neon(process.env.DRIZZLE_DATABASE_URL!);
     // const db = drizzle(sql);
     // await db.insert(players).values(formattedPlayers);
-    console.log("Seed done");
+    console.log('Seed done');
   } catch (error) {
     console.error(error);
   }

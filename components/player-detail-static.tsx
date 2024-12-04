@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-import { Player } from '@/app/lib/definitions';
+import { Player } from '@/app/(main)/lib/definitions';
 
 export function PlayerDetailsStatic({ player }: { player: Player }) {
   return (

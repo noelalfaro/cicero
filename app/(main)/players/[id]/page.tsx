@@ -1,8 +1,8 @@
-import { fetchPlayerDataByID } from '@/app/lib/data';
+import { fetchPlayerDataByID } from '@/app/(main)/lib/data';
 import { PlayerDetailsStatic } from '@/components/player-detail-static';
 import { PlayerCardSkeleton } from '@/components/skeletons';
 import { PlayerStatsChart } from '@/components/player-stats-chart';
-import { Player } from '@/app/lib/definitions';
+import { Player } from '@/app/(main)/lib/definitions';
 
 type Props = {
   params: Promise<{ id: string }>;

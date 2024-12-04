@@ -1,4 +1,4 @@
-import { User } from '@/app/lib/definitions';
+import { User } from '@/app/(main)/lib/definitions';
 import {
   Dialog,
   DialogContent,

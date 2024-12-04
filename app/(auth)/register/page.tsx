@@ -1,7 +1,6 @@
-import { LoginLink } from '@kinde-oss/kinde-auth-nextjs/server';
+import { RegisterLink } from '@kinde-oss/kinde-auth-nextjs/server';
 import { OAuthIcon } from '@/components/oAuthButton';
-
-import { getConnections } from '@/app/lib/misc';
+import { getConnections } from '@/app/(main)/lib/misc';
 import { Link } from 'next-view-transitions';
 
 import {
@@ -11,12 +10,9 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { EmailRegister } from '@/components/email-register';
 
-import { EmailLogin } from '@/components/email-login';
-
-export const dynamic = 'force-dynamic';
-
-export default async function Login() {
+export default async function Register() {
   const connections = await getConnections();
   // console.log(connections);
   const emailConnectionId = connections?.find(
@@ -27,36 +23,36 @@ export default async function Login() {
     <div className="flex min-h-screen w-full items-center justify-center self-center text-left">
       <Card className="w-full md:w-1/2 lg:w-4/12">
         <CardHeader>
-          <CardTitle className="text-2xl">Login</CardTitle>
+          <CardTitle className="text-2xl">Create an Account</CardTitle>
           <CardDescription>
-            Enter your email or login via Github below.
+            Enter your email & username to register.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid gap-4">
-            <EmailLogin emailConnectionId={emailConnectionId} />
+            <EmailRegister emailConnectionId={emailConnectionId} />
 
             <div className="flex flex-col gap-2">
               {connections
                 ?.filter((conn: any) => conn.strategy.includes('oauth2'))
                 .map((connection: any) => (
-                  <LoginLink
+                  <RegisterLink
                     key={connection.id}
                     authUrlParams={{ connection_id: connection.id }}
                   >
                     <OAuthIcon
                       provider={connection.display_name}
-                      login={true}
+                      login={false}
                     />
-                  </LoginLink>
+                  </RegisterLink>
                 ))}
             </div>
-          </div>
-          <div className="mt-4 text-center text-sm">
-            Don&apos;t have an account?{' '}
-            <Link href={'/register'} className="underline">
-              Sign up
-            </Link>
+            <div className="mt-4 text-center text-sm">
+              Already have an account?{' '}
+              <Link href="/login" className="underline">
+                Log in
+              </Link>
+            </div>
           </div>
         </CardContent>
       </Card>

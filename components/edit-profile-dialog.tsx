@@ -1,7 +1,7 @@
 'use client';
 
-import { User } from '@/app/lib/definitions';
-import { updateUserFormSchema } from '@/app/lib/definitions';
+import { User } from '@/app/(main)/lib/definitions';
+import { updateUserFormSchema } from '@/app/(main)/lib/definitions';
 import {
   Dialog,
   DialogContent,
@@ -25,7 +25,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { updateUserProfile } from '@/app/actions/updateUserProfile';
+import { updateUserProfile } from '@/app/(main)/actions/updateUserProfile';
 import { useState } from 'react';
 import Image from 'next/image';
 import { Upload } from 'lucide-react';

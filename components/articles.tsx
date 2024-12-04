@@ -1,4 +1,4 @@
-import { fetchNewsArticles } from '@/app/lib/data';
+import { fetchNewsArticles } from '@/app/(main)/lib/data';
 import Link from 'next/link';
 import {
   Card,
@@ -8,7 +8,7 @@ import {
   CardDescription,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { NewsArticle } from '@/app/lib/definitions';
+import { NewsArticle } from '@/app/(main)/lib/definitions';
 
 export default async function Articles() {
   // const data: NewsArticle[] | null = await fetchNewsArticles();

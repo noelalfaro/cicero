@@ -10,7 +10,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from 'recharts';
-import { PlayerStats } from '@/app/lib/definitions'; // Adjust the import path as necessary
+import { PlayerStats } from '@/app/(main)/lib/definitions'; // Adjust the import path as necessary
 
 import {
   Card,

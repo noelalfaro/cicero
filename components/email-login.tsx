@@ -21,7 +21,7 @@ import {
 import {
   checkIfEmailIsValid,
   doesEmailExistCheck,
-} from '@/app/lib/data/registration';
+} from '@/app/(main)/lib/data/registration';
 // import { Divider } from '@mui/material';
 import { Separator } from '@/components/ui/separator';
 

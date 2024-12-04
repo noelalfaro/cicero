@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
-import { User } from '@/app/lib/definitions';
+import { User } from '@/app/(main)/lib/definitions';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import {
@@ -22,7 +22,7 @@ import {
 } from '@/components/ui/card';
 import { UserSettings } from '@/components/user-settings-dialog';
 import { EditProfileDialog } from '@/components/edit-profile-dialog';
-import { fetchUserDataByUsername } from '@/app/lib/data';
+import { fetchUserDataByUsername } from '@/app/(main)/lib/data';
 
 // Rest of your page code
 export default async function Page({

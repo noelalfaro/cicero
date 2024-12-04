@@ -1,4 +1,4 @@
-import { User } from '@/app/lib/definitions';
+import { User } from '@/app/(main)/lib/definitions';
 import { notFound } from 'next/navigation';
 
 export async function UserCodeBlock({ user }: { user: User }) {

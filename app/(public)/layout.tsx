@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import './globals.css';
+import '../globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
 import Nav from '@/components/nav';
 import { ViewTransitions } from 'next-view-transitions';
@@ -28,7 +28,6 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <main className="container flex min-h-screen w-full max-w-7xl flex-col px-[1rem] lg:px-[2rem]">
-              <Nav />
               {children}
             </main>
           </ThemeProvider>

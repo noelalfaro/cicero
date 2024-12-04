@@ -5,7 +5,7 @@ import { eq } from 'drizzle-orm';
 import { neon } from '@neondatabase/serverless';
 import { drizzle } from 'drizzle-orm/neon-http';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
-import { revalidateUserProfile } from '@/app/actions/actions';
+import { revalidateUserProfile } from '@/app/(main)/actions/actions';
 import { NextRequest } from 'next/server';
 
 const f = createUploadthing();

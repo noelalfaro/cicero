@@ -13,7 +13,7 @@ import {
   NewsArticle,
   newsArticleSchema,
   User,
-} from '@/app/lib/definitions';
+} from '@/app/(main)/lib/definitions';
 
 // import { BLACKLISTED_TERMS } from '@/config.js';
 

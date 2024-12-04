@@ -1,25 +1,25 @@
-import { config } from "dotenv";
-config({ path: ".env.local" });
-import { Team } from "@/app/lib/definitions";
-import { neon } from "@neondatabase/serverless";
-import { drizzle } from "drizzle-orm/neon-http";
-import { teams } from "@/db/schema/teams";
+import { config } from 'dotenv';
+config({ path: '.env.local' });
+import { Team } from '@/app/(main)/lib/definitions';
+import { neon } from '@neondatabase/serverless';
+import { drizzle } from 'drizzle-orm/neon-http';
+import { teams } from '@/db/schema/teams';
 
 async function fetchTeamDataFromAPI() {
   const apiKey = process.env.RAPID_API_KEY;
 
   if (!apiKey) {
     throw new Error(
-      "RAPID_API_KEY is not defined in the environment variables",
+      'RAPID_API_KEY is not defined in the environment variables',
     );
   }
 
-  const url = "https://api-nba-v1.p.rapidapi.com/teams?";
+  const url = 'https://api-nba-v1.p.rapidapi.com/teams?';
   const options = {
-    method: "GET",
+    method: 'GET',
     headers: {
-      "X-RapidAPI-Key": apiKey,
-      "X-RapidAPI-Host": "api-nba-v1.p.rapidapi.com",
+      'X-RapidAPI-Key': apiKey,
+      'X-RapidAPI-Host': 'api-nba-v1.p.rapidapi.com',
     },
   };
 
