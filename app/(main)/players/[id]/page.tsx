@@ -3,7 +3,9 @@ import { PlayerDetailsStatic } from '@/components/player-detail-static';
 import { PlayerCardSkeleton } from '@/components/skeletons';
 import { PlayerStatsChart } from '@/components/player-stats-chart';
 import { Player } from '@/app/(main)/lib/definitions';
-
+import PlayerNews from '@/components/player-news';
+import PlayerAiSummary from '@/components/player-ai-summary';
+import PlayerActionBar from '@/components/player-action-bar';
 type Props = {
   params: Promise<{ id: string }>;
 };
@@ -36,9 +38,16 @@ export default async function PlayerDetailsPage({ params }: Props) {
   }
 
   return (
-    <div className="flex w-full flex-col gap-2 pb-4 md:flex-row">
-      <PlayerDetailsStatic player={player} />
-      <PlayerStatsChart stats={player.stats ?? []} />
-    </div>
+    <>
+      <div className="flex w-full flex-col gap-2 md:flex-row md:flex-wrap">
+        <PlayerDetailsStatic player={player} />
+        <PlayerStatsChart stats={player.stats ?? []} />
+        <PlayerActionBar />
+        <div className="mb-3 flex w-full flex-wrap gap-2 md:flex-nowrap">
+          <PlayerNews />
+          <PlayerAiSummary />
+        </div>
+      </div>
+    </>
   );
 }

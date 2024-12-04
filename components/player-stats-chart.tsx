@@ -43,14 +43,24 @@ const chartConfig = {
 
 export function PlayerStatsChart({ stats }: PlayerStatsChartProps) {
   if (!stats || stats.length === 0) {
-    return <div>No stats available</div>;
+    return (
+      <Card className="flex flex-grow flex-col items-center justify-center">
+        <CardHeader>
+          <CardTitle>No Performance Data</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-muted-foreground">
+            This player doesn't have any game stats yet.
+          </p>
+        </CardContent>
+      </Card>
+    );
   }
 
   const chartData = stats.map((stat) => ({
     game: `Game ${stat.stat_id}`,
     points: stat.points,
   }));
-  // console.log('chart data: ' + JSON.stringify(stats));
 
   const latestGame = stats!.length - 1;
 
@@ -75,7 +85,7 @@ export function PlayerStatsChart({ stats }: PlayerStatsChartProps) {
 
   return (
     <>
-      <Card className="flex flex-grow flex-col">
+      <Card className="flex max-h-fit flex-grow flex-col">
         <CardHeader className="">
           <CardTitle className="text-2xl">Pulse Rating (PR)</CardTitle>
           <CardDescription>Last {stats.length} games</CardDescription>
@@ -121,21 +131,6 @@ export function PlayerStatsChart({ stats }: PlayerStatsChartProps) {
             </ChartContainer>
           </ResponsiveContainer>
           <PlayerTicker latestScore={stats[latestGame].points} />
-          {/* <div className="flex h-full w-full flex-grow flex-col items-center justify-center gap-3 px-2 md:w-1/4 md:gap-1">
-            <CardHeader className="p-0 text-center text-8xl font-bold md:text-6xl">
-              {stats[latestGame].points}
-
-              <div className="text-sm text-muted-foreground">
-                Pulse Rating (PR)
-              </div>
-            </CardHeader>
-            <Button className="w-full rounded-md">
-              Buy <ArrowUpIcon className="ml-2 h-4 w-4" />
-            </Button>
-            <Button className="w-full rounded-md" variant={'destructive'}>
-              Sell <ArrowDownIcon className="ml-2 h-4 w-4" />
-            </Button>
-          </div> */}
         </CardContent>
 
         <CardFooter className="flex-col items-start gap-2 text-sm">
