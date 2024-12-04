@@ -10,6 +10,7 @@ export async function GET(request: Request) {
   const username = cookieStore.get('temp_username')?.value;
   const { getUser } = getKindeServerSession();
   const user = await getUser();
+  // console.log(user);
   const defaultUserImageUrl =
     'https://i.pinimg.com/originals/25/ee/de/25eedef494e9b4ce02b14990c9b5db2d.jpg';
 
@@ -21,7 +22,9 @@ export async function GET(request: Request) {
   const { isAuthenticated, getIdToken } = getKindeServerSession();
 
   if (await isAuthenticated()) {
+    // console.log(await getIdToken());
     const idToken = (await getIdToken()) as unknown as ExtendedKindeIdToken;
+    // console.log(JSON.stringify(idToken, null, 2));
 
     if (idToken) {
       const user: User = {

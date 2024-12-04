@@ -17,7 +17,7 @@ export default async function PlayerDetailsPage({ params }: Props) {
 
   if (isNaN(playerId)) {
     return (
-      <div className="h-screen content-center">
+      <div className="flex flex-col content-center justify-center">
         <h1 className="text-4xl font-bold">Invalid Player ID 🫠</h1>
       </div>
     );
@@ -27,7 +27,7 @@ export default async function PlayerDetailsPage({ params }: Props) {
 
   if (!player) {
     return (
-      <div className="h-screen content-center">
+      <div className="flex flex-col content-center justify-center">
         <h1 className="text-4xl font-bold">
           Technical Foul! Player not found. 🫠
         </h1>

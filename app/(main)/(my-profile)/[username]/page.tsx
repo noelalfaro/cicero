@@ -49,6 +49,8 @@ export default async function Page({
                 src={user?.picture}
                 alt={`${user?.username}.png`}
                 fill={true}
+                priority={true}
+                sizes="(max-width: 768px) 100vw, 250px"
                 className="rounded-full object-cover"
               />
             </div>
