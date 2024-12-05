@@ -27,7 +27,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <main className="container flex min-h-screen w-full max-w-7xl flex-col px-[1rem] lg:px-[2rem]">
+            <main className="container flex h-screen w-full max-w-7xl flex-col px-[1rem] lg:px-[2rem]">
               <Nav />
               {children}
             </main>

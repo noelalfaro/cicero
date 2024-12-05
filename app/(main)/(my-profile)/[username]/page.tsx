@@ -23,6 +23,7 @@ import {
 import { UserSettings } from '@/components/user-settings-dialog';
 import { EditProfileDialog } from '@/components/edit-profile-dialog';
 import { fetchUserDataByUsername } from '@/app/(main)/lib/data';
+import Watchlist from '@/components/watchlist';
 
 // Rest of your page code
 export default async function Page({
@@ -136,11 +137,7 @@ export default async function Page({
           </CardContent>
         </Card>
 
-        <Card className="flex flex-grow">
-          <CardHeader>
-            <CardTitle className="">My Watchlist</CardTitle>
-          </CardHeader>
-        </Card>
+        <Watchlist />
       </div>
     </>
   );

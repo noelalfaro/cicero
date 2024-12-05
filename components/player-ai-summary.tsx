@@ -6,13 +6,6 @@ import {
   CardTitle,
   CardFooter,
 } from '@/components/ui/card';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from '@/components/ui/carousel';
 
 const PlayerAiSummary = () => {
   return (
@@ -32,8 +25,8 @@ const PlayerAiSummary = () => {
       <CardFooter>
         <p className="text-center text-sm">
           Source:{' '}
-          <a href="https://www.nba.com" className="underline">
-            NBA.com
+          <a href="https://www.google.com" className="underline">
+            AI-Model.com
           </a>
         </p>
       </CardFooter>

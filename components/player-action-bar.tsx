@@ -10,9 +10,9 @@ import { ThumbsUp, ThumbsDown } from 'lucide-react';
 
 const PlayerActionBar = () => {
   return (
-    <Card className="flex w-full flex-col justify-between md:flex-row">
+    <Card className="flex w-full flex-col justify-between md:w-1/2 md:flex-row">
       <CardHeader className="w-full md:w-1/2">
-        <CardTitle>Player Actions</CardTitle>
+        <CardTitle>Do You Agree?</CardTitle>
       </CardHeader>
       <CardContent className="flex w-full justify-end gap-4 p-6 md:w-1/4">
         <ThumbsUp />

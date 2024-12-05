@@ -2,9 +2,16 @@ import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { LogoutLink } from '@kinde-oss/kinde-auth-nextjs/server';
 import { Link } from 'next-view-transitions';
 import { Button } from '@/components/ui/button';
-import { Card, CardHeader, CardContent } from '@/components/ui/card';
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardTitle,
+  CardDescription,
+} from '@/components/ui/card';
 import { redirect } from 'next/navigation';
 import React from 'react';
+import DashboardTools from '@/components/dashboard-tools';
 
 // Add force-dynamic since we're using authentication
 export const dynamic = 'force-dynamic';
@@ -18,8 +25,8 @@ export default async function Page() {
   }
 
   return (
-    <div className="flex w-full flex-col items-center justify-start">
-      <Card className="w-full">
+    <div className="grid w-full items-center justify-start gap-2 pb-2 lg:grid-cols-8 lg:grid-rows-8">
+      <Card className="h-full lg:col-span-5 lg:row-span-4 xl:row-span-5">
         <CardHeader className="text-3xl font-bold">
           Dashboard For{' '}
           <Link href={`/${user?.username}`}>
@@ -46,6 +53,33 @@ export default async function Page() {
               </Button>
             </LogoutLink>
           </div>
+        </CardContent>
+      </Card>
+      <DashboardTools />
+      {/* <Card className="h-full lg:col-span-8 lg:row-span-1">
+        <CardHeader>
+          <CardTitle>Quick News</CardTitle>
+        </CardHeader>
+      </Card> */}
+      <Card className="h-full w-full lg:col-span-8 lg:row-span-3">
+        <CardHeader>
+          <CardTitle>Summary</CardTitle>
+          <CardDescription>
+            AI Summary of your portfolio performance will go here.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium
+          impedit pariatur porro expedita officiis, repellat veniam, totam
+          veritatis numquam accusamus magni doloribus distinctio aspernatur
+          eaque ducimus corporis deserunt quo exercitationem sequi omnis animi!
+          Impedit veritatis deleniti facilis id quod doloribus rem, recusandae
+          velit eius architecto facere eaque quisquam fugit? Dolor nulla
+          expedita nostrum facilis quam ad omnis. Fugit nostrum, quidem pariatur
+          dolorem veniam in culpa eum nihil ab est voluptatum blanditiis,
+          reprehenderit iusto expedita nesciunt ratione sint corrupti explicabo
+          et qui cupiditate accusantium dolores nulla. Adipisci modi a explicabo
+          ut?
         </CardContent>
       </Card>
     </div>

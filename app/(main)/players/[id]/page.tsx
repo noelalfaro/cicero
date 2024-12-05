@@ -42,7 +42,9 @@ export default async function PlayerDetailsPage({ params }: Props) {
       <div className="flex w-full flex-col gap-2 md:flex-row md:flex-wrap">
         <PlayerDetailsStatic player={player} />
         <PlayerStatsChart stats={player.stats ?? []} />
-        <PlayerActionBar />
+        {/* <div className="flex w-full gap-2">
+          <PlayerActionBar />
+        </div> */}
         <div className="mb-3 flex w-full flex-wrap gap-2 md:flex-nowrap">
           <PlayerNews />
           <PlayerAiSummary />
