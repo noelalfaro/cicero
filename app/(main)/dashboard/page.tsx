@@ -8,6 +8,7 @@ import {
   CardContent,
   CardTitle,
   CardDescription,
+  CardFooter,
 } from '@/components/ui/card';
 import { redirect } from 'next/navigation';
 import React from 'react';
@@ -25,8 +26,8 @@ export default async function Page() {
   }
 
   return (
-    <div className="grid w-full items-center justify-start gap-2 pb-2 lg:grid-cols-8 lg:grid-rows-8">
-      <Card className="h-full lg:col-span-5 lg:row-span-4 xl:row-span-5">
+    <div className="grid w-full grid-cols-1 gap-2 md:grid-cols-8 md:grid-rows-8">
+      <Card className="col-span-1 row-span-1 h-full overflow-auto md:col-span-5 md:row-span-4 lg:col-span-5 lg:row-span-4">
         <CardHeader className="text-3xl font-bold">
           Dashboard For{' '}
           <Link href={`/${user?.username}`}>
@@ -35,40 +36,64 @@ export default async function Page() {
             </p>
           </Link>
         </CardHeader>
-        <CardContent className="flex flex-col">
+        <CardContent className="flex flex-col gap-1 pb-0">
           Welcome to Prospect Portfolio! <br /> We're still under active
           development. <br /> I welcome you to navigate to the different pages
           in the nav above or click on a link below to explore what a player's
           individual page currently looks like.
-          <div className="flex w-full flex-col justify-center md:flex-row">
+          <div className="flex w-full flex-col justify-start gap-1 md:flex-row md:gap-6">
             <Link href={'/players/2544'}>
-              <Button variant={'link'}>Link to Lebron's Page</Button>
+              <Button variant={'link'} className="p-0">
+                Link to Lebron's Page
+              </Button>
             </Link>
             <Link href={'/players/201142'}>
-              <Button variant={'link'}>Link to Durant's Page</Button>
+              <Button variant={'link'} className="p-0">
+                Link to Durant's Page
+              </Button>
             </Link>
             <LogoutLink>
-              <Button variant={'link'} className="text-red-600">
+              <Button variant={'link'} className="p-0 text-red-600">
                 Logout
               </Button>
             </LogoutLink>
           </div>
         </CardContent>
+        <CardFooter>
+          <CardDescription className="text-sm text-muted-foreground">
+            Github:{' '}
+            <Button variant={'link'} className="p-0">
+              <a href="https://github.com/noelalfaro/cicero"> Cicero</a>
+            </Button>
+          </CardDescription>
+        </CardFooter>
       </Card>
       <DashboardTools />
-      {/* <Card className="h-full lg:col-span-8 lg:row-span-1">
+      <Card className="flex h-full flex-col items-center justify-start gap-2 md:col-span-8 md:row-span-1 md:flex-row">
         <CardHeader>
-          <CardTitle>Quick News</CardTitle>
+          <CardTitle>Control Center</CardTitle>
         </CardHeader>
-      </Card> */}
-      <Card className="h-full w-full lg:col-span-8 lg:row-span-3">
+        <CardContent className="flex h-full w-full flex-grow flex-col content-center items-center justify-end gap-2 md:w-fit md:flex-row md:p-0 md:px-6">
+          <Button variant={'secondary'} className="w-full md:w-fit">
+            Investment History
+          </Button>
+          <Button variant={'secondary'} className="w-full md:w-fit">
+            Manage Stocks
+          </Button>
+          <Button variant={'secondary'} className="w-full md:w-fit">
+            Watchlist
+          </Button>
+          {/* <Button variant={'secondary'}>UE</Button> */}
+        </CardContent>
+      </Card>
+      <Card className="w-full md:col-span-8 md:row-span-4">
         <CardHeader>
           <CardTitle>Summary</CardTitle>
           <CardDescription>
             AI Summary of your portfolio performance will go here.
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        {/* <CardContent>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium
           impedit pariatur porro expedita officiis, repellat veniam, totam
           veritatis numquam accusamus magni doloribus distinctio aspernatur
@@ -80,7 +105,7 @@ export default async function Page() {
           reprehenderit iusto expedita nesciunt ratione sint corrupti explicabo
           et qui cupiditate accusantium dolores nulla. Adipisci modi a explicabo
           ut?
-        </CardContent>
+        </CardContent> */}
       </Card>
     </div>
   );
