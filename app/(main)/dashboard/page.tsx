@@ -26,8 +26,8 @@ export default async function Page() {
   }
 
   return (
-    <div className="grid w-full grid-cols-1 gap-2 md:grid-cols-8 md:grid-rows-8">
-      <Card className="col-span-1 row-span-1 h-full overflow-auto md:col-span-5 md:row-span-4 lg:col-span-5 lg:row-span-4">
+    <div className="grid w-full grid-cols-1 gap-2 md:grid-cols-8 md:grid-rows-[350px_1fr_250px]">
+      <Card className="col-span-1 row-span-1 overflow-auto md:col-span-5">
         <CardHeader className="text-3xl font-bold">
           Dashboard For{' '}
           <Link href={`/${user?.username}`}>
@@ -63,13 +63,16 @@ export default async function Page() {
           <CardDescription className="text-sm text-muted-foreground">
             Github:{' '}
             <Button variant={'link'} className="p-0">
-              <a href="https://github.com/noelalfaro/cicero"> Cicero</a>
+              <a href="https://github.com/noelalfaro/cicero">
+                {' '}
+                noelalfaro/Cicero
+              </a>
             </Button>
           </CardDescription>
         </CardFooter>
       </Card>
       <DashboardTools />
-      <Card className="flex h-full flex-col items-center justify-start gap-2 md:col-span-8 md:row-span-1 md:flex-row">
+      <Card className="flex h-full flex-col items-center justify-start gap-2 md:col-span-8 md:flex-row">
         <CardHeader>
           <CardTitle>Control Center</CardTitle>
         </CardHeader>
@@ -86,7 +89,7 @@ export default async function Page() {
           {/* <Button variant={'secondary'}>UE</Button> */}
         </CardContent>
       </Card>
-      <Card className="w-full md:col-span-8 md:row-span-4">
+      <Card className="row-span-1 w-full md:col-span-8">
         <CardHeader>
           <CardTitle>Summary</CardTitle>
           <CardDescription>

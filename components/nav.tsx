@@ -91,7 +91,7 @@ async function DynamicUserProfile() {
 
 const Nav = async () => {
   return (
-    <nav className="flex h-auto min-h-24 w-full items-center justify-between">
+    <nav className="flex h-20 w-full items-center justify-between">
       <div className="flex w-fit">
         <Link href="/dashboard">
           <p className="text-2xl font-extrabold">PROSPECT PORTFOLIO</p>

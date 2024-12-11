@@ -44,7 +44,7 @@ const chartConfig = {
 export function PlayerStatsChart({ stats }: PlayerStatsChartProps) {
   if (!stats || stats.length === 0) {
     return (
-      <Card className="flex flex-grow flex-col items-center justify-center">
+      <Card className="col-span-1 flex flex-grow flex-col items-center justify-center md:col-span-5 lg:col-span-6">
         <CardHeader>
           <CardTitle>No Performance Data</CardTitle>
         </CardHeader>
@@ -85,13 +85,13 @@ export function PlayerStatsChart({ stats }: PlayerStatsChartProps) {
 
   return (
     <>
-      <Card className="flex max-h-fit flex-grow flex-col">
-        <CardHeader className="">
+      <Card className="flex max-h-fit flex-grow flex-col md:col-span-5 lg:col-span-6">
+        <CardHeader className="pb-0">
           <CardTitle className="text-2xl">Pulse Rating (PR)</CardTitle>
           <CardDescription>Last {stats.length} games</CardDescription>
         </CardHeader>
 
-        <CardContent className="flex flex-col items-start justify-start md:flex-row">
+        <CardContent className="flex flex-col items-start justify-start pb-0 md:flex-row">
           <ResponsiveContainer
             width="100%"
             height={200}

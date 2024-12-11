@@ -16,7 +16,7 @@ import {
 
 const PlayerNews = () => {
   return (
-    <Card className="flex w-full flex-col justify-between md:w-7/12">
+    <Card className="flex w-full flex-col justify-between md:col-span-4">
       <Carousel className="flex flex-grow flex-col">
         <CardHeader className="flex w-full flex-row">
           <div className="flex w-1/2 flex-col">

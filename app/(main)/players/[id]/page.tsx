@@ -39,16 +39,14 @@ export default async function PlayerDetailsPage({ params }: Props) {
 
   return (
     <>
-      <div className="flex w-full flex-col gap-2 md:flex-row md:flex-wrap">
+      <div className="grid h-full w-full gap-2 md:max-h-max md:grid-cols-8 md:grid-rows-[350px_1fr_300px] lg:grid-rows-[350px_1fr_250px]">
         <PlayerDetailsStatic player={player} />
         <PlayerStatsChart stats={player.stats ?? []} />
-        {/* <div className="flex w-full gap-2">
-          <PlayerActionBar />
-        </div> */}
-        <div className="mb-3 flex w-full flex-wrap gap-2 md:flex-nowrap">
-          <PlayerNews />
-          <PlayerAiSummary />
-        </div>
+        <PlayerActionBar />
+        {/* <div className="mb-3 flex w-full flex-wrap gap-2 md:flex-nowrap"> */}
+        <PlayerNews />
+        <PlayerAiSummary />
+        {/* </div> */}
       </div>
     </>
   );
