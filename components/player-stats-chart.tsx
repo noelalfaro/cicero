@@ -76,12 +76,12 @@ export function PlayerStatsChart({ stats }: PlayerStatsChartProps) {
     return [0, Math.max(fixedMax, maxValue)];
   };
 
-  console.log('length of stats: ' + stats.length);
-  console.log('Latest Game: ' + latestGame);
-  console.log('Average Points: ' + averagePoints);
-  console.log('Last Game Points: ' + lastGamePoints);
-  console.log('Points Difference: ' + pointsDifference);
-  console.log('Percentage Difference: ' + percentageDifference);
+  // console.log('length of stats: ' + stats.length);
+  // console.log('Latest Game: ' + latestGame);
+  // console.log('Average Points: ' + averagePoints);
+  // console.log('Last Game Points: ' + lastGamePoints);
+  // console.log('Points Difference: ' + pointsDifference);
+  // console.log('Percentage Difference: ' + percentageDifference);
 
   return (
     <>

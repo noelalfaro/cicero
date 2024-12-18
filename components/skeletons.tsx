@@ -1,4 +1,3 @@
-import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
@@ -7,6 +6,18 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel';
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+  ChartConfig,
+} from '@/components/ui/chart';
 import { Skeleton } from '@/components/ui/skeleton';
 import {
   Table,
@@ -16,7 +27,16 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Asul } from 'next/font/google';
+import { ThumbsDown, ThumbsUp } from 'lucide-react';
+import {
+  CartesianGrid,
+  Line,
+  LineChart,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+} from 'recharts';
 
 export function ExploreTableSkeleton() {
   return (
@@ -43,46 +63,104 @@ export function ExploreTableSkeleton() {
     </>
   );
 }
-
-export async function PlayerCardSkeleton() {
+export async function PlayerDetailsStaticSkeleton() {
   return (
-    <Card className="flex w-full animate-pulse flex-col items-center gap-1 p-2 md:min-h-[550px] md:flex-row">
-      <CardHeader className="md:gap-1md:p-2 w-full gap-1 p-1 md:h-full md:w-2/6 md:justify-center lg:p-6">
-        <CardContent className="flex max-w-full justify-center pb-0">
-          <div className="relative flex h-[250px] w-full max-w-[250px] self-center">
-            <div className="h-full w-full animate-pulse rounded-full bg-gray-300"></div>
-          </div>
-        </CardContent>
-        <CardTitle>
-          <div className="grid grid-cols-3 gap-4">
-            <div className="space-y-4">
-              <Skeleton className="h-4 w-[250px]" />
-              <Skeleton className="h-4 w-[200px]" />
-            </div>
-          </div>
-        </CardTitle>
-        <CardDescription></CardDescription>
-        <Button variant={'secondary'}>Add to Watchlist</Button>
-        <Button variant={'secondary'}>More Info</Button>
+    <Card className="col-span-1 flex w-full flex-col items-center justify-between rounded-xl border bg-card text-card-foreground shadow-sm md:col-span-3 lg:col-span-2">
+      <CardHeader className="flex w-full flex-col items-center justify-center pb-0 md:gap-1">
+        <Skeleton className="h-[200px] w-[200px] rounded-full" />
+
+        <div className="mt-4 w-full space-y-2">
+          <Skeleton className="h-8 w-3/4" />
+        </div>
       </CardHeader>
-      <PlayerChartSkeleton />
+
+      <CardContent className="flex w-full flex-col justify-start">
+        <Skeleton className="h-10 w-full" />
+      </CardContent>
     </Card>
   );
 }
 
-export async function PlayerChartSkeleton() {
+const chartConfig = {
+  desktop: {
+    label: 'Desktop',
+    color: 'hsl(var(--chart-1))',
+  },
+} satisfies ChartConfig;
+export function PlayerStatsChartSkeleton() {
   return (
-    <div className="flex h-full w-full flex-col justify-center md:w-4/6">
-      <CardHeader className="items-start p-1 md:p-4 lg:py-0">
-        <CardTitle className="text-3xl">Pulse Rating (PR)</CardTitle>
-        <CardDescription>Last x games</CardDescription>
+    <Card className="flex h-full flex-grow flex-col md:col-span-5 lg:col-span-6">
+      <CardHeader className="pb-0">
+        <CardTitle className="text-2xl">Pulse Rating (PR)</CardTitle>
+        <CardDescription>Last X games</CardDescription>
       </CardHeader>
-      <div className="h-full w-full"></div>
-      {/* <Skeleton className="h-full w-full rounded-xl p-1 md:p-4 lg:px-4" /> */}
-      <CardFooter className="flex-col items-start gap-2 p-1 text-sm md:p-4 lg:px-4 lg:pt-0">
-        <Skeleton className="h-4 w-[250px]" />
-        <Skeleton className="h-4 w-[200px]" />
-      </CardFooter>
-    </div>
+
+      <CardContent className="flex flex-col items-start justify-start pb-0 md:flex-row">
+        <Skeleton className="h-[200px] w-full"></Skeleton>
+      </CardContent>
+    </Card>
+  );
+}
+
+export async function PlayerActionBarSkeleton() {
+  return (
+    <Card className="flex w-full flex-col justify-between md:col-span-8 md:flex-row">
+      <CardHeader className="w-full md:w-1/2">
+        <CardTitle>Do You Agree?</CardTitle>
+      </CardHeader>
+      <CardContent className="flex w-full justify-end gap-4 p-6 md:w-1/4">
+        <ThumbsUp />
+        <ThumbsDown />
+      </CardContent>
+    </Card>
+  );
+}
+
+export async function PlayerAiSummarySkeleton() {
+  return (
+    <Card className="flex w-full flex-col md:col-span-4">
+      <CardHeader className="min-h-[88px] pb-3">
+        <CardTitle>PR Trend</CardTitle>
+        <CardDescription className="h-full flex-grow">
+          AI Summary of what affected the score.
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="flex flex-grow flex-col overflow-auto">
+        <div className="flex h-full grow flex-col justify-between gap-2">
+          <Skeleton className="h-[75px] w-full md:h-[75%]"></Skeleton>
+          <Skeleton className="flex h-[25px] w-full flex-grow"></Skeleton>
+        </div>
+      </CardContent>
+      {/* <CardFooter>
+        <Skeleton className="h-4 w-1/2" />
+      </CardFooter> */}
+    </Card>
+  );
+}
+
+export async function PlayerNewsSkeleton() {
+  return (
+    <Card className="flex w-full flex-col justify-between md:col-span-4">
+      <Carousel className="flex flex-grow flex-col">
+        <CardHeader className="flex w-full flex-row space-y-0 pb-3">
+          <div className="flex w-1/2 flex-col">
+            <CardTitle className="text-2xl">NBA News</CardTitle>
+            <CardDescription>Get the latest news on the NBA</CardDescription>
+          </div>
+
+          <div className="mt-0 flex flex-grow items-center justify-end gap-2">
+            <CarouselPrevious className="relative left-0 right-0 top-0 m-0 translate-x-0 translate-y-0" />
+            <CarouselNext className="relative left-0 right-0 top-0 m-0 translate-x-0 translate-y-0" />
+          </div>
+        </CardHeader>
+
+        <CardContent className="flex flex-grow flex-col">
+          <div className="flex h-full grow flex-col justify-between gap-2">
+            <Skeleton className="h-[75px] w-full md:h-[75%]"></Skeleton>
+            <Skeleton className="h-[25px] w-full flex-grow md:flex"></Skeleton>
+          </div>
+        </CardContent>
+      </Carousel>
+    </Card>
   );
 }
