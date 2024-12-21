@@ -17,7 +17,7 @@ import PlayerActionBar from '@/components/player-action-bar';
 export default async function PlayerDetailsPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
   const playerId = Number(id);
