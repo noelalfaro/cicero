@@ -21,7 +21,7 @@ function StaticNavLinks() {
         <TooltipProvider delayDuration={50}>
           <Tooltip>
             <TooltipTrigger>
-              <Home absoluteStrokeWidth />
+              <Home absoluteStrokeWidth aria-label="home-link-button" />
             </TooltipTrigger>
             <TooltipContent>Dashboard</TooltipContent>
           </Tooltip>
@@ -31,7 +31,7 @@ function StaticNavLinks() {
         <TooltipProvider delayDuration={50}>
           <Tooltip>
             <TooltipTrigger>
-              <Search absoluteStrokeWidth />
+              <Search absoluteStrokeWidth aria-label="search-link-button" />
             </TooltipTrigger>
             <TooltipContent>Explore</TooltipContent>
           </Tooltip>
@@ -41,7 +41,10 @@ function StaticNavLinks() {
         <TooltipProvider delayDuration={50}>
           <Tooltip>
             <TooltipTrigger>
-              <Bell absoluteStrokeWidth />
+              <Bell
+                absoluteStrokeWidth
+                aria-label="notifications-link-button"
+              />
             </TooltipTrigger>
             <TooltipContent>Notifications</TooltipContent>
           </Tooltip>
@@ -89,7 +92,7 @@ async function DynamicUserProfile() {
   );
 }
 
-const Nav = async () => {
+export default async function Nav() {
   return (
     <nav className="flex h-20 w-full items-center justify-between">
       <div className="flex w-fit">
@@ -107,6 +110,4 @@ const Nav = async () => {
       </div>
     </nav>
   );
-};
-
-export default Nav;
+}
