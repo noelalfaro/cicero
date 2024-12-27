@@ -1,10 +1,11 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import '../globals.css';
-import { ThemeProvider } from '@/components/theme-provider';
-import Nav from '@/components/nav';
+import { ThemeProvider } from '@/components/theme/theme-provider';
+import Nav from '@/components/layout/nav';
 import { ViewTransitions } from 'next-view-transitions';
 const inter = Inter({ subsets: ['latin'] });
+import QueryProvider from '@/components/providers/QueryProvider';
 
 export const metadata: Metadata = {
   title: 'Cicero - Development',
@@ -18,22 +19,24 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ViewTransitions>
-      <html lang="en">
-        <body className={` ${inter.className}`}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <main className="container flex h-screen w-full max-w-7xl flex-col px-[1rem] lg:px-[2rem]">
-              <Nav />
-              {children}
-            </main>
-          </ThemeProvider>
-        </body>
-      </html>
-    </ViewTransitions>
+    <QueryProvider>
+      <ViewTransitions>
+        <html lang="en">
+          <body className={` ${inter.className}`}>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <main className="container flex h-screen w-full max-w-7xl flex-col px-[1rem] lg:px-[2rem]">
+                <Nav />
+                {children}
+              </main>
+            </ThemeProvider>
+          </body>
+        </html>
+      </ViewTransitions>
+    </QueryProvider>
   );
 }

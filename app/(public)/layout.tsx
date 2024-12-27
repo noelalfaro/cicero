@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import '../globals.css';
-import { ThemeProvider } from '@/components/theme-provider';
-import Nav from '@/components/nav';
+import { ThemeProvider } from '@/components/theme/theme-provider';
+import Nav from '@/components/layout/nav';
 import { ViewTransitions } from 'next-view-transitions';
 const inter = Inter({ subsets: ['latin'] });
 

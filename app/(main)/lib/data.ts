@@ -13,6 +13,7 @@ import {
   NewsArticle,
   newsArticleSchema,
   User,
+  PlayerStats,
 } from '@/app/(main)/lib/definitions';
 
 // import { BLACKLISTED_TERMS } from '@/config.js';
@@ -69,6 +70,12 @@ export async function fetchPlayerDataByID(id: number): Promise<Player | null> {
     return null; // More graceful error handling
   }
 }
+
+export const fetchPlayerStatsByID = async (
+  id: number,
+): Promise<PlayerStats[]> => {
+  return db.select().from(playerStats).where(eq(playerStats.player_id, id));
+};
 
 // export const fetchPlayerDataByID = cache(
 //   async (id: number): Promise<Player | null> => {

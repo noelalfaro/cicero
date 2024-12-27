@@ -22,7 +22,6 @@ import {
   checkIfEmailIsValid,
   doesEmailExistCheck,
 } from '@/app/(main)/lib/data/registration';
-// import { Divider } from '@mui/material';
 import { Separator } from '@/components/ui/separator';
 
 const formSchema = z.object({

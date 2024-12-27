@@ -20,10 +20,10 @@ import {
   CardContent,
   CardTitle,
 } from '@/components/ui/card';
-import { UserSettings } from '@/components/user-settings-dialog';
-import { EditProfileDialog } from '@/components/edit-profile-dialog';
+import { UserSettings } from '@/components/profile/user-settings-dialog';
+import { EditProfileDialog } from '@/components/profile/edit-profile-dialog';
 import { fetchUserDataByUsername } from '@/app/(main)/lib/data';
-import Watchlist from '@/components/watchlist';
+import Watchlist from '@/components/profile/watchlist';
 
 // Rest of your page code
 export default async function Page({

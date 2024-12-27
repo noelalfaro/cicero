@@ -1,5 +1,5 @@
 import { RegisterLink } from '@kinde-oss/kinde-auth-nextjs/server';
-import { OAuthIcon } from '@/components/oAuthButton';
+import { OAuthIcon } from '@/components/auth/oAuthButton';
 import { getConnections } from '@/app/(main)/lib/misc';
 import { Link } from 'next-view-transitions';
 
@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { EmailRegister } from '@/components/email-register';
+import { EmailRegister } from '@/components/auth/email-register';
 
 export default async function Register() {
   const connections = await getConnections();

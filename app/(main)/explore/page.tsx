@@ -1,5 +1,5 @@
-import Players from '@/components/players';
-import { ExploreTableSkeleton } from '@/components/skeletons';
+import Players from '@/components/explore/players';
+import { ExploreTableSkeleton } from '@/components/layout/skeletons';
 import { Suspense } from 'react';
 import {
   Card,
@@ -7,7 +7,7 @@ import {
   CardDescription,
   CardHeader,
 } from '@/components/ui/card';
-import NbaNews from '@/components/nba-news';
+import NbaNews from '@/components/explore/nba-news';
 
 export default async function Page() {
   return (

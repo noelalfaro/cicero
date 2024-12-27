@@ -1,5 +1,5 @@
 import { LoginLink } from '@kinde-oss/kinde-auth-nextjs/server';
-import { OAuthIcon } from '@/components/oAuthButton';
+import { OAuthIcon } from '@/components/auth/oAuthButton';
 
 import { getConnections } from '@/app/(main)/lib/misc';
 import { Link } from 'next-view-transitions';
@@ -12,7 +12,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 
-import { EmailLogin } from '@/components/email-login';
+import { EmailLogin } from '@/components/auth/email-login';
 
 export const dynamic = 'force-dynamic';
 

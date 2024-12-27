@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/card';
 import { redirect } from 'next/navigation';
 import React from 'react';
-import DashboardTools from '@/components/dashboard-tools';
+import DashboardTools from '@/components/dashboard/dashboard-tools';
 
 // Add force-dynamic since we're using authentication
 export const dynamic = 'force-dynamic';

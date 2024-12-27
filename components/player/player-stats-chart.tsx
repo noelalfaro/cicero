@@ -1,4 +1,5 @@
 'use client';
+import { useQuery } from '@tanstack/react-query';
 
 import { ArrowDownIcon, ArrowUpIcon, TrendingUp } from 'lucide-react';
 import {
@@ -10,8 +11,6 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from 'recharts';
-import { PlayerStats } from '@/app/(main)/lib/definitions'; // Adjust the import path as necessary
-
 import {
   Card,
   CardContent,
@@ -28,7 +27,9 @@ import {
 } from '@/components/ui/chart';
 import { Button } from '@/components/ui/button';
 import NumberFlow from '@number-flow/react';
-import PlayerTicker from '@/components/player-ticker';
+import PlayerTicker from '@/components/player/player-ticker';
+import { fetchPlayerStats } from '@/app/(main)/lib/client/client-fetch'; // Adjust the import path as necessary
+import { PlayerStats } from '@/app/(main)/lib/definitions';
 
 interface PlayerStatsChartProps {
   stats: PlayerStats[];
@@ -41,10 +42,19 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function PlayerStatsChart({ stats }: PlayerStatsChartProps) {
+export function PlayerStatsChart({ playerId }: { playerId: number }) {
+  const {
+    data: stats,
+    error,
+    isLoading,
+  } = useQuery({
+    queryKey: ['playerStats', playerId],
+    queryFn: () => fetchPlayerStats(playerId),
+  });
+
   if (!stats || stats.length === 0) {
     return (
-      <Card className="col-span-1 flex flex-grow flex-col items-center justify-center md:col-span-5 lg:col-span-6">
+      <Card className="col-span-1 flex h-full flex-grow flex-col items-center justify-center md:col-span-5 lg:col-span-6">
         <CardHeader>
           <CardTitle>No Performance Data</CardTitle>
         </CardHeader>
@@ -57,18 +67,18 @@ export function PlayerStatsChart({ stats }: PlayerStatsChartProps) {
     );
   }
 
-  const chartData = stats.map((stat) => ({
+  const chartData = stats.map((stat: PlayerStats) => ({
     game: `Game ${stat.stat_id}`,
     points: stat.points,
   }));
 
   const latestGame = stats!.length - 1;
 
-  const averagePoints =
-    stats.reduce((sum, stat) => sum + stat.points, 0) / stats.length;
-  const lastGamePoints = stats[stats.length - 1].points;
-  const pointsDifference = lastGamePoints - averagePoints;
-  const percentageDifference = (pointsDifference / averagePoints) * 100;
+  // const averagePoints =
+  //   stats.reduce((sum, stat) => sum + stat.points, 0) / stats.length;
+  // const lastGamePoints = stats[stats.length - 1].points;
+  // const pointsDifference = lastGamePoints - averagePoints;
+  // const percentageDifference = (pointsDifference / averagePoints) * 100;
 
   const getDomain = (data: any) => {
     const maxValue = Math.max(...data.map((item: any) => item.desktop));
@@ -85,7 +95,7 @@ export function PlayerStatsChart({ stats }: PlayerStatsChartProps) {
 
   return (
     <>
-      <Card className="flex max-h-fit flex-grow flex-col md:col-span-5 lg:col-span-6">
+      <Card className="flex h-full flex-grow flex-col md:col-span-5 lg:col-span-6">
         <CardHeader className="pb-0">
           <CardTitle className="text-2xl">Pulse Rating (PR)</CardTitle>
           <CardDescription>Last {stats.length} games</CardDescription>
@@ -134,7 +144,7 @@ export function PlayerStatsChart({ stats }: PlayerStatsChartProps) {
         </CardContent>
 
         <CardFooter className="flex-col items-start gap-2 text-sm">
-          <div className="flex gap-2 font-medium leading-none">
+          {/* <div className="flex gap-2 font-medium leading-none">
             {pointsDifference >= 0 ? 'Up' : 'Down'} by{' '}
             {Math.abs(percentageDifference).toFixed(1)}% from average
             <TrendingUp
@@ -144,7 +154,7 @@ export function PlayerStatsChart({ stats }: PlayerStatsChartProps) {
           <div className="leading-none text-muted-foreground">
             Last game: {lastGamePoints} points (Average:{' '}
             {averagePoints.toFixed(1)})
-          </div>
+          </div> */}
         </CardFooter>
       </Card>
     </>

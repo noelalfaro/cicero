@@ -5,14 +5,14 @@ import {
   PlayerNewsSkeleton,
   PlayerActionBarSkeleton,
   PlayerAiSummarySkeleton,
-} from '@/components/skeletons';
+} from '@/components/layout/skeletons';
 import { fetchPlayerDataByID } from '@/app/(main)/lib/data';
-import { PlayerDetailsStatic } from '@/components/player-detail-static';
-import { PlayerStatsChart } from '@/components/player-stats-chart';
+import { PlayerDetailsStatic } from '@/components/player/player-detail-static';
+import { PlayerStatsChart } from '@/components/player/player-stats-chart';
 import { Player } from '@/app/(main)/lib/definitions';
-import PlayerNews from '@/components/player-news';
-import PlayerAiSummary from '@/components/player-ai-summary';
-import PlayerActionBar from '@/components/player-action-bar';
+import PlayerNews from '@/components/player/player-news';
+import PlayerAiSummary from '@/components/player/player-ai-summary';
+import PlayerActionBar from '@/components/player/player-action-bar';
 
 export default async function PlayerDetailsPage({
   params,
@@ -49,7 +49,7 @@ export default async function PlayerDetailsPage({
       {/* </Suspense> */}
 
       <Suspense fallback={<PlayerStatsChartSkeleton />}>
-        <PlayerStatsChart stats={player.stats ?? []} />
+        <PlayerStatsChart playerId={player.id} />
       </Suspense>
 
       <Suspense fallback={<PlayerActionBarSkeleton />}>

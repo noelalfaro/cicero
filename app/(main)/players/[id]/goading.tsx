@@ -1,8 +1,8 @@
-import { PlayerActionBarSkeleton } from '@/components/skeletons';
-import { PlayerAiSummarySkeleton } from '@/components/skeletons';
-import { PlayerDetailsStaticSkeleton } from '@/components/skeletons';
-import { PlayerNewsSkeleton } from '@/components/skeletons';
-import { PlayerStatsChartSkeleton } from '@/components/skeletons';
+import { PlayerActionBarSkeleton } from '@/components/layout/skeletons';
+import { PlayerAiSummarySkeleton } from '@/components/layout/skeletons';
+import { PlayerDetailsStaticSkeleton } from '@/components/layout/skeletons';
+import { PlayerNewsSkeleton } from '@/components/layout/skeletons';
+import { PlayerStatsChartSkeleton } from '@/components/layout/skeletons';
 
 // app/player/[id]/loading.tsx
 export default function Loading() {

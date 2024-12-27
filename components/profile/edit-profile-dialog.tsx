@@ -10,7 +10,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -27,11 +26,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { updateUserProfile } from '@/app/(main)/actions/updateUserProfile';
 import { useState } from 'react';
-import Image from 'next/image';
-import { Upload } from 'lucide-react';
-import { UploadButton } from '@/utils/uploadthing';
-import { CustomUpload } from '@/components/custom-upload';
-import { Separator } from '@/components/ui/separator';
+import { CustomUpload } from '@/components/profile/custom-upload';
 
 export const EditProfileDialog = ({ user }: { user: User }) => {
   const form = useForm<z.infer<typeof updateUserFormSchema>>({
