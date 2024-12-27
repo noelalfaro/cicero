@@ -7,7 +7,7 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
-    console.log(`Fetching stats for player ID: ${id}`);
+    // console.log(`Fetching stats for player ID: ${id}`);
 
     if (!id) {
       return NextResponse.json({ error: 'Invalid player ID' }, { status: 400 });

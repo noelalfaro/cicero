@@ -30,6 +30,8 @@ import NumberFlow from '@number-flow/react';
 import PlayerTicker from '@/components/player/player-ticker';
 import { fetchPlayerStats } from '@/app/(main)/lib/client/client-fetch'; // Adjust the import path as necessary
 import { PlayerStats } from '@/app/(main)/lib/definitions';
+import { PlayerStatsChartSkeleton } from '@/components/layout/skeletons';
+import { useParams } from 'next/navigation';
 
 interface PlayerStatsChartProps {
   stats: PlayerStats[];
@@ -42,17 +44,40 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function PlayerStatsChart({ playerId }: { playerId: number }) {
+export function PlayerStatsChart() {
+  const params = useParams<{ id: string }>();
+  const playerId = Number(params.id);
   const {
     data: stats,
-    error,
+    isError,
     isLoading,
   } = useQuery({
     queryKey: ['playerStats', playerId],
     queryFn: () => fetchPlayerStats(playerId),
+    refetchOnMount: false,
   });
+  console.log(stats);
 
-  if (!stats || stats.length === 0) {
+  if (isLoading) {
+    return <PlayerStatsChartSkeleton />;
+  }
+
+  if (isError) {
+    return (
+      <Card className="col-span-1 flex h-full flex-grow flex-col items-center justify-center md:col-span-5 lg:col-span-6">
+        <CardHeader>
+          <CardTitle>Error</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-muted-foreground">
+            There was a problem loading the player's stats.
+          </p>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  if (stats.length === 0) {
     return (
       <Card className="col-span-1 flex h-full flex-grow flex-col items-center justify-center md:col-span-5 lg:col-span-6">
         <CardHeader>
@@ -74,11 +99,12 @@ export function PlayerStatsChart({ playerId }: { playerId: number }) {
 
   const latestGame = stats!.length - 1;
 
-  // const averagePoints =
-  //   stats.reduce((sum, stat) => sum + stat.points, 0) / stats.length;
-  // const lastGamePoints = stats[stats.length - 1].points;
-  // const pointsDifference = lastGamePoints - averagePoints;
-  // const percentageDifference = (pointsDifference / averagePoints) * 100;
+  const averagePoints =
+    stats.reduce((sum: any, stat: { points: any }) => sum + stat.points, 0) /
+    stats.length;
+  const lastGamePoints = stats[stats.length - 1].points;
+  const pointsDifference = lastGamePoints - averagePoints;
+  const percentageDifference = (pointsDifference / averagePoints) * 100;
 
   const getDomain = (data: any) => {
     const maxValue = Math.max(...data.map((item: any) => item.desktop));
@@ -144,7 +170,7 @@ export function PlayerStatsChart({ playerId }: { playerId: number }) {
         </CardContent>
 
         <CardFooter className="flex-col items-start gap-2 text-sm">
-          {/* <div className="flex gap-2 font-medium leading-none">
+          <div className="flex gap-2 font-medium leading-none">
             {pointsDifference >= 0 ? 'Up' : 'Down'} by{' '}
             {Math.abs(percentageDifference).toFixed(1)}% from average
             <TrendingUp
@@ -154,7 +180,7 @@ export function PlayerStatsChart({ playerId }: { playerId: number }) {
           <div className="leading-none text-muted-foreground">
             Last game: {lastGamePoints} points (Average:{' '}
             {averagePoints.toFixed(1)})
-          </div> */}
+          </div>
         </CardFooter>
       </Card>
     </>

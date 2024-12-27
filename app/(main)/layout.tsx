@@ -19,10 +19,10 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <QueryProvider>
-      <ViewTransitions>
-        <html lang="en">
-          <body className={` ${inter.className}`}>
+    <ViewTransitions>
+      <html lang="en">
+        <body className={` ${inter.className}`}>
+          <QueryProvider>
             <ThemeProvider
               attribute="class"
               defaultTheme="system"
@@ -34,9 +34,9 @@ export default async function RootLayout({
                 {children}
               </main>
             </ThemeProvider>
-          </body>
-        </html>
-      </ViewTransitions>
-    </QueryProvider>
+          </QueryProvider>
+        </body>
+      </html>
+    </ViewTransitions>
   );
 }
