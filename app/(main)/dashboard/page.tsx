@@ -2,6 +2,8 @@ import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { LogoutLink } from '@kinde-oss/kinde-auth-nextjs/server';
 import { Link } from 'next-view-transitions';
 import { Button } from '@/components/ui/button';
+import { TextScramble } from '@/components/ui/text-scramble';
+import { TextEffect } from '@/components/ui/text-effect';
 import {
   Card,
   CardHeader,
@@ -37,10 +39,19 @@ export default async function Page() {
           </Link>
         </CardHeader>
         <CardContent className="flex flex-col gap-1 pb-0">
-          Welcome to Prospect Portfolio! <br /> We're still under active
-          development. <br /> I welcome you to navigate to the different pages
-          in the nav above or click on a link below to explore what a player's
-          individual page currently looks like.
+          {' '}
+          {/* <TextScramble
+            className="font-mono text-sm"
+            duration={1.2}
+            characterSet="*"
+          > */}
+          <TextEffect per="word" as="h3" preset="blur">
+            Welcome to Prospect Portfolio! We're still under active development.
+            I welcome you to navigate to the different pages in the nav above or
+            click on a link below to explore what a player's individual page
+            currently looks like.
+          </TextEffect>
+          {/* </TextScramble> */}
           <div className="flex w-full flex-col justify-start gap-1 md:flex-row md:gap-6">
             <Link href={'/players/2544'}>
               <Button variant={'link'} className="p-0">

@@ -40,6 +40,7 @@ export const EmailLogin = (props: {
   emailConnectionId: string | undefined;
 }) => {
   const [email, setEmail] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -52,9 +53,14 @@ export const EmailLogin = (props: {
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    router.push(
-      `/api/auth/login?connection_id=${props.emailConnectionId}&login_hint=${values.email}`,
-    );
+    setIsLoading(true);
+    try {
+      router.push(
+        `/api/auth/login?connection_id=${props.emailConnectionId}&login_hint=${values.email}`,
+      );
+    } catch (error) {
+      setIsLoading(false);
+    }
   }
 
   return (
