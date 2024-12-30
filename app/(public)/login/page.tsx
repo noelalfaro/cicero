@@ -14,7 +14,7 @@ import {
 
 import { EmailLogin } from '@/components/auth/email-login';
 
-export const dynamic = 'force-dynamic';
+// export const dynamic = 'force-dynamic';
 
 export default async function Login() {
   const connections = await getConnections();

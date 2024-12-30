@@ -1,21 +1,29 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import React from 'react';
 import {
   Carousel,
-  CarouselContent,
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel';
 import {
-  ChartContainer,
+  CartesianGrid,
+  Line,
+  LineChart,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+} from 'recharts';
+import {
+  Card,
+  CardDescription,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import {
   ChartTooltip,
   ChartTooltipContent,
+  ChartContainer,
   ChartConfig,
 } from '@/components/ui/chart';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -28,15 +36,6 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { ThumbsDown, ThumbsUp } from 'lucide-react';
-import {
-  CartesianGrid,
-  Line,
-  LineChart,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-} from 'recharts';
 
 export function ExploreTableSkeleton() {
   return (
@@ -131,9 +130,6 @@ export async function PlayerAiSummarySkeleton() {
           <Skeleton className="flex h-[25px] w-full flex-grow"></Skeleton>
         </div>
       </CardContent>
-      {/* <CardFooter>
-        <Skeleton className="h-4 w-1/2" />
-      </CardFooter> */}
     </Card>
   );
 }

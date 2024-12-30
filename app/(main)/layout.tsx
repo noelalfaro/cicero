@@ -29,7 +29,7 @@ export default async function RootLayout({
               enableSystem
               disableTransitionOnChange
             >
-              <main className="container flex h-screen w-full max-w-7xl flex-col px-[1rem] lg:px-[2rem]">
+              <main className="container flex h-fit w-full max-w-7xl flex-col px-[1rem] md:h-screen lg:px-[2rem]">
                 <Nav />
                 {children}
               </main>

@@ -222,7 +222,7 @@ export async function updateUserUsername(userId: string, username: string) {
 // Simulated async function to fetch player news
 export async function fetchPlayerNews(playerId: number) {
   // Simulate an API call with a timeout
-  await new Promise((resolve) => setTimeout(resolve, 2000));
+  // await new Promise((resolve) => setTimeout(resolve, 2000));
 
   return [
     {
@@ -250,7 +250,7 @@ export async function fetchPlayerNews(playerId: number) {
 // Simulated async function to generate AI summary
 export async function generateAiSummary(playerId: number) {
   // Simulate an AI summary generation with a timeout
-  await new Promise((resolve) => setTimeout(resolve, 4000));
+  // await new Promise((resolve) => setTimeout(resolve, 4000));
 
   return `AI-generated insights for player ${playerId}: 
   Demonstrates exceptional skill in offensive strategies, 

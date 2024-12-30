@@ -56,7 +56,7 @@ export function PlayerStatsChart() {
     queryFn: () => fetchPlayerStats(playerId),
     refetchOnMount: false,
   });
-  console.log(stats);
+  // console.log(stats);
 
   if (isLoading) {
     return <PlayerStatsChartSkeleton />;
@@ -121,21 +121,19 @@ export function PlayerStatsChart() {
 
   return (
     <>
-      <Card className="flex h-full flex-grow flex-col md:col-span-5 lg:col-span-6">
-        <CardHeader className="pb-0">
-          <CardTitle className="text-2xl">Pulse Rating (PR)</CardTitle>
-          <CardDescription>Last {stats.length} games</CardDescription>
+      <Card className="box-border flex h-full flex-grow flex-col justify-between md:col-span-5 lg:col-span-6">
+        <CardHeader className="flex w-full pb-0">
+          <CardTitle className="w-full text-2xl">Pulse Rating (PR)</CardTitle>
+          <CardDescription className="w-full">
+            Last {stats.length} games
+          </CardDescription>
         </CardHeader>
 
-        <CardContent className="flex flex-col items-start justify-start pb-0 md:flex-row">
-          <ResponsiveContainer
-            width="100%"
-            height={200}
-            style={{ padding: '0' }}
-          >
+        <CardContent className="flex flex-col items-center justify-center pb-0 md:flex-row">
+          <ResponsiveContainer width="100%" height="100%" minHeight={180}>
             <ChartContainer
               config={chartConfig}
-              className="flex items-center justify-start"
+              className="flex items-center justify-center"
             >
               <LineChart data={chartData} accessibilityLayer>
                 <CartesianGrid
@@ -143,7 +141,7 @@ export function PlayerStatsChart() {
                   stroke="hsl(var(--border))"
                   syncWithTicks
                 />
-                <XAxis dataKey={'none'} tickLine={false} axisLine={false} />
+                <XAxis dataKey={'game'} tickLine={false} axisLine={false} />
                 <YAxis
                   width={25}
                   tickLine={false}
