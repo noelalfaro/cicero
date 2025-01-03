@@ -39,13 +39,12 @@ export default async function Page() {
           </Link>
         </CardHeader>
         <CardContent className="flex flex-col gap-1 pb-0">
-          <TextEffect per="word" as="h3" preset="blur">
-            Welcome to Prospect Portfolio! We're still under active development.
-            I welcome you to navigate to the different pages in the nav above or
-            click on a link below to explore what a player's individual page
-            currently looks like.
-          </TextEffect>
-
+          {/* <TextEffect per="word" as="h3" preset="blur"> */}
+          Welcome to Prospect Portfolio! We're still under active development. I
+          welcome you to navigate to the different pages in the nav above or
+          click on a link below to explore what a player's individual page
+          currently looks like.
+          {/* </TextEffect> */}
           <div className="flex w-full flex-col justify-start gap-1 md:flex-row md:gap-6">
             <Link href={'/players/2544'}>
               <Button variant={'link'} className="p-0">
