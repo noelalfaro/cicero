@@ -12,7 +12,7 @@ import {
   LogoutLink,
 } from '@kinde-oss/kinde-auth-nextjs/server';
 import { Button } from '@/components/ui/button';
-import { Link } from 'next-view-transitions';
+import Link from 'next/link';
 // Statically rendered part of the navigation
 function StaticNavLinks() {
   return (

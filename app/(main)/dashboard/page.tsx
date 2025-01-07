@@ -1,6 +1,6 @@
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { LogoutLink } from '@kinde-oss/kinde-auth-nextjs/server';
-import { Link } from 'next-view-transitions';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { TextScramble } from '@/components/ui/text-scramble';
 import { TextEffect } from '@/components/ui/text-effect';
