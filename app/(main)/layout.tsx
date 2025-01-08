@@ -19,24 +19,22 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ViewTransitions>
-      <html lang="en">
-        <body className={` ${inter.className}`}>
-          <QueryProvider>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
-              <main className="container flex h-fit w-full max-w-7xl flex-col px-[1rem] md:h-screen lg:px-[2rem]">
-                <Nav />
-                {children}
-              </main>
-            </ThemeProvider>
-          </QueryProvider>
-        </body>
-      </html>
-    </ViewTransitions>
+    <html lang="en">
+      <body className={` ${inter.className}`}>
+        <QueryProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <main className="container flex h-fit w-full max-w-7xl flex-col px-[1rem] md:h-screen lg:px-[2rem]">
+              <Nav />
+              {children}
+            </main>
+          </ThemeProvider>
+        </QueryProvider>
+      </body>
+    </html>
   );
 }

@@ -16,7 +16,8 @@ import {
   CardDescription,
 } from '@/components/ui/card';
 
-import { Link } from 'next-view-transitions';
+// import { Link } from 'next-view-transitions';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
 // Add revalidate to the component level as well
