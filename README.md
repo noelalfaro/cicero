@@ -113,7 +113,7 @@ The Next.js app is a critical component of the Cicero project, responsible for r
 
 ### Phase 2: Development
 
-**Next.JS**
+#### **Next.JS**
 
 1. **Deploy & Connect**
 
@@ -189,7 +189,7 @@ The Next.js app is a critical component of the Cicero project, responsible for r
    - Document app architecture.'
    - Use Project Management tools to organize & assing tasks
 
-**Django**
+#### **Django**
 
 1. **Deploy & Connect**
 
