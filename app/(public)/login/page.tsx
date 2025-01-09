@@ -24,6 +24,17 @@ export default async function Login() {
     (conn) => conn.strategy === 'email:otp',
   )?.id;
 
+  // const player = async () => {
+  //   const response = await fetch(
+  //     'https://stats.nba.com/stats/leagueleaders?ActiveFlag=&LeagueID=00&PerMode=Totals&Scope=S&Season=2019-20&SeasonType=Regular+Season&StatCategory=PTS',
+  //   );
+  //   const data = await response.json();
+  //   console.log(data.resultSet.rowSet[2]);
+  //   // console.log(JSON.stringify(data.resultSets, null, 2));
+  // };
+
+  // player();
+
   return (
     <div className="flex min-h-screen w-full items-center justify-center self-center text-left">
       <Card className="w-full md:w-1/2 lg:w-4/12">

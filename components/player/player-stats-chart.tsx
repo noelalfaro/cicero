@@ -55,6 +55,7 @@ export function PlayerStatsChart() {
     queryKey: ['playerStats', playerId],
     queryFn: () => fetchPlayerStats(playerId),
     refetchOnMount: false,
+    staleTime: 60000,
   });
   // console.log(stats);
 

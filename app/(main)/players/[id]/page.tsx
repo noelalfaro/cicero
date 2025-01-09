@@ -55,9 +55,11 @@ export default async function PlayerDetailsPage({
         <PlayerDetailsStatic player={player} />
       </Suspense>
 
-      <HydrationBoundary state={dehydrate(queryClient)}>
-        <PlayerStatsChart />
-      </HydrationBoundary>
+      <Suspense fallback={<PlayerStatsChartSkeleton />}>
+        <HydrationBoundary state={dehydrate(queryClient)}>
+          <PlayerStatsChart />
+        </HydrationBoundary>
+      </Suspense>
 
       <Suspense fallback={<PlayerActionBarSkeleton />}>
         <PlayerActionBar />
