@@ -7,7 +7,7 @@ export default withAuth(
   {
     isReturnToCurrentPage: true,
     loginPage: '/login',
-    publicPaths: ['/register', '/login', '/about-us'],
+    publicPaths: ['/register', '/login', '/about-us', '/learn'],
   },
 );
 

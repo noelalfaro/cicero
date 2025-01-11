@@ -69,7 +69,7 @@ export default async function Page() {
             <Button variant={'link'} className="p-0">
               <a href="https://github.com/noelalfaro/cicero">
                 {' '}
-                noelalfaro/Cicero
+                noelalfaro/cicero
               </a>
             </Button>
           </CardDescription>

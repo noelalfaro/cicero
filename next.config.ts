@@ -1,4 +1,7 @@
-const nextConfig = {
+import withMDX from '@next/mdx';
+import { NextConfig } from 'next';
+
+const nextConfig: NextConfig = {
   eslint: {
     // Warning: This allows production builds to successfully complete even if
     // your project has ESLint errors.
@@ -28,5 +31,15 @@ const nextConfig = {
       },
     ],
   },
+  pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
 };
-export default nextConfig;
+
+const mdxConfig = {
+  extension: /\.mdx?$/,
+  options: {
+    remarkPlugins: [],
+    rehypePlugins: [],
+  },
+};
+
+export default withMDX(mdxConfig)(nextConfig);
