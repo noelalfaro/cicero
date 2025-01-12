@@ -6,7 +6,7 @@ import {
   CardTitle,
   CardFooter,
 } from '@/components/ui/card';
-import { generateAiSummary } from '@/app/(main)/lib/data';
+import { generateAiSummary } from '@/lib/data';
 
 export default async function PlayerAiSummary({
   playerId,

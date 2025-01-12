@@ -1,6 +1,6 @@
 import { RegisterLink } from '@kinde-oss/kinde-auth-nextjs/server';
 import { OAuthIcon } from '@/components/auth/oAuthButton';
-import { getConnections } from '@/app/(main)/lib/misc';
+import { getConnections } from '@/lib/misc';
 // import { Link } from 'next-view-transitions';
 import Link from 'next/link';
 

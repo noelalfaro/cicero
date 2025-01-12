@@ -3,12 +3,12 @@
 import { useState, useCallback } from 'react';
 import { useDropzone } from '@uploadthing/react';
 import { generateClientDropzoneAccept } from 'uploadthing/client';
-import { useUploadThing } from '@/utils/uploadthing';
+import { useUploadThing } from '@/server/utils/uploadthing';
 import { Upload } from 'lucide-react';
 import RotateLoader from 'react-spinners/RotateLoader';
 
 import { revalidateUserProfile } from '@/app/(main)/actions/actions';
-import { User } from '@/app/(main)/lib/definitions';
+import { User } from '@/lib/definitions';
 import Image from 'next/image';
 import React from 'react';
 

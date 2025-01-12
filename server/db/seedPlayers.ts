@@ -1,9 +1,9 @@
 import { config } from 'dotenv';
 config({ path: '.env.local' });
-import { Player, playerSchema } from '@/app/(main)/lib/definitions';
+import { Player, playerSchema } from '@/lib/definitions';
 import { neon } from '@neondatabase/serverless';
 import { drizzle } from 'drizzle-orm/neon-http';
-import { players } from '@/db/schema/players';
+import { players } from '@/server/db/schema/players';
 import { z } from 'zod';
 
 async function fetchPlayerDataFromAPI() {

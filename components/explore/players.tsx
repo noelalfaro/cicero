@@ -1,5 +1,5 @@
-import { fetchPlayerData } from '@/app/(main)/lib/data';
-import { Player } from '@/app/(main)/lib/definitions';
+import { fetchPlayerData } from '@/lib/data';
+import { Player } from '@/lib/definitions';
 import {
   Table,
   TableBody,

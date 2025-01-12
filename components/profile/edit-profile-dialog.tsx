@@ -1,7 +1,7 @@
 'use client';
 
-import { User } from '@/app/(main)/lib/definitions';
-import { updateUserFormSchema } from '@/app/(main)/lib/definitions';
+import { User } from '@/lib/definitions';
+import { updateUserFormSchema } from '@/lib/definitions';
 import {
   Dialog,
   DialogContent,

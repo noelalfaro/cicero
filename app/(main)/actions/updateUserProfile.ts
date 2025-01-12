@@ -1,6 +1,6 @@
 'use server';
-import { users } from '@/db/schema/users';
-import { updateUserFormSchema } from '@/app/(main)/lib/definitions'; // Adjust this import if necessary
+import { users } from '@/server/db/schema/users';
+import { updateUserFormSchema } from '@/lib/definitions'; // Adjust this import if necessary
 import { eq } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
 import { neon } from '@neondatabase/serverless';

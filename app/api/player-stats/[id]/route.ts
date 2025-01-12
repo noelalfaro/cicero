@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { fetchPlayerStatsByID } from '@/app/(main)/lib/data';
+import { fetchPlayerStatsByID } from '@/lib/data';
 
 export async function GET(
   req: NextRequest,

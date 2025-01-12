@@ -2,9 +2,9 @@ import 'server-only';
 // ('use server');
 import { unstable_noStore as noStore } from 'next/cache';
 
-import { players } from '@/db/schema/players';
-import { users } from '@/db/schema/users';
-import { playerStats } from '@/db/schema/player_stats';
+import { players } from '@/server/db/schema/players';
+import { users } from '@/server/db/schema/users';
+import { playerStats } from '@/server/db/schema/player_stats';
 
 import { eq } from 'drizzle-orm';
 import {
@@ -14,11 +14,11 @@ import {
   newsArticleSchema,
   User,
   PlayerStats,
-} from '@/app/(main)/lib/definitions';
+} from '@/lib/definitions';
 
 // import { BLACKLISTED_TERMS } from '@/config.js';
 
-import { db } from '@/db';
+import { db } from '@/server/db';
 import { cache } from 'react';
 
 export async function fetchPlayerData(): Promise<Player[]> {

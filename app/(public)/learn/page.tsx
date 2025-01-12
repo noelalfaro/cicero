@@ -1,4 +1,4 @@
-import LearnContent from '@/markdown/learn.mdx';
+import LearnContent from '@/planning/markdown/learn.mdx';
 
 export default async function Page() {
   return (

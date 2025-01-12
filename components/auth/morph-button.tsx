@@ -20,7 +20,7 @@ export function TextMorphButton({ login, provider }: TextMorphButtonProps) {
     >
       <TextMorph>{text}</TextMorph>
       {'  '}
-      {provider === 'Google' ? <FaGoogle size={32} /> : <FaGithub size={24} />}
+      {provider === 'Google' ? <FaGoogle size={24} /> : <FaGithub size={24} />}
     </Button>
   );
 }

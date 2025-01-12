@@ -5,7 +5,7 @@ import {
   foreignKey,
   text,
 } from 'drizzle-orm/pg-core';
-import { players } from '@/db/schema/players';
+import { players } from '@/server/db/schema/players';
 
 // import { serial, integer, text, pgTable } from "drizzle-orm/pg-core";
 

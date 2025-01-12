@@ -28,8 +28,8 @@ import {
 import { Button } from '@/components/ui/button';
 import NumberFlow from '@number-flow/react';
 import PlayerTicker from '@/components/player/player-ticker';
-import { fetchPlayerStats } from '@/app/(main)/lib/client/client-fetch'; // Adjust the import path as necessary
-import { PlayerStats } from '@/app/(main)/lib/definitions';
+import { fetchPlayerStats } from '@/lib/client/client-fetch'; // Adjust the import path as necessary
+import { PlayerStats } from '@/lib/definitions';
 import { PlayerStatsChartSkeleton } from '@/components/layout/skeletons';
 import { useParams } from 'next/navigation';
 

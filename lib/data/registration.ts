@@ -4,9 +4,9 @@ import {
   englishDataset,
   englishRecommendedTransformers,
 } from 'obscenity';
-import { users } from '@/db/schema/users';
+import { users } from '@/server/db/schema/users';
 import { eq } from 'drizzle-orm';
-import { db } from '@/db';
+import { db } from '@/server/db';
 
 const matcher = new RegExpMatcher({
   ...englishDataset.build(),

@@ -13,7 +13,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel';
-import { fetchPlayerNews } from '@/app/(main)/lib/data';
+import { fetchPlayerNews } from '@/lib/data';
 
 export default async function PlayerNews({ playerId }: { playerId: number }) {
   const news = await fetchPlayerNews(playerId);

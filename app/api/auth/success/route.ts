@@ -1,8 +1,8 @@
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { redirect } from 'next/navigation';
-import { ExtendedKindeIdToken } from '@/app/(main)/lib/types';
-import { User } from '@/app/(main)/lib/definitions';
-import { createUser, updateUserUsername } from '@/app/(main)/lib/data';
+import { ExtendedKindeIdToken } from '@/lib/types';
+import { User } from '@/lib/definitions';
+import { createUser, updateUserUsername } from '@/lib/data';
 import { cookies } from 'next/headers';
 
 export async function GET(request: Request) {

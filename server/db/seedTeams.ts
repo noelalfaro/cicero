@@ -1,9 +1,9 @@
 import { config } from 'dotenv';
 config({ path: '.env.local' });
-import { Team } from '@/app/(main)/lib/definitions';
+import { Team } from '@/lib/definitions';
 import { neon } from '@neondatabase/serverless';
 import { drizzle } from 'drizzle-orm/neon-http';
-import { teams } from '@/db/schema/teams';
+import { teams } from '@/server/db/schema/teams';
 
 async function fetchTeamDataFromAPI() {
   const apiKey = process.env.RAPID_API_KEY;
