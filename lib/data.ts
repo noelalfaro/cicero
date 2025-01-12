@@ -1,6 +1,7 @@
 import 'server-only';
 // ('use server');
 import { unstable_noStore as noStore } from 'next/cache';
+import { unstable_cache } from 'next/cache';
 
 import { players } from '@/server/db/schema/players';
 import { users } from '@/server/db/schema/users';
@@ -21,29 +22,34 @@ import {
 import { db } from '@/server/db';
 import { cache } from 'react';
 
-export async function fetchPlayerData(): Promise<Player[]> {
-  noStore();
-  try {
-    // Perform a join between players and player_stats
-    const result = await db.select().from(players).limit(10);
+export const fetchPlayerData = unstable_cache(
+  async (): Promise<Player[]> => {
+    try {
+      // Perform a join between players and player_stats
+      console.log('Fetching player data');
+      const result = await db.select().from(players).limit(10);
+      console.log('Data Fetched');
 
-    // Convert the grouped data into an array and add picture URLs
-    // Add picture URLs
-    const playersWithPictures = result.map((player) => {
-      const pictureUrl = `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/1040x760/${player.id}.png`;
-      return { ...player, picture: pictureUrl };
-    });
+      // Convert the grouped data into an array and add picture URLs
+      // Add picture URLs
+      const playersWithPictures = result.map((player) => {
+        const pictureUrl = `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/1040x760/${player.id}.png`;
+        return { ...player, picture: pictureUrl };
+      });
 
-    // Parse each player object using the schema
-    return playersWithPictures.map((playerData) =>
-      playerSchema.parse(playerData),
-    );
-  } catch (error) {
-    throw new Error(
-      'Failed to fetch players data - Function: fetchPlayerData()' + error,
-    );
-  }
-}
+      // Parse each player object using the schema
+      return playersWithPictures.map((playerData) =>
+        playerSchema.parse(playerData),
+      );
+    } catch (error) {
+      throw new Error(
+        'Failed to fetch players data - Function: fetchPlayerData()' + error,
+      );
+    }
+  },
+  ['players-key'],
+  { revalidate: 86400 },
+);
 
 export async function fetchPlayerDataByID(id: number): Promise<Player | null> {
   // Use Promise.all for parallel data fetching
