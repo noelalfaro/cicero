@@ -40,21 +40,12 @@ const chartConfig = {
 export function PlayerStatsChart() {
   const params = useParams<{ id: string }>();
   const playerId = Number(params.id);
-  const {
-    data: stats,
-    isError,
-    isLoading,
-  } = useQuery({
+  const { data: stats, isError } = useSuspenseQuery({
     queryKey: ['playerStats', playerId],
-    queryFn: () => fetchPlayerStats(playerId),
+    queryFn: () => fetchPlayerStatsApi(playerId),
     refetchOnMount: false,
     staleTime: 60000,
   });
-  // console.log(stats);
-
-  if (isLoading) {
-    return <PlayerStatsChartSkeleton />;
-  }
 
   if (isError) {
     return (

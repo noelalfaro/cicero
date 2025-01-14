@@ -37,16 +37,11 @@ export default async function PlayerDetailsPage({
     return <PlayerNotFoundError />;
   }
 
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        staleTime: 60000, // 1 minute
-      },
-    },
-  });
-  await queryClient.prefetchQuery({
+  const queryClient = getQueryClient();
+
+  queryClient.prefetchQuery({
     queryKey: ['playerStats', playerId],
-    queryFn: () => fetchPlayerStats(playerId),
+    queryFn: () => fetchPlayerStatsByID(playerId),
   });
 
   return (
