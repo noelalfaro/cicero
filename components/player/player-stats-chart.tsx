@@ -1,7 +1,6 @@
 'use client';
-import { useQuery } from '@tanstack/react-query';
-
-import { ArrowDownIcon, ArrowUpIcon, TrendingUp } from 'lucide-react';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { TrendingUp } from 'lucide-react';
 import {
   CartesianGrid,
   Line,
@@ -25,17 +24,11 @@ import {
   ChartContainer,
   ChartConfig,
 } from '@/components/ui/chart';
-import { Button } from '@/components/ui/button';
-import NumberFlow from '@number-flow/react';
-import PlayerTicker from '@/components/player/player-ticker';
-import { fetchPlayerStats } from '@/lib/client/client-fetch'; // Adjust the import path as necessary
-import { PlayerStats } from '@/lib/definitions';
-import { PlayerStatsChartSkeleton } from '@/components/layout/skeletons';
-import { useParams } from 'next/navigation';
 
-interface PlayerStatsChartProps {
-  stats: PlayerStats[];
-}
+import PlayerTicker from '@/components/player/player-ticker';
+import { fetchPlayerStatsApi } from '@/lib/client/player-stats-api'; // Adjust the import path as necessary
+import { PlayerStats } from '@/lib/definitions';
+import { useParams } from 'next/navigation';
 
 const chartConfig = {
   desktop: {

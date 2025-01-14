@@ -1,4 +1,4 @@
-import { fetchPlayerData } from '@/lib/data';
+import { fetchPlayerData } from '@/lib/data/players';
 import { Player } from '@/lib/definitions';
 import {
   Table,

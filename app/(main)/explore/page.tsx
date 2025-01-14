@@ -25,9 +25,7 @@ export default async function Page() {
         <Suspense fallback={<ExploreTableSkeleton />}>
           <Players />
         </Suspense>
-        {/* <Suspense> */}
         <NbaNews />
-        {/* </Suspense> */}
       </div>
     </>
   );

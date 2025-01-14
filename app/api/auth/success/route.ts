@@ -2,7 +2,7 @@ import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { redirect } from 'next/navigation';
 import { ExtendedKindeIdToken } from '@/lib/types';
 import { User } from '@/lib/definitions';
-import { createUser, updateUserUsername } from '@/lib/data';
+import { createUser, updateUserUsername } from '@/lib/data/users';
 import { cookies } from 'next/headers';
 
 export async function GET(request: Request) {
@@ -10,7 +10,7 @@ export async function GET(request: Request) {
   const username = cookieStore.get('temp_username')?.value;
   const { getUser } = getKindeServerSession();
   const user = await getUser();
-  // console.log(user);
+  console.log(user);
   const defaultUserImageUrl =
     'https://i.pinimg.com/originals/25/ee/de/25eedef494e9b4ce02b14990c9b5db2d.jpg';
 
@@ -24,7 +24,7 @@ export async function GET(request: Request) {
   if (await isAuthenticated()) {
     // console.log(await getIdToken());
     const idToken = (await getIdToken()) as unknown as ExtendedKindeIdToken;
-    // console.log(JSON.stringify(idToken, null, 2));
+    console.log(JSON.stringify(idToken, null, 2));
 
     if (idToken) {
       const user: User = {

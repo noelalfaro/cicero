@@ -6,7 +6,7 @@ import {
   PlayerActionBarSkeleton,
   PlayerAiSummarySkeleton,
 } from '@/components/layout/skeletons';
-import { fetchPlayerDataByID } from '@/lib/data';
+import { fetchPlayerDataByID, fetchPlayerStatsByID } from '@/lib/data/players';
 import { PlayerDetailsStatic } from '@/components/player/player-detail-static';
 import { PlayerStatsChart } from '@/components/player/player-stats-chart';
 import PlayerNews from '@/components/player/player-news';
@@ -17,7 +17,7 @@ import {
   HydrationBoundary,
   QueryClient,
 } from '@tanstack/react-query';
-import { fetchPlayerStats } from '@/lib/client/client-fetch';
+import { getQueryClient } from '@/lib/get-query-client';
 
 export default async function PlayerDetailsPage({
   params,

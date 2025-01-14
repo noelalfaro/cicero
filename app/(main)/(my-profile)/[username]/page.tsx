@@ -22,7 +22,7 @@ import {
 } from '@/components/ui/card';
 import { UserSettings } from '@/components/profile/user-settings-dialog';
 import { EditProfileDialog } from '@/components/profile/edit-profile-dialog';
-import { fetchUserDataByUsername } from '@/lib/data';
+import { fetchUserDataByUsername } from '@/lib/data/users';
 import Watchlist from '@/components/profile/watchlist';
 
 // Rest of your page code
