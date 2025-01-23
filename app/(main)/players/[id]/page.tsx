@@ -32,6 +32,7 @@ export default async function PlayerDetailsPage({
   }
 
   const player = await fetchPlayerDataByID(playerId);
+  // console.log(player);
 
   if (!player) {
     return <PlayerNotFoundError />;
@@ -43,6 +44,9 @@ export default async function PlayerDetailsPage({
     queryKey: ['playerStats', playerId],
     queryFn: () => fetchPlayerStatsByID(playerId),
   });
+
+  // const stats = await fetchPlayerStatsByID(playerId);
+  // console.log(stats);
 
   return (
     <div className="flex h-fit w-full flex-col gap-2 md:grid md:grid-cols-8 md:grid-rows-[350px_1fr_300px] lg:grid-rows-[350px_1fr_250px]">

@@ -23,6 +23,7 @@ import {
   doesEmailExistCheck,
 } from '@/lib/data/registration';
 import { Separator } from '@/components/ui/separator';
+import { LoginButton } from '@/components/auth/login-button';
 
 const formSchema = z.object({
   email: z
@@ -50,9 +51,7 @@ export const EmailLogin = (props: {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsLoading(true);
     try {
       router.push(
@@ -61,7 +60,7 @@ export const EmailLogin = (props: {
     } catch (error) {
       setIsLoading(false);
     }
-  }
+  };
 
   return (
     <>
@@ -81,7 +80,6 @@ export const EmailLogin = (props: {
                     <Input
                       id="email"
                       placeholder="kingjames@lakers.com"
-                      required
                       onKeyDown={(e) => {
                         if (e.key === 'Enter') {
                           router.push(

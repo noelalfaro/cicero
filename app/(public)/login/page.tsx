@@ -1,5 +1,5 @@
 import { LoginLink } from '@kinde-oss/kinde-auth-nextjs/server';
-import { OAuthIcon } from '@/components/auth/oAuthButton';
+import { OAuthButton } from '@/components/auth/oAuthButton';
 
 import { getConnections } from '@/lib/utils';
 // import { Link } from 'next-view-transitions';
@@ -24,17 +24,6 @@ export default async function Login() {
     (conn) => conn.strategy === 'email:otp',
   )?.id;
 
-  // const player = async () => {
-  //   const response = await fetch(
-  //     'https://stats.nba.com/stats/leagueleaders?ActiveFlag=&LeagueID=00&PerMode=Totals&Scope=S&Season=2019-20&SeasonType=Regular+Season&StatCategory=PTS',
-  //   );
-  //   const data = await response.json();
-  //   console.log(data.resultSet.rowSet[2]);
-  //   // console.log(JSON.stringify(data.resultSets, null, 2));
-  // };
-
-  // player();
-
   return (
     <div className="flex min-h-screen w-full items-center justify-center self-center text-left">
       <Card className="w-full md:w-1/2 lg:w-4/12">
@@ -56,9 +45,8 @@ export default async function Login() {
                     key={connection.id}
                     authUrlParams={{ connection_id: connection.id }}
                   >
-                    <OAuthIcon
-                      provider={connection.display_name}
-                      login={true}
+                    <OAuthButton
+                      provider={connection.display_name.toLowerCase()}
                     />
                   </LoginLink>
                 ))}

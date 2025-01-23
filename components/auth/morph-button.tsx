@@ -3,46 +3,45 @@ import { useState } from 'react';
 import { TextMorph } from '@/components/ui/text-morph';
 import { Button } from '@/components/ui/button';
 import { FaGoogle, FaGithub } from 'react-icons/fa';
+import clsx from 'clsx';
 
-interface TextMorphButtonProps {
-  login: boolean;
-  provider: string;
+interface MorphButtonProps {
+  initialText: string;
+  variant: 'default' | 'secondary' | 'outline';
+  icon?: 'google' | 'github';
+  isHomePage?: boolean; // Add a prop to determine if the button is on the home page
 }
 
-export function TextMorphButton({ login, provider }: TextMorphButtonProps) {
-  const [text, setText] = useState(login ? `Login with` : `Sign up with`);
+export function MorphButton({
+  initialText,
+  variant,
+  icon,
+  isHomePage = false, // Default value for isHomePage
+}: MorphButtonProps) {
+  const [text, setText] = useState(initialText);
+
+  const getIcon = () => {
+    switch (icon) {
+      case 'google':
+        return <FaGoogle size={24} />;
+      case 'github':
+        return <FaGithub size={24} />;
+      default:
+        return null;
+    }
+  };
 
   return (
     <Button
-      variant={'outline'}
+      variant={variant}
       onClick={() => setText('Loading...')}
-      className="flex w-full items-center gap-2 p-6 text-base transition-colors"
+      className={clsx(
+        'flex items-center gap-2 p-6 text-base transition-colors',
+        isHomePage ? 'w-[120px]' : 'w-full',
+      )}
     >
       <TextMorph>{text}</TextMorph>
-      {'  '}
-      {provider === 'Google' ? <FaGoogle size={24} /> : <FaGithub size={24} />}
-    </Button>
-  );
-}
-
-interface SimpleTextMorphButtonProps {
-  login: boolean;
-  isLoading: boolean;
-}
-
-export function SimpleTextMorphButton({
-  login,
-  isLoading,
-}: SimpleTextMorphButtonProps) {
-  const [text, setText] = useState(login ? 'Login' : 'Sign up');
-
-  return (
-    <Button
-      variant={'default'}
-      onClick={() => setText('Loading...')}
-      className="flex w-full items-center gap-2 p-6 text-base transition-colors"
-    >
-      <TextMorph>{isLoading ? 'Loading...' : text}</TextMorph>
+      {icon && getIcon()}
     </Button>
   );
 }

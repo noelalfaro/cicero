@@ -29,6 +29,7 @@ import PlayerTicker from '@/components/player/player-ticker';
 import { fetchPlayerStatsApi } from '@/lib/client/player-stats-api'; // Adjust the import path as necessary
 import { PlayerStats } from '@/lib/definitions';
 import { useParams } from 'next/navigation';
+import PlayerChartError from '@/components/player/player-chart-error';
 
 const chartConfig = {
   desktop: {
@@ -46,20 +47,9 @@ export function PlayerStatsChart() {
     refetchOnMount: false,
     staleTime: 60000,
   });
-
+  // console.log('PlayerStatsChart: ' + JSON.stringify(stats.stats));
   if (isError) {
-    return (
-      <Card className="col-span-1 flex h-full flex-grow flex-col items-center justify-center md:col-span-5 lg:col-span-6">
-        <CardHeader>
-          <CardTitle>Error</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground">
-            There was a problem loading the player's stats.
-          </p>
-        </CardContent>
-      </Card>
-    );
+    return <PlayerChartError />;
   }
 
   if (stats.length === 0) {
@@ -90,19 +80,6 @@ export function PlayerStatsChart() {
   const lastGamePoints = stats[stats.length - 1].points;
   const pointsDifference = lastGamePoints - averagePoints;
   const percentageDifference = (pointsDifference / averagePoints) * 100;
-
-  const getDomain = (data: any) => {
-    const maxValue = Math.max(...data.map((item: any) => item.desktop));
-    const fixedMax = 300; // Set your desired fixed maximum here
-    return [0, Math.max(fixedMax, maxValue)];
-  };
-
-  // console.log('length of stats: ' + stats.length);
-  // console.log('Latest Game: ' + latestGame);
-  // console.log('Average Points: ' + averagePoints);
-  // console.log('Last Game Points: ' + lastGamePoints);
-  // console.log('Points Difference: ' + pointsDifference);
-  // console.log('Percentage Difference: ' + percentageDifference);
 
   return (
     <>

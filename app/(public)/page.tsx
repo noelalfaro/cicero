@@ -9,6 +9,10 @@ import Link from 'next/link';
 import React from 'react';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { redirect } from 'next/navigation';
+import { TextMorph } from '@/components/ui/text-morph';
+// import { TextMorphButton } from '@/components/general/login-button';
+import { LoginButton } from '@/components/auth/login-button';
+import { RegisterButton } from '@/components/auth/register-button';
 
 export default async function Home() {
   const { isAuthenticated } = getKindeServerSession();
@@ -32,18 +36,11 @@ export default async function Home() {
 
           <div className="flex w-full justify-start gap-2 self-end text-center md:w-fit md:justify-end md:gap-2 lg:grid-cols-4 lg:text-left">
             <Link href={'/login'} className="w-1/2">
-              <Button className="w-full rounded-xl p-6 text-base md:rounded-md">
-                Log In
-              </Button>
+              <LoginButton isHomePage />
             </Link>
 
             <Link href={'/register'} className="w-1/2">
-              <Button
-                variant={'secondary'}
-                className="w-full rounded-xl p-6 text-base md:rounded-md"
-              >
-                Register
-              </Button>
+              <RegisterButton isHomePage />
             </Link>
           </div>
         </section>

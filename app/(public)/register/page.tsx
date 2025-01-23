@@ -1,5 +1,5 @@
 import { RegisterLink } from '@kinde-oss/kinde-auth-nextjs/server';
-import { OAuthIcon } from '@/components/auth/oAuthButton';
+import { OAuthButton } from '@/components/auth/oAuthButton';
 import { getConnections } from '@/lib/utils';
 // import { Link } from 'next-view-transitions';
 import Link from 'next/link';
@@ -12,6 +12,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { EmailRegister } from '@/components/auth/email-register';
+import { Separator } from '@/components/ui/separator';
 
 export default async function Register() {
   const connections = await getConnections();
@@ -32,6 +33,11 @@ export default async function Register() {
         <CardContent>
           <div className="grid gap-4">
             <EmailRegister emailConnectionId={emailConnectionId} />
+            <div className="flex w-full flex-wrap items-center justify-center gap-2 text-xs text-muted-foreground">
+              <Separator orientation="horizontal" className="w-1/4"></Separator>
+              OR
+              <Separator orientation="horizontal" className="w-1/4"></Separator>
+            </div>
 
             <div className="flex flex-col gap-2">
               {connections
@@ -41,9 +47,8 @@ export default async function Register() {
                     key={connection.id}
                     authUrlParams={{ connection_id: connection.id }}
                   >
-                    <OAuthIcon
-                      provider={connection.display_name}
-                      login={false}
+                    <OAuthButton
+                      provider={connection.display_name.toLowerCase()}
                     />
                   </RegisterLink>
                 ))}

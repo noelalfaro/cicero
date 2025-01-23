@@ -3,9 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-
-import { unstable_rethrow, useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -21,7 +19,7 @@ import {
   checkIfUsernameIsTaken,
   doesEmailExistCheck,
 } from '@/lib/data/registration';
-// import { Divider } from '@mui/material';
+
 import { setCookie } from 'cookies-next';
 
 const reservedRoutes = [
@@ -72,8 +70,6 @@ const formSchema = z.object({
 export const EmailRegister = (props: {
   emailConnectionId: string | undefined;
 }) => {
-  const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -117,13 +113,6 @@ export const EmailRegister = (props: {
                       id="email"
                       placeholder="kingjames@lakers.com"
                       required
-                      // onKeyDown={(e) => {
-                      //   if (e.key === 'Enter') {
-                      //     router.push(
-                      //       `/api/auth/login?connection_id=${props.emailConnectionId}&login_hint=${email}`,
-                      //     );
-                      //   }
-                      // }}
                       {...field}
                     />
                   </FormControl>
@@ -149,20 +138,12 @@ export const EmailRegister = (props: {
                 </FormItem>
               )}
             />
-
-            {/* <RegisterLink
-              authUrlParams={{
-                connection_id: props.emailConnectionId!,
-              }}
-            > */}
             <Button className="w-full" type="submit">
               Sign Up
             </Button>
-            {/* </RegisterLink> */}
           </form>
         </Form>
       </div>
-      {/* <Divider className="text-sm text-muted-foreground">Or</Divider> */}
     </>
   );
 };
