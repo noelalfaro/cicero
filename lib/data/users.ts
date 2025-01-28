@@ -10,12 +10,22 @@ export async function createUser(user: User): Promise<string> {
     .from(users)
     .where(eq(users.id, user.id));
   if (!existingUser[0]) {
-    const result = await db.insert(users).values(user);
+    const result = await db
+      .insert(users)
+      .values({ ...user, email: user.email ?? '' });
     console.log(result);
     return 'Successfully inserted user to user database';
   } else {
     return 'User already in database';
   }
+}
+
+export async function getUserById(userId: string): Promise<User | null> {
+  const existingUser: User[] = await db
+    .select()
+    .from(users)
+    .where(eq(users.id, userId));
+  return existingUser[0];
 }
 
 export async function fetchUserDataByUsername(username: string): Promise<User> {
@@ -39,9 +49,26 @@ export async function fetchUserDataById(id: string): Promise<User | null> {
   return existingUser[0];
 }
 
-export async function updateUserUsername(userId: string, username: string) {
+export async function updateUserDisplayName(userId: string, username: string) {
   await db
     .update(users)
     .set({ username: username, display_name: username })
+    .where(eq(users.id, userId));
+}
+
+export async function updateUserUsername(userId: string, username: string) {
+  await db
+    .update(users)
+    .set({ username: username })
+    .where(eq(users.id, userId));
+}
+
+export async function updateUserOnboardingStatus(
+  userId: string,
+  onboarding_status: boolean,
+) {
+  await db
+    .update(users)
+    .set({ onboarding_status: onboarding_status })
     .where(eq(users.id, userId));
 }

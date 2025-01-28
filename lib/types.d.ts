@@ -1,19 +1,17 @@
 // types/kinde.d.ts
-import { KindeIdToken as OriginalKindeIdToken } from '@kinde-oss/kinde-auth-nextjs/types';
+// import { KindeIdToken as OriginalKindeIdToken } from '@kinde-oss/kinde-auth-nextjs/types';
+import { KindeIdToken } from '@kinde-oss/kinde-auth-nextjs/types';
 
-export interface ExtendedKindeIdToken extends OriginalKindeIdToken {
-  preferred_username: string;
-  picture: string;
-
-  ext_provider: {
+export interface ExtendedKindeIdToken extends KindeIdToken {
+  ext_provider?: {
     claims: {
       connection_id: string;
       email: string;
       family_name: string;
       given_name: string;
       is_confirmed: boolean;
-      picture: string;
-      profile: {
+      picture?: string;
+      profile?: {
         avatar_url: string;
         bio: string;
         blog: string;

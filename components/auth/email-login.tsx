@@ -18,10 +18,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import {
-  checkIfEmailIsValid,
-  doesEmailExistCheck,
-} from '@/lib/data/registration';
+import { doesEmailExistCheck } from '@/lib/data/registration';
 import { Separator } from '@/components/ui/separator';
 import { LoginButton } from '@/components/auth/login-button';
 
@@ -34,7 +31,7 @@ const formSchema = z.object({
       // Where checkIfEmailIsValid makes a request to the backend
       // to see if the email is valid.
       return await doesEmailExistCheck(email);
-    }, 'This email is not in our database.'),
+    }, 'This username is not in our database.'),
 });
 
 export const EmailLogin = (props: {
@@ -55,7 +52,7 @@ export const EmailLogin = (props: {
     setIsLoading(true);
     try {
       router.push(
-        `/api/auth/login?connection_id=${props.emailConnectionId}&login_hint=${values.email}`,
+        `/api/auth/login?connection_id=${props.emailConnectionId}&login_hint=${values.email}&post_login_redirect_url=/dashboard`,
       );
     } catch (error) {
       setIsLoading(false);
@@ -79,14 +76,14 @@ export const EmailLogin = (props: {
                   <FormControl>
                     <Input
                       id="email"
-                      placeholder="kingjames@lakers.com"
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter') {
-                          router.push(
-                            `/api/auth/login?connection_id=${props.emailConnectionId}&login_hint=${email}`,
-                          );
-                        }
-                      }}
+                      placeholder="justakidfromakron@gmail.com"
+                      // onKeyDown={(e) => {
+                      //   if (e.key === 'Enter') {
+                      //     router.push(
+                      //       `/api/auth/login?connection_id=${props.emailConnectionId}&login_hint=${email}`,
+                      //     );
+                      //   }
+                      // }}
                       {...field}
                     />
                   </FormControl>
@@ -95,10 +92,12 @@ export const EmailLogin = (props: {
                 </FormItem>
               )}
             />
+
             <LoginLink
               authUrlParams={{
                 connection_id: props.emailConnectionId!,
                 login_hint: email,
+                post_login_redirect_url: '/dashboard',
               }}
             >
               <Button className="w-full" type="submit">

@@ -126,13 +126,15 @@ const userSchema = z.object({
   username: z
     .string()
     .min(2, { message: 'Username must be at least 2 characters.' })
-    .nullable(),
-  email: z.string().email({ message: 'Invalid email address' }).nullable(),
+    .nullable()
+    .optional(),
+  email: z.string().email({ message: 'Invalid email address' }),
   picture: z.string(),
   display_name: z
     .string()
     .min(2, { message: 'Display must be at least 2 characters.' })
     .nullable(),
+  onboarding_status: z.boolean(),
 });
 const updateUserFormSchema = z.object({
   id: z.string(),

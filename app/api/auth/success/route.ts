@@ -1,56 +1,65 @@
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
-import { redirect } from 'next/navigation';
 import { ExtendedKindeIdToken } from '@/lib/types';
 import { User } from '@/lib/definitions';
-import { createUser, updateUserUsername } from '@/lib/data/users';
+import { createUser, getUserById } from '@/lib/data/users';
 import { cookies } from 'next/headers';
+import { NextResponse } from 'next/server';
 
 export async function GET(request: Request) {
-  const cookieStore = await cookies();
-  const username = cookieStore.get('temp_username')?.value;
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
-  console.log(user);
-  const defaultUserImageUrl =
-    'https://i.pinimg.com/originals/25/ee/de/25eedef494e9b4ce02b14990c9b5db2d.jpg';
+  const { isAuthenticated, getIdToken, getAccessToken } =
+    getKindeServerSession();
+  const cookieStore = cookies();
+  const tempUsername = (await cookieStore).get('temp_username')?.value;
 
   const redirectURL =
     process.env.NODE_ENV === 'production'
       ? 'https://cicero-coral.vercel.app/dashboard'
       : 'http://localhost:3000/dashboard';
 
-  const { isAuthenticated, getIdToken } = getKindeServerSession();
-
   if (await isAuthenticated()) {
-    // console.log(await getIdToken());
-    const idToken = (await getIdToken()) as unknown as ExtendedKindeIdToken;
-    console.log(JSON.stringify(idToken, null, 2));
+    try {
+      const idToken = (await getIdToken()) as ExtendedKindeIdToken;
+      const accessToken = await getAccessToken();
 
-    if (idToken) {
-      const user: User = {
-        username:
-          idToken.preferred_username ||
-          idToken.ext_provider.claims?.profile?.login,
-        picture: idToken.picture || defaultUserImageUrl,
-        email: idToken.email,
-        id: idToken.sub,
-        display_name: idToken.name,
-      };
+      if (idToken && accessToken) {
+        const userId = idToken.sub;
+        const existingUser = await getUserById(userId);
 
-      await createUser(user);
+        if (existingUser) {
+          // Check the onboarding status
+          if (!existingUser.onboarding_status) {
+            // Redirect user to the onboarding process
+            console.log("user's onboarding status is false");
+            return NextResponse.redirect(new URL('/onboarding', redirectURL));
+          } else {
+            // User exists and has completed onboarding, proceed with login
+            console.log('Existing User logged in:', existingUser);
+          }
+        } else {
+          // User does not exist, proceed with registration
+          const user: User = {
+            username: null, // Keep username null initially
+            picture:
+              idToken.picture ??
+              'https://i.pinimg.com/originals/25/ee/de/25eedef494e9b4ce02b14990c9b5db2d.jpg',
+            email: idToken.email ?? '',
+            id: idToken.sub,
+            display_name: idToken.name ?? null,
+            onboarding_status: false,
+          };
 
-      if (username) {
-        await updateUserUsername(user.id, username);
+          await createUser(user);
+
+          // Redirect user to a page to fill in the username
+          return NextResponse.redirect(new URL('/onboarding', redirectURL));
+        }
+
+        (await cookieStore).delete('temp_username');
       }
-
-      cookieStore.delete('temp_username');
+    } catch (error) {
+      console.error('Error during authentication:', error);
     }
   }
 
-  return redirect(redirectURL);
+  return NextResponse.redirect(new URL('/dashboard', redirectURL));
 }
-
-// Allowed callback URLs
-// https://cicero-coral.vercel.app/api/auth/kinde_callback
-// Allowed logout redirect URLs
-// https://cicero-coral.vercel.app

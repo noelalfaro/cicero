@@ -24,10 +24,10 @@ export default async function Register() {
   return (
     <div className="flex min-h-screen w-full items-center justify-center self-center text-left">
       <Card className="w-full md:w-1/2 lg:w-4/12">
-        <CardHeader>
+        <CardHeader className="pb-2">
           <CardTitle className="text-2xl">Create an Account</CardTitle>
           <CardDescription>
-            Enter your email & username to register.
+            Enter your email to register or sign up via Github below.
           </CardDescription>
         </CardHeader>
         <CardContent>

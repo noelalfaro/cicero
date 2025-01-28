@@ -5,7 +5,7 @@ import {
   englishRecommendedTransformers,
 } from 'obscenity';
 import { users } from '@/server/db/schema/users';
-import { eq } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
 import { db } from '@/server/db';
 
 const matcher = new RegExpMatcher({
@@ -23,25 +23,17 @@ export async function doesEmailExistCheck(email: string): Promise<boolean> {
   else return false;
 }
 
-export async function checkIfUsernameIsTaken(
+export async function checkUsernameAvailability(
   username: string,
 ): Promise<boolean> {
   const result = await db
     .select()
     .from(users)
     .where(eq(users.username, username));
-  return result.length > 0;
+  return result.length === 0; // Return true if the username is not found (available), false otherwise
 }
 
-export async function checkIfEmailIsValid(email: string) {
-  const result = await db
-    .select()
-    .from(users)
-    .where(eq(users.email, email))
-    .limit(1);
-  console.log(result);
-
-  if (result.length > 0) return true;
-
-  return false;
+export async function checkEmailAvailability(email: string): Promise<boolean> {
+  const result = await db.select().from(users).where(eq(users.email, email));
+  return result.length === 0;
 }
