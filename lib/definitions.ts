@@ -135,6 +135,7 @@ const userSchema = z.object({
     .min(2, { message: 'Display must be at least 2 characters.' })
     .nullable(),
   onboarding_status: z.boolean(),
+  social_connection_id: z.string().nullable().optional(),
 });
 const updateUserFormSchema = z.object({
   id: z.string(),

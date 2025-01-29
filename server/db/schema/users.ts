@@ -9,4 +9,5 @@ export const users = pgTable('users', {
   picture: text('picture').notNull(),
   display_name: text('display_name'),
   onboarding_status: boolean('onboarding_status').notNull().default(false),
+  social_connection_id: text('social_connection_id'),
 });

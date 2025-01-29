@@ -40,27 +40,30 @@ const formSchema = z.object({
 
 export default function UsernameForm({
   userId,
-  initialUsername,
+  connectionId,
 }: {
   userId: string;
-  initialUsername: string | null | undefined;
+  connectionId?: string | null;
 }) {
-  const [username, setUsername] = useState(initialUsername || '');
-  const [debouncedUsername] = useDebounce(username, 500);
+  const [username, setUsername] = useState('');
+  const [debouncedUsername] = useDebounce(username, 1500);
   const [isAvailable, setIsAvailable] = useState<
-    'true' | 'false' | 'loading' | 'null' | 'initial'
-  >('null');
+    'true' | 'false' | 'loading' | 'null'
+  >('loading');
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: initialUsername || '',
+      username: '',
     },
     reValidateMode: 'onSubmit',
   });
 
   useEffect(() => {
+    const controller = new AbortController();
+    const { signal } = controller;
+
     const checkAvailability = async (username: string) => {
       const regex = /^[a-zA-Z0-9]+$/;
 
@@ -73,16 +76,38 @@ export default function UsernameForm({
       }
 
       setIsAvailable('loading');
-      const response = await fetch('/api/users/check-username-availability', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username }),
-      });
 
-      const data = await response.json();
-      setIsAvailable(data.isAvailable ? 'true' : 'false');
+      try {
+        const response = await fetch('/api/users/check-username-availability', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ username }),
+          signal, // Attach the AbortController signal
+        });
+
+        if (!response.ok) {
+          throw new Error(`Server error: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        setIsAvailable(data.isAvailable ? 'true' : 'false');
+      } catch (error) {
+        if (error instanceof Error) {
+          if (error.name === 'AbortError') {
+            // Request was aborted, do nothing
+            return;
+          }
+          console.error('Error checking username availability:', error.message);
+        } else {
+          console.error(
+            'Unexpected error checking username availability:',
+            error,
+          );
+        }
+        setIsAvailable('false'); // Optionally set to 'false' or handle differently
+      }
     };
 
     if (debouncedUsername.length >= 3) {
@@ -90,7 +115,12 @@ export default function UsernameForm({
     } else {
       setIsAvailable('null');
     }
-  }, [debouncedUsername]);
+
+    // Cleanup function to abort the fetch request if username changes or component unmounts
+    return () => {
+      controller.abort();
+    };
+  }, [debouncedUsername, reservedRoutes]);
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
@@ -99,7 +129,11 @@ export default function UsernameForm({
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username: values.username, userId }),
+        body: JSON.stringify({
+          username: values.username,
+          userId,
+          connectionId,
+        }),
       });
 
       if (response.ok) {
@@ -109,7 +143,10 @@ export default function UsernameForm({
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ userId, onboarding_status: true }),
+          body: JSON.stringify({
+            userId,
+            onboarding_status: true,
+          }),
         });
 
         if (response.ok) {

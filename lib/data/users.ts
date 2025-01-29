@@ -20,6 +20,19 @@ export async function createUser(user: User): Promise<string> {
   }
 }
 
+export async function updateUser(user: User): Promise<string> {
+  const existingUser = await db
+    .select()
+    .from(users)
+    .where(eq(users.id, user.id));
+  if (existingUser[0]) {
+    await db.update(users).set(user).where(eq(users.id, user.id));
+    return 'Successfully updated user';
+  } else {
+    return 'User not found';
+  }
+}
+
 export async function getUserById(userId: string): Promise<User | null> {
   const existingUser: User[] = await db
     .select()
@@ -71,4 +84,14 @@ export async function updateUserOnboardingStatus(
     .update(users)
     .set({ onboarding_status: onboarding_status })
     .where(eq(users.id, userId));
+}
+
+export async function fetchUserConnectionId(
+  userId: string,
+): Promise<string | null> {
+  const connection_id = await db
+    .select()
+    .from(users)
+    .where(eq(users.id, userId));
+  return connection_id[0].social_connection_id;
 }

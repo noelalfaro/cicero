@@ -5,11 +5,13 @@ import {
   CardDescription,
   CardContent,
 } from '@/components/ui/card';
+import { fetchUserConnectionId } from '@/lib/data/users';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 
 export default async function Onboarding() {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
+  const connectionId = await fetchUserConnectionId(user?.id);
 
   return (
     <div className="flex min-h-screen w-full items-center justify-center self-center text-left">
@@ -23,7 +25,7 @@ export default async function Onboarding() {
             Create a unique username to attach to your profile, this will be
             your identifier on the platform.
           </CardDescription>
-          <UsernameForm userId={user?.id} initialUsername={user?.username} />
+          <UsernameForm userId={user?.id} connectionId={connectionId} />
         </CardContent>
       </Card>
     </div>

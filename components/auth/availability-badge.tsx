@@ -6,7 +6,7 @@ import clsx from 'clsx';
 export default function AvailabilityBadge({
   availability,
 }: {
-  availability: 'true' | 'false' | 'loading' | 'null' | 'initial';
+  availability: 'true' | 'false' | 'loading' | 'null';
 }) {
   return (
     <AnimatePresence>
