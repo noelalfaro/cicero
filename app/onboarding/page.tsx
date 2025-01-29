@@ -11,7 +11,14 @@ import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 export default async function Onboarding() {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
-  const connectionId = await fetchUserConnectionId(user?.id);
+
+  let connectionId;
+  try {
+    connectionId = await fetchUserConnectionId(user.id);
+  } catch (error) {
+    console.error('Failed to fetch connection ID:', error);
+    connectionId = null; // or a default value
+  }
 
   return (
     <div className="flex min-h-screen w-full items-center justify-center self-center text-left">
