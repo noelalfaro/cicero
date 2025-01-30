@@ -14,7 +14,6 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    // TODO: Update the username by calling
     await updateUserOnboardingStatus(userId, onboarding_status);
     return NextResponse.json(
       { message: 'Onboarding Status Updated' },

@@ -74,6 +74,8 @@ export async function updateUserUsername(userId: string, username: string) {
     .update(users)
     .set({ username: username })
     .where(eq(users.id, userId));
+
+  return 'Successfully updated username: ' + username + ' for user: ' + userId;
 }
 
 export async function updateUserOnboardingStatus(

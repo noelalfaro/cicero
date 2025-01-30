@@ -7,16 +7,12 @@ export default withAuth(
   {
     isReturnToCurrentPage: true,
     loginPage: '/login',
-    publicPaths: ['/register', '/login', '/about-us', '/learn'],
+    publicPaths: ['/register', '/login', '/about-us', '/learn', '/', '/blog/*'],
   },
 );
 
 export const config = {
   matcher: [
-    '/dashboard',
-    '/notifications',
-    '/explore',
-    '/players/:path*',
-    '/:username',
+    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
   ],
 };

@@ -40,7 +40,7 @@ export async function GET(request: Request) {
             // Update the user's social_connection_id
             await updateUser({
               ...existingUser,
-              social_connection_id: idToken.ext_provider?.connection_id ?? null,
+              social_connection_id: idToken.ext_provider?.name ?? null,
             });
 
             return NextResponse.redirect(new URL('/dashboard', redirectURL));
@@ -56,7 +56,7 @@ export async function GET(request: Request) {
             id: idToken.sub,
             display_name: idToken.name ?? null,
             onboarding_status: false,
-            social_connection_id: idToken.ext_provider?.connection_id ?? null,
+            social_connection_id: idToken.ext_provider?.name ?? null,
           };
 
           await createUser(user);

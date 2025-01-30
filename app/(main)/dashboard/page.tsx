@@ -2,8 +2,7 @@ import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { LogoutLink } from '@kinde-oss/kinde-auth-nextjs/server';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { TextScramble } from '@/components/ui/text-scramble';
-import { TextEffect } from '@/components/ui/text-effect';
+
 import {
   Card,
   CardHeader,
@@ -12,7 +11,6 @@ import {
   CardDescription,
   CardFooter,
 } from '@/components/ui/card';
-import { redirect } from 'next/navigation';
 import React from 'react';
 import DashboardTools from '@/components/dashboard/dashboard-tools';
 
@@ -22,10 +20,6 @@ export const dynamic = 'force-dynamic';
 export default async function Page() {
   const { getUser, isAuthenticated } = getKindeServerSession();
   const user = await getUser();
-
-  if (!isAuthenticated()) {
-    redirect('/');
-  }
 
   return (
     <div className="grid w-full grid-cols-1 gap-2 md:grid-cols-8 md:grid-rows-[350px_1fr_250px]">

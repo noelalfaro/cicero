@@ -120,7 +120,7 @@ export default function UsernameForm({
     return () => {
       controller.abort();
     };
-  }, [debouncedUsername, reservedRoutes]);
+  }, [debouncedUsername]);
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
@@ -138,7 +138,7 @@ export default function UsernameForm({
 
       if (response.ok) {
         // Update onboarding status to true
-        await fetch('/api/users/update-onboarding-status', {
+        const response = await fetch('/api/users/update-onboarding-status', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -152,6 +152,8 @@ export default function UsernameForm({
         if (response.ok) {
           // Redirect to dashboard after successful onboarding
           router.push('/dashboard');
+        } else {
+          console.error('Failed to update onboarding status');
         }
       } else {
         console.error('Failed to update username');
