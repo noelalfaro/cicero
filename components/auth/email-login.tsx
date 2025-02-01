@@ -52,7 +52,7 @@ export const EmailLogin = (props: {
     setIsLoading(true);
     try {
       router.push(
-        `/api/auth/login?connection_id=${props.emailConnectionId}&login_hint=${values.email}&post_login_redirect_url=/dashboard`,
+        `/api/auth/login?connection_id=${props.emailConnectionId}&login_hint=${values.email}`,
       );
     } catch (error) {
       setIsLoading(false);
@@ -97,7 +97,6 @@ export const EmailLogin = (props: {
               authUrlParams={{
                 connection_id: props.emailConnectionId!,
                 login_hint: email,
-                post_login_redirect_url: '/dashboard',
               }}
             >
               <Button className="w-full" type="submit">

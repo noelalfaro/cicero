@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import '../globals.css';
+import '../../globals.css';
 import { ThemeProvider } from '@/components/theme/theme-provider';
 import { ViewTransitions } from 'next-view-transitions';
+import { AuthProvider } from '@/components/providers/auth-provider';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -18,20 +19,22 @@ export default function RootLayout({
 }>) {
   return (
     <ViewTransitions>
-      <html lang="en">
-        <body className={` ${inter.className}`}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <main className="container flex min-h-screen w-full max-w-7xl flex-col px-[1rem] lg:px-[2rem]">
-              {children}
-            </main>
-          </ThemeProvider>
-        </body>
-      </html>
+      <AuthProvider>
+        <html lang="en">
+          <body className={` ${inter.className}`}>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <main className="container flex min-h-screen w-full max-w-7xl flex-col px-[1rem] lg:px-[2rem]">
+                {children}
+              </main>
+            </ThemeProvider>
+          </body>
+        </html>
+      </AuthProvider>
     </ViewTransitions>
   );
 }

@@ -20,6 +20,7 @@ export const dynamic = 'force-dynamic';
 export default async function Page() {
   const { getUser, isAuthenticated } = getKindeServerSession();
   const user = await getUser();
+  console.log(user);
 
   return (
     <div className="grid w-full grid-cols-1 gap-2 md:grid-cols-8 md:grid-rows-[350px_1fr_250px]">

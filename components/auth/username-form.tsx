@@ -35,7 +35,26 @@ const formSchema = z.object({
     .min(3, 'Username must be at least 3 characters long')
     .max(20, 'Username must not exceed 20 characters')
     .regex(/^[a-zA-Z0-9]+$/, 'Username can only contain letters and numbers')
-    .transform((username) => username.trim()),
+    .transform((username) => username.trim())
+    .refine(async (username) => {
+      return !reservedRoutes.includes(username.toLowerCase());
+    }, 'This username is reserved. Please choose another one.')
+    .refine(async (username) => {
+      const response = await fetch('/api/users/check-username-availability', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Server error: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      return data.isAvailable;
+    }, 'This username is already taken.'),
 });
 
 export default function UsernameForm({
@@ -199,7 +218,16 @@ export default function UsernameForm({
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <Button
+            type="submit"
+            disabled={
+              isAvailable === 'false' ||
+              isAvailable === 'loading' ||
+              isAvailable === 'null'
+            }
+          >
+            Submit
+          </Button>
         </form>
       </Form>
     </div>
