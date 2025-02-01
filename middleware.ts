@@ -7,7 +7,15 @@ export default withAuth(
   {
     isReturnToCurrentPage: true,
     loginPage: '/login',
-    publicPaths: ['/register', '/login', '/about-us', '/learn', '/', '/blog/*'],
+    publicPaths: [
+      '/register',
+      '/login',
+      '/about-us',
+      '/learn',
+      '/',
+      '/blog/*',
+      '/api/uploadthing/*',
+    ],
   },
 );
 

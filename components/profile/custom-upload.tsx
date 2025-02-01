@@ -41,10 +41,6 @@ export function CustomUpload({ user }: { user: User }) {
     },
   );
 
-  // const fileTypes = permittedFileInfo?.config
-  //   ? Object.keys(permittedFileInfo?.config)
-  //   : [];
-
   const fileTypes = ['image/jpeg', 'image/png', 'image/gif'];
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
