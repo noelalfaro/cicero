@@ -17,6 +17,7 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { useDebounce } from 'use-debounce';
 import AvailabilityBadge from '@/components/auth/availability-badge';
+import { MorphButton } from '@/components/auth/morph-button';
 
 const reservedRoutes = [
   'dashboard',
@@ -57,7 +58,7 @@ const formSchema = z.object({
     }, 'This username is already taken.'),
 });
 
-export default function UsernameForm({
+export default function OnboardingForm({
   userId,
   connectionId,
 }: {
@@ -69,6 +70,8 @@ export default function UsernameForm({
   const [isAvailable, setIsAvailable] = useState<
     'true' | 'false' | 'loading' | 'null'
   >('loading');
+  const [buttonText, setButtonText] = useState('Submit');
+
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -143,6 +146,7 @@ export default function UsernameForm({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
+      setButtonText('Loading...');
       const response = await fetch('/api/users/update-username', {
         method: 'POST',
         headers: {
@@ -178,6 +182,7 @@ export default function UsernameForm({
         console.error('Failed to update username');
       }
     } catch (error) {
+      setButtonText('Submit');
       console.error('Error during username update:', error);
     }
   };
@@ -218,7 +223,14 @@ export default function UsernameForm({
               </FormItem>
             )}
           />
-          <Button
+          <MorphButton
+            text={buttonText}
+            setButtonText={setButtonText}
+            variant="default"
+            type="submit"
+            isAvailable={isAvailable}
+          />
+          {/* <Button
             type="submit"
             disabled={
               isAvailable === 'false' ||
@@ -227,7 +239,7 @@ export default function UsernameForm({
             }
           >
             Submit
-          </Button>
+          </Button> */}
         </form>
       </Form>
     </div>

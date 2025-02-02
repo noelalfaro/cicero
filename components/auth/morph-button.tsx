@@ -12,6 +12,7 @@ interface MorphButtonProps {
   icon?: 'google' | 'github';
   isHomePage?: boolean;
   type?: 'submit' | 'reset' | 'button' | undefined;
+  isAvailable?: 'true' | 'false' | 'loading' | 'null';
 }
 
 export function MorphButton({
@@ -21,6 +22,7 @@ export function MorphButton({
   icon,
   isHomePage,
   type,
+  isAvailable,
 }: MorphButtonProps) {
   // const [text, setText] = useState(initialText);
 
@@ -44,6 +46,11 @@ export function MorphButton({
         isHomePage ? 'w-full md:w-[120px]' : 'md:w-full',
       )}
       type={type}
+      disabled={
+        isAvailable === 'false' ||
+        isAvailable === 'loading' ||
+        isAvailable === 'null'
+      }
     >
       <TextMorph>{text}</TextMorph>
       {icon && getIcon()}

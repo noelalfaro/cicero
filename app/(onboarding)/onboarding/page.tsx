@@ -1,4 +1,4 @@
-import UsernameForm from '@/components/auth/username-form';
+import OnboardingForm from '@/components/auth/onboarding-form';
 import {
   Card,
   CardHeader,
@@ -32,7 +32,7 @@ export default async function Onboarding() {
             Create a unique username to attach to your profile, this will be
             your identifier on the platform.
           </CardDescription>
-          <UsernameForm userId={user?.id} connectionId={connectionId} />
+          <OnboardingForm userId={user?.id} connectionId={connectionId} />
         </CardContent>
       </Card>
     </div>
