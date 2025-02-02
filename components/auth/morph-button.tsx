@@ -6,19 +6,23 @@ import { FaGoogle, FaGithub } from 'react-icons/fa';
 import clsx from 'clsx';
 
 interface MorphButtonProps {
-  initialText: string;
+  text: string;
+  setButtonText?: (text: string) => void;
   variant: 'default' | 'secondary' | 'outline';
   icon?: 'google' | 'github';
-  isHomePage?: boolean; // Add a prop to determine if the button is on the home page
+  isHomePage?: boolean;
+  type?: 'submit' | 'reset' | 'button' | undefined;
 }
 
 export function MorphButton({
-  initialText,
+  text,
+  setButtonText,
   variant,
   icon,
-  isHomePage = false, // Default value for isHomePage
+  isHomePage,
+  type,
 }: MorphButtonProps) {
-  const [text, setText] = useState(initialText);
+  // const [text, setText] = useState(initialText);
 
   const getIcon = () => {
     switch (icon) {
@@ -34,11 +38,12 @@ export function MorphButton({
   return (
     <Button
       variant={variant}
-      onClick={() => setText('Loading...')}
+      // onClick={() => setText('Loading...')}
       className={clsx(
         'flex items-center gap-2 p-6 text-base transition-colors',
-        isHomePage ? 'w-[120px]' : 'w-full',
+        isHomePage ? 'w-full md:w-[120px]' : 'md:w-full',
       )}
+      type={type}
     >
       <TextMorph>{text}</TextMorph>
       {icon && getIcon()}

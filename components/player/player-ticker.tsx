@@ -13,8 +13,8 @@ const PlayerTicker = ({ latestScore }: { latestScore: number }) => {
     setScore(latestScore);
   }, [latestScore]);
   return (
-    <div className="flex w-full flex-col items-center justify-center gap-3 px-2 md:w-1/4 md:gap-1">
-      <CardHeader className="p-0 text-center text-8xl font-bold md:text-4xl">
+    <div className="flex w-full flex-col items-center justify-center gap-3 md:gap-1">
+      <CardHeader className="p-0 text-center text-8xl font-bold md:text-6xl">
         <NumberFlow continuous={true} value={score} />
         {/* {score} */}
         <div className="text-sm text-muted-foreground">Pulse Rating (PR)</div>

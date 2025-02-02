@@ -35,13 +35,13 @@ export default async function Home() {
           </div>
 
           <div className="flex w-full justify-start gap-2 self-end text-center md:w-fit md:justify-end md:gap-2 lg:grid-cols-4 lg:text-left">
-            <Link href={'/login'} className="w-1/2">
+            <div className="w-1/2">
               <LoginButton isHomePage />
-            </Link>
+            </div>
 
-            <Link href={'/register'} className="w-1/2">
+            <div className="w-1/2">
               <RegisterButton isHomePage />
-            </Link>
+            </div>
           </div>
         </section>
         {/* Learn Section */}

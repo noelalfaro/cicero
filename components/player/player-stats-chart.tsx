@@ -83,65 +83,69 @@ export function PlayerStatsChart() {
 
   return (
     <>
-      <Card className="box-border flex h-full flex-grow flex-col justify-between md:col-span-5 lg:col-span-6">
-        <CardHeader className="flex w-full pb-0">
-          <CardTitle className="w-full text-2xl">Pulse Rating (PR)</CardTitle>
-          <CardDescription className="w-full">
-            Last {stats.length} games
-          </CardDescription>
-        </CardHeader>
+      <Card className="flex flex-grow flex-col md:col-span-5 md:flex-row lg:col-span-6">
+        <div className="box-border flex h-full w-full flex-col justify-between md:w-3/4">
+          <CardHeader className="flex w-full md:pb-0">
+            <CardTitle className="w-full text-2xl">Pulse Rating (PR)</CardTitle>
+            <CardDescription className="w-full">
+              Last {stats.length} games
+            </CardDescription>
+          </CardHeader>
 
-        <CardContent className="flex flex-col items-center justify-center pb-0 md:flex-row">
-          <ResponsiveContainer width="100%" height="100%" minHeight={180}>
-            <ChartContainer
-              config={chartConfig}
-              className="flex items-center justify-center"
-            >
-              <LineChart data={chartData} accessibilityLayer>
-                <CartesianGrid
-                  vertical={false}
-                  stroke="hsl(var(--border))"
-                  syncWithTicks
-                />
-                <XAxis dataKey={'game'} tickLine={false} axisLine={false} />
-                <YAxis
-                  width={25}
-                  tickLine={false}
-                  axisLine={false}
-                  tickMargin={1}
-                  tickCount={5}
-                  className="p-0"
-                />
-                <ChartTooltip
-                  cursor={false}
-                  content={<ChartTooltipContent hideLabel />}
-                ></ChartTooltip>
-                <Tooltip />
-                <Line
-                  type="monotone"
-                  dataKey="points"
-                  stroke="hsl(var(--primary))"
-                  strokeWidth={2}
-                />
-              </LineChart>
-            </ChartContainer>
-          </ResponsiveContainer>
+          <CardContent className="flex w-full flex-col items-center justify-center px-4 md:flex-row md:pb-0">
+            <ResponsiveContainer width="100%" height="100%" minHeight={180}>
+              <ChartContainer
+                config={chartConfig}
+                className="flex items-center justify-center"
+              >
+                <LineChart data={chartData} accessibilityLayer>
+                  <CartesianGrid
+                    vertical={false}
+                    stroke="hsl(var(--border))"
+                    syncWithTicks
+                  />
+                  <XAxis dataKey={'game'} tickLine={false} axisLine={false} />
+                  <YAxis
+                    width={25}
+                    tickLine={false}
+                    axisLine={false}
+                    tickMargin={1}
+                    tickCount={5}
+                    className="p-0"
+                  />
+                  <ChartTooltip
+                    cursor={false}
+                    content={<ChartTooltipContent hideLabel />}
+                  ></ChartTooltip>
+                  <Tooltip />
+                  <Line
+                    type="monotone"
+                    dataKey="points"
+                    stroke="hsl(var(--primary))"
+                    strokeWidth={2}
+                  />
+                </LineChart>
+              </ChartContainer>
+            </ResponsiveContainer>
+          </CardContent>
+
+          <CardFooter className="w-full flex-col items-start gap-2 text-sm">
+            <div className="flex gap-2 font-medium leading-none">
+              {pointsDifference >= 0 ? 'Up' : 'Down'} by{' '}
+              {Math.abs(percentageDifference).toFixed(1)}% from average
+              <TrendingUp
+                className={`h-4 w-4 ${pointsDifference >= 0 ? 'text-green-500' : 'text-red-500'}`}
+              />
+            </div>
+            <div className="leading-none text-muted-foreground">
+              Last game: {lastGamePoints} points (Average:{' '}
+              {averagePoints.toFixed(1)})
+            </div>
+          </CardFooter>
+        </div>
+        <CardContent className="flex flex-grow justify-center p-6">
           <PlayerTicker latestScore={stats[latestGame].points} />
         </CardContent>
-
-        <CardFooter className="flex-col items-start gap-2 text-sm">
-          <div className="flex gap-2 font-medium leading-none">
-            {pointsDifference >= 0 ? 'Up' : 'Down'} by{' '}
-            {Math.abs(percentageDifference).toFixed(1)}% from average
-            <TrendingUp
-              className={`h-4 w-4 ${pointsDifference >= 0 ? 'text-green-500' : 'text-red-500'}`}
-            />
-          </div>
-          <div className="leading-none text-muted-foreground">
-            Last game: {lastGamePoints} points (Average:{' '}
-            {averagePoints.toFixed(1)})
-          </div>
-        </CardFooter>
       </Card>
     </>
   );

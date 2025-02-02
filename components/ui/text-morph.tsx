@@ -12,33 +12,46 @@ type TextMorphProps = {
 
 export function TextMorph({
   children,
-  as: Component = 'p',
+  as: Component = 'span',
   className,
   style,
 }: TextMorphProps) {
   const uniqueId = useId();
 
+  // 1. Pre-process the string to capitalize the first letter of each word
+  const processedString = useMemo(() => {
+    return children
+      .split(' ')
+      .map((word) => {
+        // If word is empty or whitespace, return as is
+        if (!word) return word;
+        return word.charAt(0).toUpperCase() + word.slice(1);
+      })
+      .join(' ');
+  }, [children]);
+
+  // 2. Split processedString into characters
   const characters = useMemo(() => {
     const charCounts: Record<string, number> = {};
 
-    return children.split('').map((char, index) => {
-      const lowerChar = char.toLowerCase();
-      charCounts[lowerChar] = (charCounts[lowerChar] || 0) + 1;
+    return processedString.split('').map((char) => {
+      // Lowercase version, just for counting so keys stay consistent
+      const lowercaseChar = char.toLowerCase();
+      charCounts[lowercaseChar] = (charCounts[lowercaseChar] || 0) + 1;
 
       return {
-        id: `${uniqueId}-${lowerChar}${charCounts[lowerChar]}`,
-        label:
-          char === ' '
-            ? '\u00A0'
-            : index === 0
-              ? char.toUpperCase()
-              : lowerChar, // Handle spaces explicitly
+        id: `${uniqueId}-${lowercaseChar}${charCounts[lowercaseChar]}`,
+        label: char === ' ' ? '\u00A0' : char, // Replace space with a non-breaking space for layout
       };
     });
-  }, [children, uniqueId]);
+  }, [processedString, uniqueId]);
 
   return (
-    <Component className={cn(className)} aria-label={children} style={style}>
+    <Component
+      className={cn(className)}
+      aria-label={processedString}
+      style={style}
+    >
       <AnimatePresence mode="popLayout" initial={false}>
         {characters.map((character) => (
           <motion.span

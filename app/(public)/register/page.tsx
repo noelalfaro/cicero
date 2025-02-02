@@ -1,5 +1,4 @@
 import { RegisterLink } from '@kinde-oss/kinde-auth-nextjs/server';
-import { OAuthButton } from '@/components/auth/oAuthButton';
 import { getConnections } from '@/lib/utils';
 // import { Link } from 'next-view-transitions';
 import Link from 'next/link';
@@ -13,6 +12,7 @@ import {
 } from '@/components/ui/card';
 import { EmailRegister } from '@/components/auth/email-register';
 import { Separator } from '@/components/ui/separator';
+import { OAuthRegister } from '@/components/auth/oauth-register';
 
 export default async function Register() {
   const connections = await getConnections();
@@ -43,14 +43,11 @@ export default async function Register() {
               {connections
                 ?.filter((conn: any) => conn.strategy.includes('oauth2'))
                 .map((connection: any) => (
-                  <RegisterLink
+                  <OAuthRegister
                     key={connection.id}
-                    authUrlParams={{ connection_id: connection.id }}
-                  >
-                    <OAuthButton
-                      provider={connection.display_name.toLowerCase()}
-                    />
-                  </RegisterLink>
+                    provider={connection.display_name.toLowerCase()}
+                    connectionId={connection.id}
+                  />
                 ))}
             </div>
             <div className="mt-4 text-center text-sm">

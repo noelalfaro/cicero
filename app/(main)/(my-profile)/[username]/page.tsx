@@ -43,7 +43,7 @@ export default async function Page({
   return (
     <>
       <div className="flex w-full flex-col gap-2 md:flex-row">
-        <Card className="flex w-full flex-col gap-1 md:w-[300px]">
+        <Card className="flex w-full flex-col md:w-[300px]">
           <CardHeader className="w-full gap-1 pb-0 text-start">
             <div className="relative flex h-[250px] w-full max-w-[250px] self-center">
               <Image

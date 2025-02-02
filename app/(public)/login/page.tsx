@@ -1,10 +1,5 @@
-import { LoginLink } from '@kinde-oss/kinde-auth-nextjs/server';
-import { OAuthButton } from '@/components/auth/oAuthButton';
-
 import { getConnections } from '@/lib/utils';
-// import { Link } from 'next-view-transitions';
 import Link from 'next/link';
-
 import {
   Card,
   CardContent,
@@ -12,10 +7,8 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-
 import { EmailLogin } from '@/components/auth/email-login';
-
-// export const dynamic = 'force-dynamic';
+import { OAuthLogin } from '@/components/auth/oauth-login';
 
 export default async function Login() {
   const connections = await getConnections();
@@ -41,14 +34,11 @@ export default async function Login() {
               {connections
                 ?.filter((conn: any) => conn.strategy.includes('oauth2'))
                 .map((connection: any) => (
-                  <LoginLink
+                  <OAuthLogin
                     key={connection.id}
-                    authUrlParams={{ connection_id: connection.id }}
-                  >
-                    <OAuthButton
-                      provider={connection.display_name.toLowerCase()}
-                    />
-                  </LoginLink>
+                    provider={connection.display_name.toLowerCase()}
+                    connectionId={connection.id}
+                  />
                 ))}
             </div>
           </div>

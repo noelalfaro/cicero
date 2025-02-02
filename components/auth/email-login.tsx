@@ -21,6 +21,7 @@ import {
 import { doesEmailExistCheck } from '@/lib/data/registration';
 import { Separator } from '@/components/ui/separator';
 import { LoginButton } from '@/components/auth/login-button';
+import { MorphButton } from '@/components/auth/morph-button';
 
 const formSchema = z.object({
   email: z
@@ -31,7 +32,7 @@ const formSchema = z.object({
       // Where checkIfEmailIsValid makes a request to the backend
       // to see if the email is valid.
       return await doesEmailExistCheck(email);
-    }, 'This username is not in our database.'),
+    }, "This email doesn't exist in our database, try registering first instead."),
 });
 
 export const EmailLogin = (props: {
@@ -39,6 +40,8 @@ export const EmailLogin = (props: {
 }) => {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [buttonText, setButtonText] = useState('Login Via Email');
+
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -46,16 +49,19 @@ export const EmailLogin = (props: {
     defaultValues: {
       email: '',
     },
+    reValidateMode: 'onSubmit',
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsLoading(true);
+    setButtonText('Loading...');
     try {
       router.push(
         `/api/auth/login?connection_id=${props.emailConnectionId}&login_hint=${values.email}`,
       );
     } catch (error) {
       setIsLoading(false);
+      setButtonText('Login Via Email');
     }
   };
 
@@ -92,17 +98,12 @@ export const EmailLogin = (props: {
                 </FormItem>
               )}
             />
-
-            <LoginLink
-              authUrlParams={{
-                connection_id: props.emailConnectionId!,
-                login_hint: email,
-              }}
-            >
-              <Button className="w-full" type="submit">
-                Login
-              </Button>
-            </LoginLink>
+            <MorphButton
+              text={buttonText}
+              setButtonText={setButtonText}
+              variant="default"
+              type="submit"
+            />
           </form>
         </Form>
       </div>

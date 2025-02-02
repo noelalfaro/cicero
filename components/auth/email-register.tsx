@@ -16,6 +16,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import AvailabilityBadge from '@/components/auth/availability-badge';
+import { MorphButton } from '@/components/auth/morph-button';
 
 const formSchema = z.object({
   email: z
@@ -43,6 +44,8 @@ export const EmailRegister = (props: {
   const [isAvailable, setIsAvailable] = useState<
     'true' | 'false' | 'loading' | 'null'
   >('null');
+  const [buttonText, setButtonText] = useState('Register Via Email');
+
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -56,6 +59,7 @@ export const EmailRegister = (props: {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       setIsAvailable('loading');
+      setButtonText('Loading...');
       const response = await fetch('/api/users/check-email-availability', {
         method: 'POST',
         headers: {
@@ -77,6 +81,7 @@ export const EmailRegister = (props: {
     } catch (error) {
       console.error('Error during registration:', error);
       setIsAvailable('false');
+      setButtonText('Register Via Email');
       // Handle error (e.g., show error message to user)
     }
   };
@@ -117,7 +122,13 @@ export const EmailRegister = (props: {
               </FormItem>
             )}
           />
-          <Button type="submit">Register</Button>
+          {/* <Button type="submit">Register</Button> */}
+          <MorphButton
+            text={buttonText}
+            setButtonText={setButtonText}
+            variant="default"
+            type="submit"
+          />
         </form>
       </Form>
     </div>
