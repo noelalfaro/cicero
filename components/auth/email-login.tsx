@@ -1,9 +1,6 @@
 'use client';
-
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { LoginLink } from '@kinde-oss/kinde-auth-nextjs/components';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -56,9 +53,8 @@ export const EmailLogin = (props: {
     setIsLoading(true);
     setButtonText('Loading...');
     try {
-      router.push(
-        `/api/auth/login?connection_id=${props.emailConnectionId}&login_hint=${values.email}`,
-      );
+      console.log('Trying to reach auth api route...');
+      window.location.href = `/api/auth/login?connection_id=${props.emailConnectionId}&login_hint=${values.email}`;
     } catch (error) {
       setIsLoading(false);
       setButtonText('Login Via Email');

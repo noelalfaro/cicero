@@ -15,13 +15,13 @@ export function OAuthLogin({ provider, connectionId }: OAuthLoginProps) {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setButtonText('Loading...');
-
     try {
-      // Redirect to your OAuth route
-      router.push(`/api/auth/login?connection_id=${connectionId}`);
+      console.log('Trying to reach api auth route with social...');
+      window.location.href = `/api/auth/login?connection_id=${connectionId}`;
     } catch (error) {
       // Reset text if something fails
-      setButtonText(`Continue with ${provider}`);
+      console.log(error);
+      setButtonText(`Continue with`);
     }
   };
 

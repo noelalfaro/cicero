@@ -14,7 +14,7 @@ const f = createUploadthing();
 const auth = async (req: NextRequest) => {
   try {
     // Get the Kinde server session
-    console.log(req);
+    // console.log(req);
 
     const { getUser, isAuthenticated } = getKindeServerSession();
     const user = await getUser();
@@ -41,9 +41,11 @@ export const ourFileRouter = {
       // This code runs on your server before upload
       // console.log(req.body);
       // const result = await auth(req);
-      const user = await auth(req as unknown as NextRequest);
+      // const user = await auth(req as NextRequest);
+      const { getUser, isAuthenticated } = getKindeServerSession();
+      const user = await getUser();
 
-      console.log(user);
+      // console.log(user);
 
       // If you throw, the user will not be able to upload
       if (!user) throw new UploadThingError('Unauthorized');
@@ -52,16 +54,15 @@ export const ourFileRouter = {
     })
     .onUploadComplete(async ({ metadata, file }) => {
       // This code RUNS ON YOUR SERVER after upload
-      // console.log('Upload complete for userId:', metadata.userId);
-      console.log('file url', file.url);
+      console.log('Upload complete for userId:', metadata.userId);
+      console.log('file url', file.ufsUrl);
 
       const sql = neon(process.env.DRIZZLE_DATABASE_URL!);
       const db = drizzle(sql);
-
       // Update the user's profile picture URL in the database
       await db
         .update(users)
-        .set({ picture: file.url })
+        .set({ picture: file.ufsUrl })
         .where(eq(users.id, metadata.userId));
 
       await revalidateUserProfile();

@@ -13,6 +13,7 @@ import {
 } from '@kinde-oss/kinde-auth-nextjs/server';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { getCiceroUser } from '@/lib/data/users';
 // Statically rendered part of the navigation
 function StaticNavLinks() {
   return (
@@ -58,6 +59,7 @@ function StaticNavLinks() {
 async function DynamicUserProfile() {
   const { getUser, isAuthenticated } = getKindeServerSession();
   const user = await getUser();
+  const ciceroUser = await getCiceroUser(user.id);
 
   if (!(await isAuthenticated())) {
     return (
@@ -76,12 +78,11 @@ async function DynamicUserProfile() {
           <TooltipTrigger>
             <Avatar>
               <AvatarImage
-                src={user.picture ?? 'default-avatar.png'}
+                src={ciceroUser.picture}
                 alt={user.username + '.png'}
               />
               <AvatarFallback>
-                {user.given_name?.substring(0, 1).toUpperCase()}
-                {user.family_name?.substring(0, 1).toUpperCase()}
+                {user.username?.substring(0, 1).toUpperCase()}
               </AvatarFallback>
             </Avatar>
           </TooltipTrigger>

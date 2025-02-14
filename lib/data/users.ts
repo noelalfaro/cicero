@@ -5,19 +5,8 @@ import { User } from '@/lib/definitions';
 import { db } from '@/server/db';
 
 export async function createUser(user: User): Promise<string> {
-  const existingUser = await db
-    .select()
-    .from(users)
-    .where(eq(users.id, user.id));
-  if (!existingUser[0]) {
-    const result = await db
-      .insert(users)
-      .values({ ...user, email: user.email ?? '' });
-    console.log(result);
-    return 'Successfully inserted user to user database';
-  } else {
-    return 'User already in database';
-  }
+  await db.insert(users).values({ ...user });
+  return 'Successfully inserted user to user database';
 }
 
 export async function updateUser(user: User): Promise<string> {
@@ -67,6 +56,18 @@ export async function updateUserDisplayName(userId: string, username: string) {
     .update(users)
     .set({ username: username, display_name: username })
     .where(eq(users.id, userId));
+  const updatedUser = await db
+    .select({ display_name: users.display_name, id: users.id })
+    .from(users)
+    .where(eq(users.id, userId))
+    .limit(1);
+
+  return (
+    'Successfully updated display name: ' +
+    updatedUser[0]?.display_name +
+    ' - For user: ' +
+    updatedUser[0]?.id
+  );
 }
 
 export async function updateUserUsername(userId: string, username: string) {
@@ -75,7 +76,18 @@ export async function updateUserUsername(userId: string, username: string) {
     .set({ username: username })
     .where(eq(users.id, userId));
 
-  return 'Successfully updated username: ' + username + ' for user: ' + userId;
+  const updatedUser = await db
+    .select({ username: users.username, id: users.id })
+    .from(users)
+    .where(eq(users.id, userId))
+    .limit(1);
+
+  return (
+    'Successfully updated username: ' +
+    updatedUser[0]?.username +
+    ' - For user: ' +
+    updatedUser[0]?.id
+  );
 }
 
 export async function updateUserOnboardingStatus(
@@ -96,4 +108,9 @@ export async function fetchUserConnectionId(
     .from(users)
     .where(eq(users.id, userId));
   return connection_id[0].social_connection_id;
+}
+
+export async function getCiceroUser(userId: string): Promise<User> {
+  const result = await db.select().from(users).where(eq(users.id, userId));
+  return result[0];
 }

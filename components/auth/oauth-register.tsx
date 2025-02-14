@@ -9,19 +9,18 @@ interface OAuthLoginProps {
 }
 
 export function OAuthRegister({ provider, connectionId }: OAuthLoginProps) {
-  const [buttonText, setButtonText] = useState(`Continue with `);
+  const [buttonText, setButtonText] = useState(`Continue with`);
   const router = useRouter();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setButtonText('Loading...');
-
     try {
       // Redirect to your OAuth route
-      router.push(`/api/auth/register?connection_id=${connectionId}`);
+      window.location.href = `/api/auth/register?connection_id=${connectionId}`;
     } catch (error) {
       // Reset text if something fails
-      setButtonText(`Continue with ${provider}`);
+      setButtonText(`Continue with`);
     }
   };
 

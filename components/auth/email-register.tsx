@@ -74,9 +74,10 @@ export const EmailRegister = (props: {
       if (data.isAvailable) {
         console.log(values);
         // Handle form submission logic here
-        router.push(
-          `/api/auth/register?connection_id=${props.emailConnectionId}&login_hint=${values.email}`,
-        );
+        // router.push(
+        //   `/api/auth/register?connection_id=${props.emailConnectionId}&login_hint=${values.email}`,
+        // );
+        window.location.href = `/api/auth/register?connection_id=${props.emailConnectionId}&login_hint=${values.email}`;
       }
     } catch (error) {
       console.error('Error during registration:', error);
