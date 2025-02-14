@@ -110,7 +110,7 @@ export async function fetchUserConnectionId(
   return connection_id[0].social_connection_id;
 }
 
-export async function getCiceroUser(userId: string): Promise<User> {
+export async function getCiceroUser(userId: string): Promise<User | null> {
   const result = await db.select().from(users).where(eq(users.id, userId));
   return result[0];
 }
