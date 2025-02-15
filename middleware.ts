@@ -18,7 +18,7 @@ export default withAuth(
       '/api/users/',
       '/',
       '/blog/*',
-      '/api/uploadthing/',
+      '/api/uploadthing',
     ],
   },
 );

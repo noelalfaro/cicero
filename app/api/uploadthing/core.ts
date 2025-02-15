@@ -7,6 +7,8 @@ import { drizzle } from 'drizzle-orm/neon-http';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { revalidateUserProfile } from '@/app/(main)/actions/actions';
 import { NextRequest } from 'next/server';
+import { revalidatePath } from 'next/cache';
+import { db } from '@/server/db';
 
 const f = createUploadthing();
 
@@ -42,30 +44,28 @@ export const ourFileRouter = {
       // console.log(req.body);
       // const result = await auth(req);
       // const user = await auth(req as NextRequest);
-      const { getUser, isAuthenticated } = getKindeServerSession();
-      const user = await getUser();
+      const user = await auth(req);
 
       // console.log(user);
 
       // If you throw, the user will not be able to upload
       if (!user) throw new UploadThingError('Unauthorized');
       // Whatever is returned here is accessible in onUploadComplete as `metadata`
-      return { userId: user.id };
+      return { userId: user.id, username: user.username };
     })
     .onUploadComplete(async ({ metadata, file }) => {
-      // This code RUNS ON YOUR SERVER after upload
-      console.log('Upload complete for userId:', metadata.userId);
-      console.log('file url', file.ufsUrl);
-
-      const sql = neon(process.env.DRIZZLE_DATABASE_URL!);
-      const db = drizzle(sql);
       // Update the user's profile picture URL in the database
+      console.log('lololool' + file.ufsUrl);
+
       await db
         .update(users)
         .set({ picture: file.ufsUrl })
         .where(eq(users.id, metadata.userId));
 
-      await revalidateUserProfile();
+      revalidatePath(`/${metadata.username}`);
+      // This code RUNS ON YOUR SERVER after upload
+      console.log('Upload complete for userId:', metadata.userId);
+      console.log('file url', file.ufsUrl);
 
       // Return any additional data to the client
       return { uploadedBy: metadata.userId };

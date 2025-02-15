@@ -1,8 +1,6 @@
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
-import { ExtendedKindeIdToken } from '@/lib/types';
 import { User } from '@/lib/definitions';
 import { createUser, getUserById, updateUser } from '@/lib/data/users';
-import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
 export async function GET(request: Request) {
@@ -15,7 +13,7 @@ export async function GET(request: Request) {
 
   try {
     const idToken = await getIdToken();
-    console.log(idToken);
+    // console.log(idToken);
     const userId = idToken.sub;
     const existingUser = await getUserById(userId);
 
@@ -27,7 +25,7 @@ export async function GET(request: Request) {
         return NextResponse.redirect(`${redirectURL}/onboarding`);
       } else {
         // User exists and has completed onboarding, proceed with login
-        console.log('Existing User logged in:', existingUser);
+        // console.log('Existing User logged in:', existingUser);
       }
 
       // if (!existingUser.social_connection_id) {
