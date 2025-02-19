@@ -6,6 +6,7 @@ import Nav from '@/components/layout/nav';
 import { ViewTransitions } from 'next-view-transitions';
 const inter = Inter({ subsets: ['latin'] });
 import { AuthProvider } from '@/components/providers/auth-provider';
+import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
   title: 'Cicero - Development',
@@ -32,6 +33,7 @@ export default function RootLayout({
               <main className="container flex min-h-screen w-full max-w-7xl flex-col px-[1rem] lg:px-[2rem]">
                 {children}
               </main>
+              <Toaster />
             </ThemeProvider>
           </body>
         </html>

@@ -23,20 +23,16 @@ export async function GET(request: Request) {
         // Redirect user to the onboarding process
         console.log("user's onboarding status is false");
         return NextResponse.redirect(`${redirectURL}/onboarding`);
-      } else {
-        // User exists and has completed onboarding, proceed with login
-        // console.log('Existing User logged in:', existingUser);
       }
+      if (!existingUser.social_connection_id) {
+        // Update the user's social_connection_id
+        await updateUser({
+          ...existingUser,
+          social_connection_id: idToken.ext_provider?.name ?? null,
+        });
 
-      // if (!existingUser.social_connection_id) {
-      //   // Update the user's social_connection_id
-      //   await updateUser({
-      //     ...existingUser,
-      //     social_connection_id: idToken.ext_provider?.name ?? null,
-      //   });
-
-      //   return NextResponse.redirect(`${redirectURL}/dashboard`);
-      // }
+        return NextResponse.redirect(`${redirectURL}/dashboard`);
+      }
     } else {
       // User does not exist, proceed with registration
       const user: User = {

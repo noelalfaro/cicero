@@ -7,6 +7,7 @@ import { ViewTransitions } from 'next-view-transitions';
 const inter = Inter({ subsets: ['latin'] });
 import QueryProvider from '@/components/providers/QueryProvider';
 import { AuthProvider } from '@/components/providers/auth-provider';
+import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
   title: 'Cicero - Development',
@@ -34,6 +35,7 @@ export default async function RootLayout({
                 <Nav />
                 {children}
               </main>
+              <Toaster />
             </ThemeProvider>
           </QueryProvider>
         </body>
