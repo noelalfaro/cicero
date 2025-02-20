@@ -24,9 +24,9 @@ export const fetchPlayerData = unstable_cache(
   async (): Promise<Player[]> => {
     try {
       // Perform a join between players and player_stats
-      console.log('Fetching player data');
+      // console.log('Fetching player data');
       const result = await db.select().from(players).limit(10);
-      console.log('Data Fetched');
+      // console.log('Data Fetched');
 
       // Convert the grouped data into an array and add picture URLs
       // Add picture URLs
