@@ -24,7 +24,7 @@ const NbaNews = () => {
             <CardDescription>Get the latest news on the NBA</CardDescription>
           </div>
 
-          <div className="flex flex-grow items-center justify-end gap-2">
+          <div className="flex grow items-center justify-end gap-2">
             <CarouselPrevious className="relative left-0 right-0 top-0 translate-x-0 translate-y-0" />
             <CarouselNext className="relative left-0 right-0 top-0 translate-x-0 translate-y-0" />
           </div>

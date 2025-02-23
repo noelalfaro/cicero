@@ -28,13 +28,13 @@ export default async function Page() {
         <CardHeader className="text-3xl font-bold">
           Dashboard For{' '}
           <Link href={`/${user?.username}`}>
-            <p className="font-mono hover:text-primary hover:underline">
+            <p className="hover:text-primary font-mono hover:underline">
               @{user?.username}
             </p>
           </Link>
         </CardHeader>
         <CardContent className="flex flex-col gap-1 pb-0">
-          {/* <TextEffect per="word" as="h3" preset="blur"> */}
+          {/* <TextEffect per="word" as="h3" preset="blur-sm"> */}
           Welcome to Prospect Portfolio! We're still under active development. I
           welcome you to navigate to the different pages in the nav above or
           click on a link below to explore what a player's individual page
@@ -59,7 +59,7 @@ export default async function Page() {
           </div>
         </CardContent>
         <CardFooter>
-          <CardDescription className="text-sm text-muted-foreground">
+          <CardDescription className="text-muted-foreground text-sm">
             Github:{' '}
             <Button variant={'link'} className="p-0">
               <a href="https://github.com/noelalfaro/cicero">
@@ -73,9 +73,9 @@ export default async function Page() {
       <DashboardTools />
       <Card className="flex h-full flex-col items-center justify-start gap-2 md:col-span-8 md:flex-row">
         <CardHeader>
-          <CardTitle>Control Center</CardTitle>
+          <CardTitle className="text-xl">Control Center</CardTitle>
         </CardHeader>
-        <CardContent className="flex h-full w-full flex-grow flex-col content-center items-center justify-end gap-2 md:w-fit md:flex-row md:p-0 md:px-6">
+        <CardContent className="flex h-full w-full grow flex-col content-center items-center justify-end gap-2 md:w-fit md:flex-row md:p-0 md:px-6">
           <Button variant={'secondary'} className="w-full md:w-fit">
             Investment History
           </Button>

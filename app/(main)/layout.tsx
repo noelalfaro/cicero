@@ -7,7 +7,7 @@ import { ViewTransitions } from 'next-view-transitions';
 const inter = Inter({ subsets: ['latin'] });
 import QueryProvider from '@/components/providers/QueryProvider';
 import { AuthProvider } from '@/components/providers/auth-provider';
-import { Toaster } from '@/components/ui/toaster';
+import { Toaster } from '@/components/ui/sonner';
 
 export const metadata: Metadata = {
   title: 'Cicero - Development',

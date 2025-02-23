@@ -1,6 +1,4 @@
-import { RegisterLink } from '@kinde-oss/kinde-auth-nextjs/server';
-import { getConnections } from '@/lib/utils';
-// import { Link } from 'next-view-transitions';
+import { getConnections } from '@/server/kinde/utils';
 import Link from 'next/link';
 
 import {

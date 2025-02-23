@@ -19,11 +19,11 @@ export default async function PlayerAiSummary({
     <Card className="flex w-full flex-col justify-start md:col-span-4">
       <CardHeader className="min-h-[88px] pb-3">
         <CardTitle>PR Trend</CardTitle>
-        <CardDescription className="h-full flex-grow">
+        <CardDescription className="h-full grow">
           AI Summary of what affected the score.
         </CardDescription>
       </CardHeader>
-      <CardContent className="flex-grow overflow-auto text-sm">
+      <CardContent className="grow overflow-auto text-sm">
         {summary}
       </CardContent>
       <CardFooter>

@@ -1,4 +1,4 @@
-import { getConnections } from '@/lib/utils';
+import { getConnections } from '@/server/kinde/utils';
 import Link from 'next/link';
 import {
   Card,

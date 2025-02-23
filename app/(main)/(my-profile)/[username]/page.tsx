@@ -1,18 +1,6 @@
-import { Button } from '@/components/ui/button';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
-import { User } from '@/lib/definitions';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
-import { MoreVertical, ShieldX, Copy, UserCheck } from 'lucide-react';
-import { Label } from '@/components/ui/label';
 import {
   Card,
   CardDescription,
@@ -24,7 +12,6 @@ import { UserSettings } from '@/components/profile/user-settings-dialog';
 import { EditProfileDialog } from '@/components/profile/edit-profile-dialog';
 import { fetchUserDataByUsername } from '@/lib/data/users';
 import Watchlist from '@/components/profile/watchlist';
-import { CopyProfile } from '@/components/profile/copy-profile';
 import UserDialog from '@/components/profile/user-dialog';
 import { FollowButton } from '@/components/profile/follow-button';
 
@@ -49,7 +36,7 @@ export default async function Page({
     <>
       {/* <div className="flex w-full flex-col gap-2 md:flex-row"> */}
       <div className="flex h-fit w-full flex-col gap-2 md:grid md:grid-cols-8 md:grid-rows-[350px_1fr_300px] lg:grid-rows-[350px_1fr_250px]">
-        <Card className="col-span-1 flex w-full flex-col items-center justify-between rounded-xl border bg-card text-card-foreground shadow-sm md:col-span-3 lg:col-span-2">
+        <Card className="col-span-1 flex w-full flex-col items-center justify-between rounded-xl border bg-card text-card-foreground shadow-xs md:col-span-3 lg:col-span-2">
           <CardHeader className="flex w-full flex-col items-center justify-center pb-0 md:gap-1">
             <div className="relative flex h-[200px] w-[200px]">
               <Image

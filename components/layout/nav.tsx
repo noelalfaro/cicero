@@ -105,7 +105,7 @@ export default async function Nav() {
       <div className="flex w-2/3 items-center justify-between rounded-lg py-6 md:w-2/5 lg:w-1/4">
         <StaticNavLinks />
 
-        <Suspense fallback={<Button>Loading...</Button>}>
+        <Suspense fallback={<Avatar />}>
           <DynamicUserProfile />
         </Suspense>
       </div>

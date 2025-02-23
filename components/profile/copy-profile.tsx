@@ -1,8 +1,8 @@
 'use client';
 import { Button } from '@/components/ui/button';
 import { Copy } from 'lucide-react';
-import { useEffect, useState } from 'react';
-import { useToast } from '@/hooks/use-toast';
+import { useState } from 'react';
+import { toast } from 'sonner';
 
 export const CopyProfile = ({
   profile,
@@ -10,36 +10,20 @@ export const CopyProfile = ({
   profile: string | null | undefined;
 }) => {
   const [isCopied, setIsCopied] = useState(false);
-  const { toast } = useToast();
 
-  useEffect(() => {
-    const handleCopyClick = async () => {
-      try {
-        await navigator.clipboard.writeText(window.location.href);
-        setIsCopied(true);
-
-        // alert('Profile URL copied to clipboard!'); // Optional: Provide feedback to the user
-      } catch (err) {
-        console.error('Failed to copy: ', err);
-        // alert('Failed to copy profile URL to clipboard.'); // Optional: Handle errors
-      }
-    };
-
-    return () => {
-      handleCopyClick();
-    };
-  }, []);
+  const handleCopyClick = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setIsCopied(true);
+      toast('Profile URL copied to clipboard!');
+    } catch (err) {
+      console.error('Failed to copy: ', err);
+      toast.error('Failed to copy profile URL to clipboard.');
+    }
+  };
 
   return (
-    <Button
-      variant={'ghost'}
-      onClick={() => {
-        toast({
-          title: 'Profile URL copied to clipboard!',
-          // description: 'You can now share your profile with others.',
-        });
-      }}
-    >
+    <Button variant={'ghost'} onClick={handleCopyClick}>
       <Copy />
     </Button>
   );

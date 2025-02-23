@@ -34,7 +34,7 @@ import PlayerChartError from '@/components/player/player-chart-error';
 const chartConfig = {
   desktop: {
     label: 'Desktop',
-    color: 'hsl(var(--chart-1))',
+    color: 'var(--chart-1)',
   },
 } satisfies ChartConfig;
 
@@ -54,7 +54,7 @@ export function PlayerStatsChart() {
 
   if (stats.length === 0) {
     return (
-      <Card className="col-span-1 flex h-full flex-grow flex-col items-center justify-center md:col-span-5 lg:col-span-6">
+      <Card className="col-span-1 flex h-full grow flex-col items-center justify-center md:col-span-5 lg:col-span-6">
         <CardHeader>
           <CardTitle>No Performance Data</CardTitle>
         </CardHeader>
@@ -83,7 +83,7 @@ export function PlayerStatsChart() {
 
   return (
     <>
-      <Card className="flex flex-grow flex-col md:col-span-5 md:flex-row lg:col-span-6">
+      <Card className="flex grow flex-col md:col-span-5 md:flex-row lg:col-span-6">
         <div className="box-border flex h-full w-full flex-col justify-between md:w-3/4">
           <CardHeader className="flex w-full md:pb-0">
             <CardTitle className="w-full text-2xl">Pulse Rating (PR)</CardTitle>
@@ -93,15 +93,15 @@ export function PlayerStatsChart() {
           </CardHeader>
 
           <CardContent className="flex w-full flex-col items-center justify-center px-4 md:flex-row md:pb-0">
-            <ResponsiveContainer width="100%" height="100%" minHeight={180}>
+            <ResponsiveContainer width="100%">
               <ChartContainer
                 config={chartConfig}
-                className="flex items-center justify-center"
+                className="flex h-[200px] w-full items-center justify-center"
               >
                 <LineChart data={chartData} accessibilityLayer>
                   <CartesianGrid
                     vertical={false}
-                    stroke="hsl(var(--border))"
+                    stroke="var(--border)"
                     syncWithTicks
                   />
                   <XAxis dataKey={'game'} tickLine={false} axisLine={false} />
@@ -121,7 +121,7 @@ export function PlayerStatsChart() {
                   <Line
                     type="monotone"
                     dataKey="points"
-                    stroke="hsl(var(--primary))"
+                    stroke="var(--primary)"
                     strokeWidth={2}
                   />
                 </LineChart>
@@ -130,20 +130,20 @@ export function PlayerStatsChart() {
           </CardContent>
 
           <CardFooter className="w-full flex-col items-start gap-2 text-sm">
-            <div className="flex gap-2 font-medium leading-none">
+            <div className="flex gap-2 leading-none font-medium">
               {pointsDifference >= 0 ? 'Up' : 'Down'} by{' '}
               {Math.abs(percentageDifference).toFixed(1)}% from average
               <TrendingUp
                 className={`h-4 w-4 ${pointsDifference >= 0 ? 'text-green-500' : 'text-red-500'}`}
               />
             </div>
-            <div className="leading-none text-muted-foreground">
+            <div className="text-muted-foreground leading-none">
               Last game: {lastGamePoints} points (Average:{' '}
               {averagePoints.toFixed(1)})
             </div>
           </CardFooter>
         </div>
-        <CardContent className="flex flex-grow justify-center p-6">
+        <CardContent className="flex grow justify-center p-6">
           <PlayerTicker latestScore={stats[latestGame].points} />
         </CardContent>
       </Card>
