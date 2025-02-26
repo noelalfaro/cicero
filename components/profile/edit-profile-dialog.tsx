@@ -54,7 +54,7 @@ export const EditProfileDialog = ({ user }: { user: User }) => {
   return (
     <>
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger className="inline-flex w-11/12 items-center justify-center whitespace-nowrap rounded-md border border-input bg-background text-sm font-medium text-foreground ring-offset-background transition-colors hover:bg-secondary/50 hover:text-secondary-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
+        <DialogTrigger className="border-input bg-background text-foreground ring-offset-background hover:bg-secondary/50 hover:text-secondary-foreground focus-visible:ring-ring inline-flex w-11/12 items-center justify-center rounded-md border text-sm font-medium whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50">
           Edit Profile
         </DialogTrigger>
         <DialogContent className="text-start sm:max-w-[425px]">
@@ -90,7 +90,7 @@ export const EditProfileDialog = ({ user }: { user: User }) => {
 
                 <div className="flex justify-between gap-1">
                   <Button
-                    variant={'ghostdestructive'}
+                    variant={'outline'}
                     onClick={() => setOpen(false)}
                     type="reset"
                     className="w-1/2"

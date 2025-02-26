@@ -15,7 +15,7 @@ import { User } from '@/lib/definitions';
 export default function UserDialog({ user }: { user: User }) {
   return (
     <Dialog>
-      <DialogTrigger className="inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md border border-input bg-background px-1 py-2 text-sm font-medium text-foreground ring-offset-background transition-colors hover:bg-secondary/50 hover:text-secondary-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
+      <DialogTrigger className="border-input bg-background text-foreground ring-offset-background hover:bg-secondary/50 hover:text-secondary-foreground focus-visible:ring-ring inline-flex h-10 items-center justify-center rounded-md border px-1 py-2 text-sm font-medium whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50">
         <MoreVertical />
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
@@ -28,7 +28,7 @@ export default function UserDialog({ user }: { user: User }) {
                 <Label htmlFor="follow" className="mb-1 text-right">
                   Follow
                 </Label>
-                <p className="text-xs text-muted-text">
+                <p className="text-muted-text text-xs">
                   Follow @{user.username}
                 </p>
               </div>
@@ -41,7 +41,7 @@ export default function UserDialog({ user }: { user: User }) {
                 <Label htmlFor="share" className="mb-1 text-right">
                   Share
                 </Label>
-                <p className="text-xs text-muted-text">
+                <p className="text-muted-text text-xs">
                   Copy link to {user.username}'s profile.
                 </p>
               </div>
@@ -52,9 +52,9 @@ export default function UserDialog({ user }: { user: User }) {
                 <Label htmlFor="block" className="mb-1 text-right">
                   Block
                 </Label>
-                <p className="text-xs text-muted-text">Block this account.</p>
+                <p className="text-muted-text text-xs">Block this account.</p>
               </div>
-              <Button variant={'ghostdestructive'}>
+              <Button variant={'outline'}>
                 <ShieldX />
               </Button>
             </div>
