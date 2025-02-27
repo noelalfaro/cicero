@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import '../../globals.css';
+import '../globals.css';
 import { ThemeProvider } from '@/components/theme/theme-provider';
 import { ViewTransitions } from 'next-view-transitions';
 import { AuthProvider } from '@/components/providers/auth-provider';
