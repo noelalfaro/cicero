@@ -123,6 +123,11 @@ export function PlayerStatsChart() {
                     dataKey="points"
                     stroke="var(--primary)"
                     strokeWidth={2}
+                    fill="var(--primary)"
+                    dot={true}
+                    activeDot={{
+                      stroke: 'var(--primary)',
+                    }}
                   />
                 </LineChart>
               </ChartContainer>

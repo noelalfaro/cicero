@@ -103,10 +103,10 @@ export const EmailLogin = (props: {
           </form>
         </Form>
       </div>
-      <div className="flex w-full flex-wrap items-center justify-center gap-2 text-xs text-muted-foreground">
-        <Separator orientation="horizontal" className="w-1/4"></Separator>
+      <div className="text-muted-foreground flex w-full flex-wrap items-center justify-center gap-2 text-xs">
+        <Separator orientation="horizontal" className="w-1/3"></Separator>
         OR
-        <Separator orientation="horizontal" className="w-1/4"></Separator>
+        <Separator orientation="horizontal" className="w-1/3"></Separator>
       </div>
     </>
   );

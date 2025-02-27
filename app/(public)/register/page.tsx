@@ -21,7 +21,7 @@ export default async function Register() {
 
   return (
     <div className="flex min-h-screen w-full items-center justify-center self-center text-left">
-      <Card className="w-full md:w-1/2 lg:w-4/12">
+      <Card className="w-full gap-0 md:w-1/2 lg:w-4/12">
         <CardHeader className="pb-2">
           <CardTitle className="text-2xl">Create an Account</CardTitle>
           <CardDescription>
@@ -31,11 +31,6 @@ export default async function Register() {
         <CardContent>
           <div className="grid gap-4">
             <EmailRegister emailConnectionId={emailConnectionId} />
-            <div className="flex w-full flex-wrap items-center justify-center gap-2 text-xs text-muted-foreground">
-              <Separator orientation="horizontal" className="w-1/4"></Separator>
-              OR
-              <Separator orientation="horizontal" className="w-1/4"></Separator>
-            </div>
 
             <div className="flex flex-col gap-2">
               {connections

@@ -18,11 +18,18 @@ import { getCiceroUser } from '@/lib/data/users';
 function StaticNavLinks() {
   return (
     <>
-      <Link className="flex flex-col items-center" href="/dashboard">
+      <Link
+        className="flex cursor-pointer flex-col items-center"
+        href="/dashboard"
+      >
         <TooltipProvider delayDuration={50}>
           <Tooltip>
             <TooltipTrigger>
-              <Home absoluteStrokeWidth aria-label="home-link-button" />
+              <Home
+                absoluteStrokeWidth
+                aria-label="home-link-button"
+                className="cursor-pointer"
+              />
             </TooltipTrigger>
             <TooltipContent>Dashboard</TooltipContent>
           </Tooltip>
@@ -32,7 +39,11 @@ function StaticNavLinks() {
         <TooltipProvider delayDuration={50}>
           <Tooltip>
             <TooltipTrigger>
-              <Search absoluteStrokeWidth aria-label="search-link-button" />
+              <Search
+                absoluteStrokeWidth
+                aria-label="search-link-button"
+                className="cursor-pointer"
+              />
             </TooltipTrigger>
             <TooltipContent>Explore</TooltipContent>
           </Tooltip>
@@ -45,6 +56,7 @@ function StaticNavLinks() {
               <Bell
                 absoluteStrokeWidth
                 aria-label="notifications-link-button"
+                className="cursor-pointer"
               />
             </TooltipTrigger>
             <TooltipContent>Notifications</TooltipContent>
@@ -80,6 +92,7 @@ async function DynamicUserProfile() {
               <AvatarImage
                 src={ciceroUser?.picture}
                 alt={ciceroUser?.username + '.png'}
+                className="cursor-pointer"
               />
               <AvatarFallback>
                 {user.username?.substring(0, 1).toUpperCase()}

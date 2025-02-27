@@ -17,6 +17,7 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import AvailabilityBadge from '@/components/auth/availability-badge';
 import { MorphButton } from '@/components/auth/morph-button';
+import { Separator } from '@/components/ui/separator';
 
 const formSchema = z.object({
   email: z
@@ -88,50 +89,57 @@ export const EmailRegister = (props: {
   };
 
   return (
-    <div className="grid gap-2">
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col gap-2"
-        >
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <div className="center flex h-7 w-full gap-1 text-center align-middle">
-                  <Label htmlFor="email" className="leading-loose">
-                    Email
-                  </Label>
-                  <AvailabilityBadge availability={isAvailable} />
-                </div>
+    <>
+      <div className="grid gap-2">
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="flex flex-col gap-2"
+          >
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <div className="center flex h-7 w-full gap-1 text-center align-middle">
+                    <Label htmlFor="email" className="leading-loose">
+                      Email
+                    </Label>
+                    <AvailabilityBadge availability={isAvailable} />
+                  </div>
 
-                <FormControl>
-                  <Input
-                    id="email"
-                    placeholder="example@example.com"
-                    {...field}
-                    onChange={(e) => {
-                      field.onChange(e);
-                      setEmail(e.target.value);
-                      setIsAvailable('null'); // Reset availability state when user is typing
-                    }}
-                  />
-                </FormControl>
+                  <FormControl>
+                    <Input
+                      id="email"
+                      placeholder="example@example.com"
+                      {...field}
+                      onChange={(e) => {
+                        field.onChange(e);
+                        setEmail(e.target.value);
+                        setIsAvailable('null'); // Reset availability state when user is typing
+                      }}
+                    />
+                  </FormControl>
 
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          {/* <Button type="submit">Register</Button> */}
-          <MorphButton
-            text={buttonText}
-            setButtonText={setButtonText}
-            variant="default"
-            type="submit"
-          />
-        </form>
-      </Form>
-    </div>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {/* <Button type="submit">Register</Button> */}
+            <MorphButton
+              text={buttonText}
+              setButtonText={setButtonText}
+              variant="default"
+              type="submit"
+            />
+          </form>
+        </Form>
+      </div>
+      <div className="text-muted-foreground flex w-full flex-row flex-wrap items-center justify-center gap-2 text-xs">
+        <Separator orientation="horizontal" className="w-1/3"></Separator>
+        <p className="w-fit">OR</p>
+        <Separator orientation="horizontal" className="w-1/3"></Separator>
+      </div>
+    </>
   );
 };

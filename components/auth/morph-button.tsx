@@ -29,9 +29,9 @@ export function MorphButton({
   const getIcon = () => {
     switch (icon) {
       case 'google':
-        return <FaGoogle size={24} />;
+        return <FaGoogle size={32} />;
       case 'github':
-        return <FaGithub size={24} />;
+        return <FaGithub size={32} />;
       default:
         return null;
     }
