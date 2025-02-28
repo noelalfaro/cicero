@@ -13,7 +13,6 @@ export default withAuth(
       '/login',
       '/about-us',
       '/learn',
-
       '/api/auth/register',
       '/api/auth/login',
       '/api/users/',

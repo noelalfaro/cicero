@@ -22,7 +22,7 @@ export const UserSettings = ({ user }: { user: User }) => {
 
   return (
     <Dialog>
-      <DialogTrigger className="inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md border border-input bg-background px-1 py-2 text-sm font-medium text-foreground ring-offset-background transition-colors hover:bg-secondary/50 hover:text-secondary-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
+      <DialogTrigger className="border-input bg-background text-foreground ring-offset-background hover:bg-secondary/50 hover:text-secondary-foreground focus-visible:ring-ring inline-flex h-10 cursor-pointer items-center justify-center rounded-md border px-1 py-2 text-sm font-medium whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50">
         <MoreVertical />
       </DialogTrigger>
 
@@ -38,7 +38,7 @@ export const UserSettings = ({ user }: { user: User }) => {
                 <Label htmlFor="theme-toggle" className="mb-1 text-right">
                   Appearence
                 </Label>
-                <p className="text-xs text-muted-text">
+                <p className="text-muted-text text-xs">
                   Change the color theme
                 </p>
               </div>

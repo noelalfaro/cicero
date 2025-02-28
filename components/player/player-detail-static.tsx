@@ -12,8 +12,8 @@ import { Player } from '@/lib/definitions';
 
 export function PlayerDetailsStatic({ player }: { player: Player }) {
   return (
-    <Card className="col-span-1 flex w-full flex-col items-center justify-between rounded-xl border bg-card text-card-foreground shadow-xs md:col-span-3 lg:col-span-2">
-      <CardHeader className="flex w-full flex-col items-center justify-center pb-0 md:gap-1">
+    <Card className="bg-card text-card-foreground col-span-1 flex w-full flex-col items-center justify-start gap-0 rounded-xl border shadow-xs md:col-span-3 lg:col-span-2">
+      <CardHeader className="flex w-full flex-col items-center justify-center gap-0 pb-0">
         <div className="relative flex h-[200px] w-[200px]">
           <Image
             src={player.picture!}
@@ -25,7 +25,7 @@ export function PlayerDetailsStatic({ player }: { player: Player }) {
           />
         </div>
         <div className="flex w-full flex-col items-start">
-          <CardTitle>
+          <CardTitle className="text-2xl">
             {player.first_name} {player.last_name}
           </CardTitle>
           <CardDescription>
@@ -33,7 +33,7 @@ export function PlayerDetailsStatic({ player }: { player: Player }) {
           </CardDescription>
         </div>
       </CardHeader>
-      <CardContent className="flex w-full flex-col justify-start">
+      <CardContent className="flex w-full grow flex-col justify-center">
         <Button variant={'secondary'}>Add to Watchlist</Button>
       </CardContent>
     </Card>

@@ -36,8 +36,8 @@ export default async function Page({
     <>
       {/* <div className="flex w-full flex-col gap-2 md:flex-row"> */}
       <div className="flex h-fit w-full flex-col gap-2 md:grid md:grid-cols-8 md:grid-rows-[350px_1fr_300px] lg:grid-rows-[350px_1fr_250px]">
-        <Card className="col-span-1 flex w-full flex-col items-center justify-between rounded-xl border bg-card text-card-foreground shadow-xs md:col-span-3 lg:col-span-2">
-          <CardHeader className="flex w-full flex-col items-center justify-center pb-0 md:gap-1">
+        <Card className="bg-card text-card-foreground col-span-1 flex w-full flex-col items-center justify-start gap-0 rounded-xl border shadow-xs md:col-span-3 lg:col-span-2">
+          <CardHeader className="flex w-full flex-col items-center justify-center gap-0 pb-0">
             <div className="relative flex h-[200px] w-[200px]">
               <Image
                 src={user.picture ?? defaultImage}
@@ -50,11 +50,11 @@ export default async function Page({
             </div>
 
             <div className="flex w-full flex-col items-start">
-              <CardTitle>{user.display_name}</CardTitle>
+              <CardTitle className="text-2xl">{user.display_name}</CardTitle>
               <CardDescription>@{user.username}</CardDescription>
             </div>
           </CardHeader>
-          <CardContent className="flex w-full flex-col justify-start">
+          <CardContent className="flex w-full grow flex-col justify-center">
             {user.id === loggedInUser?.id ? (
               <div className="flex justify-between gap-1">
                 <EditProfileDialog user={user} />
