@@ -1,6 +1,6 @@
 'use client';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { TrendingUp } from 'lucide-react';
+import { GitCommitVertical, TrendingUp } from 'lucide-react';
 import {
   CartesianGrid,
   Line,
@@ -83,8 +83,8 @@ export function PlayerStatsChart() {
 
   return (
     <>
-      <Card className="flex grow flex-col md:col-span-5 md:flex-row lg:col-span-6">
-        <div className="box-border flex h-full w-full flex-col justify-between md:w-3/4">
+      <Card className="flex grow flex-col gap-0 md:col-span-5 md:flex-row lg:col-span-6">
+        <div className="box-border flex h-full grow flex-col justify-between md:w-3/4">
           <CardHeader className="flex w-full md:pb-0">
             <CardTitle className="w-full text-2xl">Pulse Rating (PR)</CardTitle>
             <CardDescription className="w-full">
@@ -111,7 +111,7 @@ export function PlayerStatsChart() {
                     axisLine={false}
                     tickMargin={1}
                     tickCount={5}
-                    className="p-0"
+                    // className="p-1"
                   />
                   <ChartTooltip
                     cursor={false}
@@ -124,10 +124,22 @@ export function PlayerStatsChart() {
                     stroke="var(--primary)"
                     strokeWidth={2}
                     fill="var(--primary)"
-                    dot={true}
-                    activeDot={{
-                      stroke: 'var(--primary)',
+                    // dot={{ r: 2 }}
+                    dot={({ cx, cy, payload }) => {
+                      const r = 24;
+                      return (
+                        <GitCommitVertical
+                          key={payload.game}
+                          x={cx - r / 2}
+                          y={cy - r / 2}
+                          width={r}
+                          height={r}
+                          fill="var(--background)"
+                          stroke="var(--primary)"
+                        />
+                      );
                     }}
+                    activeDot={false}
                   />
                 </LineChart>
               </ChartContainer>
@@ -148,7 +160,7 @@ export function PlayerStatsChart() {
             </div>
           </CardFooter>
         </div>
-        <CardContent className="flex grow justify-center p-6">
+        <CardContent className="flex grow justify-center p-0 pr-6">
           <PlayerTicker latestScore={stats[latestGame].points} />
         </CardContent>
       </Card>

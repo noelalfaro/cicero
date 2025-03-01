@@ -22,10 +22,35 @@ const playerStatsSchema = z.object({
   turnovers: z.number(),
   blocks: z.number(),
   plusMinus: z.string(),
+  lastUpdate: z.string().optional(),
+});
+
+const playerAveragesSchema = z.object({
+  ppg: z.number().optional(),
+  minutes: z.string().optional(),
+  fgm: z.number().optional(),
+  fga: z.number().optional(),
+  fgp: z.number().optional(),
+  ftm: z.number().optional(),
+  fta: z.number().optional(),
+  ftp: z.number().optional(),
+  tpm: z.number().optional(),
+  tpa: z.number().optional(),
+  tpp: z.number().optional(),
+  offReb: z.number().optional(),
+  defReb: z.number().optional(),
+  totReb: z.number().optional(),
+  assists: z.number().optional(),
+  pFouls: z.number().optional(),
+  steals: z.number().optional(),
+  turnovers: z.number().optional(),
+  blocks: z.number().optional(),
+  plusMinus: z.string().optional(),
+  lastUpdate: z.string().optional(),
 });
 
 // Export the player stats schema
-export { playerStatsSchema };
+export { playerStatsSchema, playerAveragesSchema };
 
 // const averagesSchema = z.optional();
 
@@ -63,29 +88,9 @@ const playerSchema = z.object({
   draft_number: z.string().nullable(),
   is_active: z.string(),
   picture: z.string().optional(),
-  averages: z.object({
-    ppg: z.number().optional(),
-    minutes: z.string().optional(),
-    fgm: z.number().optional(),
-    fga: z.number().optional(),
-    fgp: z.number().optional(),
-    ftm: z.number().optional(),
-    fta: z.number().optional(),
-    ftp: z.number().optional(),
-    tpm: z.number().optional(),
-    tpa: z.number().optional(),
-    tpp: z.number().optional(),
-    offReb: z.number().optional(),
-    defReb: z.number().optional(),
-    totReb: z.number().optional(),
-    assists: z.number().optional(),
-    pFouls: z.number().optional(),
-    steals: z.number().optional(),
-    turnovers: z.number().optional(),
-    blocks: z.number().optional(),
-    plusMinus: z.string().optional(),
-  }),
+  averages: z.array(playerAveragesSchema).optional(),
   stats: z.array(playerStatsSchema).optional(), // assuming stats is another schema
+  lastUpdate: z.string().optional(),
 });
 
 // Export the schema
@@ -121,7 +126,6 @@ export type Team = z.infer<typeof teamSchema>;
 
 const userSchema = z.object({
   id: z.string(),
-
   username: z
     .string()
     .min(2, { message: 'Username must be at least 2 characters.' })

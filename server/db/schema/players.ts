@@ -1,13 +1,5 @@
-import {
-  serial,
-  text,
-  integer,
-  pgTable,
-  boolean,
-  jsonb,
-} from 'drizzle-orm/pg-core';
+import { serial, text, integer, pgTable, date } from 'drizzle-orm/pg-core';
 import { teams } from '@/server/db/schema/teams';
-import { number } from 'zod';
 
 export const players = pgTable('players', {
   id: serial('id').primaryKey(),
@@ -52,5 +44,5 @@ export const players = pgTable('players', {
   draft_round: text('DRAFT_ROUND'),
   draft_number: text('DRAFT_NUMBER'),
   is_active: text('IS_ACTIVE'),
-  averages: jsonb('averages'),
+  last_update: date('LAST_UPDATE'),
 });

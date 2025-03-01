@@ -1,24 +1,21 @@
 import 'server-only';
 import { unstable_noStore as noStore } from 'next/cache';
 import { unstable_cache } from 'next/cache';
-
 import { players } from '@/server/db/schema/players';
-import { users } from '@/server/db/schema/users';
 import { playerStats } from '@/server/db/schema/player_stats';
-
 import { eq } from 'drizzle-orm';
 import {
   playerSchema,
   Player,
   NewsArticle,
   newsArticleSchema,
-  User,
   PlayerStats,
 } from '@/lib/definitions';
 
 // import { BLACKLISTED_TERMS } from '@/config.js';
 
 import { db } from '@/server/db';
+import { player_averages } from '@/server/db/schema/player_averages';
 
 export const fetchPlayerData = unstable_cache(
   async (): Promise<Player[]> => {
@@ -51,9 +48,10 @@ export const fetchPlayerData = unstable_cache(
 
 export async function fetchPlayerDataByID(id: number): Promise<Player | null> {
   // Use Promise.all for parallel data fetching
-  const [playerResult, statsResult] = await Promise.all([
+  const [playerResult, statsResult, averagesResult] = await Promise.all([
     db.select().from(players).where(eq(players.id, id)),
     db.select().from(playerStats).where(eq(playerStats.player_id, id)),
+    db.select().from(player_averages).where(eq(player_averages.player_id, id)),
   ]);
 
   if (playerResult.length === 0) {
@@ -66,6 +64,7 @@ export async function fetchPlayerDataByID(id: number): Promise<Player | null> {
   try {
     return playerSchema.parse({
       ...player,
+      averages: averagesResult || null, // An object of averages or null if no averages found
       stats: statsResult || [], // An array of stats or an empty array if no stats found
       picture: pictureUrl,
     });
