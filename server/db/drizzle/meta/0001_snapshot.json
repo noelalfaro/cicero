@@ -1,10 +1,8 @@
 {
-  "id": "ea0fd686-1acc-41bc-adac-6119c3a69c47",
-  "prevId": "2af0e11e-d626-4152-9322-44753c802fb9",
-  "version": "5",
-  "dialect": "pg",
+  "version": "7",
+  "dialect": "postgresql",
   "tables": {
-    "players": {
+    "public.players": {
       "name": "players",
       "schema": "",
       "columns": {
@@ -41,18 +39,29 @@
       },
       "indexes": {
         "unique_idx": {
-          "name": "unique_idx",
           "columns": [
-            "id"
+            {
+              "expression": "id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
           ],
-          "isUnique": true
+          "with": {},
+          "name": "unique_idx",
+          "isUnique": true,
+          "method": "btree",
+          "concurrently": false
         }
       },
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
+      "uniqueConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false,
+      "checkConstraints": {}
     },
-    "users": {
+    "public.users": {
       "name": "users",
       "schema": "",
       "columns": {
@@ -102,14 +111,23 @@
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
+      "uniqueConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false,
+      "checkConstraints": {}
     }
   },
   "enums": {},
   "schemas": {},
   "_meta": {
-    "columns": {},
     "schemas": {},
-    "tables": {}
-  }
+    "tables": {},
+    "columns": {}
+  },
+  "id": "ea0fd686-1acc-41bc-adac-6119c3a69c47",
+  "prevId": "2af0e11e-d626-4152-9322-44753c802fb9",
+  "sequences": {},
+  "policies": {},
+  "views": {},
+  "roles": {}
 }

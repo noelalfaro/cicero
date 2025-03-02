@@ -1,10 +1,8 @@
 {
-  "id": "7c377bf4-4f43-40eb-9452-2cdd093ff8e6",
-  "prevId": "ac041960-cd9c-4fa0-8cd4-4cfd5fe5130c",
-  "version": "5",
-  "dialect": "pg",
+  "version": "7",
+  "dialect": "postgresql",
   "tables": {
-    "players": {
+    "public.players": {
       "name": "players",
       "schema": "",
       "columns": {
@@ -42,9 +40,12 @@
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
+      "uniqueConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false,
+      "checkConstraints": {}
     },
-    "user": {
+    "public.user": {
       "name": "user",
       "schema": "",
       "columns": {
@@ -88,14 +89,23 @@
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
+      "uniqueConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false,
+      "checkConstraints": {}
     }
   },
   "enums": {},
   "schemas": {},
   "_meta": {
-    "columns": {},
     "schemas": {},
-    "tables": {}
-  }
+    "tables": {},
+    "columns": {}
+  },
+  "id": "7c377bf4-4f43-40eb-9452-2cdd093ff8e6",
+  "prevId": "ac041960-cd9c-4fa0-8cd4-4cfd5fe5130c",
+  "sequences": {},
+  "policies": {},
+  "views": {},
+  "roles": {}
 }

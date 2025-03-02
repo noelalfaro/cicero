@@ -32,7 +32,7 @@ export default async function PlayerDetailsPage({
   }
 
   const player = await fetchPlayerDataByID(playerId);
-  // console.log(player);
+  console.log(player);
 
   if (!player) {
     return <PlayerNotFoundError />;

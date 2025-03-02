@@ -15,7 +15,7 @@ import {
 // import { BLACKLISTED_TERMS } from '@/config.js';
 
 import { db } from '@/server/db';
-import { player_averages } from '@/server/db/schema/player_averages';
+import { playerAverages } from '@/server/db/schema/player_averages';
 
 export const fetchPlayerData = unstable_cache(
   async (): Promise<Player[]> => {
@@ -51,7 +51,7 @@ export async function fetchPlayerDataByID(id: number): Promise<Player | null> {
   const [playerResult, statsResult, averagesResult] = await Promise.all([
     db.select().from(players).where(eq(players.id, id)),
     db.select().from(playerStats).where(eq(playerStats.player_id, id)),
-    db.select().from(player_averages).where(eq(player_averages.player_id, id)),
+    db.select().from(playerAverages).where(eq(playerAverages.player_id, id)),
   ]);
 
   if (playerResult.length === 0) {
@@ -64,7 +64,7 @@ export async function fetchPlayerDataByID(id: number): Promise<Player | null> {
   try {
     return playerSchema.parse({
       ...player,
-      averages: averagesResult || null, // An object of averages or null if no averages found
+      averages: averagesResult[0], // An object of averages or null if no averages found
       stats: statsResult || [], // An array of stats or an empty array if no stats found
       picture: pictureUrl,
     });
@@ -77,7 +77,24 @@ export async function fetchPlayerDataByID(id: number): Promise<Player | null> {
 export const fetchPlayerStatsByID = async (
   id: number,
 ): Promise<PlayerStats[]> => {
-  return db.select().from(playerStats).where(eq(playerStats.player_id, id));
+  const result = await db
+    .select()
+    .from(playerStats)
+    .where(eq(playerStats.player_id, id));
+  try {
+    // Parse each player object using the schema
+    const transformedStats = result.map((stat) => ({
+      ...stat,
+      last_update: stat.last_update,
+    }));
+
+    return transformedStats;
+  } catch (error) {
+    console.error('Failed to fetch player stats data:', error);
+    return [];
+  }
+
+  // return db.select().from(playerStats).where(eq(playerStats.player_id, id));
 };
 
 export async function fetchNewsArticles(): Promise<NewsArticle[] | null> {

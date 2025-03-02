@@ -4,12 +4,12 @@ import {
   integer,
   pgTable,
   real,
-  date,
+  timestamp,
 } from 'drizzle-orm/pg-core';
 import { players } from '@/server/db/schema/players';
 
-export const player_averages = pgTable('player_averages', {
-  id: serial('id').primaryKey(),
+export const playerAverages = pgTable('player_averages', {
+  averages_id: serial('id').primaryKey(),
   player_id: integer('player_id')
     .references(() => players.id)
     .notNull(),
@@ -33,5 +33,5 @@ export const player_averages = pgTable('player_averages', {
   minutes: text('minutes').notNull(),
   plusMinus: text('plusMinus').notNull(),
   turnovers: real('turnovers').notNull(),
-  last_update: date('last_update'),
+  last_update: timestamp('last_update'),
 });

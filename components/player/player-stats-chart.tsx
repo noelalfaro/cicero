@@ -68,7 +68,7 @@ export function PlayerStatsChart() {
   }
 
   const chartData = stats.map((stat: PlayerStats) => ({
-    game: `Game ${stat.stat_id}`,
+    game: `Game ${stat.stats_id}`,
     points: stat.points,
   }));
 

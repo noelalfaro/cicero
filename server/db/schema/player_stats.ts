@@ -1,10 +1,10 @@
-import { serial, integer, pgTable, text, date } from 'drizzle-orm/pg-core';
+import { serial, integer, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
 import { players } from '@/server/db/schema/players';
 
 // import { serial, integer, text, pgTable } from "drizzle-orm/pg-core";
 
 export const playerStats = pgTable('player_stats', {
-  stat_id: serial('stat_id').primaryKey(),
+  stats_id: serial('stats_id').primaryKey(),
   player_id: integer('player_id')
     .references(() => players.id)
     .notNull(),
@@ -29,5 +29,5 @@ export const playerStats = pgTable('player_stats', {
   turnovers: integer('turnovers').notNull(),
   blocks: integer('blocks').notNull(),
   plusMinus: text('plusMinus').notNull(),
-  last_update: date('last_update'),
+  last_update: timestamp('last_update'),
 });

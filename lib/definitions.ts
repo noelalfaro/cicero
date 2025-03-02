@@ -1,7 +1,7 @@
 import { z } from 'zod';
 const playerStatsSchema = z.object({
+  stats_id: z.number(),
   player_id: z.number(),
-  stat_id: z.number(),
   points: z.number(),
   min: z.string(),
   fgm: z.number(),
@@ -22,10 +22,11 @@ const playerStatsSchema = z.object({
   turnovers: z.number(),
   blocks: z.number(),
   plusMinus: z.string(),
-  lastUpdate: z.string().optional(),
+  last_update: z.date().nullable(),
 });
-
 const playerAveragesSchema = z.object({
+  averages_id: z.number(),
+  player_id: z.number(),
   ppg: z.number().optional(),
   minutes: z.string().optional(),
   fgm: z.number().optional(),
@@ -46,14 +47,8 @@ const playerAveragesSchema = z.object({
   turnovers: z.number().optional(),
   blocks: z.number().optional(),
   plusMinus: z.string().optional(),
-  lastUpdate: z.string().optional(),
+  last_update: z.date().optional().nullable(),
 });
-
-// Export the player stats schema
-export { playerStatsSchema, playerAveragesSchema };
-
-// const averagesSchema = z.optional();
-
 const playerSchema = z.object({
   id: z.number(),
   first_name: z.string(),
@@ -88,17 +83,12 @@ const playerSchema = z.object({
   draft_number: z.string().nullable(),
   is_active: z.string(),
   picture: z.string().optional(),
-  averages: z.array(playerAveragesSchema).optional(),
+  averages: playerAveragesSchema.optional(),
   stats: z.array(playerStatsSchema).optional(), // assuming stats is another schema
-  lastUpdate: z.string().optional(),
+  last_update: z.date().optional().nullable(),
 });
-
 // Export the schema
-export { playerSchema };
-// export type Averages = z.infer<typeof averagesSchema>;
-
-// Example of a playerStatsSchema, adjust accordingly
-
+export { playerStatsSchema, playerAveragesSchema, playerSchema };
 export type Player = z.infer<typeof playerSchema>;
 export type PlayerStats = z.infer<typeof playerStatsSchema>;
 
@@ -106,7 +96,6 @@ export const newsArticleSchema = z.object({
   title: z.string(),
   url: z.string(),
   source: z.string(),
-  // Add other properties based on the API response
 });
 export type NewsArticle = z.infer<typeof newsArticleSchema>;
 

@@ -1,4 +1,4 @@
-import { serial, text, integer, pgTable, date } from 'drizzle-orm/pg-core';
+import { serial, text, integer, pgTable, timestamp } from 'drizzle-orm/pg-core';
 import { teams } from '@/server/db/schema/teams';
 
 export const players = pgTable('players', {
@@ -44,5 +44,5 @@ export const players = pgTable('players', {
   draft_round: text('DRAFT_ROUND'),
   draft_number: text('DRAFT_NUMBER'),
   is_active: text('IS_ACTIVE'),
-  last_update: date('LAST_UPDATE'),
+  last_update: timestamp('LAST_UPDATE'),
 });
