@@ -1,5 +1,6 @@
 import { serial, integer, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
 import { players } from '@/server/db/schema/players';
+import { sql } from 'drizzle-orm';
 
 // import { serial, integer, text, pgTable } from "drizzle-orm/pg-core";
 
@@ -29,5 +30,10 @@ export const playerStats = pgTable('player_stats', {
   turnovers: integer('turnovers').notNull(),
   blocks: integer('blocks').notNull(),
   plusMinus: text('plusMinus').notNull(),
-  last_update: timestamp('last_update'),
+  gamedate: timestamp('gamedate')
+    .notNull()
+    .default(new Date(new Date().getFullYear(), 0, 1)),
+  created_at: timestamp('created_at')
+    .default(sql`now()`)
+    .notNull(),
 });

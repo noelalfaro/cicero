@@ -85,7 +85,7 @@ export const fetchPlayerStatsByID = async (
     // Parse each player object using the schema
     const transformedStats = result.map((stat) => ({
       ...stat,
-      last_update: stat.last_update,
+      gamedate: stat.gamedate,
     }));
 
     return transformedStats;

@@ -17,7 +17,7 @@ const PlayerTicker = ({ latestScore }: { latestScore: number }) => {
       <CardHeader className="p-0 text-center text-8xl font-bold md:text-6xl">
         <NumberFlow continuous={true} value={score} />
         {/* {score} */}
-        <div className="text-sm text-muted-foreground">Pulse Rating (PR)</div>
+        <div className="text-muted-foreground text-sm">Pulse Rating (PR)</div>
       </CardHeader>
       <Button className="w-full rounded-md">
         Buy <ArrowUpIcon className="ml-2 h-4 w-4" />

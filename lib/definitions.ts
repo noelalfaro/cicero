@@ -22,7 +22,8 @@ const playerStatsSchema = z.object({
   turnovers: z.number(),
   blocks: z.number(),
   plusMinus: z.string(),
-  last_update: z.date().nullable(),
+  gamedate: z.date(),
+  created_at: z.date(),
 });
 const playerAveragesSchema = z.object({
   averages_id: z.number(),

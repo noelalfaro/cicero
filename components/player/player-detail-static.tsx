@@ -18,10 +18,11 @@ export function PlayerDetailsStatic({ player }: { player: Player }) {
           <Image
             src={player.picture!}
             alt={`${player.first_name} ${player.last_name}`}
-            sizes="(max-width: 768px) 100vw, 250px"
+            // sizes="(max-width: 768px) 100vw, 250px"
             fill={true}
             className="rounded-full object-cover"
             priority={true}
+            draggable={false}
           />
         </div>
         <div className="flex w-full flex-col items-start">
