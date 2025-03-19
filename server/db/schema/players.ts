@@ -1,4 +1,11 @@
-import { serial, text, integer, pgTable, timestamp } from 'drizzle-orm/pg-core';
+import {
+  serial,
+  text,
+  integer,
+  pgTable,
+  timestamp,
+  boolean,
+} from 'drizzle-orm/pg-core';
 import { teams } from '@/server/db/schema/teams';
 
 export const players = pgTable('players', {
@@ -10,9 +17,9 @@ export const players = pgTable('players', {
   display_fi_last: text('DISPLAY_FI_LAST').notNull(),
   player_slug: text('PLAYER_SLUG').notNull(),
   birthdate: text('BIRTHDATE').notNull(),
-  school: text('SCHOOL').notNull(),
+  school: text('SCHOOL'),
   country: text('COUNTRY').notNull(),
-  last_affiliation: text('LAST_AFFILIATION').notNull(),
+  last_affiliation: text('LAST_AFFILIATION'),
   height: text('HEIGHT').notNull(),
   weight: text('WEIGHT').notNull(),
   season_exp: integer('SEASON_EXP').notNull(),
@@ -44,5 +51,6 @@ export const players = pgTable('players', {
   draft_round: text('DRAFT_ROUND'),
   draft_number: text('DRAFT_NUMBER'),
   is_active: text('IS_ACTIVE'),
-  last_update: timestamp('LAST_UPDATE'),
+  is_retired: boolean('IS_RETIRED'),
+  last_updated: timestamp('LAST_UPDATED'),
 });
