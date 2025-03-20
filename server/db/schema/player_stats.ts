@@ -1,4 +1,11 @@
-import { serial, integer, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
+import {
+  serial,
+  integer,
+  pgTable,
+  text,
+  timestamp,
+  real,
+} from 'drizzle-orm/pg-core';
 import { players } from '@/server/db/schema/players';
 import { sql } from 'drizzle-orm';
 
@@ -9,18 +16,18 @@ export const playerStats = pgTable('player_stats', {
   player_id: integer('player_id')
     .references(() => players.id)
     .notNull(),
-  game_id: integer('game_id').notNull(),
+  game_id: text('game_id').notNull(),
   points: integer('points').notNull(),
   min: text('min').notNull(),
   fgm: integer('fgm').notNull(),
   fga: integer('fga').notNull(),
-  fgp: text('fgp').notNull(),
+  fgp: real('fgp').notNull(),
   ftm: integer('ftm').notNull(),
   fta: integer('fta').notNull(),
-  ftp: text('ftp').notNull(),
+  ftp: real('ftp').notNull(),
   tpm: integer('tpm').notNull(),
   tpa: integer('tpa').notNull(),
-  tpp: text('tpp').notNull(),
+  tpp: real('tpp').notNull(),
   offReb: integer('offReb').notNull(),
   defReb: integer('defReb').notNull(),
   totReb: integer('totReb').notNull(),

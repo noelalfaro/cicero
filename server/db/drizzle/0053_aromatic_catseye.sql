@@ -1,0 +1,1 @@
+ALTER TABLE "player_stats" ALTER COLUMN "game_id" SET DATA TYPE text;
