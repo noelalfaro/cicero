@@ -1,0 +1,1 @@
+ALTER TABLE "player_stats" ADD COLUMN "comment" text;

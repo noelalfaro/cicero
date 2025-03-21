@@ -23,6 +23,8 @@ import {
   ChartTooltipContent,
   ChartContainer,
   ChartConfig,
+  ChartLegend,
+  ChartLegendContent,
 } from '@/components/ui/chart';
 
 import PlayerTicker from '@/components/player/player-ticker';
@@ -37,6 +39,12 @@ const chartConfig = {
     color: 'var(--chart-1)',
   },
 } satisfies ChartConfig;
+
+interface ChartDataPoint {
+  game: string;
+  points: number;
+  comment?: string | null; // Add comment property
+}
 
 export function PlayerStatsChart() {
   const params = useParams<{ id: string }>();
@@ -67,9 +75,16 @@ export function PlayerStatsChart() {
     );
   }
 
-  const chartData = stats.map((stat: PlayerStats) => ({
-    game: `Game ${stat.stats_id}`,
+  const chartData: ChartDataPoint[] = stats.map((stat: PlayerStats) => ({
+    game:
+      stat.gamedate instanceof Date
+        ? stat.gamedate.toLocaleDateString(undefined, {
+            month: 'short',
+            day: '2-digit',
+          })
+        : 'Invalid Date',
     points: stat.points,
+    comment: stat.comment, // Include comment property
   }));
 
   const latestGame = stats!.length - 1;
@@ -115,8 +130,11 @@ export function PlayerStatsChart() {
                   />
                   <ChartTooltip
                     cursor={false}
-                    content={<ChartTooltipContent hideLabel />}
+                    content={<ChartTooltipContent indicator="dashed" />}
                   ></ChartTooltip>
+                  {/* <ChartLegend>
+                    <ChartLegendContent></ChartLegendContent>
+                  </ChartLegend> */}
                   <Tooltip />
                   <Line
                     type="monotone"
@@ -125,20 +143,20 @@ export function PlayerStatsChart() {
                     strokeWidth={2}
                     fill="var(--primary)"
                     // dot={{ r: 2 }}
-                    dot={({ cx, cy, payload }) => {
-                      const r = 24;
-                      return (
-                        <GitCommitVertical
-                          key={payload.game}
-                          x={cx - r / 2}
-                          y={cy - r / 2}
-                          width={r}
-                          height={r}
-                          fill="var(--background)"
-                          stroke="var(--primary)"
-                        />
-                      );
-                    }}
+                    // dot={({ cx, cy, payload }) => {
+                    //   const r = 24;
+                    //   return (
+                    //     <GitCommitVertical
+                    //       key={payload.game}
+                    //       x={cx - r / 2}
+                    //       y={cy - r / 2}
+                    //       width={r}
+                    //       height={r}
+                    //       fill="var(--background)"
+                    //       stroke="var(--primary)"
+                    //     />
+                    //   );
+                    // }}
                     activeDot={false}
                   />
                 </LineChart>

@@ -41,9 +41,9 @@ export default async function Page() {
           currently looks like.
           {/* </TextEffect> */}
           <div className="flex w-full flex-col justify-start gap-1 md:flex-row md:gap-6">
-            <Link href={'/players/2544'}>
+            <Link href={'/players/1629029'}>
               <Button variant={'link'} className="p-0">
-                Link to Lebron's Page
+                Link to Lukas's Page
               </Button>
             </Link>
             <Link href={'/players/201142'}>

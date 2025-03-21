@@ -169,6 +169,7 @@ function ChartTooltipContent({
   }
 
   const nestLabel = payload.length === 1 && indicator !== 'dot';
+  const data = payload[0]?.payload; // Access the data object
 
   return (
     <div
@@ -228,6 +229,10 @@ function ChartTooltipContent({
                   >
                     <div className="grid gap-1.5">
                       {nestLabel ? tooltipLabel : null}
+                      {nestLabel ? (
+                        <div className="font-medium">{data.comment}</div>
+                      ) : null}
+
                       <span className="text-muted-foreground">
                         {itemConfig?.label || item.name}
                       </span>

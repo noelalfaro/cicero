@@ -21,6 +21,7 @@ const playerStatsSchema = z.object({
   steals: z.number(),
   turnovers: z.number(),
   blocks: z.number(),
+  comment: z.string().nullable(),
   plusMinus: z.string(),
   gamedate: z.date(),
   created_at: z.date(),

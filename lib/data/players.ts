@@ -3,7 +3,7 @@ import { unstable_noStore as noStore } from 'next/cache';
 import { unstable_cache } from 'next/cache';
 import { players } from '@/server/db/schema/players';
 import { playerStats } from '@/server/db/schema/player_stats';
-import { eq } from 'drizzle-orm';
+import { asc, eq } from 'drizzle-orm';
 import {
   playerSchema,
   Player,
@@ -54,7 +54,11 @@ export async function fetchPlayerDataByID(id: number): Promise<Player | null> {
   // Use Promise.all for parallel data fetching
   const [playerResult, statsResult, averagesResult] = await Promise.all([
     db.select().from(players).where(eq(players.id, id)),
-    db.select().from(playerStats).where(eq(playerStats.player_id, id)),
+    db
+      .select()
+      .from(playerStats)
+      .where(eq(playerStats.player_id, id))
+      .orderBy(asc(playerStats.gamedate)),
     db.select().from(playerAverages).where(eq(playerAverages.player_id, id)),
   ]);
 
@@ -84,11 +88,13 @@ export const fetchPlayerStatsByID = async (
   const result = await db
     .select()
     .from(playerStats)
-    .where(eq(playerStats.player_id, id));
+    .where(eq(playerStats.player_id, id))
+    .orderBy(asc(playerStats.gamedate));
   try {
     // Parse each player object using the schema
     const transformedStats = result.map((stat) => ({
       ...stat,
+
       gamedate: stat.gamedate,
     }));
 
@@ -197,8 +203,8 @@ export async function generateAiSummary(playerId: number) {
   // Simulate an AI summary generation with a timeout
   // await new Promise((resolve) => setTimeout(resolve, 4000));
 
-  return `AI-generated insights for player ${playerId}: 
-  Demonstrates exceptional skill in offensive strategies, 
-  with a consistent performance record across recent games. 
+  return `AI-generated insights for player ${playerId}:
+  Demonstrates exceptional skill in offensive strategies,
+  with a consistent performance record across recent games.
   Key strengths include quick decision-making and strategic positioning.`;
 }

@@ -36,6 +36,7 @@ export const playerStats = pgTable('player_stats', {
   steals: integer('steals').notNull(),
   turnovers: integer('turnovers').notNull(),
   blocks: integer('blocks').notNull(),
+  comment: text('comment'),
   plusMinus: text('plusMinus').notNull(),
   gamedate: timestamp('gamedate')
     .notNull()
