@@ -38,12 +38,12 @@ export default async function PlayerDetailsPage({
     return <PlayerNotFoundError />;
   }
 
-  const queryClient = getQueryClient();
+  // const queryClient = getQueryClient();
 
-  queryClient.prefetchQuery({
-    queryKey: ['playerStats', playerId],
-    queryFn: () => fetchPlayerStatsByID(playerId),
-  });
+  // queryClient.prefetchQuery({
+  //   queryKey: ['playerStats', playerId],
+  //   queryFn: () => fetchPlayerStatsByID(playerId),
+  // });
 
   // const stats = await fetchPlayerStatsByID(playerId);
   // console.log(stats);
@@ -55,9 +55,9 @@ export default async function PlayerDetailsPage({
       </Suspense>
 
       <Suspense fallback={<PlayerStatsChartSkeleton />}>
-        <HydrationBoundary state={dehydrate(queryClient)}>
-          <PlayerStatsChart />
-        </HydrationBoundary>
+        {/* <HydrationBoundary state={dehydrate(queryClient)}> */}
+        <PlayerStatsChart />
+        {/* </HydrationBoundary> */}
       </Suspense>
 
       <Suspense fallback={<PlayerActionBarSkeleton />}>

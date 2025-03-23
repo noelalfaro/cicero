@@ -1,0 +1,1 @@
+ALTER TABLE "player_stats" ADD COLUMN "opp" text NOT NULL;

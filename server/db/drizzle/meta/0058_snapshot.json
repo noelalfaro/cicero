@@ -1,0 +1,883 @@
+{
+  "id": "fdf4d8f9-fce5-41ea-a7b9-ff808318a7f9",
+  "prevId": "0822002d-3a95-43f2-9d8c-1caaeae5fff0",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.cicero_scores": {
+      "name": "cicero_scores",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "cicero_score": {
+          "name": "cicero_score",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "calculated_at": {
+          "name": "calculated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "cicero_scores_id_players_id_fk": {
+          "name": "cicero_scores_id_players_id_fk",
+          "tableFrom": "cicero_scores",
+          "tableTo": "players",
+          "columnsFrom": [
+            "id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.player_averages": {
+      "name": "player_averages",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "player_id": {
+          "name": "player_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "fga": {
+          "name": "fga",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "fgm": {
+          "name": "fgm",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "fgp": {
+          "name": "fgp",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "fta": {
+          "name": "fta",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ftm": {
+          "name": "ftm",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ftp": {
+          "name": "ftp",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ppg": {
+          "name": "ppg",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tpa": {
+          "name": "tpa",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tpm": {
+          "name": "tpm",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tpp": {
+          "name": "tpp",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "blocks": {
+          "name": "blocks",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "defReb": {
+          "name": "defReb",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "offReb": {
+          "name": "offReb",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "pFouls": {
+          "name": "pFouls",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "steals": {
+          "name": "steals",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "totReb": {
+          "name": "totReb",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "assists": {
+          "name": "assists",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "minutes": {
+          "name": "minutes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "plusMinus": {
+          "name": "plusMinus",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "turnovers": {
+          "name": "turnovers",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "last_update": {
+          "name": "last_update",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "player_averages_player_id_players_id_fk": {
+          "name": "player_averages_player_id_players_id_fk",
+          "tableFrom": "player_averages",
+          "tableTo": "players",
+          "columnsFrom": [
+            "player_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.player_stats": {
+      "name": "player_stats",
+      "schema": "",
+      "columns": {
+        "stats_id": {
+          "name": "stats_id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "player_id": {
+          "name": "player_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "game_id": {
+          "name": "game_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "points": {
+          "name": "points",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "min": {
+          "name": "min",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "fgm": {
+          "name": "fgm",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "fga": {
+          "name": "fga",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "fgp": {
+          "name": "fgp",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ftm": {
+          "name": "ftm",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "fta": {
+          "name": "fta",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ftp": {
+          "name": "ftp",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tpm": {
+          "name": "tpm",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tpa": {
+          "name": "tpa",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tpp": {
+          "name": "tpp",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "offReb": {
+          "name": "offReb",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "defReb": {
+          "name": "defReb",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "totReb": {
+          "name": "totReb",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "assists": {
+          "name": "assists",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "pFouls": {
+          "name": "pFouls",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "steals": {
+          "name": "steals",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "turnovers": {
+          "name": "turnovers",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "blocks": {
+          "name": "blocks",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "comment": {
+          "name": "comment",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "plusMinus": {
+          "name": "plusMinus",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "prScore": {
+          "name": "prScore",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "opp": {
+          "name": "opp",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "gamedate": {
+          "name": "gamedate",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'2025-01-01 06:00:00.000'"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "player_stats_player_id_players_id_fk": {
+          "name": "player_stats_player_id_players_id_fk",
+          "tableFrom": "player_stats",
+          "tableTo": "players",
+          "columnsFrom": [
+            "player_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.players": {
+      "name": "players",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "FIRST_NAME": {
+          "name": "FIRST_NAME",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "LAST_NAME": {
+          "name": "LAST_NAME",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "DISPLAY_FIRST_LAST": {
+          "name": "DISPLAY_FIRST_LAST",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "DISPLAY_LAST_COMMA_FIRST": {
+          "name": "DISPLAY_LAST_COMMA_FIRST",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "DISPLAY_FI_LAST": {
+          "name": "DISPLAY_FI_LAST",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "PLAYER_SLUG": {
+          "name": "PLAYER_SLUG",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "BIRTHDATE": {
+          "name": "BIRTHDATE",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "SCHOOL": {
+          "name": "SCHOOL",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "COUNTRY": {
+          "name": "COUNTRY",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "LAST_AFFILIATION": {
+          "name": "LAST_AFFILIATION",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "HEIGHT": {
+          "name": "HEIGHT",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "WEIGHT": {
+          "name": "WEIGHT",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "SEASON_EXP": {
+          "name": "SEASON_EXP",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "JERSEY": {
+          "name": "JERSEY",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "POSITION": {
+          "name": "POSITION",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ROSTERSTATUS": {
+          "name": "ROSTERSTATUS",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "TEAM_ID": {
+          "name": "TEAM_ID",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "TEAM_NAME": {
+          "name": "TEAM_NAME",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "TEAM_ABBREVIATION": {
+          "name": "TEAM_ABBREVIATION",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "TEAM_CODE": {
+          "name": "TEAM_CODE",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "TEAM_CITY": {
+          "name": "TEAM_CITY",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "PLAYERCODE": {
+          "name": "PLAYERCODE",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "FROM_YEAR": {
+          "name": "FROM_YEAR",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "TO_YEAR": {
+          "name": "TO_YEAR",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "DLEAGUE_FLAG": {
+          "name": "DLEAGUE_FLAG",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "NBA_FLAG": {
+          "name": "NBA_FLAG",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "GAMES_PLAYED_FLAG": {
+          "name": "GAMES_PLAYED_FLAG",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "DRAFT_YEAR": {
+          "name": "DRAFT_YEAR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "DRAFT_ROUND": {
+          "name": "DRAFT_ROUND",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "DRAFT_NUMBER": {
+          "name": "DRAFT_NUMBER",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "IS_ACTIVE": {
+          "name": "IS_ACTIVE",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "IS_RETIRED": {
+          "name": "IS_RETIRED",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "LAST_UPDATED": {
+          "name": "LAST_UPDATED",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "players_TEAM_ID_teams_TEAM_ID_fk": {
+          "name": "players_TEAM_ID_teams_TEAM_ID_fk",
+          "tableFrom": "players",
+          "tableTo": "teams",
+          "columnsFrom": [
+            "TEAM_ID"
+          ],
+          "columnsTo": [
+            "TEAM_ID"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.teams": {
+      "name": "teams",
+      "schema": "",
+      "columns": {
+        "TEAM_ID": {
+          "name": "TEAM_ID",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "logo": {
+          "name": "logo",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "abbreviation": {
+          "name": "abbreviation",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "code": {
+          "name": "code",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "city": {
+          "name": "city",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "state": {
+          "name": "state",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "year_founded": {
+          "name": "year_founded",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "LAST_UPDATE": {
+          "name": "LAST_UPDATE",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.transactions": {
+      "name": "transactions",
+      "schema": "",
+      "columns": {
+        "transaction_id": {
+          "name": "transaction_id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "player_id": {
+          "name": "player_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "transaction_type": {
+          "name": "transaction_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "price": {
+          "name": "price",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "quantity": {
+          "name": "quantity",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "transaction_date": {
+          "name": "transaction_date",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "stats_id": {
+          "name": "stats_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "transactions_user_id_users_id_fk": {
+          "name": "transactions_user_id_users_id_fk",
+          "tableFrom": "transactions",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "transactions_player_id_players_id_fk": {
+          "name": "transactions_player_id_players_id_fk",
+          "tableFrom": "transactions",
+          "tableTo": "players",
+          "columnsFrom": [
+            "player_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "transactions_stats_id_player_stats_stats_id_fk": {
+          "name": "transactions_stats_id_player_stats_stats_id_fk",
+          "tableFrom": "transactions",
+          "tableTo": "player_stats",
+          "columnsFrom": [
+            "stats_id"
+          ],
+          "columnsTo": [
+            "stats_id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.users": {
+      "name": "users",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "username": {
+          "name": "username",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "picture": {
+          "name": "picture",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "display_name": {
+          "name": "display_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "onboarding_status": {
+          "name": "onboarding_status",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "social_connection_id": {
+          "name": "social_connection_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

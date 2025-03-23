@@ -1,0 +1,1 @@
+ALTER TABLE "player_stats" ALTER COLUMN "opp" DROP NOT NULL;

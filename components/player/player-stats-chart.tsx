@@ -1,6 +1,12 @@
 'use client';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { GitCommitVertical, TrendingUp } from 'lucide-react';
+import {
+  GitCommitVertical,
+  TrendingUp,
+  XCircleIcon,
+  Circle,
+  CircleCheck,
+} from 'lucide-react';
 import {
   CartesianGrid,
   Line,
@@ -75,26 +81,50 @@ export function PlayerStatsChart() {
     );
   }
 
-  const chartData: ChartDataPoint[] = stats.map((stat: PlayerStats) => ({
-    game:
-      stat.gamedate instanceof Date
-        ? stat.gamedate.toLocaleDateString(undefined, {
-            month: 'short',
-            day: '2-digit',
-          })
-        : 'Invalid Date',
-    points: stat.points,
-    comment: stat.comment, // Include comment property
-  }));
+  const chartData: ChartDataPoint[] = stats.map((stat: PlayerStats) => {
+    let gameDate: Date;
+    try {
+      gameDate = new Date(stat.gamedate);
+      if (isNaN(gameDate.getTime())) {
+        throw new Error('Invalid date');
+      }
+    } catch (error) {
+      gameDate = new Date('Invalid Date');
+      console.error('Error parsing date:', stat.gamedate, error);
+    }
+
+    return {
+      game:
+        gameDate instanceof Date
+          ? gameDate.toLocaleDateString('en-US', {
+              month: 'short',
+              day: '2-digit',
+              timeZone: 'UTC',
+            })
+          : 'Invalid Date',
+      game_id: stat.stats_id,
+      points: stat.points,
+      prScore: stat.prScore,
+      assists: stat.assists,
+      rebounds: stat.totReb,
+      opp: stat.opp,
+      comment: stat.comment, // Include comment property
+      isDNP: stat.comment ? stat.comment.includes('DNP') : false,
+    };
+  });
 
   const latestGame = stats!.length - 1;
 
+  const averagePrScore =
+    stats.reduce((sum: any, stat: { prScore: any }) => sum + stat.prScore, 0) /
+    stats.length;
   const averagePoints =
     stats.reduce((sum: any, stat: { points: any }) => sum + stat.points, 0) /
     stats.length;
   const lastGamePoints = stats[stats.length - 1].points;
-  const pointsDifference = lastGamePoints - averagePoints;
-  const percentageDifference = (pointsDifference / averagePoints) * 100;
+  const lastGamePrScore = stats[stats.length - 1].prScore;
+  const pointsDifference = lastGamePoints - averagePrScore;
+  const percentageDifference = (pointsDifference / averagePrScore) * 100;
 
   return (
     <>
@@ -113,7 +143,7 @@ export function PlayerStatsChart() {
                 config={chartConfig}
                 className="flex h-[200px] w-full items-center justify-center"
               >
-                <LineChart data={chartData} accessibilityLayer>
+                <LineChart data={chartData} className="z-20" accessibilityLayer>
                   <CartesianGrid
                     vertical={false}
                     stroke="var(--border)"
@@ -130,7 +160,7 @@ export function PlayerStatsChart() {
                   />
                   <ChartTooltip
                     cursor={false}
-                    content={<ChartTooltipContent indicator="dashed" />}
+                    content={<ChartTooltipContent hideIndicator />}
                   ></ChartTooltip>
                   {/* <ChartLegend>
                     <ChartLegendContent></ChartLegendContent>
@@ -143,20 +173,31 @@ export function PlayerStatsChart() {
                     strokeWidth={2}
                     fill="var(--primary)"
                     // dot={{ r: 2 }}
-                    // dot={({ cx, cy, payload }) => {
-                    //   const r = 24;
-                    //   return (
-                    //     <GitCommitVertical
-                    //       key={payload.game}
-                    //       x={cx - r / 2}
-                    //       y={cy - r / 2}
-                    //       width={r}
-                    //       height={r}
-                    //       fill="var(--background)"
-                    //       stroke="var(--primary)"
-                    //     />
-                    //   );
-                    // }}
+                    dot={({ cx, cy, payload }) => {
+                      const r = 18;
+                      const isDNP = payload.isDNP;
+                      return isDNP ? (
+                        <XCircleIcon
+                          key={payload.game_id}
+                          x={cx - r / 2}
+                          y={cy - r / 2}
+                          width={r}
+                          height={r}
+                          fill="var(--background)"
+                          stroke="var(--destructive)"
+                        />
+                      ) : (
+                        <CircleCheck
+                          key={payload.game_id}
+                          x={cx - r / 2}
+                          y={cy - r / 2}
+                          width={r}
+                          height={r}
+                          fill="var(--background)"
+                          stroke="var(--primary)"
+                        />
+                      );
+                    }}
                     activeDot={false}
                   />
                 </LineChart>
@@ -179,7 +220,7 @@ export function PlayerStatsChart() {
           </CardFooter>
         </div>
         <CardContent className="flex grow justify-center p-0 pr-6">
-          <PlayerTicker latestScore={stats[latestGame].points} />
+          <PlayerTicker lastGamePrScore={lastGamePrScore} />
         </CardContent>
       </Card>
     </>

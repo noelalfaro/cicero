@@ -38,6 +38,8 @@ export const playerStats = pgTable('player_stats', {
   blocks: integer('blocks').notNull(),
   comment: text('comment'),
   plusMinus: text('plusMinus').notNull(),
+  prScore: real('prScore'),
+  opp: text('opp'),
   gamedate: timestamp('gamedate')
     .notNull()
     .default(new Date(new Date().getFullYear(), 0, 1)),

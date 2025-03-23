@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { nullable, z } from 'zod';
 const playerStatsSchema = z.object({
   stats_id: z.number(),
   player_id: z.number(),
@@ -22,6 +22,8 @@ const playerStatsSchema = z.object({
   turnovers: z.number(),
   blocks: z.number(),
   comment: z.string().nullable(),
+  prScore: z.number().nullable(),
+  opp: z.string().nullable(),
   plusMinus: z.string(),
   gamedate: z.date(),
   created_at: z.date(),

@@ -6,12 +6,12 @@ import NumberFlow from '@number-flow/react';
 import { ArrowDownIcon, ArrowUpIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-const PlayerTicker = ({ latestScore }: { latestScore: number }) => {
+const PlayerTicker = ({ lastGamePrScore }: { lastGamePrScore: number }) => {
   const [score, setScore] = useState(0);
 
   useEffect(() => {
-    setScore(latestScore);
-  }, [latestScore]);
+    setScore(lastGamePrScore);
+  }, [lastGamePrScore]);
   return (
     <div className="flex w-full flex-col items-center justify-center gap-3 md:gap-1">
       <CardHeader className="p-0 text-center text-8xl font-bold md:text-6xl">
