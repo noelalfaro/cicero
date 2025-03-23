@@ -46,7 +46,7 @@ export default async function PlayerDetailsPage({
   // });
 
   // const stats = await fetchPlayerStatsByID(playerId);
-  // console.log(stats);
+  // // console.log(stats);
 
   return (
     <div className="flex h-fit w-full flex-col gap-2 md:grid md:grid-cols-8 md:grid-rows-[350px_1fr_300px] lg:grid-rows-[350px_1fr_250px]">
@@ -56,7 +56,7 @@ export default async function PlayerDetailsPage({
 
       <Suspense fallback={<PlayerStatsChartSkeleton />}>
         {/* <HydrationBoundary state={dehydrate(queryClient)}> */}
-        <PlayerStatsChart />
+        <PlayerStatsChart initialStats={player.stats ?? []} />
         {/* </HydrationBoundary> */}
       </Suspense>
 

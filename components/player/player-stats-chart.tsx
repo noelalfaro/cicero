@@ -52,14 +52,19 @@ interface ChartDataPoint {
   comment?: string | null; // Add comment property
 }
 
-export function PlayerStatsChart() {
+export function PlayerStatsChart({
+  initialStats,
+}: {
+  initialStats: PlayerStats[];
+}) {
   const params = useParams<{ id: string }>();
   const playerId = Number(params.id);
   const { data: stats, isError } = useSuspenseQuery({
     queryKey: ['playerStats', playerId],
     queryFn: () => fetchPlayerStatsApi(playerId),
     refetchOnMount: false,
-    staleTime: 60000,
+    initialData: initialStats,
+    staleTime: 7200000,
   });
   // console.log('PlayerStatsChart: ' + JSON.stringify(stats.stats));
   if (isError) {
@@ -109,7 +114,9 @@ export function PlayerStatsChart() {
       rebounds: stat.totReb,
       opp: stat.opp,
       comment: stat.comment, // Include comment property
-      isDNP: stat.comment ? stat.comment.includes('DNP') : false,
+      isDNP: stat.comment
+        ? stat.comment.includes('DNP') || stat.comment.includes('DND')
+        : false,
     };
   });
 
@@ -123,7 +130,7 @@ export function PlayerStatsChart() {
     stats.length;
   const lastGamePoints = stats[stats.length - 1].points;
   const lastGamePrScore = stats[stats.length - 1].prScore;
-  const pointsDifference = lastGamePoints - averagePrScore;
+  const pointsDifference = lastGamePrScore - averagePrScore;
   const percentageDifference = (pointsDifference / averagePrScore) * 100;
 
   return (
@@ -143,13 +150,26 @@ export function PlayerStatsChart() {
                 config={chartConfig}
                 className="flex h-[200px] w-full items-center justify-center"
               >
-                <LineChart data={chartData} className="z-20" accessibilityLayer>
+                <LineChart
+                  data={chartData}
+                  margin={{
+                    top: 10,
+                    left: 4,
+                    right: 8,
+                  }}
+                  accessibilityLayer
+                >
                   <CartesianGrid
                     vertical={false}
                     stroke="var(--border)"
                     syncWithTicks
                   />
-                  <XAxis dataKey={'game'} tickLine={false} axisLine={false} />
+                  <XAxis
+                    dataKey={'game'}
+                    tickMargin={8}
+                    tickLine={false}
+                    axisLine={false}
+                  />
                   <YAxis
                     width={25}
                     tickLine={false}
@@ -162,13 +182,11 @@ export function PlayerStatsChart() {
                     cursor={false}
                     content={<ChartTooltipContent hideIndicator />}
                   ></ChartTooltip>
-                  {/* <ChartLegend>
-                    <ChartLegendContent></ChartLegendContent>
-                  </ChartLegend> */}
+
                   <Tooltip />
                   <Line
                     type="monotone"
-                    dataKey="points"
+                    dataKey="prScore"
                     stroke="var(--primary)"
                     strokeWidth={2}
                     fill="var(--primary)"
@@ -207,15 +225,15 @@ export function PlayerStatsChart() {
 
           <CardFooter className="w-full flex-col items-start gap-2 text-sm">
             <div className="flex gap-2 leading-none font-medium">
-              {pointsDifference >= 0 ? 'Up' : 'Down'} by{' '}
+              {pointsDifference >= 0 ? 'PR up' : 'PR down'} by{' '}
               {Math.abs(percentageDifference).toFixed(1)}% from average
               <TrendingUp
                 className={`h-4 w-4 ${pointsDifference >= 0 ? 'text-green-500' : 'text-red-500'}`}
               />
             </div>
             <div className="text-muted-foreground leading-none">
-              Last game: {lastGamePoints} points (Average:{' '}
-              {averagePoints.toFixed(1)})
+              Last game: {lastGamePoints} points (Points Avg{' '}
+              {averagePrScore.toFixed(1)})
             </div>
           </CardFooter>
         </div>
