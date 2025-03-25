@@ -19,10 +19,17 @@ const PlayerTicker = ({ lastGamePrScore }: { lastGamePrScore: number }) => {
         {/* {score} */}
         <div className="text-muted-foreground text-sm">Pulse Rating (PR)</div>
       </CardHeader>
-      <Button className="w-full rounded-md">
+      <Button
+        className="w-full rounded-md text-lg md:h-10 md:text-base"
+        size={'lg'}
+      >
         Buy <ArrowUpIcon className="ml-2 h-4 w-4" />
       </Button>
-      <Button className="w-full rounded-md" variant={'destructive'}>
+      <Button
+        className="w-full rounded-md text-lg md:h-10 md:text-base"
+        variant={'destructive'}
+        size={'lg'}
+      >
         Sell <ArrowDownIcon className="ml-2 h-4 w-4" />
       </Button>
     </div>

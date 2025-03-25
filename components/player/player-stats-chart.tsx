@@ -86,7 +86,7 @@ export function PlayerStatsChart({
     );
   }
 
-  const numberOfGamesToShow = 8;
+  const numberOfGamesToShow = 5;
   const limitedStats = stats.slice(
     Math.max(stats.length - numberOfGamesToShow, 0),
   );
