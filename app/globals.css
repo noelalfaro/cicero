@@ -101,16 +101,6 @@
   If we ever want to remove these styles, we need to add an explicit border
   color utility to any element that depends on these defaults.
 */
-@layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
-  }
-}
-
 :root {
   /* background-image: url("../blurry-background.svg");*/
 
@@ -230,13 +220,32 @@
   body {
     @apply bg-background text-foreground;
   }
-}
-/* ---break---*/
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
   }
-  body {
-    @apply bg-background text-foreground;
+
+  .dynamic-font-size {
+    font-size: clamp(1.5rem, 1em, 3rem); /* Default clamp values */
+  }
+
+  /* Media query for even larger screens */
+  @media (min-width: 768px) {
+    .dynamic-font-size {
+      font-size: clamp(
+        1.3rem,
+        1em,
+        1.5rem
+      ); /* Further adjusted clamp values for very large screens */
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .dynamic-font-size {
+      font-size: clamp(
+        1.2rem,
+        1em,
+        1.3rem
+      ); /* Further adjusted clamp values for very large screens */
+    }
   }
 }

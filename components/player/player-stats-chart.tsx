@@ -86,7 +86,12 @@ export function PlayerStatsChart({
     );
   }
 
-  const chartData: ChartDataPoint[] = stats.map((stat: PlayerStats) => {
+  const numberOfGamesToShow = 8;
+  const limitedStats = stats.slice(
+    Math.max(stats.length - numberOfGamesToShow, 0),
+  );
+
+  const chartData: ChartDataPoint[] = limitedStats.map((stat: PlayerStats) => {
     let gameDate: Date;
     try {
       gameDate = new Date(stat.gamedate);
@@ -140,7 +145,7 @@ export function PlayerStatsChart({
           <CardHeader className="flex w-full md:pb-0">
             <CardTitle className="w-full text-2xl">Pulse Rating (PR)</CardTitle>
             <CardDescription className="w-full">
-              Last {stats.length} games
+              Last {limitedStats.length} games
             </CardDescription>
           </CardHeader>
 
@@ -223,7 +228,7 @@ export function PlayerStatsChart({
             </ResponsiveContainer>
           </CardContent>
 
-          <CardFooter className="w-full flex-col items-start gap-2 text-sm">
+          <CardFooter className="w-full flex-col items-start gap-2 py-6 text-sm md:py-0">
             <div className="flex gap-2 leading-none font-medium">
               {pointsDifference >= 0 ? 'PR up' : 'PR down'} by{' '}
               {Math.abs(percentageDifference).toFixed(1)}% from average
@@ -237,7 +242,7 @@ export function PlayerStatsChart({
             </div>
           </CardFooter>
         </div>
-        <CardContent className="flex grow justify-center p-0 pr-6">
+        <CardContent className="flex grow justify-center p-6 md:p-0 md:pr-6">
           <PlayerTicker lastGamePrScore={lastGamePrScore} />
         </CardContent>
       </Card>
