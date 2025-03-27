@@ -1,12 +1,6 @@
 'use client';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import {
-  GitCommitVertical,
-  TrendingUp,
-  XCircleIcon,
-  Circle,
-  CircleCheck,
-} from 'lucide-react';
+import { TrendingUp, XCircleIcon, CircleCheck } from 'lucide-react';
 import {
   CartesianGrid,
   Line,
@@ -29,8 +23,6 @@ import {
   ChartTooltipContent,
   ChartContainer,
   ChartConfig,
-  ChartLegend,
-  ChartLegendContent,
 } from '@/components/ui/chart';
 
 import PlayerTicker from '@/components/player/player-ticker';
@@ -118,6 +110,8 @@ export function PlayerStatsChart({
       assists: stat.assists,
       rebounds: stat.totReb,
       opp: stat.opp,
+      game_result: stat.game_result,
+      min: stat.min,
       comment: stat.comment, // Include comment property
       isDNP: stat.comment
         ? stat.comment.includes('DNP') || stat.comment.includes('DND')
@@ -181,7 +175,6 @@ export function PlayerStatsChart({
                     axisLine={false}
                     tickMargin={1}
                     tickCount={5}
-                    // className="p-1"
                   />
                   <ChartTooltip
                     cursor={false}
@@ -195,7 +188,6 @@ export function PlayerStatsChart({
                     stroke="var(--primary)"
                     strokeWidth={2}
                     fill="var(--primary)"
-                    // dot={{ r: 2 }}
                     dot={({ cx, cy, payload }) => {
                       const r = 18;
                       const isDNP = payload.isDNP;

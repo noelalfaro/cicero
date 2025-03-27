@@ -421,6 +421,13 @@
       "when": 1742713117471,
       "tag": "0059_living_kitty_pryde",
       "breakpoints": true
+    },
+    {
+      "idx": 60,
+      "version": "7",
+      "when": 1742977652243,
+      "tag": "0060_outgoing_doctor_spectrum",
+      "breakpoints": true
     }
   ]
 }

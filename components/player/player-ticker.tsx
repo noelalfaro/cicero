@@ -16,7 +16,6 @@ const PlayerTicker = ({ lastGamePrScore }: { lastGamePrScore: number }) => {
     <div className="flex w-full flex-col items-center justify-center gap-3 md:gap-1">
       <CardHeader className="p-0 text-center text-8xl font-bold md:text-6xl">
         <NumberFlow continuous={true} value={score} />
-        {/* {score} */}
         <div className="text-muted-foreground text-sm">Pulse Rating (PR)</div>
       </CardHeader>
       <Button

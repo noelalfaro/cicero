@@ -158,6 +158,9 @@ function ChartTooltipContent({
             <span className="text-foreground font-medium">
               {' ' + data.opp}
             </span>
+            <span className="text-foreground font-medium">
+              {' - ' + data.game_result}
+            </span>
           </div>
         </div>
       ) : (
@@ -191,6 +194,15 @@ function ChartTooltipContent({
               Opp:
               <span className="text-foreground font-medium">
                 {' ' + data.opp}
+              </span>
+              <span className="text-foreground font-medium">
+                {' - ' + data.game_result}
+              </span>
+            </div>
+            <div className="text-muted-foreground">
+              Minutes
+              <span className="text-foreground font-medium">
+                {' ' + data.min}
               </span>
             </div>
           </div>

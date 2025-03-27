@@ -9,6 +9,7 @@ import {
   Player,
   NewsArticle,
   newsArticleSchema,
+  playerStatsSchema,
   PlayerStats,
 } from '@/lib/definitions';
 
@@ -92,13 +93,17 @@ export const fetchPlayerStatsByID = async (
     .orderBy(asc(playerStats.gamedate));
   try {
     // Parse each player object using the schema
-    const transformedStats = result.map((stat) => ({
-      ...stat,
+    const parsedStats = result.map((stat) => {
+      try {
+        return playerStatsSchema.parse(stat);
+      } catch (error) {
+        console.error('Failed to parse player stat:', stat, error);
+        return null; // Or throw an error, depending on your error handling strategy
+      }
+    });
 
-      gamedate: stat.gamedate,
-    }));
-
-    return transformedStats;
+    // Filter out any null values that resulted from parsing errors
+    return parsedStats.filter((stat): stat is PlayerStats => stat !== null);
   } catch (error) {
     console.error('Failed to fetch player stats data:', error);
     return [];
