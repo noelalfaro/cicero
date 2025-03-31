@@ -62,6 +62,8 @@ export async function fetchPlayerDataByID(id: number): Promise<Player | null> {
       .orderBy(asc(playerStats.gamedate)),
     db.select().from(playerAverages).where(eq(playerAverages.player_id, id)),
   ]);
+  // const wait = new Promise((res) => setTimeout(res, 3000));
+  // await wait;
 
   if (playerResult.length === 0) {
     return null;
