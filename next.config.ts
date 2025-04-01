@@ -34,7 +34,9 @@ const nextConfig: NextConfig = {
         hostname: 'nsghluj212.ufs.sh', // Add this line
       },
     ],
+    formats: ['image/avif', 'image/webp'],
   },
+
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
 };
 

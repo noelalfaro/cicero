@@ -7,17 +7,13 @@ import {
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import React from 'react';
-import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
-import { redirect } from 'next/navigation';
-import { TextMorph } from '@/components/ui/text-morph';
-// import { TextMorphButton } from '@/components/general/login-button';
 import { LoginButton } from '@/components/auth/login-button';
 import { RegisterButton } from '@/components/auth/register-button';
 
 export default async function Home() {
-  const { isAuthenticated } = getKindeServerSession();
+  // const { isAuthenticated } = getKindeServerSession();
 
-  (await isAuthenticated()) ? redirect('/dashboard') : null;
+  // (await isAuthenticated()) ? redirect('/dashboard') : null;
   return (
     <>
       {/* Container for the page */}
@@ -46,7 +42,7 @@ export default async function Home() {
         </section>
         {/* Learn Section */}
         <section className="flex h-fit min-h-screen w-full flex-col items-start justify-start gap-2 text-left">
-          <h1 className="mb-2 mt-2 pb-2 font-bold lg:text-5xl">Learn</h1>
+          <h1 className="mt-2 mb-2 pb-2 font-bold lg:text-5xl">Learn</h1>
           <Accordion
             type="single"
             collapsible

@@ -14,6 +14,7 @@ import {
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { getCiceroUser } from '@/lib/data/users';
+import Image from 'next/image';
 // Statically rendered part of the navigation
 function StaticNavLinks() {
   return (
@@ -89,10 +90,12 @@ async function DynamicUserProfile() {
         <Tooltip>
           <TooltipTrigger>
             <Avatar>
-              <AvatarImage
-                src={ciceroUser?.picture}
-                alt={ciceroUser?.username + '.png'}
+              <Image
+                src={ciceroUser!.picture}
+                alt={ciceroUser!.username + '.png'}
                 className="cursor-pointer"
+                width={32}
+                height={32}
               />
               <AvatarFallback>
                 {user.username?.substring(0, 1).toUpperCase()}

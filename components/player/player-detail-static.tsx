@@ -24,6 +24,7 @@ export function PlayerDetailsStatic({ player }: { player: Player }) {
               className="rounded-full object-cover"
               priority={true}
               draggable={false}
+              sizes="200px"
             />
           ) : (
             <Avatar.Root className="bg-muted relative flex h-[200px] w-[200px] overflow-hidden rounded-full">
