@@ -1,9 +1,9 @@
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
+// import {
+//   Accordion,
+//   AccordionContent,
+//   AccordionItem,
+//   AccordionTrigger,
+// } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import React from 'react';
@@ -43,7 +43,7 @@ export default async function Home() {
         {/* Learn Section */}
         <section className="flex h-fit min-h-screen w-full flex-col items-start justify-start gap-2 text-left">
           <h1 className="mt-2 mb-2 pb-2 font-bold lg:text-5xl">Learn</h1>
-          <Accordion
+          {/* <Accordion
             type="single"
             collapsible
             className="w-full text-left text-xl"
@@ -82,7 +82,7 @@ export default async function Home() {
                 performance or plummet after a disappointing game.
               </AccordionContent>
             </AccordionItem>
-          </Accordion>
+          </Accordion> */}
           <Link href={'https://github.com/noelalfaro/cicero'}>
             <Button>Learn More</Button>
           </Link>

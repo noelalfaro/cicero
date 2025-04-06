@@ -21,7 +21,6 @@ export function LoginButton({ isHomePage }: LoginButtonProps) {
     } catch (error) {
       console.error(error);
     }
-    // You could handle any login logic here
   };
   return (
     <form onSubmit={onSubmit}>

@@ -42,7 +42,7 @@ export function MorphButton({
       variant={variant}
       // onClick={() => setText('Loading...')}
       className={clsx(
-        'flex items-center gap-2 p-6 text-base transition-colors',
+        'flex w-full items-center gap-2 p-6 text-base transition-colors',
         isHomePage ? 'w-full md:w-[120px]' : 'md:w-full',
       )}
       type={type}

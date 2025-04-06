@@ -32,6 +32,7 @@ export function OAuthLogin({ provider, connectionId }: OAuthLoginProps) {
         setButtonText={setButtonText}
         variant="outline"
         icon={provider}
+        isHomePage={false}
         type="submit"
       />
     </form>

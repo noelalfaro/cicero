@@ -25,12 +25,7 @@ export default async function RootLayout({
       <html lang="en">
         <body className={` ${inter.className}`}>
           <QueryProvider>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
               <main className="container flex h-fit w-full max-w-7xl flex-col px-[1rem] md:h-screen lg:px-[2rem]">
                 <Nav />
                 {children}

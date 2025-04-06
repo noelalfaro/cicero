@@ -1,0 +1,2 @@
+CREATE INDEX "idx_playeravg_playerid" ON "player_averages" USING btree ("player_id");--> statement-breakpoint
+CREATE INDEX "idx_playerstats_playerid_gamedate" ON "player_stats" USING btree ("player_id","gamedate");
