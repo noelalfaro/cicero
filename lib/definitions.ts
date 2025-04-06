@@ -81,6 +81,7 @@ const playerSchema = z.object({
 export { playerStatsSchema, playerAveragesSchema, playerSchema };
 export type Player = z.infer<typeof playerSchema>;
 export type PlayerStats = z.infer<typeof playerStatsSchema>;
+export type PlayerAverages = z.infer<typeof playerAveragesSchema>;
 
 export const newsArticleSchema = z.object({
   title: z.string(),

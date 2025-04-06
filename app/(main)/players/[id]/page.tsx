@@ -61,7 +61,7 @@ export default async function PlayerDetailsPage({
       </Suspense>
 
       <Suspense fallback={<PlayerActionBarSkeleton />}>
-        <PlayerActionBar />
+        <PlayerActionBar averages={player.averages} />
       </Suspense>
 
       <Suspense fallback={<PlayerNewsSkeleton />}>
