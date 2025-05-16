@@ -36,8 +36,6 @@ export async function POST(request: NextRequest) {
     // If they don't have a username identity on kinde, we create one
 
     if (!usernameIdentity) {
-      console.log('Username Identity Not there so we must create one...');
-
       const newIdentity = await addUsernameIdentity(
         userId,
         username,
