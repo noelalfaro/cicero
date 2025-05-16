@@ -25,26 +25,25 @@ export async function POST(request: NextRequest) {
     console.log(await updateUserUsername(userId, username));
     console.log(await updateUserDisplayName(userId, username));
     // console.log(dbUsernameUpdateLog, '/n', dbDisplayNameUpdateLog);
-    init();
 
     // Then we want to check if a username property already exists on kinde
-    // Fetch the user's identities
     const identities = await getUserIdentities(userId);
-    const usernameIdentity = identities.find(
-      (identity: { type: string }) => identity.type === 'username',
+
+    const usernameIdentity = identities?.find(
+      (identity) => identity?.type === 'username',
     );
 
-    // If they don't have a username identity on kinde, we create one.d
+    // If they don't have a username identity on kinde, we create one
+
     if (!usernameIdentity) {
+      console.log('Username Identity Not there so we must create one...');
+
       const newIdentity = await addUsernameIdentity(
         userId,
         username,
         connectionId,
       );
-      // console.log(
-      //   'Username Created Successfully on both Database and Kinde',
-      //   newIdentity,
-      // );
+
       await refreshTokens();
       revalidatePath('/dashboard');
 
@@ -53,31 +52,46 @@ export async function POST(request: NextRequest) {
         { status: 200 },
       );
     } else {
-      // IF they do have a username identity, we must first delete the old one and create a new one
-      const identityId = usernameIdentity.id;
+      if (usernameIdentity.id && typeof usernameIdentity.id === 'string') {
+        const identityIdToDelete = usernameIdentity.id;
 
-      // Step 2: Delete the old username identity
-      await deleteIdentity(identityId);
+        // Step 2: Delete the old username identity
+        await deleteIdentity(identityIdToDelete);
 
-      // Step 3: Add the new username identity
-      const newIdentity = await addUsernameIdentity(
-        userId,
-        username,
-        connectionId,
-      );
-      console.log(
-        'Username Updated Successfully on both Database and Kinde',
-        newIdentity,
-      );
-      await refreshTokens();
+        // Step 3: Add the new username identity
+        const newIdentity = await addUsernameIdentity(
+          userId,
+          username,
+          connectionId,
+        );
+        const identities = await getUserIdentities(userId);
+        await refreshTokens();
 
-      revalidatePath('/dashboard');
-      return NextResponse.json(
-        { message: 'Username Succesfully updated on both Database and Kinde' },
-        { status: 200 },
-      );
+        revalidatePath('/dashboard');
+        return NextResponse.json(
+          {
+            message: 'Username Succesfully updated on both Database and Kinde',
+          },
+          { status: 200 },
+        );
+      } else {
+        console.error(
+          `Found username identity for user ${userId} but it's missing an ID:`,
+          usernameIdentity,
+        );
+        return NextResponse.json(
+          {
+            message: 'Error processing existing username identity: ID missing.',
+          },
+          { status: 500 },
+        );
+      }
     }
   } catch (error) {
     console.log('There was a problem updating the user username: ', error);
+    return NextResponse.json(
+      { message: 'Internal server error while updating username.' },
+      { status: 500 },
+    );
   }
 }

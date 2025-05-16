@@ -1,9 +1,14 @@
 import { withAuth } from '@kinde-oss/kinde-auth-nextjs/middleware';
+import { NextRequest } from 'next/server';
 
 export default withAuth(
-  async function middleware(req: any) {
+  async function middleware(req: NextRequest) {
     // console.log('Middleware called');
     // TODO: Add a logic check to verify if the user has completed onboarding, if not we redirect them to the onboarding page. To complete onboarding, the user must have a username.
+    // console.log(req);
+
+    const user = req;
+    console.log(user);
   },
   {
     isReturnToCurrentPage: true,

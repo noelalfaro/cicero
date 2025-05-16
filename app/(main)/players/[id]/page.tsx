@@ -12,12 +12,6 @@ import { PlayerStatsChart } from '@/components/player/player-stats-chart';
 import PlayerNews from '@/components/player/player-news';
 import PlayerAiSummary from '@/components/player/player-ai-summary';
 import PlayerActionBar from '@/components/player/player-action-bar';
-import {
-  dehydrate,
-  HydrationBoundary,
-  QueryClient,
-} from '@tanstack/react-query';
-import { getQueryClient } from '@/lib/get-query-client';
 
 export default async function PlayerDetailsPage({
   params,
@@ -32,7 +26,6 @@ export default async function PlayerDetailsPage({
   }
 
   const player = await fetchPlayerDataByID(playerId);
-  console.log(player);
 
   if (!player) {
     return <PlayerNotFoundError />;

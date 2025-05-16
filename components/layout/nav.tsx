@@ -72,7 +72,8 @@ function StaticNavLinks() {
 async function DynamicUserProfile() {
   const { getUser, isAuthenticated } = getKindeServerSession();
   const user = await getUser();
-  const ciceroUser = await getCiceroUser(user?.id);
+
+  const ciceroUser = user ? await getCiceroUser(user.id) : null;
 
   if (!(await isAuthenticated())) {
     return (
@@ -91,14 +92,18 @@ async function DynamicUserProfile() {
           <TooltipTrigger>
             <Avatar>
               <Image
-                src={ciceroUser!.picture}
-                alt={ciceroUser!.username + '.png'}
+                src={
+                  ciceroUser?.picture
+                    ? ciceroUser?.picture
+                    : 'https://avatars.githubusercontent.com/u/56320635?v=4'
+                }
+                alt={ciceroUser?.username + '.png'}
                 className="cursor-pointer"
                 width={32}
                 height={32}
               />
               <AvatarFallback>
-                {user.username?.substring(0, 1).toUpperCase()}
+                {user?.username?.substring(0, 1).toUpperCase()}
               </AvatarFallback>
             </Avatar>
           </TooltipTrigger>

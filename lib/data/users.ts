@@ -63,7 +63,7 @@ export async function updateUserDisplayName(userId: string, username: string) {
     .limit(1);
 
   return (
-    'Successfully updated display name: ' +
+    'Successfully updated display name on Database: ' +
     updatedUser[0]?.display_name +
     ' - For user: ' +
     updatedUser[0]?.id
@@ -83,7 +83,7 @@ export async function updateUserUsername(userId: string, username: string) {
     .limit(1);
 
   return (
-    'Successfully updated username: ' +
+    'Successfully updated username on Database: ' +
     updatedUser[0]?.username +
     ' - For user: ' +
     updatedUser[0]?.id

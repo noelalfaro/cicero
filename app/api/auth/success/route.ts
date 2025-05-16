@@ -13,6 +13,10 @@ export async function GET(request: Request) {
 
   try {
     const idToken = await getIdToken();
+
+    if (!idToken) {
+      return NextResponse.redirect('/login');
+    }
     // console.log(idToken);
     const userId = idToken.sub;
     const existingUser = await getUserById(userId);
