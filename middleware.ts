@@ -6,43 +6,31 @@ export default withAuth(
   async function middleware(req: KindeRequest) {
     const kindeSession = req.kindeAuth;
     const { pathname } = req.nextUrl;
+    const onboardingPagePath = '/onboarding';
 
-    const onboardingBypassPaths = [
-      '/onboarding',
+    // API routes and pages essential for authenticated users
+    // during the onboarding process or for basic auth actions.
+    // These paths are protected by withAuth (user must be logged in),
+    // but our custom onboarding redirect logic will NOT apply to them.
+    const alwaysAllowedForAuthenticated = [
       '/api/auth/logout',
-      '/api/users/update-username',
-      '/api/users/check-username-availability',
-      '/api/users/update-onboarding-status',
+      '/api/auth/success', // Critical: Kinde redirects here after auth; user sync happens here
+      '/api/users/update-username', // Called by onboarding form
+      '/api/users/check-username-availability', // Called by onboarding form
+      '/api/users/update-onboarding-status', // Your existing endpoint - handles both DB and Kinde updates
     ];
 
-    // A user is considered authenticated if kindeSession and kindeSession.user exist
-    // Kinde's `withAuth` should handle redirecting to loginPage if no valid session.
-    // Our main concern here is the onboarding check for *already authenticated* users.
-    if (kindeSession && kindeSession.user && kindeSession.token) {
-      if (onboardingBypassPaths.includes(pathname)) {
+    // Early return for authenticated users accessing always-allowed paths
+    if (kindeSession?.user && kindeSession?.token) {
+      if (alwaysAllowedForAuthenticated.includes(pathname)) {
+        console.log(`Middleware: Allowing authenticated access to ${pathname}`);
         return NextResponse.next();
       }
 
-      // ** Logs the users information(user, tokens)
-      // console.log('--- Kinde Session Info (Authenticated User) ---');
-      // console.log(
-      //   'kindeSession.user:',
-      //   JSON.stringify(kindeSession.user, null, 2),
-      // );
-      // console.log(
-      //   'kindeSession.token ',
-      //   JSON.stringify(kindeSession.token, null, 2),
-      // );
-
-      // --- Onboarding Check Logic ---
-      // Accessing your custom claim:
-      // It's good to check for the existence of user_properties and the specific claim first.
+      // Check onboarding status from Kinde token claims for all other protected routes
       const onboardingPropertyValue =
         kindeSession.token.user_properties?.onboarding_completed?.v;
 
-      // The value 'v' from Kinde custom properties might be a string "true" or "false"
-      // or a boolean true/false. Adjust comparison accordingly.
-      // Let's assume it could be a string "true" or boolean true.
       let onboardingCompleted = false;
       if (typeof onboardingPropertyValue === 'string') {
         onboardingCompleted = onboardingPropertyValue.toLowerCase() === 'true';
@@ -50,45 +38,62 @@ export default withAuth(
         onboardingCompleted = onboardingPropertyValue;
       }
 
-      // console.log(
-      //   `User ${kindeSession.user?.id} - Onboarding property value: '{onboardingPropertyValue}', Parsed as completed: ${onboardingCompleted}`,
-      // );
-
-      if (!onboardingCompleted) {
-        console.log(
-          `Redirecting user ${kindeSession.user?.id} to /onboarding.`,
-        );
-        return NextResponse.redirect(new URL('/onboarding', req.url));
-      }
-    } else {
       console.log(
-        'Middleware: No valid Kinde session or user not authenticated. Path:',
-        pathname,
+        `Middleware: User ${kindeSession.user.id} - Onboarding status: ${onboardingCompleted} for path: ${pathname}`,
       );
+
+      // Scenario 1: User IS ONBOARDED and tries to access the onboarding page
+      if (onboardingCompleted && pathname === onboardingPagePath) {
+        console.log(
+          `Middleware: User ${kindeSession.user.id} is already onboarded. Redirecting from /onboarding to /dashboard`,
+        );
+        return NextResponse.redirect(new URL('/dashboard', req.url));
+      }
+
+      // Scenario 2: User IS NOT ONBOARDED and tries to access a protected page
+      // (excluding the onboarding page itself and always-allowed paths)
+      if (!onboardingCompleted && pathname !== onboardingPagePath) {
+        console.log(
+          `Middleware: User ${kindeSession.user.id} not onboarded. Redirecting to /onboarding from ${pathname}`,
+        );
+        return NextResponse.redirect(new URL(onboardingPagePath, req.url));
+      }
+
+      // Allow the request to proceed if:
+      // - Onboarded user accessing any protected route
+      // - Non-onboarded user accessing the onboarding page
+      console.log(`Middleware: Allowing access to ${pathname}`);
+      return NextResponse.next();
     }
 
+    // No valid Kinde session - withAuth will handle redirecting to login
+    console.log(
+      `Middleware: No valid session for ${pathname} - withAuth will handle redirect`,
+    );
     return NextResponse.next();
   },
   {
     isReturnToCurrentPage: true,
     loginPage: '/login',
     publicPaths: [
-      '/register',
-      '/login',
-      '/about-us',
+      '/', // Landing page
+      '/register', // Registration page
+      '/login', // Login page
+      '/about-us', // Marketing pages
       '/learn',
-      '/api/auth/register',
-      '/api/auth/login',
-      '/',
-      '/blog/*',
+      '/blog/*', // Blog content
+      '/api/auth/login', // Kinde's login initiation endpoint
+      '/api/auth/register', // Kinde's registration initiation endpoint
       '/api/uploadthing',
+      '/api/auth/kinde_callback', // Kinde's OAuth callback endpoint
+      '/api/users/check-email-availability', // Pre-registration validation
+      '/error', // Error pages should be accessible to all
     ],
   },
 );
 
 export const config = {
   matcher: [
-    // Run on everything but Next internals and static files
-    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+    '/((?!_next|api/auth/health|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
   ],
 };

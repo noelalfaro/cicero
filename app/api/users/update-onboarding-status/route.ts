@@ -57,8 +57,13 @@ export async function POST(request: NextRequest) {
       { status: 200 },
     );
   } catch (error) {
-    console.log(
-      "There was an error updating the user's onboarding status" + error,
+    console.error(
+      "There was an error updating the user's onboarding status:",
+      error,
+    );
+    return NextResponse.json(
+      { error: 'Failed to update onboarding status' },
+      { status: 500 },
     );
   }
 }

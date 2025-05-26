@@ -11,6 +11,7 @@ import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 export default async function Onboarding() {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
+  console.log(user);
 
   if (!user) {
     // Handle the case where user is null

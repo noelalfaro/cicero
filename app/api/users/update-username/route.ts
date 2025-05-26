@@ -11,6 +11,12 @@ import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 
 export async function POST(request: NextRequest) {
   const { username, userId, connectionId } = await request.json();
+  console.log(
+    '[API /update-username] Received userId:',
+    userId,
+    'Username:',
+    username,
+  );
 
   const { refreshTokens } = getKindeServerSession();
   if (!username) {
@@ -22,8 +28,8 @@ export async function POST(request: NextRequest) {
 
   try {
     // We first update the username and set a display name in the database
-    console.log(await updateUserUsername(userId, username));
-    console.log(await updateUserDisplayName(userId, username));
+    await updateUserUsername(userId, username);
+    await updateUserDisplayName(userId, username);
     // console.log(dbUsernameUpdateLog, '/n', dbDisplayNameUpdateLog);
 
     // Then we want to check if a username property already exists on kinde
