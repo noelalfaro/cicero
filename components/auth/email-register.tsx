@@ -1,10 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import z from 'zod';
+import { useDebounce } from 'use-debounce';
+import { handleError } from '@/lib/error/handle';
+
 import {
   Form,
   FormField,
@@ -13,7 +16,6 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import AvailabilityBadge from '@/components/auth/availability-badge';
 import { MorphButton } from '@/components/auth/morph-button';
@@ -22,30 +24,21 @@ import { Separator } from '@/components/ui/separator';
 const formSchema = z.object({
   email: z
     .string()
-    .email('This is not a valid email.')
-    .transform((email) => email.trim().toLowerCase())
-    .refine(async (email) => {
-      const response = await fetch('/api/users/check-email-availability', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
-      });
-
-      const data = await response.json();
-      return data.isAvailable;
-    }, 'This email already has an account, try logging in instead.'),
+    .min(1, 'Email is required.')
+    .email('This is not a valid email format.')
+    .transform((email) => email.trim().toLowerCase()),
 });
 
 export const EmailRegister = (props: {
   emailConnectionId: string | undefined;
 }) => {
-  const [email, setEmail] = useState('');
-  const [isAvailable, setIsAvailable] = useState<
+  const [emailInputValue, setEmailInputValue] = useState('');
+  const [debouncedEmail] = useDebounce(emailInputValue, 1000);
+  const [isEmailAvailable, setIsEmailAvailable] = useState<
     'true' | 'false' | 'loading' | 'null'
   >('null');
   const [buttonText, setButtonText] = useState('Register Via Email');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const router = useRouter();
 
@@ -54,37 +47,81 @@ export const EmailRegister = (props: {
     defaultValues: {
       email: '',
     },
-    reValidateMode: 'onSubmit',
   });
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    try {
-      setIsAvailable('loading');
-      setButtonText('Loading...');
-      const response = await fetch('/api/users/check-email-availability', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email: values.email }),
-      });
+  useEffect(() => {
+    const controller = new AbortController();
+    const { signal } = controller;
 
-      const data = await response.json();
-      setIsAvailable(data.isAvailable ? 'true' : 'false');
-
-      if (data.isAvailable) {
-        console.log(values);
-        // Handle form submission logic here
-        // router.push(
-        //   `/api/auth/register?connection_id=${props.emailConnectionId}&login_hint=${values.email}`,
-        // );
-        window.location.href = `/api/auth/register?connection_id=${props.emailConnectionId}&login_hint=${values.email}`;
+    const checkEmailAvailability = async (emailToCheck: string) => {
+      if (
+        !emailToCheck ||
+        !z.string().email().safeParse(emailToCheck).success
+      ) {
+        setIsEmailAvailable('null');
+        return;
       }
+
+      setIsEmailAvailable('loading');
+      try {
+        const response = await fetch('/api/users/check-email-availability', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: emailToCheck }),
+          signal,
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => null);
+          throw new Error(
+            errorData?.message || `Server error: ${response.status}`,
+          );
+        }
+
+        const data = await response.json();
+        setIsEmailAvailable(data.isAvailable ? 'true' : 'false');
+      } catch (error) {
+        if (error instanceof Error && error.name === 'AbortError') {
+          console.log('Email availability check aborted');
+          return;
+        }
+        console.error('Error checking email availability:', error);
+        setIsEmailAvailable('false');
+      }
+    };
+
+    if (debouncedEmail.length > 3 && debouncedEmail.includes('@')) {
+      checkEmailAvailability(debouncedEmail);
+    } else {
+      setIsEmailAvailable('null');
+    }
+
+    return () => {
+      controller.abort();
+    };
+  }, [debouncedEmail]);
+
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    if (isEmailAvailable !== 'true') {
+      form.setError('email', {
+        type: 'manual',
+        message:
+          isEmailAvailable === 'false'
+            ? 'This email is already taken. Try logging in.'
+            : 'Please wait for email availability check or enter a valid email.',
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+    setButtonText('Loading...');
+    try {
+      console.log('Proceeding to Kinde registration with email:', values.email);
+      window.location.href = `/api/auth/register?connection_id=${props.emailConnectionId}&login_hint=${values.email}`;
     } catch (error) {
-      console.error('Error during registration:', error);
-      setIsAvailable('false');
+      handleError('Registration Failed', error);
+      setIsSubmitting(false);
       setButtonText('Register Via Email');
-      // Handle error (e.g., show error message to user)
     }
   };
 
@@ -101,36 +138,36 @@ export const EmailRegister = (props: {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <div className="center flex h-7 w-full gap-1 text-center align-middle">
+                  <div className="center flex h-7 w-full gap-2 text-center align-middle">
                     <Label htmlFor="email" className="leading-loose">
                       Email
                     </Label>
-                    <AvailabilityBadge availability={isAvailable} />
+                    {emailInputValue && (
+                      <AvailabilityBadge availability={isEmailAvailable} />
+                    )}
                   </div>
-
                   <FormControl>
                     <Input
                       id="email"
                       placeholder="example@example.com"
+                      type="email"
                       {...field}
                       onChange={(e) => {
                         field.onChange(e);
-                        setEmail(e.target.value);
-                        setIsAvailable('null'); // Reset availability state when user is typing
+                        setEmailInputValue(e.target.value);
                       }}
                     />
                   </FormControl>
-
                   <FormMessage />
                 </FormItem>
               )}
             />
-            {/* <Button type="submit">Register</Button> */}
             <MorphButton
               text={buttonText}
-              setButtonText={setButtonText}
               variant="default"
               type="submit"
+              isLoading={isSubmitting}
+              isAvailable={isEmailAvailable}
             />
           </form>
         </Form>

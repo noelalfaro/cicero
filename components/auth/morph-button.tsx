@@ -10,6 +10,7 @@ interface MorphButtonProps {
   setButtonText?: (text: string) => void;
   variant: 'default' | 'secondary' | 'outline';
   icon?: 'google' | 'github';
+  isLoading?: boolean;
   isHomePage?: boolean;
   type?: 'submit' | 'reset' | 'button' | undefined;
   isAvailable?: 'true' | 'false' | 'loading' | 'null';
@@ -20,12 +21,11 @@ export function MorphButton({
   setButtonText,
   variant,
   icon,
+  isLoading,
   isHomePage,
   type,
   isAvailable,
 }: MorphButtonProps) {
-  // const [text, setText] = useState(initialText);
-
   const getIcon = () => {
     switch (icon) {
       case 'google':
@@ -40,13 +40,13 @@ export function MorphButton({
   return (
     <Button
       variant={variant}
-      // onClick={() => setText('Loading...')}
       className={clsx(
         'flex w-full items-center gap-2 p-6 text-base transition-colors',
         isHomePage ? 'w-full md:w-[120px]' : 'md:w-full',
       )}
       type={type}
       disabled={
+        isLoading ||
         isAvailable === 'false' ||
         isAvailable === 'loading' ||
         isAvailable === 'null'

@@ -4,6 +4,7 @@ import {
   CardHeader,
   CardDescription,
   CardContent,
+  CardTitle,
 } from '@/components/ui/card';
 import { fetchUserConnectionId } from '@/lib/data/users';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
@@ -35,11 +36,9 @@ export default async function Onboarding() {
   }
 
   return (
-    <div className="flex min-h-screen w-full items-center justify-center self-center text-left">
-      <Card className="w-full md:w-1/2 lg:w-4/12">
-        <CardHeader className="pb-2 text-2xl font-bold">
-          Create a Username
-        </CardHeader>
+    <div className="flex min-h-screen w-full flex-col items-center justify-center gap-2 self-center text-left">
+      <Card className="w-full gap-2 md:w-1/2 lg:w-4/12">
+        <CardHeader className="text-xl font-bold">Create a Username</CardHeader>
 
         <CardContent>
           <CardDescription>

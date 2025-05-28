@@ -1,9 +1,9 @@
 'use client';
-
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { handleError } from '@/lib/error/handle';
 import z from 'zod';
 import {
   Form,
@@ -97,18 +97,14 @@ export default function OnboardingForm({
         setIsAvailable(data.isAvailable ? 'true' : 'false');
       } catch (error) {
         if (error instanceof Error) {
-          if (error.name === 'AbortError') {
-            // Request was aborted, do nothing
-            return;
-          }
-          console.error('Error checking username availability:', error.message);
+          handleError('Onboarding Failed', error);
         } else {
           console.error(
             'Unexpected error checking username availability:',
             error,
           );
         }
-        setIsAvailable('false'); // Optionally set to 'false' or handle differently
+        setIsAvailable('false');
       }
     };
 
@@ -118,7 +114,6 @@ export default function OnboardingForm({
       setIsAvailable('null');
     }
 
-    // Cleanup function to abort the fetch request if username changes or component unmounts
     return () => {
       controller.abort();
     };
@@ -140,7 +135,6 @@ export default function OnboardingForm({
       });
 
       if (response.ok) {
-        // Update onboarding status to true
         const response = await fetch('/api/users/update-onboarding-status', {
           method: 'POST',
           headers: {
@@ -153,7 +147,6 @@ export default function OnboardingForm({
         });
 
         if (response.ok) {
-          // Redirect to dashboard after successful onboarding
           router.push('/dashboard');
         } else {
           console.error('Failed to update onboarding status');
@@ -178,7 +171,7 @@ export default function OnboardingForm({
             control={form.control}
             name="username"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="gap-1">
                 <div className="center flex h-7 w-full gap-1 text-center align-middle">
                   <Label htmlFor="username" className="leading-loose">
                     Username
@@ -194,11 +187,10 @@ export default function OnboardingForm({
                     onChange={(e) => {
                       field.onChange(e);
                       setUsername(e.target.value);
-                      setIsAvailable('loading'); // Set to loading state when user is typing
+                      setIsAvailable('loading');
                     }}
                   />
                 </FormControl>
-
                 <FormMessage />
               </FormItem>
             )}
@@ -210,16 +202,6 @@ export default function OnboardingForm({
             type="submit"
             isAvailable={isAvailable}
           />
-          {/* <Button
-            type="submit"
-            disabled={
-              isAvailable === 'false' ||
-              isAvailable === 'loading' ||
-              isAvailable === 'null'
-            }
-          >
-            Submit
-          </Button> */}
         </form>
       </Form>
     </div>
