@@ -12,7 +12,17 @@ import { User } from '@/lib/definitions';
 import Image from 'next/image';
 import React from 'react';
 
-export function CustomUpload({ user }: { user: User }) {
+interface CustomUploadProps {
+  currentImageUrl: string | null | undefined;
+  altText: string;
+  onUploadComplete: (url: string) => void;
+}
+
+export function CustomUpload({
+  currentImageUrl,
+  altText,
+  onUploadComplete,
+}: CustomUploadProps) {
   const [files, setFiles] = useState<File[]>([]);
   const [isUploading, setIsUploading] = useState(false);
   const [fileSizeError, setFileSizeError] = useState(false);
@@ -20,13 +30,16 @@ export function CustomUpload({ user }: { user: User }) {
   const { startUpload, isUploading: isUploadingThing } = useUploadThing(
     'profilePicture',
     {
-      onClientUploadComplete: async () => {
+      onClientUploadComplete: (res) => {
         setIsUploading(false);
-        setFiles([]);
+        // setFiles([]);
         setFileSizeError(false);
         // Revalidate the user profile data
-        await revalidateUserProfile();
-
+        // await revalidateUserProfile();
+        if (res && res.length > 0) {
+          // We report back with the new URL. That's it. Our job is done.
+          onUploadComplete(res[0].ufsUrl);
+        }
         // Refresh the current route
       },
       onUploadError: (error: Error) => {
@@ -54,34 +67,37 @@ export function CustomUpload({ user }: { user: User }) {
     onDrop,
     accept: generateClientDropzoneAccept(fileTypes),
   });
+  const displayImageUrl =
+    currentImageUrl ||
+    'https://i.pinimg.com/originals/25/ee/de/25eedef494e9b4ce02b14990c9b5db2d.jpg';
 
   return (
     <>
-      <div className="flex w-full justify-center">
+      <div className="flex justify-center">
         <div
           {...getRootProps()}
-          className={`relative flex h-[200px] w-[200px] cursor-pointer place-items-center justify-center rounded-full transition-opacity`}
+          className={`relative flex h-[250px] w-[250px] cursor-pointer place-items-center justify-center overflow-hidden rounded-full object-cover transition-opacity lg:h-[350px] lg:w-[350px]`}
         >
           <Image
-            src={user.picture}
-            alt={`${user?.username}.png`}
-            // width={200}
+            src={displayImageUrl}
+            alt={altText}
+            // width={}
             // height={200}
             fill={true}
-            className={`h-auto rounded-full object-cover ${
+            className={`${
               isDragActive || isUploading
                 ? 'opacity-20'
                 : 'opacity-100 hover:opacity-20'
             }`}
           />
-          <div className="absolute flex h-[200px] w-[200px] items-center justify-center rounded-full bg-secondary opacity-0 transition-opacity hover:opacity-70">
+          <div className="bg-secondary absolute flex h-[250px] w-[250px] items-center justify-center rounded-full opacity-0 transition-opacity hover:opacity-70 lg:h-[350px] lg:w-[350px]">
             <Upload className="self-center transition-opacity" />
           </div>
         </div>
 
         <input {...getInputProps()} />
         {isUploading ? (
-          <div className="absolute place-items-center self-center">
+          <div className="absolute place-items-center justify-center self-center">
             <RotateLoader
               color={'#ffffff'}
               loading={true}

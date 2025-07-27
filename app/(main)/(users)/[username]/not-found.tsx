@@ -9,7 +9,7 @@ export default function NotFound() {
         User Not Found <Frown className="inline" size={64} />
       </h2>
 
-      <Link href="/">
+      <Link href="/dashboard">
         <Button>Go Home</Button>
       </Link>
     </div>

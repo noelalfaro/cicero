@@ -112,19 +112,35 @@ const userSchema = z.object({
     .nullable()
     .optional(),
   email: z.string().email({ message: 'Invalid email address' }),
-  picture: z.string(),
   display_name: z
     .string()
     .min(2, { message: 'Display must be at least 2 characters.' })
     .nullable(),
   onboarding_status: z.boolean(),
   social_connection_id: z.string().nullable().optional(),
+
+  // New onboarding fields (make them optional/nullable as appropriate for your logic)
+  hometown: z.string().nullable().optional(),
+  favorite_team: z.string().nullable().optional(),
+  goat: z.string().nullable().optional(),
+  picture: z
+    .string()
+    .url({ message: 'Invalid URL for avatar' })
+    .nullable()
+    .optional(), // For the profile_picture from the form
+  social_handle: z.string().nullable().optional(),
+  age: z.number().int().positive().nullable().optional(),
 });
 const updateUserFormSchema = z.object({
   id: z.string(),
   display_name: z
     .string()
     .min(2, { message: 'Display must be at least 2 characters.' }),
+  picture: z
+    .string()
+    .url({ message: 'Invalid URL for avatar' })
+    .nullable()
+    .optional(), // For the profile_picture from the form
 });
 
 export { userSchema, updateUserFormSchema };

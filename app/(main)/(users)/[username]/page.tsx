@@ -29,6 +29,7 @@ export default async function Page({
   ]);
 
   if (!user) return notFound();
+  console.log(user);
   const defaultImage =
     'https://i.pinimg.com/originals/25/ee/de/25eedef494e9b4ce02b14990c9b5db2d.jpg';
 

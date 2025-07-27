@@ -55,6 +55,8 @@ export async function fetchUserDataById(id: string): Promise<User | null> {
     .limit(1);
   // console.log(existingUser);
 
+  if (!existingUser) return null;
+
   return existingUser[0];
 }
 
@@ -75,6 +77,50 @@ export async function updateUserDisplayName(userId: string, username: string) {
     ' - For user: ' +
     updatedUser[0]?.id
   );
+}
+export interface OnboardingData {
+  username: string;
+  hometown?: string | null;
+  favorite_team?: string | null;
+  goat?: string | null;
+  picture?: string | null;
+  social_platform?: 'X (Twitter)' | 'Threads' | 'Bluesky' | null;
+  social_handle?: string | null;
+  age?: number | null;
+}
+
+export async function completeOnboardingUpdate(
+  userId: string,
+  data: OnboardingData,
+) {
+  try {
+    const user = await db
+      .update(users)
+      .set({
+        username: data.username,
+        display_name: data.username, // Set display name to username by default
+        hometown: data.hometown,
+        favorite_team: data.favorite_team,
+        goat: data.goat,
+        picture: data.picture, // Make sure 'picture' is the column name in your schema
+        social_platform: data.social_platform,
+        social_handle: data.social_handle,
+        age: data.age,
+        onboarding_status: true, // Mark onboarding as complete!
+      })
+      .where(eq(users.id, userId)) // 3. Specify the condition for the update
+      .returning({ updatedId: users.id });
+    // Check if the update actually happened
+    if (user.length === 0) {
+      throw new Error(`User with ID ${userId} not found for update.`);
+    }
+
+    return user[0];
+  } catch (error) {
+    console.error('Failed to complete onboarding update in database:', error);
+    // Re-throw the error to be handled by the API route
+    throw new Error('Database update failed during onboarding.');
+  }
 }
 
 export async function updateUserUsername(

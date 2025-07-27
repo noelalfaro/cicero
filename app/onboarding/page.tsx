@@ -6,16 +6,15 @@ import {
   CardContent,
   CardTitle,
 } from '@/components/ui/card';
-import { fetchUserConnectionId } from '@/lib/data/users';
+import { fetchUserConnectionId, getUserById } from '@/lib/data/users';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 
 export default async function Onboarding() {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
-  console.log(user);
+  console.log('helllo', user);
 
   if (!user) {
-    // Handle the case where user is null
     return (
       <div className="flex min-h-screen w-full items-center justify-center self-center text-left">
         <Card className="w-full md:w-1/2 lg:w-4/12">
@@ -28,26 +27,21 @@ export default async function Onboarding() {
   }
 
   let connectionId;
+  let dbUser;
   try {
     connectionId = await fetchUserConnectionId(user.id);
+    dbUser = await getUserById(user.id);
   } catch (error) {
     console.error('Failed to fetch connection ID:', error);
     connectionId = null; // or a default value
+    dbUser = null;
   }
 
   return (
-    <div className="flex min-h-screen w-full flex-col items-center justify-center gap-2 self-center text-left">
-      <Card className="w-full gap-2 md:w-1/2 lg:w-4/12">
-        <CardHeader className="text-xl font-bold">Create a Username</CardHeader>
-
-        <CardContent>
-          <CardDescription>
-            Create a unique username to attach to your profile, this will be
-            your identifier on the platform.
-          </CardDescription>
-          <OnboardingForm userId={user?.id} connectionId={connectionId} />
-        </CardContent>
-      </Card>
-    </div>
+    <OnboardingForm
+      userId={user?.id}
+      connectionId={connectionId}
+      defaultPicture={dbUser?.picture}
+    />
   );
 }

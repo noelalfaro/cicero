@@ -15,7 +15,7 @@ export default withAuth(
     const alwaysAllowedForAuthenticated = [
       '/api/auth/logout',
       '/api/auth/success', // Critical: Kinde redirects here after auth; user sync happens here
-      '/api/users/update-username', // Called by onboarding form
+      '/api/users/complete-onboarding', // Called by onboarding form
       '/api/users/check-username-availability', // Called by onboarding form
       '/api/users/update-onboarding-status', // Your existing endpoint - handles both DB and Kinde updates
     ];

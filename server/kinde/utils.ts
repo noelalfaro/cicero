@@ -68,7 +68,7 @@ export async function deleteIdentity(
 export async function addUsernameIdentity(
   userId: string,
   newUsername: string,
-  connectionId?: string,
+  connectionId?: string | null,
 ): Promise<CreateUserIdentityResponse> {
   try {
     // console.log('Adding Username...', newUsername);

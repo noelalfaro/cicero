@@ -2,7 +2,6 @@ import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { LogoutLink } from '@kinde-oss/kinde-auth-nextjs/server';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-
 import {
   Card,
   CardHeader,
@@ -13,12 +12,13 @@ import {
 } from '@/components/ui/card';
 import React from 'react';
 import DashboardTools from '@/components/dashboard/dashboard-tools';
+import ControlCenter from '@/components/dashboard/ControlCenter';
 
 // Add force-dynamic since we're using authentication
 export const dynamic = 'force-dynamic';
 
 export default async function Page() {
-  const { getUser, isAuthenticated } = getKindeServerSession();
+  const { getUser } = getKindeServerSession();
   const user = await getUser();
   // console.log(user);
 
@@ -71,23 +71,7 @@ export default async function Page() {
         </CardFooter>
       </Card>
       <DashboardTools />
-      <Card className="flex h-full flex-col items-center justify-start gap-2 md:col-span-8 md:flex-row">
-        <CardHeader>
-          <CardTitle className="text-xl">Control Center</CardTitle>
-        </CardHeader>
-        <CardContent className="flex h-full w-full grow flex-col content-center items-center justify-end gap-2 md:w-fit md:flex-row md:p-0 md:px-6">
-          <Button variant={'secondary'} className="w-full md:w-fit">
-            Investment History
-          </Button>
-          <Button variant={'secondary'} className="w-full md:w-fit">
-            Manage Stocks
-          </Button>
-          <Button variant={'secondary'} className="w-full md:w-fit">
-            Watchlist
-          </Button>
-          {/* <Button variant={'secondary'}>UE</Button> */}
-        </CardContent>
-      </Card>
+      <ControlCenter />
       <Card className="row-span-1 w-full md:col-span-8">
         <CardHeader>
           <CardTitle>Summary</CardTitle>

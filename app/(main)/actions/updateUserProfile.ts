@@ -11,8 +11,11 @@ export async function updateUserProfile(formData: FormData) {
   const db = drizzle(sql);
 
   const data = {
-    id: formData.get('id'),
-    display_name: formData.get('display_name'),
+    id: formData.get('id') as string, // Cast to string if ID is always present
+    display_name: formData.get('display_name') as string,
+    picture: formData.get('picture')
+      ? String(formData.get('picture'))
+      : undefined, // Explicitly convert to string or undefined if not set
   };
 
   const userData = updateUserFormSchema.parse(data);
@@ -24,6 +27,7 @@ export async function updateUserProfile(formData: FormData) {
       .set({
         display_name: userData.display_name,
         // Add other fields as necessary
+        picture: userData.picture,
       })
       .where(eq(users.id, userData.id))
       .returning();
