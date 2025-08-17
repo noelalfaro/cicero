@@ -12,10 +12,14 @@ import { OAuthLogin } from '@/components/auth/oauth-login';
 
 export default async function Login() {
   const connections = await getConnections();
-  // console.log(connections);
+  console.log(connections);
   const emailConnectionId = connections?.find(
-    (conn) => conn.strategy === 'email:otp',
+    (conn) => conn.strategy === 'email:password',
   )?.id;
+  const usernameConnectionId = connections?.find(
+    (conn) => conn.strategy === 'username:password',
+  )?.id;
+  console.log(usernameConnectionId);
 
   return (
     <div className="flex min-h-screen w-full items-center justify-center self-center text-left">
@@ -23,12 +27,15 @@ export default async function Login() {
         <CardHeader>
           <CardTitle className="text-2xl">Login</CardTitle>
           <CardDescription>
-            Enter your email or login via Github below.
+            Enter your email or login via Github or Google below.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid gap-4">
-            <EmailLogin emailConnectionId={emailConnectionId} />
+            <EmailLogin
+              emailConnectionId={emailConnectionId}
+              usernameConnectionId={usernameConnectionId}
+            />
 
             <div className="flex flex-col gap-2">
               {connections

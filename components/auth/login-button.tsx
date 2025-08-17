@@ -23,13 +23,14 @@ export function LoginButton({ isHomePage }: LoginButtonProps) {
     }
   };
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={onSubmit} className="font-body">
       <MorphButton
         text={buttonText}
         setButtonText={setButtonText}
         variant="default"
         type="submit"
         isHomePage={isHomePage}
+        isLoginButton={false}
       />
     </form>
   );

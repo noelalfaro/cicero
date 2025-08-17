@@ -8,6 +8,8 @@ type TextMorphProps = {
   as?: React.ElementType;
   className?: string;
   style?: React.CSSProperties;
+  capitalize?: boolean;
+  isLoginButton?: boolean | undefined;
 };
 
 export function TextMorph({
@@ -15,40 +17,40 @@ export function TextMorph({
   as: Component = 'span',
   className,
   style,
+  capitalize,
+  isLoginButton,
 }: TextMorphProps) {
   const uniqueId = useId();
 
-  // 1. Pre-process the string to capitalize the first letter of each word
+  // Build the text based on "capitalize"
   const processedString = useMemo(() => {
+    if (!children) return '';
+    if (!capitalize) return children;
     return children
       .split(' ')
-      .map((word) => {
-        // If word is empty or whitespace, return as is
-        if (!word) return word;
-        return word.charAt(0).toUpperCase() + word.slice(1);
-      })
+      .map((word) =>
+        word ? word.charAt(0).toUpperCase() + word.slice(1) : word,
+      )
       .join(' ');
-  }, [children]);
+  }, [children, capitalize]);
 
-  // 2. Split processedString into characters
+  // Split into characters with stable IDs
   const characters = useMemo(() => {
     const charCounts: Record<string, number> = {};
-
     return processedString.split('').map((char) => {
-      // Lowercase version, just for counting so keys stay consistent
       const lowercaseChar = char.toLowerCase();
       charCounts[lowercaseChar] = (charCounts[lowercaseChar] || 0) + 1;
 
       return {
         id: `${uniqueId}-${lowercaseChar}${charCounts[lowercaseChar]}`,
-        label: char === ' ' ? '\u00A0' : char, // Replace space with a non-breaking space for layout
+        label: char === ' ' ? '\u00A0' : char,
       };
     });
   }, [processedString, uniqueId]);
 
   return (
     <Component
-      className={cn(className)}
+      className={cn(className, { 'font-login': isLoginButton })}
       aria-label={processedString}
       style={style}
     >

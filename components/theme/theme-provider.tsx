@@ -6,13 +6,13 @@ import { ThemeProviderProps } from 'next-themes';
 import { useEffect, useState } from 'react';
 
 export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setIsLoaded(true);
+    setMounted(true);
   }, []);
 
-  if (!isLoaded) {
+  if (!mounted) {
     return null;
   }
 

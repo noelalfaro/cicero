@@ -84,7 +84,7 @@ export interface OnboardingData {
   favorite_team?: string | null;
   goat?: string | null;
   picture?: string | null;
-  social_platform?: 'X (Twitter)' | 'Threads' | 'Bluesky' | null;
+  social_platform?: 'X (Twitter)' | 'Threads' | 'BlueSky' | null;
   social_handle?: string | null;
   age?: number | null;
 }

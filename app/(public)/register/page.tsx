@@ -25,7 +25,8 @@ export default async function Register() {
         <CardHeader className="pb-2">
           <CardTitle className="text-2xl">Create an Account</CardTitle>
           <CardDescription>
-            Enter your email to register or sign up via Github below.
+            Enter your email to register or continue with Google or Github
+            below.
           </CardDescription>
         </CardHeader>
         <CardContent>

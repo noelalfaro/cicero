@@ -76,18 +76,18 @@ export default withAuth(
     isReturnToCurrentPage: true,
     loginPage: '/login',
     publicPaths: [
-      '/', // Landing page
-      '/register', // Registration page
+      '/',
+      '/register',
       '/login', // Login page
-      '/about-us', // Marketing pages
+      '/about-us',
       '/learn',
-      '/blog/*', // Blog content
-      '/api/auth/login', // Kinde's login initiation endpoint
-      '/api/auth/register', // Kinde's registration initiation endpoint
+      '/blog/*',
+      '/api/auth/login',
+      '/api/auth/register',
       '/api/uploadthing',
-      '/api/auth/kinde_callback', // Kinde's OAuth callback endpoint
-      '/api/users/check-email-availability', // Pre-registration validation
-      '/error', // Error pages should be accessible to all
+      '/api/auth/kinde_callback',
+      '/api/users/check-email-availability',
+      '/error',
     ],
   },
 );

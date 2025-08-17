@@ -1,112 +1,131 @@
 'use client';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { doesEmailExistCheck } from '@/lib/data/registration';
 import { Separator } from '@/components/ui/separator';
-import { LoginButton } from '@/components/auth/login-button';
 import { MorphButton } from '@/components/auth/morph-button';
+import { LoginLink } from '@kinde-oss/kinde-auth-nextjs';
+
+const DEMO_USERNAME = (
+  process.env.NEXT_PUBLIC_DEMO_USERNAME || 'demo'
+).toLowerCase();
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const formSchema = z.object({
-  email: z
+  identifier: z
     .string()
-    .min(1, { message: 'This field has to be filled.' })
-    .email({ message: 'This is not a valid email.' })
-    .refine(async (email) => {
-      // Where checkIfEmailIsValid makes a request to the backend
-      // to see if the email is valid.
-      return await doesEmailExistCheck(email);
-    }, "This email doesn't exist in our database, try registering first instead."),
+    .min(1, 'Required')
+    .refine(async (value) => {
+      const raw = value.trim();
+      const lower = raw.toLowerCase();
+      if (!raw.includes('@')) {
+        // Only allow the demo username for username/password login
+        return lower === DEMO_USERNAME;
+      }
+      if (!emailRegex.test(raw)) return false;
+      return await doesEmailExistCheck(raw);
+    }, 'Enter an existing email or the demo username.'),
 });
 
-export const EmailLogin = (props: {
-  emailConnectionId: string | undefined;
+type FormValues = z.infer<typeof formSchema>;
+
+export const EmailLogin = ({
+  emailConnectionId,
+  usernameConnectionId,
+}: {
+  emailConnectionId?: string;
+  usernameConnectionId?: string;
 }) => {
-  const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [buttonText, setButtonText] = useState('Login Via Email');
 
-  const router = useRouter();
+  console.log('Username connection received is: ' + usernameConnectionId);
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: '',
-    },
+    defaultValues: { identifier: '' },
     reValidateMode: 'onSubmit',
   });
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const identifierVal = form.watch('identifier');
+  const trimmed = identifierVal.trim();
+  const lower = trimmed.toLowerCase();
+  const isEmail = trimmed.includes('@');
+  const isDemoUsername = !isEmail && lower === DEMO_USERNAME;
+
+  async function onSubmit(values: FormValues) {
     setIsLoading(true);
-    setButtonText('Loading...');
     try {
-      console.log('Trying to reach auth api route...');
-      window.location.href = `/api/auth/login?connection_id=${props.emailConnectionId}&login_hint=${values.email}`;
-    } catch (error) {
+      const ident = values.identifier.trim();
+
+      // DEMO LOGIN — hosted UI with pre-filled username
+      if (isDemoUsername) {
+        if (!usernameConnectionId)
+          throw new Error('Missing username/password connection id');
+        window.location.href = `/api/auth/login?connection_id=${usernameConnectionId}&login_hint=username:${encodeURIComponent(ident)}`;
+        return;
+      }
+
+      // NORMAL EMAIL LOGIN — hosted UI
+      if (isEmail) {
+        if (!emailConnectionId) throw new Error('Missing email connection id');
+        window.location.href = `/api/auth/login?connection_id=${emailConnectionId}&login_hint=${encodeURIComponent(
+          ident,
+        )}`;
+      }
+    } catch (err) {
+      console.error(err);
       setIsLoading(false);
-      setButtonText('Login Via Email');
     }
-  };
+  }
+
+  const buttonLabel = isLoading
+    ? isDemoUsername
+      ? 'Redirecting to Demo Login...'
+      : 'Redirecting...'
+    : isDemoUsername
+      ? 'Demo Login'
+      : 'Login via Email';
 
   return (
     <>
       <div className="grid gap-2">
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col gap-2"
-          >
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <Label htmlFor="email">Email</Label>
-                  <FormControl>
-                    <Input
-                      id="email"
-                      placeholder="justakidfromakron@gmail.com"
-                      // onKeyDown={(e) => {
-                      //   if (e.key === 'Enter') {
-                      //     router.push(
-                      //       `/api/auth/login?connection_id=${props.emailConnectionId}&login_hint=${email}`,
-                      //     );
-                      //   }
-                      // }}
-                      {...field}
-                    />
-                  </FormControl>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col gap-3"
+          noValidate
+        >
+          <div>
+            <Label htmlFor="identifier">Email</Label>
+            <Input
+              id="identifier"
+              placeholder="you@email.com"
+              {...form.register('identifier')}
+              autoComplete={isEmail ? 'email' : 'username'}
+            />
+            {form.formState.errors.identifier && (
+              <p className="mt-1 text-xs text-red-500">
+                {form.formState.errors.identifier.message}
+              </p>
+            )}
+          </div>
 
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <MorphButton
-              text={buttonText}
-              setButtonText={setButtonText}
-              variant="default"
-              type="submit"
-            />
-          </form>
-        </Form>
+          <MorphButton
+            text={buttonLabel}
+            variant="default"
+            type="submit"
+            isLoading={isLoading}
+          />
+        </form>
       </div>
+
       <div className="text-muted-foreground flex w-full flex-wrap items-center justify-center gap-2 text-xs">
-        <Separator orientation="horizontal" className="w-1/3"></Separator>
+        <Separator orientation="horizontal" className="w-1/3" />
         OR
-        <Separator orientation="horizontal" className="w-1/3"></Separator>
+        <Separator orientation="horizontal" className="w-1/3" />
       </div>
     </>
   );

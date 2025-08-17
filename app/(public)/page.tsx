@@ -11,9 +11,6 @@ import { LoginButton } from '@/components/auth/login-button';
 import { RegisterButton } from '@/components/auth/register-button';
 
 export default async function Home() {
-  // const { isAuthenticated } = getKindeServerSession();
-
-  // (await isAuthenticated()) ? redirect('/dashboard') : null;
   return (
     <>
       {/* Container for the page */}

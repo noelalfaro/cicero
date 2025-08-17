@@ -8,8 +8,14 @@ interface OAuthLoginProps {
   connectionId: string;
 }
 
+function capitalize(string: string) {
+  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+}
+
 export function OAuthRegister({ provider, connectionId }: OAuthLoginProps) {
-  const [buttonText, setButtonText] = useState(`Continue with`);
+  const [buttonText, setButtonText] = useState(
+    `Sign in with ` + capitalize(provider),
+  );
   const router = useRouter();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -20,7 +26,7 @@ export function OAuthRegister({ provider, connectionId }: OAuthLoginProps) {
       window.location.href = `/api/auth/register?connection_id=${connectionId}`;
     } catch (error) {
       // Reset text if something fails
-      setButtonText(`Continue with`);
+      setButtonText(`Sign in with ` + capitalize(provider));
     }
   };
 

@@ -7,9 +7,14 @@ interface OAuthLoginProps {
   provider: 'google' | 'github';
   connectionId: string;
 }
+function capitalize(string: string) {
+  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+}
 
 export function OAuthLogin({ provider, connectionId }: OAuthLoginProps) {
-  const [buttonText, setButtonText] = useState(`Continue with`);
+  const [buttonText, setButtonText] = useState(
+    `Sign in with ` + capitalize(provider),
+  );
   const router = useRouter();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -21,7 +26,7 @@ export function OAuthLogin({ provider, connectionId }: OAuthLoginProps) {
     } catch (error) {
       // Reset text if something fails
       console.log(error);
-      setButtonText(`Continue with`);
+      setButtonText(`Sign in with ` + capitalize(provider));
     }
   };
 
@@ -34,6 +39,7 @@ export function OAuthLogin({ provider, connectionId }: OAuthLoginProps) {
         icon={provider}
         isHomePage={false}
         type="submit"
+        isLoginButton
       />
     </form>
   );

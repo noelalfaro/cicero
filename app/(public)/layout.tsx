@@ -4,7 +4,9 @@ import '../globals.css';
 import { ThemeProvider } from '@/components/theme/theme-provider';
 import Nav from '@/components/layout/nav';
 import { ViewTransitions } from 'next-view-transitions';
-const inter = Inter({ subsets: ['latin'] });
+import { Roboto } from 'next/font/google';
+const roboto = Roboto({ subsets: ['latin'], variable: '--font-roboto' });
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 import { AuthProvider } from '@/components/providers/auth-provider';
 import { Toaster } from '@/components/ui/toaster';
 
@@ -22,14 +24,9 @@ export default function RootLayout({
   return (
     <ViewTransitions>
       <AuthProvider>
-        <html lang="en">
-          <body className={` ${inter.className}`}>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
+        <html lang="en" className={` ${inter.variable} ${roboto.variable}`}>
+          <body className={`${inter.className}`}>
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
               <main className="container flex min-h-screen w-full max-w-7xl flex-col px-[1rem] lg:px-[2rem]">
                 {children}
               </main>

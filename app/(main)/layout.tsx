@@ -1,10 +1,12 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { Roboto } from 'next/font/google';
 import '../globals.css';
 import { ThemeProvider } from '@/components/theme/theme-provider';
 import Nav from '@/components/layout/nav';
 import { ViewTransitions } from 'next-view-transitions';
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+const roboto = Roboto({ subsets: ['latin'], variable: '--font-roboto' });
 import QueryProvider from '@/components/providers/QueryProvider';
 import { AuthProvider } from '@/components/providers/auth-provider';
 import { Toaster } from '@/components/ui/sonner';
@@ -22,8 +24,8 @@ export default async function RootLayout({
 }>) {
   return (
     <AuthProvider>
-      <html lang="en">
-        <body className={` ${inter.className}`}>
+      <html lang="en" className={` ${inter.variable} ${roboto.variable}`}>
+        <body className={`${inter.className}`}>
           <QueryProvider>
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
               <main className="container flex h-fit w-full max-w-7xl flex-col px-[1rem] md:h-screen lg:px-[2rem]">

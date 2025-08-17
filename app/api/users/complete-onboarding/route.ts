@@ -37,13 +37,9 @@ const onboardingSchema = z.object({
   hometown: z.string().optional().nullable(),
   favorite_team: z.string().optional().nullable(),
   goat: z.string().optional().nullable(),
-  picture: z
-    .string()
-    .url('Invalid URL format for picture.')
-    .optional()
-    .nullable(), // Validate URL if present
+  picture: z.string().url('Invalid URL format for picture.'), // Validate URL if present
   social_platform: z
-    .enum(['X (Twitter)', 'Threads', 'Bluesky'])
+    .enum(['X (Twitter)', 'Threads', 'BlueSky'])
     .optional()
     .nullable(),
   social_handle: z.string().optional().nullable(),
@@ -184,6 +180,17 @@ export async function POST(request: NextRequest) {
         { message: 'Validation Error', errors: error.issues },
         { status: 400 },
       );
+    }
+
+    // Handle Postgres unique constraint violation (username already taken)
+    if (typeof error === 'object' && error !== null && 'code' in error) {
+      const pgError = error as { code?: string };
+      if (pgError.code === '23505') {
+        return NextResponse.json(
+          { message: 'Username already taken' },
+          { status: 400 },
+        );
+      }
     }
     // For any other unexpected errors, return a 500 Internal Server Error
     return NextResponse.json(

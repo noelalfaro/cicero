@@ -18,25 +18,14 @@ export async function GET(request: Request) {
   try {
     const { getIdToken } = getKindeServerSession();
     const idToken = await getIdToken();
+    const idJSON = JSON.stringify(idToken);
+    const user = JSON.parse(idJSON);
+    console.log(user);
 
-    if (!idToken?.sub) {
-      console.log(
-        '/api/auth/success: No ID token or user ID found, redirecting to /login',
-      );
-      return NextResponse.redirect(new URL('/login', redirectURLBase));
-    }
-
-    console.log(
-      `/api/auth/success: Processing user sync for Kinde ID: ${idToken.sub}`,
-    );
-
-    // Focus only on user sync - no onboarding logic here
     await syncUserWithDatabase(idToken);
 
-    // Always redirect to dashboard - middleware will handle onboarding checks
-    console.log(
-      `/api/auth/success: User ${idToken.sub} synced successfully. Redirecting to /dashboard`,
-    );
+    console.log(`/api/auth/success: User ${idToken?.sub} synced successfully`);
+
     return NextResponse.redirect(new URL('/dashboard', redirectURLBase));
   } catch (error) {
     console.error('/api/auth/success: Critical error during user sync:', error);
