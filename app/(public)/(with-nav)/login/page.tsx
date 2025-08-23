@@ -22,7 +22,7 @@ export default async function Login() {
   console.log(usernameConnectionId);
 
   return (
-    <div className="flex min-h-screen w-full items-center justify-center self-center text-left">
+    <div className="flex w-full grow items-center justify-center self-center text-left">
       <Card className="w-full md:w-1/2 lg:w-4/12">
         <CardHeader>
           <CardTitle className="text-2xl">Log In</CardTitle>
@@ -32,11 +32,6 @@ export default async function Login() {
         </CardHeader>
         <CardContent>
           <div className="grid gap-4">
-            <EmailLogin
-              emailConnectionId={emailConnectionId}
-              usernameConnectionId={usernameConnectionId}
-            />
-
             <div className="flex flex-col gap-2">
               {connections
                 ?.filter((conn: any) => conn.strategy.includes('oauth2'))

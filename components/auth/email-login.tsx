@@ -10,9 +10,7 @@ import { Separator } from '@/components/ui/separator';
 import { MorphButton } from '@/components/auth/morph-button';
 import { LoginLink } from '@kinde-oss/kinde-auth-nextjs';
 
-const DEMO_USERNAME = (
-  process.env.NEXT_PUBLIC_DEMO_USERNAME || 'demo'
-).toLowerCase();
+const DEMO_USERNAME = process.env.NEXT_PUBLIC_DEMO_USERNAME?.toLowerCase();
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const formSchema = z.object({
@@ -88,7 +86,7 @@ export const EmailLogin = ({
       : 'Redirecting...'
     : isDemoUsername
       ? 'Demo Login'
-      : 'Login via Email';
+      : 'Login';
 
   return (
     <>
@@ -99,10 +97,10 @@ export const EmailLogin = ({
           noValidate
         >
           <div>
-            <Label htmlFor="identifier">Email</Label>
+            <Label htmlFor="identifier">Demo Username</Label>
             <Input
               id="identifier"
-              placeholder="you@email.com"
+              placeholder="justakidfromakron"
               {...form.register('identifier')}
               autoComplete={isEmail ? 'email' : 'username'}
             />
@@ -117,6 +115,7 @@ export const EmailLogin = ({
             text={buttonLabel}
             variant="default"
             type="submit"
+            isAvailable={isDemoUsername ? 'true' : 'false'}
             isLoading={isLoading}
           />
         </form>

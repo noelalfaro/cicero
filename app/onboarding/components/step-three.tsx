@@ -2,24 +2,14 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormControl,
   FormMessage,
 } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
 import { OnboardingFormValues } from '@/components/auth/onboarding-form';
 import { UseFormReturn } from 'react-hook-form';
 import { Card } from '@/components/ui/card';
 import { MorphButton } from '@/components/auth/morph-button';
 import { Button } from '@/components/ui/button';
-import { Toggle } from '@/components/ui/toggle';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { Combobox } from '@/components/ui/combobox'; // <-- Import the new component
+import { Combobox } from '@/components/ui/combobox';
 
 const nbaTeams = [
   'Atlanta Hawks',
@@ -139,7 +129,6 @@ const nbaGreats = [
   'Nate Thurmond',
   'Dennis Rodman',
 ];
-// Transform the list to have `value` and `label` properties for the Combobox
 const nbaGreatsOptions = nbaGreats.map((player) => ({
   value: player,
   label: player,
@@ -149,8 +138,6 @@ const nbaTeamsOptions = nbaTeams.map((team) => ({
   value: team,
   label: team,
 }));
-
-// const socialPlatforms = ['X (Twitter)', 'Threads', 'BlueSky'] as const;
 
 interface StepThreeProps {
   form: UseFormReturn<OnboardingFormValues>;
@@ -176,24 +163,6 @@ export function StepThree({
           render={({ field }) => (
             <FormItem>
               <FormLabel>Favorite NBA Team</FormLabel>
-              {/* Use the Select component instead of Input */}
-              {/* <Select
-                onValueChange={field.onChange}
-                value={field.value ?? undefined}
-              >
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select your favorite team" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {nbaTeams.map((team) => (
-                    <SelectItem key={team} value={team}>
-                      {team}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select> */}
               <Combobox
                 options={nbaTeamsOptions}
                 onChange={field.onChange}
@@ -223,60 +192,6 @@ export function StepThree({
             </FormItem>
           )}
         />
-
-        {/* <FormField
-          control={form.control}
-          name="social_platform"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Social Platform (Optional)</FormLabel>
-              <FormControl>
-                <div className="flex flex-wrap gap-2">
-                  {socialPlatforms.map((platform) => (
-                    <Toggle
-                      key={platform}
-                      pressed={field.value === platform}
-                      onPressedChange={(pressed) => {
-                        field.onChange(pressed ? platform : null);
-                        if (!pressed) {
-                          form.setValue('social_handle', '');
-                        }
-                      }}
-                      variant="outline"
-                      className="data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
-                    >
-                      {platform}
-                    </Toggle>
-                  ))}
-                </div>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="social_handle"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Social Handle</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder={
-                    form.watch('social_platform')
-                      ? 'Enter handle (without @)'
-                      : 'Select a platform first'
-                  }
-                  {...field}
-                  value={field.value ?? ''}
-                  disabled={!form.watch('social_platform')}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        /> */}
 
         <div className="flex justify-between gap-2">
           <div className="w-1/2">

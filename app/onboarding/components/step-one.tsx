@@ -84,9 +84,8 @@ export function StepOne({
               onClick={onNext}
               className="w-full p-6 text-base"
               disabled={
-                isUsernameAvailable === 'false' ||
-                isUsernameAvailable === 'loading' ||
-                isUsernameAvailable === 'null'
+                isUsernameAvailable !== 'true' ||
+                !!form.formState.errors.username
               }
             >
               Next

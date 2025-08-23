@@ -32,7 +32,7 @@ export default async function Onboarding() {
     dbUser = await getUserById(user.id);
   } catch (error) {
     console.error('Failed to fetch connection ID:', error);
-    connectionId = null; // or a default value
+    connectionId = null;
     dbUser = null;
   }
 

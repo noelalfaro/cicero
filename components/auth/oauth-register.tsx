@@ -38,6 +38,7 @@ export function OAuthRegister({ provider, connectionId }: OAuthLoginProps) {
         variant="outline"
         icon={provider}
         type="submit"
+        isLoginButton
       />
     </form>
   );

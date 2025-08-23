@@ -21,8 +21,8 @@ export default async function Register() {
 
   return (
     <div className="flex min-h-screen w-full items-center justify-center self-center text-left">
-      <Card className="w-full gap-0 md:w-1/2 lg:w-4/12">
-        <CardHeader className="pb-2">
+      <Card className="w-full md:w-1/2 lg:w-4/12">
+        <CardHeader>
           <CardTitle className="text-2xl">Create an Account</CardTitle>
           <CardDescription>
             Enter your email to register or continue with Google or Github
@@ -30,9 +30,7 @@ export default async function Register() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid gap-4">
-            <EmailRegister emailConnectionId={emailConnectionId} />
-
+          <div className="grid">
             <div className="flex flex-col gap-2">
               {connections
                 ?.filter((conn: any) => conn.strategy.includes('oauth2'))
@@ -44,12 +42,12 @@ export default async function Register() {
                   />
                 ))}
             </div>
-            <div className="mt-4 text-center text-sm">
-              Already have an account?{' '}
-              <Link href="/login" className="underline">
-                Log in
-              </Link>
-            </div>
+          </div>
+          <div className="mt-4 text-center text-sm">
+            Already have an account?{' '}
+            <Link href="/login" className="underline">
+              Log in
+            </Link>
           </div>
         </CardContent>
       </Card>

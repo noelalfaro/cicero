@@ -32,8 +32,9 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'nsghluj212.ufs.sh', // Add this line
+        hostname: 'nsghluj212.ufs.sh',
       },
+      { protocol: 'https', hostname: 'gravatar.com' },
     ],
     formats: ['image/avif', 'image/webp'],
   },

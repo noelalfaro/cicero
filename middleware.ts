@@ -78,10 +78,11 @@ export default withAuth(
     publicPaths: [
       '/',
       '/register',
-      '/login', // Login page
+      '/login',
       '/about-us',
       '/learn',
-      '/blog/*',
+      '/blog',
+      '/demo-login',
       '/api/auth/login',
       '/api/auth/register',
       '/api/uploadthing',
