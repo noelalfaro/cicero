@@ -76,7 +76,7 @@ export function CustomUpload({
       <div className="flex justify-center">
         <div
           {...getRootProps()}
-          className={`relative flex h-[250px] w-[250px] cursor-pointer place-items-center justify-center overflow-hidden rounded-full object-cover transition-opacity lg:h-[350px] lg:w-[350px]`}
+          className={`relative flex h-[150px] w-[150px] cursor-pointer place-items-center justify-center overflow-hidden rounded-full object-cover transition-opacity lg:h-[250px] lg:w-[250px]`}
         >
           <Image
             src={displayImageUrl}

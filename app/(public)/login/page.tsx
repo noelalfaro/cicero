@@ -25,7 +25,7 @@ export default async function Login() {
     <div className="flex min-h-screen w-full items-center justify-center self-center text-left">
       <Card className="w-full md:w-1/2 lg:w-4/12">
         <CardHeader>
-          <CardTitle className="text-2xl">Login</CardTitle>
+          <CardTitle className="text-2xl">Log In</CardTitle>
           <CardDescription>
             Enter your email or login via Github or Google below.
           </CardDescription>

@@ -26,6 +26,12 @@ import {
 } from '@/components/ui/select';
 import { Toggle } from '@/components/ui/toggle';
 import { CustomUpload } from '@/components/profile/custom-upload';
+import { Button } from '@/components/ui/button';
+import { motion, AnimatePresence } from 'motion/react';
+import Link from 'next/link';
+import { StepOne } from '@/app/onboarding/components/step-one';
+import { StepThree } from '@/app/onboarding/components/step-three';
+import { StepTwo } from '@/app/onboarding/components/step-two';
 
 const reservedRoutes = [
   'dashboard',
@@ -81,14 +87,6 @@ const formSchema = z
       .max(20, 'Username must not exceed 20 characters')
       .regex(/^[a-zA-Z0-9]+$/, 'Username can only contain letters and numbers')
       .transform((username) => username.trim()),
-    hometown: z
-      .string()
-      .min(3, 'Hometown must be at least 3 characters long')
-      .max(20, 'Hometown must not exceed 20 characters')
-      .regex(
-        /^[a-zA-Z\s.-]+$/,
-        'Hometown can only contain letters, spaces, dots, or hyphens.',
-      ),
     favorite_team: z
       .string()
       .min(1, 'Please select your favorite team.')
@@ -133,7 +131,6 @@ const formSchema = z
   })
   .refine(
     (data) => {
-      // If a platform is selected, handle is required
       if (
         data.social_platform &&
         (!data.social_handle || data.social_handle.trim() === '')
@@ -148,7 +145,7 @@ const formSchema = z
     },
   );
 
-type OnboardingFormValues = z.infer<typeof formSchema>;
+export type OnboardingFormValues = z.infer<typeof formSchema>;
 
 export default function OnboardingForm({
   userId,
@@ -159,12 +156,12 @@ export default function OnboardingForm({
   connectionId?: string | null | undefined;
   defaultPicture?: string | null;
 }) {
+  const [step, setStep] = useState(1);
   const [usernameForCheck, setUsernameForCheck] = useState('');
   const [debouncedUsername] = useDebounce(usernameForCheck, 1500);
   const [isUsernameAvailable, setIsUsernameAvailable] = useState<
     'true' | 'false' | 'loading' | 'null'
   >('loading');
-  const [buttonText, setButtonText] = useState('Complete Profile');
   const [submissionStatus, setSubmissionStatus] = useState<{
     type: 'idle' | 'loading' | 'error';
     message?: string;
@@ -176,7 +173,6 @@ export default function OnboardingForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: '',
-      hometown: '',
       favorite_team: '',
       goat: '',
       picture:
@@ -186,7 +182,8 @@ export default function OnboardingForm({
       social_handle: '',
       age: undefined,
     },
-    reValidateMode: 'onSubmit',
+    mode: 'onBlur',
+    // reValidateMode: 'onSubmit',
   });
 
   useEffect(() => {
@@ -226,10 +223,16 @@ export default function OnboardingForm({
         }
         const data = await response.json();
         setIsUsernameAvailable(data.isAvailable ? 'true' : 'false');
+        if (!data.isAvailable) {
+          form.setError('username', {
+            type: 'manual',
+            message: 'This username is already taken.',
+          });
+        }
       } catch (errorInstance: any) {
         if (errorInstance.name !== 'AbortError') {
           handleError('Username check failed', errorInstance);
-          setIsUsernameAvailable('false'); // Assume false on error
+          setIsUsernameAvailable('false');
           form.setError('username', {
             type: 'manual',
             message: 'Could not verify username.',
@@ -246,178 +249,283 @@ export default function OnboardingForm({
   }, [debouncedUsername, form]);
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    setSubmissionStatus({ type: 'loading' });
     try {
-      setButtonText('Loading...');
-
-      const payload = {
-        userId,
-        connectionId,
-        username: values.username,
-        hometown: values.hometown,
-        favorite_team: values.favorite_team,
-        goat: values.goat,
-        picture: values.picture,
-        social_platform: values.social_platform,
-        social_handle: values.social_handle,
-        age: values.age,
-      };
-      console.log(payload);
+      const payload = { userId, connectionId, ...values };
       const response = await fetch('/api/users/complete-onboarding', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
       if (!response.ok) {
-        // If the response is not ok, throw an error to be caught by the catch block
         const errorData = await response.json();
         throw new Error(errorData.message || 'Failed to complete onboarding.');
       }
-      // If we get here, it was successful!
       router.push('/dashboard');
     } catch (error: any) {
-      handleError('Onboarding submission failed catastrophically', error);
+      handleError('Onboarding submission failed', error);
       setSubmissionStatus({
         type: 'error',
-        message: error.message || 'An unexpected error occurred on the client.',
+        message: error.message || 'An unexpected error occurred.',
       });
     }
   };
 
-  return (
-    <div className="bg-card w-full rounded-lg border p-6 shadow-lg sm:p-8">
-      <h2 className="text-foreground text-left text-4xl font-bold tracking-tight">
-        Complete Your Profile
-      </h2>
-      <p className="text-muted-foreground mb-6 text-left text-sm">
-        Tell us a bit more about yourself to get started.
-      </p>
+  const handleNextStep = async () => {
+    let fieldsToValidate: (keyof OnboardingFormValues)[] = [];
+    if (step === 1) fieldsToValidate = ['username', 'picture'];
+    if (step === 2)
+      fieldsToValidate = ['social_handle', 'social_platform', 'age'];
 
+    const isValid = await form.trigger(fieldsToValidate);
+    if (isValid && (step !== 1 || isUsernameAvailable === 'true')) {
+      setStep((prev) => prev + 1);
+    } else if (isUsernameAvailable !== 'true' && step === 1) {
+      form.setError('username', {
+        type: 'manual',
+        message: 'Please choose an available username.',
+      });
+    }
+  };
+
+  const handleBackStep = () => {
+    setStep((prev) => prev - 1);
+  };
+
+  const handleUsernameChange = (value: string) => {
+    setUsernameForCheck(value);
+    if (value.length >= 3) {
+      setIsUsernameAvailable('loading');
+    } else {
+      setIsUsernameAvailable('null');
+    }
+  };
+
+  return (
+    <>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col lg:flex-row"
+          className="col-span-4 row-span-1 flex w-full justify-center md:col-start-2"
         >
-          <FormField
-            control={form.control}
-            name="picture"
-            render={({ field }) => (
-              <FormItem className="w-fit items-center justify-center self-center md:w-1/2">
-                <FormControl>
-                  <CustomUpload
-                    currentImageUrl={field.value}
-                    altText="Profile picture preview"
-                    onUploadComplete={(url) => {
-                      field.onChange(url);
-                    }}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className="flex grow flex-col gap-4 py-2">
-            <FormField
-              control={form.control}
-              name="username"
-              render={({ field }) => (
-                <FormItem>
-                  <div className="flex items-center gap-1">
-                    <FormLabel htmlFor="username" className="my-1">
-                      Username
-                    </FormLabel>
-                    <AvailabilityBadge availability={isUsernameAvailable} />
-                  </div>
-                  <FormControl>
-                    <Input
-                      id="username"
-                      placeholder="justakidfromakron"
-                      {...field}
-                      onChange={(e) => {
-                        field.onChange(e);
-                        setUsernameForCheck(e.target.value);
-                        if (e.target.value.length >= 3)
-                          setIsUsernameAvailable('loading');
-                        else setIsUsernameAvailable('null');
-                      }}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={step}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25, ease: 'easeInOut' }}
+              className="flex w-full flex-col"
+            >
+              {step === 1 && (
+                <StepOne
+                  form={form}
+                  isUsernameAvailable={isUsernameAvailable}
+                  onNext={handleNextStep}
+                  onUsernameChange={handleUsernameChange}
+                />
               )}
-            />
-
-            <FormField
-              control={form.control}
-              name="hometown"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel htmlFor="hometown">Hometown</FormLabel>
-                  <FormControl>
-                    <Input
-                      id="hometown"
-                      placeholder="e.g., Chicago, Illinois"
-                      value={field.value ?? ''}
-                      onChange={field.onChange}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
+              {step === 2 && (
+                <StepTwo
+                  form={form}
+                  onNext={handleNextStep}
+                  onBack={handleBackStep}
+                />
               )}
-            />
+              {step === 3 && (
+                <StepThree
+                  form={form}
+                  onBack={handleBackStep}
+                  isLoading={submissionStatus.type === 'loading'}
+                  isUsernameAvailable={isUsernameAvailable}
+                />
+              )}
+            </motion.div>
+          </AnimatePresence>
+        </form>
+      </Form>
 
-            <FormField
-              control={form.control}
-              name="favorite_team"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel htmlFor="favorite_team">
-                    Favorite NBA Team
-                  </FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    value={field.value ?? undefined}
-                  >
+      {/* <div className="bg-card w-full max-w-2xl rounded-lg border p-6 shadow-lg sm:p-8">
+      <div className="">
+        <h2 className="text-foreground text-left text-4xl font-bold tracking-tight">
+          Complete Your Profile
+        </h2>
+        <p className="text-muted-foreground my-2 text-left text-sm">
+          Step {step} of 3: {step === 1 && 'Profile Essentials'}
+          {step === 2 && 'Personal Details'}
+          {step === 3 && 'Preferences & Socials'}
+        </p>
+      </div>
+
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
+          {step === 1 && (
+            <div className="m-0">
+              <FormField
+                control={form.control}
+                name="picture"
+                render={({ field }) => (
+                  <>
+                    <FormItem className="flex flex-col items-center justify-end">
+                      <FormLabel className="flex self-start">
+                        Profile Picture
+                      </FormLabel>
+                      <FormControl>
+                        <CustomUpload
+                          currentImageUrl={field.value}
+                          altText="Profile picture preview"
+                          onUploadComplete={(url) => field.onChange(url)}
+                        />
+                      </FormControl>
+                      <div className="h-5">
+                        <FormMessage />
+                      </div>
+                    </FormItem>
+                  </>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="username"
+                render={({ field }) => (
+                  <FormItem>
+                    <div className="flex items-center gap-1">
+                      <FormLabel htmlFor="username" className="my-1">
+                        Username
+                      </FormLabel>
+                      <AvailabilityBadge availability={isUsernameAvailable} />
+                    </div>
                     <FormControl>
-                      <SelectTrigger id="favorite_team">
-                        <SelectValue placeholder="Select your favorite team" />
-                      </SelectTrigger>
+                      <Input
+                        id="username"
+                        placeholder="justakidfromakron"
+                        {...field}
+                        onChange={(e) => {
+                          field.onChange(e);
+                          setUsernameForCheck(e.target.value);
+                          if (e.target.value.length >= 3)
+                            setIsUsernameAvailable('loading');
+                          else setIsUsernameAvailable('null');
+                        }}
+                      />
                     </FormControl>
-                    <SelectContent>
-                      {/* Allow unselecting or placeholder */}
-                      {nbaTeams.map((team) => (
-                        <SelectItem key={team} value={team}>
-                          {team}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                    <div className="h-5">
+                      <FormMessage />
+                    </div>
+                  </FormItem>
+                )}
+              />
+            </div>
+          )}
 
-            <FormField
-              control={form.control}
-              name="goat"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel htmlFor="goat">Who's your GOAT?</FormLabel>
-                  <FormControl>
-                    <Input
-                      id="goat"
-                      placeholder="e.g., LeBron James"
-                      value={field.value ?? ''}
-                      onChange={field.onChange}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
+          {step === 2 && (
             <div className="space-y-4">
+              <FormField
+                control={form.control}
+                name="hometown"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel htmlFor="hometown">Hometown</FormLabel>
+                    <FormControl>
+                      <Input
+                        id="hometown"
+                        placeholder="e.g., Chicago, Illinois"
+                        value={field.value ?? ''}
+                        onChange={field.onChange}
+                      />
+                    </FormControl>
+                    <div className="h-5">
+                      <FormMessage />
+                    </div>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="age"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel htmlFor="age">Age (Optional)</FormLabel>
+                    <FormControl>
+                      <Input
+                        id="age"
+                        type="number"
+                        placeholder="e.g., 25"
+                        value={
+                          field.value === null || field.value === undefined
+                            ? ''
+                            : String(field.value)
+                        }
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          field.onChange(val === '' ? null : parseInt(val, 10));
+                        }}
+                      />
+                    </FormControl>
+                    <div className="h-5">
+                      <FormMessage />
+                    </div>
+                  </FormItem>
+                )}
+              />
+            </div>
+          )}
+
+          {step === 3 && (
+            <div className="space-y-4">
+              <FormField
+                control={form.control}
+                name="favorite_team"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel htmlFor="favorite_team">
+                      Favorite NBA Team (Optional)
+                    </FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      value={field.value ?? undefined}
+                    >
+                      <FormControl>
+                        <SelectTrigger id="favorite_team">
+                          <SelectValue placeholder="Select your favorite team" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {nbaTeams.map((team) => (
+                          <SelectItem key={team} value={team}>
+                            {team}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <div className="h-5">
+                      <FormMessage />
+                    </div>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="goat"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel htmlFor="goat">
+                      Who's your GOAT? (Optional)
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        id="goat"
+                        placeholder="e.g., LeBron James"
+                        value={field.value ?? ''}
+                        onChange={field.onChange}
+                      />
+                    </FormControl>
+                    <div className="h-5">
+                      <FormMessage />
+                    </div>
+                  </FormItem>
+                )}
+              />
               <FormField
                 control={form.control}
                 name="social_platform"
@@ -433,9 +541,7 @@ export default function OnboardingForm({
                             key={platform}
                             pressed={field.value === platform}
                             onPressedChange={(pressed) => {
-                              // If pressed, set the platform, if unpressed, set to null
                               field.onChange(pressed ? platform : null);
-                              // Also clear the handle when platform is deselected
                               if (!pressed) {
                                 form.setValue('social_handle', '');
                               }
@@ -448,11 +554,12 @@ export default function OnboardingForm({
                         ))}
                       </div>
                     </FormControl>
-                    <FormMessage />
+                    <div className="h-5">
+                      <FormMessage />
+                    </div>
                   </FormItem>
                 )}
               />
-
               <FormField
                 control={form.control}
                 name="social_handle"
@@ -471,62 +578,53 @@ export default function OnboardingForm({
                         value={field.value ?? ''}
                         onChange={field.onChange}
                         disabled={!form.watch('social_platform')}
-                        className={
-                          !form.watch('social_platform')
-                            ? 'cursor-not-allowed opacity-60'
-                            : ''
-                        }
                       />
                     </FormControl>
-                    <FormMessage />
+                    <div className="h-5">
+                      <FormMessage />
+                    </div>
                   </FormItem>
                 )}
               />
             </div>
+          )}
 
-            <FormField
-              control={form.control}
-              name="age"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel htmlFor="age">Age</FormLabel>
-                  <FormControl>
-                    <Input
-                      id="age"
-                      type="number"
-                      placeholder="e.g., 25"
-                      value={
-                        field.value === null || field.value === undefined
-                          ? ''
-                          : String(field.value)
-                      }
-                      onChange={(e) => {
-                        const val = e.target.value;
-                        field.onChange(val === '' ? null : parseInt(val, 10));
-                      }}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+          {submissionStatus.type === 'error' && (
+            <p className="text-destructive text-sm font-medium">
+              {submissionStatus.message}
+            </p>
+          )}
 
-            {submissionStatus.type === 'error' && (
-              <p className="text-destructive text-sm font-medium">
-                {submissionStatus.message}
-              </p>
+          <div className="flex justify-between pt-4">
+            {step > 1 ? (
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setStep((prev) => prev - 1)}
+              >
+                Back
+              </Button>
+            ) : (
+              <div />
             )}
 
-            <MorphButton
-              text={buttonText}
-              variant="default"
-              type="submit"
-              setButtonText={setButtonText}
-              isAvailable={isUsernameAvailable}
-            />
+            {step < 3 ? (
+              <Button type="button" onClick={handleNextStep}>
+                Next
+              </Button>
+            ) : (
+              <MorphButton
+                text="Complete Profile"
+                variant="default"
+                type="submit"
+                isLoading={submissionStatus.type === 'loading'}
+                isAvailable={isUsernameAvailable}
+              />
+            )}
           </div>
         </form>
       </Form>
-    </div>
+    </div> */}
+    </>
   );
 }

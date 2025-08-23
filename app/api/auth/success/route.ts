@@ -41,7 +41,9 @@ async function syncUserWithDatabase(idToken: any): Promise<User> {
 
   if (!userRecord) {
     console.log(`/api/auth/success: Creating new user record for ${userId}`);
-
+    if (idToken.picture) {
+      idToken.picture = idToken.picture.replace('s96-c', 's400-c'); // Or a higher resolution
+    }
     // Create new user with default onboarding status false
     const newUser: User = {
       id: userId,
