@@ -1,21 +1,5 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Home, Search, Bell } from 'lucide-react';
-import React, { Suspense } from 'react';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
-import {
-  getKindeServerSession,
-  LogoutLink,
-} from '@kinde-oss/kinde-auth-nextjs/server';
-import { Button } from '@/components/ui/button';
+import React from 'react';
 import Link from 'next/link';
-import { getCiceroUser } from '@/lib/data/users';
-import Image from 'next/image';
-import MobileNav from '@/components/layout/public-mobile-nav';
 import AnimatedMobileNav from '@/components/layout/public-mobile-nav';
 // Statically rendered part of the navigation
 function StaticNavLinks() {
@@ -42,12 +26,10 @@ function StaticNavLinks() {
 
 export default async function PublicNav() {
   return (
-    <nav className="flex h-30 w-full items-center justify-evenly md:h-20">
+    <nav className="flex h-25 w-full items-center justify-evenly md:h-20">
       <div className="flex grow">
         <Link href="/">
-          <p className="text-2xl font-extrabold">
-            PROSPECT <br /> PORTFOLIO
-          </p>
+          <p className="text-xl font-extrabold">PROSPECT PORTFOLIO</p>
         </Link>
       </div>
 

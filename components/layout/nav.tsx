@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Home, Search, Bell } from 'lucide-react';
 import React, { Suspense } from 'react';
 import {
@@ -7,16 +7,17 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import {
-  getKindeServerSession,
-  LogoutLink,
-} from '@kinde-oss/kinde-auth-nextjs/server';
+import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { getCiceroUser } from '@/lib/data/users';
 import Image from 'next/image';
+import MobileNav from './mobile-nav'; // Import the new mobile nav
+import { cn } from '@/lib/utils';
+
 // Statically rendered part of the navigation
 function StaticNavLinks() {
+  // ... (this component remains the same)
   return (
     <>
       <Link
@@ -69,11 +70,15 @@ function StaticNavLinks() {
 }
 
 // Dynamically rendered user profile section
-async function DynamicUserProfile() {
+async function DynamicUserProfile({ size = 'sm' }: { size?: 'sm' | 'lg' }) {
+  // ... (this component remains the same)
   const { getUser, isAuthenticated } = getKindeServerSession();
   const user = await getUser();
 
   const ciceroUser = user ? await getCiceroUser(user.id) : null;
+
+  const avatarSizeClasses = size === 'lg' ? 'h-16 w-16' : 'h-8 w-8';
+  const textSizeClasses = size === 'lg' ? 'text-lg font-medium' : '';
 
   if (!(await isAuthenticated())) {
     return (
@@ -86,49 +91,71 @@ async function DynamicUserProfile() {
   }
 
   return (
-    <Link className="flex flex-col items-center" href={`/${user?.username}`}>
+    <Link
+      className={cn('flex items-center gap-4', size === 'lg' && 'flex-row')}
+      href={`/${ciceroUser?.username}`}
+    >
       <TooltipProvider delayDuration={50}>
         <Tooltip>
           <TooltipTrigger>
-            <Avatar>
+            {/* Apply the dynamic size class to the Avatar */}
+            <Avatar className={avatarSizeClasses}>
               <Image
                 src={
                   ciceroUser?.picture
-                    ? ciceroUser?.picture
+                    ? ciceroUser.picture
                     : 'https://avatars.githubusercontent.com/u/56320635?v=4'
                 }
                 alt={ciceroUser?.username + '.png'}
                 className="cursor-pointer"
-                width={32}
-                height={32}
+                width={size === 'lg' ? 64 : 32}
+                height={size === 'lg' ? 64 : 32}
               />
               <AvatarFallback>
-                {user?.username?.substring(0, 1).toUpperCase()}
+                {ciceroUser?.username?.substring(0, 1).toUpperCase()}
               </AvatarFallback>
             </Avatar>
           </TooltipTrigger>
           <TooltipContent>My Profile</TooltipContent>
         </Tooltip>
       </TooltipProvider>
+      {/* Conditionally render the username for the large version */}
+      {size === 'lg' && (
+        <div className="flex flex-col">
+          <p className={textSizeClasses}>{ciceroUser?.username}</p>
+          <p className="text-muted-foreground text-sm">View Profile</p>
+        </div>
+      )}
     </Link>
   );
 }
 
 export default async function Nav() {
   return (
-    <nav className="flex h-20 w-full items-center justify-between">
+    <nav className="flex h-25 w-full items-center justify-between md:h-20">
       <div className="flex w-fit">
         <Link href="/dashboard">
-          <p className="text-2xl font-extrabold">PROSPECT PORTFOLIO</p>
+          <p className="text-xl font-extrabold">PROSPECT PORTFOLIO</p>
         </Link>
       </div>
 
-      <div className="flex w-2/3 items-center justify-between rounded-lg py-6 md:w-2/5 lg:w-1/4">
+      {/* Desktop Navigation */}
+      <div className="hidden w-2/3 items-center justify-between rounded-lg py-6 md:flex md:w-2/5 lg:w-1/4">
         <StaticNavLinks />
-
         <Suspense fallback={<Avatar />}>
           <DynamicUserProfile />
         </Suspense>
+      </div>
+
+      {/* Mobile Navigation */}
+      <div className="flex md:hidden">
+        <MobileNav>
+          {/* This is the key pattern: we pass the async server component
+              as a child to our client component. */}
+          <Suspense fallback={<Avatar />}>
+            <DynamicUserProfile size="lg" />
+          </Suspense>
+        </MobileNav>
       </div>
     </nav>
   );
