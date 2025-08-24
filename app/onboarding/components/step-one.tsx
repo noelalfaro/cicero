@@ -28,14 +28,16 @@ export function StepOne({
 }: StepOneProps) {
   return (
     <>
-      <Card className="gap-2 p-6">
-        <h2 className="mb-4 text-2xl font-bold">Profile Essentials</h2>
+      <Card className="gap-0 p-6">
+        <h2 className="mb-1 text-xl font-bold md:text-2xl">
+          Profile Essentials
+        </h2>
         <div className="space-y-5">
           <FormField
             control={form.control}
             name="picture"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="mb-2 gap-0">
                 <FormControl>
                   <CustomUpload
                     currentImageUrl={field.value}
@@ -55,13 +57,14 @@ export function StepOne({
             control={form.control}
             name="username"
             render={({ field }) => (
-              <FormItem>
-                <div className="flex items-center gap-1">
+              <FormItem className="mb-3">
+                <div className="flex w-full items-center gap-1">
                   <FormLabel htmlFor="username" className="my-1">
                     Username
                   </FormLabel>
                   <AvailabilityBadge availability={isUsernameAvailable} />
                 </div>
+                {/* <FormMessage className="ml-1 self-end text-right" /> */}
                 <FormControl>
                   <Input
                     id="username"
@@ -73,12 +76,11 @@ export function StepOne({
                     }}
                   />
                 </FormControl>
-                <FormMessage />
               </FormItem>
             )}
           />
 
-          <div className="mt-6 flex justify-end">
+          <div className="flex justify-end">
             <Button
               type="button"
               onClick={onNext}

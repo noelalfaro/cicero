@@ -28,7 +28,7 @@ export default function RootLayout({
               enableSystem
               disableTransitionOnChange
             >
-              <main className="container flex min-h-screen w-full max-w-7xl flex-col items-center px-[0.5rem] pt-12 md:pt-6 lg:px-[2rem]">
+              <main className="container flex min-h-screen w-full max-w-7xl flex-col items-center px-[0.5rem] pt-2 md:justify-center lg:justify-start lg:px-[2rem] lg:pt-2">
                 {children}
               </main>
             </ThemeProvider>

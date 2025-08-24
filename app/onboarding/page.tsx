@@ -41,7 +41,7 @@ export default async function Onboarding() {
       <div className="flex w-full flex-col gap-2 md:w-4/5 lg:w-1/2">
         <Card className="col-span-4 row-span-1 md:col-start-2">
           <CardHeader>
-            <CardTitle className="text-2xl">
+            <CardTitle className="text-xl md:text-2xl">
               Welcome to Prospect Portfolio
             </CardTitle>
             <CardDescription>

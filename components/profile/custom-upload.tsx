@@ -76,7 +76,7 @@ export function CustomUpload({
       <div className="flex justify-center">
         <div
           {...getRootProps()}
-          className={`relative flex h-[150px] w-[150px] cursor-pointer place-items-center justify-center overflow-hidden rounded-full object-cover transition-opacity lg:h-[250px] lg:w-[250px]`}
+          className={`relative flex h-[175px] w-[175px] cursor-pointer place-items-center justify-center overflow-hidden rounded-full object-cover transition-opacity md:h-[200px] md:w-[200px] lg:h-[225px] lg:w-[225px]`}
         >
           <Image
             src={displayImageUrl}
@@ -90,7 +90,7 @@ export function CustomUpload({
                 : 'opacity-100 hover:opacity-20'
             }`}
           />
-          <div className="bg-secondary absolute flex h-[250px] w-[250px] items-center justify-center rounded-full opacity-0 transition-opacity hover:opacity-70 lg:h-[350px] lg:w-[350px]">
+          <div className="bg-secondary absolute flex h-[175px] w-[175px] items-center justify-center rounded-full opacity-0 transition-opacity hover:opacity-70 md:h-[200px] md:w-[200px] lg:h-[225px] lg:w-[225px]">
             <Upload className="self-center transition-opacity" />
           </div>
         </div>

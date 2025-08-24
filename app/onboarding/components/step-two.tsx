@@ -23,7 +23,7 @@ const socialPlatforms = ['X (Twitter)', 'Threads', 'BlueSky'] as const;
 export function StepTwo({ form, onNext, onBack }: StepTwoProps) {
   return (
     <Card className="gap-2 p-6">
-      <h2 className="mb-4 text-2xl font-bold">Personal Details</h2>
+      <h2 className="mb-4 text-xl font-bold md:text-2xl">Personal Details</h2>
       <div className="space-y-5">
         <FormField
           control={form.control}
@@ -79,7 +79,7 @@ export function StepTwo({ form, onNext, onBack }: StepTwoProps) {
           control={form.control}
           name="social_handle"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="mb-3">
               <FormLabel>Social Handle</FormLabel>
               <FormControl>
                 <Input
@@ -97,7 +97,7 @@ export function StepTwo({ form, onNext, onBack }: StepTwoProps) {
             </FormItem>
           )}
         />
-        <div className="mt-6 flex justify-between gap-2">
+        <div className="flex justify-between gap-2">
           <Button
             type="button"
             variant="outline"

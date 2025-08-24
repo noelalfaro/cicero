@@ -37,5 +37,8 @@ yarn-error.log*
 next-env.d.ts
 
 
-# config  
+# config
 config.js
+
+
+diff.txt

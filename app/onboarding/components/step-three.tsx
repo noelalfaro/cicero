@@ -154,7 +154,7 @@ export function StepThree({
 }: StepThreeProps) {
   return (
     <Card className="gap-2 p-6">
-      <h2 className="mb-4 text-2xl font-bold">Who You Got? </h2>
+      <h2 className="mb-4 text-xl font-bold md:text-2xl">Who You Got? </h2>
 
       <div className="space-y-5">
         <FormField
@@ -179,7 +179,7 @@ export function StepThree({
           control={form.control}
           name="goat"
           render={({ field }) => (
-            <FormItem className="flex flex-col">
+            <FormItem className="mb-3 flex flex-col">
               <FormLabel>Who's your GOAT?</FormLabel>
               <Combobox
                 options={nbaGreatsOptions}
