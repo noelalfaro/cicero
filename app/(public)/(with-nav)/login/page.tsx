@@ -27,7 +27,7 @@ export default async function Login() {
         <CardHeader>
           <CardTitle className="text-2xl">Log In</CardTitle>
           <CardDescription>
-            Enter your email or login via Github or Google below.
+            Log in directly using Github or Google below.
           </CardDescription>
         </CardHeader>
         <CardContent>

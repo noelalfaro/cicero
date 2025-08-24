@@ -15,6 +15,8 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { getCiceroUser } from '@/lib/data/users';
 import Image from 'next/image';
+import MobileNav from '@/components/layout/public-mobile-nav';
+import AnimatedMobileNav from '@/components/layout/public-mobile-nav';
 // Statically rendered part of the navigation
 function StaticNavLinks() {
   return (
@@ -40,15 +42,23 @@ function StaticNavLinks() {
 
 export default async function PublicNav() {
   return (
-    <nav className="flex h-20 w-full items-center justify-between">
-      <div className="flex w-fit">
+    <nav className="flex h-30 w-full items-center justify-evenly md:h-20">
+      <div className="flex grow">
         <Link href="/">
-          <p className="text-2xl font-extrabold">PROSPECT PORTFOLIO</p>
+          <p className="text-2xl font-extrabold">
+            PROSPECT <br /> PORTFOLIO
+          </p>
         </Link>
       </div>
 
-      <div className="flex w-2/3 items-center justify-between rounded-lg py-6 md:w-2/5 lg:w-1/4">
+      {/* Desktop Navigation */}
+      <div className="hidden items-center justify-evenly gap-8 md:flex">
         <StaticNavLinks />
+      </div>
+
+      {/* Mobile Navigation (Hamburger Menu) */}
+      <div className="flex md:hidden">
+        <AnimatedMobileNav />
       </div>
     </nav>
   );

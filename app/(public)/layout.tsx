@@ -27,7 +27,7 @@ export default function RootLayout({
         <html lang="en" className={` ${inter.variable} ${roboto.variable}`}>
           <body className={`${inter.className}`}>
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-              <main className="container flex min-h-screen w-full max-w-7xl flex-col px-[1rem] lg:px-[2rem]">
+              <main className="container flex h-[100svh] w-full max-w-7xl flex-col px-[1rem] lg:px-[2rem]">
                 {children}
               </main>
               <Toaster />

@@ -45,8 +45,8 @@ export function MorphButton({
     <Button
       variant={variant}
       className={clsx(
-        'flex w-full items-center gap-2 p-6 text-base transition-colors',
-        isHomePage ? 'w-full md:w-[120px]' : 'md:w-full',
+        'flex w-full items-center gap-2 p-8 text-base transition-colors md:p-6',
+        isHomePage ? 'w-full p-6 md:w-[120px]' : 'md:w-full',
       )}
       type={type}
       disabled={
