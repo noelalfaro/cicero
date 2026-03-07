@@ -17,6 +17,8 @@ import {
 
 import { db } from '@/server/db';
 import { playerAverages } from '@/server/db/schema/player_averages';
+import { ciceroScores } from '@/server/db/schema/cicero_scores';
+import { desc } from 'drizzle-orm';
 
 export const fetchPlayerData = unstable_cache(
   async (): Promise<Player[]> => {
@@ -53,15 +55,25 @@ export const fetchPlayerData = unstable_cache(
 
 export async function fetchPlayerDataByID(id: number): Promise<Player | null> {
   // Use Promise.all for parallel data fetching
-  const [playerResult, statsResult, averagesResult] = await Promise.all([
-    db.select().from(players).where(eq(players.id, id)),
-    db
-      .select()
-      .from(playerStats)
-      .where(eq(playerStats.player_id, id))
-      .orderBy(asc(playerStats.gamedate)),
-    db.select().from(playerAverages).where(eq(playerAverages.player_id, id)),
-  ]);
+  const [playerResult, statsResult, averagesResult, ciceroScoreResult] =
+    await Promise.all([
+      db.select().from(players).where(eq(players.id, id)),
+      db
+        .select()
+        .from(playerStats)
+        .where(eq(playerStats.player_id, id))
+        .orderBy(asc(playerStats.gamedate)),
+      db
+        .select()
+        .from(playerAverages)
+        .where(eq(playerAverages.player_id, id)),
+      db
+        .select()
+        .from(ciceroScores)
+        .where(eq(ciceroScores.player_id, id))
+        .orderBy(desc(ciceroScores.calculated_at))
+        .limit(1),
+    ]);
   // const wait = new Promise((res) => setTimeout(res, 3000));
   // await wait;
 
@@ -75,8 +87,9 @@ export async function fetchPlayerDataByID(id: number): Promise<Player | null> {
   try {
     return playerSchema.parse({
       ...player,
-      averages: averagesResult[0], // An object of averages or null if no averages found
-      stats: statsResult || [], // An array of stats or an empty array if no stats found
+      averages: averagesResult[0],
+      stats: statsResult || [],
+      cicero_score: ciceroScoreResult[0]?.cicero_score ?? null,
       picture: pictureUrl,
     });
   } catch (error) {

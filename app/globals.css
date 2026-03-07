@@ -130,7 +130,7 @@
   --muted-text: hsl(120 2% 55%);
 
   /* --accent: 45 93% 58%; */
-  --accent: hsl(21, 89%, 52%);
+  --accent: hsl(152, 76%, 50%);
   --accent-foreground: hsl(222.2 47.4% 11.2%);
 
   --destructive: hsl(0, 71%, 56%);
@@ -253,5 +253,16 @@
         1.3rem
       ); /* Further adjusted clamp values for very large screens */
     }
+  }
+}
+/*
+  ---break---
+*/
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
   }
 }

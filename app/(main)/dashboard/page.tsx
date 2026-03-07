@@ -27,7 +27,7 @@ export default async function Page() {
       <Card className="col-span-1 row-span-1 overflow-auto md:col-span-5">
         <CardHeader className="text-3xl font-bold">
           Dashboard For{' '}
-          <Link href={`/${user?.username}`}>
+          <Link href={`/users/${user?.username}`}>
             <p className="hover:text-primary font-mono hover:underline">
               @{user?.username}
             </p>

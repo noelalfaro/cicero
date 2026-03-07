@@ -22,6 +22,16 @@ export async function updateUserProfile(formData: FormData) {
   // console.log('from the server:', JSON.stringify(userData, null, 2));
 
   try {
+    // Create an object for the fields to be updated
+    const updateData: { display_name: string; picture?: string } = {
+      display_name: userData.display_name,
+    };
+
+    // Only add the picture to the update object if it exists
+    if (userData.picture) {
+      updateData.picture = userData.picture;
+    }
+
     const updatedUsers = await db
       .update(users)
       .set({

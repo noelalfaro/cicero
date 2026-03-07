@@ -17,13 +17,13 @@ export default withAuth(
       '/api/auth/success', // Critical: Kinde redirects here after auth; user sync happens here
       '/api/users/complete-onboarding', // Called by onboarding form
       '/api/users/check-username-availability', // Called by onboarding form
-      '/api/users/update-onboarding-status', // Your existing endpoint - handles both DB and Kinde updates
+      '/api/users/update-onboarding-status', // Handles both DB and Kinde updates
+      '/api/search',
     ];
 
     // Early return for authenticated users accessing always-allowed paths
     if (kindeSession?.user && kindeSession?.token) {
       if (alwaysAllowedForAuthenticated.includes(pathname)) {
-        console.log(`Middleware: Allowing authenticated access to ${pathname}`);
         return NextResponse.next();
       }
 
@@ -38,38 +38,20 @@ export default withAuth(
         onboardingCompleted = onboardingPropertyValue;
       }
 
-      console.log(
-        `Middleware: User ${kindeSession.user.id} - Onboarding status: ${onboardingCompleted} for path: ${pathname}`,
-      );
-
       // Scenario 1: User IS ONBOARDED and tries to access the onboarding page
       if (onboardingCompleted && pathname === onboardingPagePath) {
-        console.log(
-          `Middleware: User ${kindeSession.user.id} is already onboarded. Redirecting from /onboarding to /dashboard`,
-        );
         return NextResponse.redirect(new URL('/dashboard', req.url));
       }
 
       // Scenario 2: User IS NOT ONBOARDED and tries to access a protected page
-      // (excluding the onboarding page itself and always-allowed paths)
       if (!onboardingCompleted && pathname !== onboardingPagePath) {
-        console.log(
-          `Middleware: User ${kindeSession.user.id} not onboarded. Redirecting to /onboarding from ${pathname}`,
-        );
         return NextResponse.redirect(new URL(onboardingPagePath, req.url));
       }
 
-      // Allow the request to proceed if:
-      // - Onboarded user accessing any protected route
-      // - Non-onboarded user accessing the onboarding page
-      console.log(`Middleware: Allowing access to ${pathname}`);
       return NextResponse.next();
     }
 
     // No valid Kinde session - withAuth will handle redirecting to login
-    console.log(
-      `Middleware: No valid session for ${pathname} - withAuth will handle redirect`,
-    );
     return NextResponse.next();
   },
   {
@@ -88,6 +70,7 @@ export default withAuth(
       '/api/uploadthing',
       '/api/auth/kinde_callback',
       '/api/users/check-email-availability',
+      '/api/search',
       '/error',
     ],
   },

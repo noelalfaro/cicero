@@ -12,17 +12,17 @@ import { OAuthLogin } from '@/components/auth/oauth-login';
 
 export default async function DemoLogin() {
   const connections = await getConnections();
-  console.log(connections);
+  // console.log(connections);
   const emailConnectionId = connections?.find(
     (conn) => conn.strategy === 'email:password',
   )?.id;
   const usernameConnectionId = connections?.find(
     (conn) => conn.strategy === 'username:password',
   )?.id;
-  console.log(usernameConnectionId);
+  // console.log(usernameConnectionId);
 
   return (
-    <div className="flex min-h-screen w-full items-center justify-center self-center text-left">
+    <div className="flex w-full grow items-center justify-center self-center text-left">
       <Card className="w-full md:w-1/2 lg:w-4/12">
         <CardHeader>
           <CardTitle className="text-2xl">Log In</CardTitle>

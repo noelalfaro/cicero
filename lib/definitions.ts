@@ -74,7 +74,8 @@ const playerSchema = z.object({
   is_active: z.string(),
   picture: z.string().optional(),
   averages: playerAveragesSchema.optional(),
-  stats: z.array(playerStatsSchema).optional(), // assuming stats is another schema
+  stats: z.array(playerStatsSchema).optional(),
+  cicero_score: z.string().nullable().optional(),
   last_update: z.date().optional().nullable(),
 });
 // Export the schema

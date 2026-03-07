@@ -12,14 +12,14 @@ import { OAuthLogin } from '@/components/auth/oauth-login';
 
 export default async function Login() {
   const connections = await getConnections();
-  console.log(connections);
+  // console.log(connections);
   const emailConnectionId = connections?.find(
     (conn) => conn.strategy === 'email:password',
   )?.id;
   const usernameConnectionId = connections?.find(
     (conn) => conn.strategy === 'username:password',
   )?.id;
-  console.log(usernameConnectionId);
+  // console.log(usernameConnectionId);
 
   return (
     <div className="flex w-full grow items-center justify-center self-center text-left">

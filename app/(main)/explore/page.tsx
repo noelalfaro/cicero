@@ -1,32 +1,24 @@
 import Players from '@/components/explore/players';
 import { ExploreTableSkeleton } from '@/components/layout/skeletons';
 import { Suspense } from 'react';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-} from '@/components/ui/card';
-import NbaNews from '@/components/explore/nba-news';
+import Search from '@/components/explore/search';
 
 export default async function Page() {
   return (
-    <>
-      <div className="flex flex-col gap-2">
-        <Card>
-          <CardHeader className="pb-1 text-4xl font-bold">Explore</CardHeader>
-          <CardContent>
-            <CardDescription className="text-base">
-              This page will showcase Top Trenders, News Articles, and list
-              notable players.
-            </CardDescription>
-          </CardContent>
-        </Card>
-        <Suspense fallback={<ExploreTableSkeleton />}>
-          <Players />
-        </Suspense>
-        <NbaNews />
+    <div className="flex flex-col gap-4">
+      <div className="w-full space-y-3 text-center">
+        <h1 className="text-6xl font-bold">Explore</h1>
+        <h3 className="text-xl font-semibold">
+          Browse Players, view trends, read headlines.
+        </h3>
+        <div className="w-full justify-end">
+          <Search />
+        </div>
       </div>
-    </>
+
+      <Suspense fallback={<ExploreTableSkeleton />}>
+        <Players />
+      </Suspense>
+    </div>
   );
 }

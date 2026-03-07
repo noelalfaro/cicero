@@ -93,7 +93,7 @@ async function DynamicUserProfile({ size = 'sm' }: { size?: 'sm' | 'lg' }) {
   return (
     <Link
       className={cn('flex items-center gap-4', size === 'lg' && 'flex-row')}
-      href={`/${ciceroUser?.username}`}
+      href={`/users/${ciceroUser?.username}`}
     >
       <TooltipProvider delayDuration={50}>
         <Tooltip>

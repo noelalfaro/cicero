@@ -25,9 +25,5 @@ export const users = pgTable(
     social_handle: text('social_handle'),
     age: integer('age'),
   },
-  (table) => {
-    return {
-      usernameUnique: uniqueIndex('users_username_unique').on(table.username),
-    };
-  },
+  (table) => [uniqueIndex('users_username_unique').on(table.username)],
 );

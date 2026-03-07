@@ -463,6 +463,20 @@
       "when": 1753255834629,
       "tag": "0065_public_bloodstrike",
       "breakpoints": true
+    },
+    {
+      "idx": 66,
+      "version": "7",
+      "when": 1756248166897,
+      "tag": "0066_lethal_loki",
+      "breakpoints": true
+    },
+    {
+      "idx": 67,
+      "version": "7",
+      "when": 1757494401173,
+      "tag": "0067_cynical_white_tiger",
+      "breakpoints": true
     }
   ]
 }
