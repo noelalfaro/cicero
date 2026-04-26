@@ -45,3 +45,6 @@ config.js
 
 
 diff.txt
+
+# Claude Code local files
+.claude/
