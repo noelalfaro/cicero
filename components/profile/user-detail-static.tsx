@@ -12,7 +12,6 @@ import React from 'react';
 import { FollowButton } from '@/components/profile/follow-button';
 import UserDialog from '@/components/profile/user-dialog';
 import { User } from '@/lib/definitions';
-import { KindeUser } from '@kinde-oss/kinde-auth-nextjs/types';
 
 const UserDetailStatic = ({
   user,
@@ -20,7 +19,7 @@ const UserDetailStatic = ({
   defaultImage,
 }: {
   user: User;
-  loggedInUser?: KindeUser;
+  loggedInUser?: { id: string };
   defaultImage: string;
 }) => {
   return (

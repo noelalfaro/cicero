@@ -7,7 +7,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
+import { auth } from '@/lib/auth';
+import { headers } from 'next/headers';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { getCiceroUser } from '@/lib/data/users';
@@ -71,16 +72,15 @@ function StaticNavLinks() {
 
 // Dynamically rendered user profile section
 async function DynamicUserProfile({ size = 'sm' }: { size?: 'sm' | 'lg' }) {
-  // ... (this component remains the same)
-  const { getUser, isAuthenticated } = getKindeServerSession();
-  const user = await getUser();
+  const session = await auth.api.getSession({ headers: await headers() });
+  const user = session?.user;
 
   const ciceroUser = user ? await getCiceroUser(user.id) : null;
 
   const avatarSizeClasses = size === 'lg' ? 'h-16 w-16' : 'h-8 w-8';
   const textSizeClasses = size === 'lg' ? 'text-lg font-medium' : '';
 
-  if (!(await isAuthenticated())) {
+  if (!user) {
     return (
       <>
         <Link href={'/login'}>

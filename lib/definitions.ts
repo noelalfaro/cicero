@@ -118,7 +118,6 @@ const userSchema = z.object({
     .min(2, { message: 'Display must be at least 2 characters.' })
     .nullable(),
   onboarding_status: z.boolean(),
-  social_connection_id: z.string().nullable().optional(),
   hometown: z.string().nullable().optional(),
   favorite_team: z.string().nullable().optional(),
   goat: z.string().nullable().optional(),

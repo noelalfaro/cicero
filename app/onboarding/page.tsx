@@ -6,55 +6,30 @@ import {
   CardContent,
   CardTitle,
 } from '@/components/ui/card';
-import { fetchUserConnectionId, getUserById } from '@/lib/data/users';
-import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
+import { auth } from '@/lib/auth';
+import { headers } from 'next/headers';
+import { redirect } from 'next/navigation';
 
 export default async function Onboarding() {
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
-
-  if (!user) {
-    return (
-      <div className="flex min-h-screen w-full items-center justify-center self-center text-left">
-        <Card className="w-full md:w-1/2 lg:w-4/12">
-          <CardContent>
-            <p>Loading user data...</p>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
-
-  let connectionId;
-  let dbUser;
-  try {
-    connectionId = await fetchUserConnectionId(user.id);
-    dbUser = await getUserById(user.id);
-  } catch (error) {
-    console.error('Failed to fetch connection ID:', error);
-    connectionId = null;
-    dbUser = null;
-  }
+  const session = await auth.api.getSession({ headers: await headers() });
+  if (!session?.user) redirect('/login');
 
   return (
-    <>
-      <div className="flex w-full flex-col gap-2 md:w-4/5 lg:w-1/2">
-        <Card className="col-span-4 row-span-1 md:col-start-2">
-          <CardHeader>
-            <CardTitle className="text-xl md:text-2xl">
-              Welcome to Prospect Portfolio
-            </CardTitle>
-            <CardDescription>
-              Just a few more things to get you fully onboarded.
-            </CardDescription>
-          </CardHeader>
-        </Card>
-        <OnboardingForm
-          userId={user?.id}
-          connectionId={connectionId}
-          defaultPicture={dbUser?.picture}
-        />
-      </div>
-    </>
+    <div className="flex w-full flex-col gap-2 md:w-4/5 lg:w-1/2">
+      <Card className="col-span-4 row-span-1 md:col-start-2">
+        <CardHeader>
+          <CardTitle className="text-xl md:text-2xl">
+            Welcome to Prospect Portfolio
+          </CardTitle>
+          <CardDescription>
+            Just a few more things to get you fully onboarded.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+      <OnboardingForm
+        userId={session.user.id}
+        defaultPicture={session.user.image}
+      />
+    </div>
   );
 }

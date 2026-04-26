@@ -149,11 +149,9 @@ export type OnboardingFormValues = z.infer<typeof formSchema>;
 
 export default function OnboardingForm({
   userId,
-  connectionId,
   defaultPicture,
 }: {
   userId: string;
-  connectionId?: string | null | undefined;
   defaultPicture?: string | null;
 }) {
   const [step, setStep] = useState(1);
@@ -251,7 +249,7 @@ export default function OnboardingForm({
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setSubmissionStatus({ type: 'loading' });
     try {
-      const payload = { userId, connectionId, ...values };
+      const payload = { ...values };
       const response = await fetch('/api/users/complete-onboarding', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

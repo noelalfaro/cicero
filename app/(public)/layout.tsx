@@ -2,12 +2,10 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import '../globals.css';
 import { ThemeProvider } from '@/components/theme/theme-provider';
-import Nav from '@/components/layout/nav';
 import { ViewTransitions } from 'next-view-transitions';
 import { Roboto } from 'next/font/google';
 const roboto = Roboto({ subsets: ['latin'], variable: '--font-roboto' });
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
-import { AuthProvider } from '@/components/providers/auth-provider';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
@@ -23,18 +21,16 @@ export default function RootLayout({
 }>) {
   return (
     <ViewTransitions>
-      <AuthProvider>
-        <html lang="en" className={` ${inter.variable} ${roboto.variable}`}>
-          <body className={`${inter.className}`}>
-            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-              <main className="container flex h-[100svh] w-full max-w-7xl flex-col px-[1rem] lg:px-[2rem]">
-                {children}
-              </main>
-              <Toaster />
-            </ThemeProvider>
-          </body>
-        </html>
-      </AuthProvider>
+      <html lang="en" className={` ${inter.variable} ${roboto.variable}`}>
+        <body className={`${inter.className}`}>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <main className="container flex h-[100svh] w-full max-w-7xl flex-col px-[1rem] lg:px-[2rem]">
+              {children}
+            </main>
+            <Toaster />
+          </ThemeProvider>
+        </body>
+      </html>
     </ViewTransitions>
   );
 }

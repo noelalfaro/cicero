@@ -1,4 +1,5 @@
-import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
+import { auth } from '@/lib/auth';
+import { headers } from 'next/headers';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import {
@@ -21,12 +22,11 @@ export default async function Page({
 }: {
   params: Promise<{ username: string }>;
 }) {
-  const { getUser } = getKindeServerSession();
-
-  const [loggedInUser, user] = await Promise.all([
-    getUser(),
+  const [session, user] = await Promise.all([
+    auth.api.getSession({ headers: await headers() }),
     fetchUserDataByUsername((await params).username),
   ]);
+  const loggedInUser = session?.user;
 
   if (!user) return notFound();
   console.log(user);
