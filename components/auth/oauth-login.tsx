@@ -1,32 +1,22 @@
 'use client';
 import { useState, FormEvent } from 'react';
-import { useRouter } from 'next/navigation';
 import { MorphButton } from '@/components/auth/morph-button';
+import { authClient } from '@/lib/auth-client';
 
-interface OAuthLoginProps {
-  provider: 'google' | 'github';
-  connectionId: string;
-}
-function capitalize(string: string) {
-  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-}
-
-export function OAuthLogin({ provider, connectionId }: OAuthLoginProps) {
-  const [buttonText, setButtonText] = useState(
-    `Sign in with ` + capitalize(provider),
-  );
-  const router = useRouter();
+export function OAuthLogin() {
+  const [buttonText, setButtonText] = useState('Continue with Google');
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setButtonText('Loading...');
     try {
-      console.log('Trying to reach api auth route with social...');
-      window.location.href = `/api/auth/login?connection_id=${connectionId}`;
+      await authClient.signIn.social({
+        provider: 'google',
+        callbackURL: '/dashboard',
+      });
     } catch (error) {
-      // Reset text if something fails
-      console.log(error);
-      setButtonText(`Sign in with ` + capitalize(provider));
+      console.error(error);
+      setButtonText('Continue with Google');
     }
   };
 
@@ -36,7 +26,7 @@ export function OAuthLogin({ provider, connectionId }: OAuthLoginProps) {
         text={buttonText}
         setButtonText={setButtonText}
         variant="outline"
-        icon={provider}
+        icon="google"
         isHomePage={false}
         type="submit"
         isLoginButton
