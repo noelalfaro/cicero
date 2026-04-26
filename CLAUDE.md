@@ -59,6 +59,10 @@ Web app where users invest in NBA players' "potential" — a score derived from 
 - `git push`, force-push, branch deletion.
 - Installing new top-level dependencies.
 
+## Commit style
+
+- Do NOT add `Co-Authored-By` trailers to commit messages.
+
 ## Useful context
 
 - The user is a solo dev working through Linear tickets in the "Courtside" team (project key `CRT`).
