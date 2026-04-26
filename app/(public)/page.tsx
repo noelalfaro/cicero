@@ -8,7 +8,6 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import React from 'react';
 import { LoginButton } from '@/components/auth/login-button';
-import { RegisterButton } from '@/components/auth/register-button';
 
 export default async function Home() {
   return (
@@ -28,12 +27,8 @@ export default async function Home() {
           </div>
 
           <div className="flex w-full justify-start gap-2 self-end text-center md:w-fit md:justify-end md:gap-2 lg:grid-cols-4 lg:text-left">
-            <div className="w-1/2">
+            <div>
               <LoginButton isHomePage />
-            </div>
-
-            <div className="w-1/2">
-              <RegisterButton isHomePage />
             </div>
           </div>
         </section>

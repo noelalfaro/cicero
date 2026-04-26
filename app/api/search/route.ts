@@ -13,9 +13,7 @@ export async function GET(req: NextRequest) {
     return unauthorized('Missing bearer token');
   }
 
-  // Optional: verify JWT signature/claims locally (e.g., using jose)
-  // For quick dev, you can skip verification and just proceed if token is present.
-  // But for real protection, verify here against Kinde's JWKS.
+  // TODO: verify JWT signature/claims locally before trusting the token.
 
   const { searchParams } = req.nextUrl;
   const query = searchParams.get('q') ?? '';

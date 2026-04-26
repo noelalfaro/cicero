@@ -1,5 +1,6 @@
-import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
-import { LogoutLink } from '@kinde-oss/kinde-auth-nextjs/server';
+import { auth } from '@/lib/auth';
+import { headers } from 'next/headers';
+import { LogoutButton } from '@/components/auth/logout-button';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import {
@@ -18,9 +19,8 @@ import ControlCenter from '@/components/dashboard/ControlCenter';
 export const dynamic = 'force-dynamic';
 
 export default async function Page() {
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
-  // console.log(user);
+  const session = await auth.api.getSession({ headers: await headers() });
+  const user = session?.user;
 
   return (
     <div className="grid w-full grid-cols-1 gap-2 md:grid-cols-8 md:grid-rows-[350px_1fr_250px]">
@@ -51,11 +51,9 @@ export default async function Page() {
                 Link to Durant's Page
               </Button>
             </Link>
-            <LogoutLink>
-              <Button variant={'link'} className="p-0 text-red-600">
-                Logout
-              </Button>
-            </LogoutLink>
+            <LogoutButton variant="link" className="p-0 text-red-600">
+              Logout
+            </LogoutButton>
           </div>
         </CardContent>
         <CardFooter>
