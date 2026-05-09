@@ -6,11 +6,19 @@ import { headers } from 'next/headers';
 import { z } from 'zod';
 
 const onboardingSchema = z.object({
-  username: z.string().min(1, 'Username cannot be empty.'),
+  username: z
+    .string()
+    .min(3, 'Username must be at least 3 characters long.')
+    .max(20, 'Username must not exceed 20 characters.')
+    .regex(/^[a-zA-Z0-9]+$/, 'Username can only contain letters and numbers.')
+    .transform((u) => u.trim()),
   hometown: z.string().optional().nullable(),
   favorite_team: z.string().optional().nullable(),
   goat: z.string().optional().nullable(),
-  picture: z.string().url('Invalid URL format for picture.'),
+  picture: z
+    .string()
+    .url('Invalid URL format for picture.')
+    .transform((url) => url.replace(/=s\d+-c$/, '=s400-c')),
   social_platform: z
     .enum(['X (Twitter)', 'Threads', 'BlueSky'])
     .optional()
