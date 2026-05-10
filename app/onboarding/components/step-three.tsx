@@ -4,7 +4,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { OnboardingFormValues } from '@/components/auth/onboarding-form';
+import { OnboardingFormValues } from '@/app/onboarding/components/onboarding-form';
 import { UseFormReturn } from 'react-hook-form';
 import { Card } from '@/components/ui/card';
 import { MorphButton } from '@/components/auth/morph-button';

@@ -1,4 +1,4 @@
-import { OnboardingFormValues } from '@/components/auth/onboarding-form';
+import { OnboardingFormValues } from '@/app/onboarding/components/onboarding-form';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import {

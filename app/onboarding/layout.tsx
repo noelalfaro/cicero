@@ -31,7 +31,7 @@ export default async function RootLayout({
       <html lang="en" className={` ${inter.variable} ${roboto.variable}`}>
         <body className={`${inter.className}`}>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <main className="container flex h-[100svh] w-full max-w-7xl flex-col px-[1rem] lg:px-[2rem]">
+            <main className="container flex h-[100svh] w-full max-w-7xl flex-col items-center justify-center px-[1rem] lg:px-[2rem]">
               {children}
             </main>
             <Toaster />
