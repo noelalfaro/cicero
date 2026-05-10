@@ -25,6 +25,7 @@ export const users = pgTable(
     }),
     social_handle: text('social_handle'),
     age: integer('age'),
+    bio: text('bio'),
     createdAt: timestamp('created_at').notNull().defaultNow(),
     updatedAt: timestamp('updated_at').notNull().defaultNow(),
   },
