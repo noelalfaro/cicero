@@ -209,7 +209,6 @@ export function StepThree({
               text="Complete Profile"
               variant="default"
               type="submit"
-              isHomePage
               isLoading={isLoading}
               isAvailable={isUsernameAvailable}
             />

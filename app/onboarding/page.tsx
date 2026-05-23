@@ -22,7 +22,8 @@ export default async function Onboarding() {
             Welcome to Prospect Portfolio
           </CardTitle>
           <CardDescription>
-            Just a few more things to get you fully onboarded.
+            Just a few more things to get you fully onboarded. Don't worry —
+            you can change all of this later.
           </CardDescription>
         </CardHeader>
       </Card>

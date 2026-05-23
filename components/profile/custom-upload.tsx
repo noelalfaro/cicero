@@ -82,6 +82,7 @@ export function CustomUpload({
             src={displayImageUrl}
             alt={altText}
             fill={true}
+            priority
             sizes="(max-width: 768px) 175px, (max-width: 1024px) 200px, 225px"
             className={`${
               isDragActive || isUploading
