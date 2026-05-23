@@ -1,4 +1,4 @@
-import OnboardingForm from '@/components/auth/onboarding-form';
+import OnboardingForm from '@/app/onboarding/components/onboarding-form';
 import {
   Card,
   CardHeader,
@@ -22,13 +22,14 @@ export default async function Onboarding() {
             Welcome to Prospect Portfolio
           </CardTitle>
           <CardDescription>
-            Just a few more things to get you fully onboarded.
+            Just a few more things to get you fully onboarded. Don't worry —
+            you can change all of this later.
           </CardDescription>
         </CardHeader>
       </Card>
       <OnboardingForm
         userId={session.user.id}
-        defaultPicture={session.user.image}
+        defaultPicture={session.user.image?.replace(/=s\d+-c/, '=s400-c')}
       />
     </div>
   );

@@ -7,7 +7,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { CustomUpload } from '@/components/profile/custom-upload';
-import { OnboardingFormValues } from '@/components/auth/onboarding-form';
+import { OnboardingFormValues } from '@/app/onboarding/components/onboarding-form';
 import { UseFormReturn } from 'react-hook-form';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -46,7 +46,7 @@ export function StepOne({
                   />
                 </FormControl>
                 <FormLabel className="text-muted-text mt-2 text-center text-xs">
-                  Hover or Drag & Drop to Update Profile Picture
+                  Click or drag & drop to upload a profile photo
                 </FormLabel>
                 <FormMessage />
               </FormItem>

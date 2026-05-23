@@ -1,4 +1,28 @@
-import { nullable, z } from 'zod';
+import { z } from 'zod';
+import { InferSelectModel } from 'drizzle-orm';
+import { users } from '@/server/db/schema/users';
+
+// ---- User ----
+
+// Derived directly from the Drizzle schema — updates automatically when the schema changes
+export type User = InferSelectModel<typeof users>;
+
+// Form schema for profile editing — validates input at the form boundary
+export const updateUserFormSchema = z.object({
+  id: z.string(),
+  display_name: z
+    .string()
+    .min(2, { message: 'Display name must be at least 2 characters.' }),
+  picture: z.string().url().nullable().optional(),
+  bio: z
+    .string()
+    .max(160, { message: 'Bio must be 160 characters or less.' })
+    .nullable()
+    .optional(),
+});
+
+// ---- Player ----
+
 const playerStatsSchema = z.object({
   stats_id: z.number(),
   player_id: z.number(),
@@ -31,6 +55,7 @@ const playerStatsSchema = z.object({
   gamedate: z.date(),
   created_at: z.date(),
 });
+
 const playerAveragesSchema = z.object({
   averages_id: z.number(),
   player_id: z.number(),
@@ -39,6 +64,7 @@ const playerAveragesSchema = z.object({
   rpg: z.number().optional(),
   last_update: z.date().optional().nullable(),
 });
+
 const playerSchema = z.object({
   id: z.number(),
   first_name: z.string(),
@@ -78,11 +104,13 @@ const playerSchema = z.object({
   cicero_score: z.string().nullable().optional(),
   last_update: z.date().optional().nullable(),
 });
-// Export the schema
+
 export { playerStatsSchema, playerAveragesSchema, playerSchema };
-export type Player = z.infer<typeof playerSchema>;
 export type PlayerStats = z.infer<typeof playerStatsSchema>;
 export type PlayerAverages = z.infer<typeof playerAveragesSchema>;
+export type Player = z.infer<typeof playerSchema>;
+
+// ---- News ----
 
 export const newsArticleSchema = z.object({
   title: z.string(),
@@ -90,6 +118,8 @@ export const newsArticleSchema = z.object({
   source: z.string(),
 });
 export type NewsArticle = z.infer<typeof newsArticleSchema>;
+
+// ---- Team ----
 
 const teamSchema = z.object({
   team_id: z.number(),
@@ -104,36 +134,3 @@ const teamSchema = z.object({
 
 export { teamSchema };
 export type Team = z.infer<typeof teamSchema>;
-
-const userSchema = z.object({
-  id: z.string(),
-  username: z
-    .string()
-    .min(2, { message: 'Username must be at least 2 characters.' })
-    .nullable()
-    .optional(),
-  email: z.string().email({ message: 'Invalid email address' }),
-  display_name: z
-    .string()
-    .min(2, { message: 'Display must be at least 2 characters.' })
-    .nullable(),
-  onboarding_status: z.boolean(),
-  hometown: z.string().nullable().optional(),
-  favorite_team: z.string().nullable().optional(),
-  goat: z.string().nullable().optional(),
-  picture: z.string().url({ message: 'Invalid URL for avatar' }).nullable(),
-  social_handle: z.string().nullable().optional(),
-  social_platform: z
-    .enum(['X (Twitter)', 'Threads', 'BlueSky'])
-    .nullable()
-    .optional(),
-  age: z.number().int().positive().nullable().optional(),
-});
-const updateUserFormSchema = z.object({
-  id: z.string(),
-  display_name: z.string().min(2),
-  picture: z.string().url().nullable().optional(),
-});
-
-export { userSchema, updateUserFormSchema };
-export type User = z.infer<typeof userSchema>;
