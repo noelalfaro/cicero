@@ -45,8 +45,10 @@ export function MorphButton({
     <Button
       variant={variant}
       className={clsx(
-        'flex w-full items-center gap-2 p-8 text-base transition-colors md:p-6',
-        isHomePage ? 'w-full p-6 md:w-[120px]' : 'md:w-full',
+        'flex w-full items-center text-base transition-colors',
+        isLoginButton
+          ? 'gap-[10px] py-6 pl-6 pr-8 font-[family-name:var(--font-roboto)] font-medium dark:border-[#8E918F] dark:bg-[#131314]'
+          : ['gap-2 p-8 md:p-6', isHomePage ? 'md:w-[120px]' : 'md:w-full'],
       )}
       type={type}
       disabled={
@@ -57,7 +59,7 @@ export function MorphButton({
       }
     >
       {icon && getIcon()}
-      <TextMorph isLoginButton={isLoginButton}>{text}</TextMorph>
+      {isLoginButton ? <span>{text}</span> : <TextMorph>{text}</TextMorph>}
     </Button>
   );
 }
