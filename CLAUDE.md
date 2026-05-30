@@ -95,6 +95,21 @@ Web app where users invest in NBA players' "potential" — a score derived from 
 - `git push`, force-push, branch deletion.
 - Installing new top-level dependencies.
 
+## Environments
+
+| Environment | Branch | Vercel URL | Neon DB branch |
+|---|---|---|---|
+| Local | — | `http://localhost:3000` | `main` (production DB) |
+| Staging | `staging` | `cicero-git-staging-noel-alfaros-projects.vercel.app` | `staging` (Neon branch) |
+| Production | `main` | `cicero-coral.vercel.app` | `main` |
+
+**Vercel env vars per environment:**
+- `BETTER_AUTH_URL` — must match the environment's URL (different per env)
+- `DRIZZLE_DATABASE_URL` — staging uses the Neon `staging` branch connection string, production uses `main`
+- All other vars (`GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `BETTER_AUTH_SECRET`, `UPLOADTHING_TOKEN`) — same value across all environments
+
+**Google OAuth:** Both `https://cicero-coral.vercel.app/api/auth/callback/google` and `https://cicero-git-staging-noel-alfaros-projects.vercel.app/api/auth/callback/google` are registered as authorized redirect URIs. Adding a new environment requires registering its callback URL in the Google Console and adding it to `trustedOrigins` in `lib/auth.ts`.
+
 ## Branching and staging workflow
 
 **Branches:**
@@ -121,7 +136,8 @@ git push                                      # triggers Vercel staging deploy
 **After merging to main — reset staging:**
 ```bash
 git checkout staging
-git reset --hard main
+git fetch origin
+git reset --hard origin/main
 git push --force                              # staging is now a clean mirror of main
 ```
 

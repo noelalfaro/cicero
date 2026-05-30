@@ -121,11 +121,21 @@ middleware.ts     # Auth + onboarding redirect logic
    - Onboarded → allow access to protected routes
 4. Onboarding form POSTs to `/api/users/complete-onboarding` → flips `onboarding_status=true`
 
+## Environments
+
+| Environment | Branch | URL | Neon DB |
+|---|---|---|---|
+| Local | — | `http://localhost:3000` | `main` branch |
+| Staging | `staging` | `cicero-git-staging-noel-alfaros-projects.vercel.app` | `staging` branch |
+| Production | `main` | `cicero-coral.vercel.app` | `main` branch |
+
+`BETTER_AUTH_URL` and `DRIZZLE_DATABASE_URL` differ per environment. All other env vars are shared.
+
 ## Branching and staging workflow
 
 **Branches:**
 - `main` — production, always stable
-- `staging` — permanent beta environment for live testing before merging to main. Never merges into main.
+- `staging` — permanent beta environment for live testing, never merges into main
 - `crt-XX-short-description` — feature branches, always off latest `main`
 
 **Starting a ticket:**
@@ -139,14 +149,15 @@ git checkout -b crt-XX-short-description
 git checkout staging && git pull
 git merge crt-XX-short-description
 git push                          # triggers Vercel staging deploy
-# verify on staging URL, then merge PR → main
+# verify on staging URL, check the AC box, then merge PR → main
 ```
 
 **After merging to main — reset staging:**
 ```bash
 git checkout staging
-git reset --hard main
-git push --force                  # staging is now a clean mirror of main
+git fetch origin
+git reset --hard origin/main
+git push --force                  # staging mirrors main again
 ```
 
 ---
