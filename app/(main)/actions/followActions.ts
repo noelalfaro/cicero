@@ -8,6 +8,7 @@ import { followUser, unfollowUser } from '@/lib/data/follows';
 export async function follow(followeeId: string) {
   const session = await auth.api.getSession({ headers: await headers() });
   if (!session?.user) throw new Error('Unauthorized');
+  if (session.user.id === followeeId) throw new Error('Cannot follow yourself');
 
   await followUser(session.user.id, followeeId);
   revalidatePath(`/users`);
