@@ -95,9 +95,46 @@ Web app where users invest in NBA players' "potential" — a score derived from 
 - `git push`, force-push, branch deletion.
 - Installing new top-level dependencies.
 
+## Branching and staging workflow
+
+**Branches:**
+- `main` — production. Always stable. PRs merge here after staging validation.
+- `staging` — permanent beta/testing environment. Never deleted. Mirrors main between releases. **Never merges into main** — it is a testing target only, not a development base.
+- `crt-XX-short-description` — feature branches. Always branched off the latest `main`.
+
+**Starting a new ticket:**
+```bash
+git checkout main && git pull
+git checkout -b crt-XX-short-description
+```
+
+**Before merging a PR to main — test on staging:**
+```bash
+git checkout staging
+git pull                                      # ensure staging is current
+git merge crt-XX-short-description           # bring feature onto staging
+git push                                      # triggers Vercel staging deploy
+# test the feature on the staging Vercel URL
+# once verified, check the staging AC box in the PR and merge PR → main
+```
+
+**After merging to main — reset staging:**
+```bash
+git checkout staging
+git reset --hard main
+git push --force                              # staging is now a clean mirror of main
+```
+
+**PR acceptance criteria must include:**
+- [ ] Tested and verified on the staging Vercel deployment (not just localhost)
+
 ## Commit style
 
 - Do NOT add `Co-Authored-By` trailers to commit messages.
+
+## Scratchpad
+
+`scratchpad.md` lives at the repo root and is gitignored. It's a personal space for jotting down topics to study or write about (blog ideas, tech rabbit holes, things noticed during a session that aren't directly tied to the task). When the user says "note that in the scratchpad," append a new entry to that file.
 
 ## Documentation
 

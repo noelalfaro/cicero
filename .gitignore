@@ -48,3 +48,6 @@ diff.txt
 
 # Claude Code local files
 .claude/
+
+# Personal scratchpad (blog topics, study notes — not project docs)
+scratchpad.md

@@ -13,7 +13,7 @@ This repo is **Courtside**, the Next.js frontend. The Python backend (Combine) l
 | Framework | Next.js 15 (App Router, Turbopack) |
 | Language | TypeScript |
 | Styling | Tailwind CSS v4, Radix UI, shadcn/ui |
-| Auth | Kinde Auth (+ Management API) |
+| Auth | Better Auth v1.6 (Google OAuth) |
 | Database | Neon (PostgreSQL) via Drizzle ORM |
 | File Uploads | Uploadthing |
 | Data Fetching | TanStack Query v5 |
@@ -27,8 +27,9 @@ This repo is **Courtside**, the Next.js frontend. The Python backend (Combine) l
 ## Prerequisites
 
 - Node.js >= 20
-- A [Kinde](https://kinde.com) account and application
+- A Google OAuth app (Client ID + Secret)
 - A [Neon](https://neon.tech) database
+- A [Better Auth](https://better-auth.com) secret
 - An [Uploadthing](https://uploadthing.com) account
 
 ---
@@ -48,42 +49,19 @@ npm install
 Copy the example below into `.env.local` and fill in your values:
 
 ```bash
-NODE_ENV=development
+# Better Auth
+BETTER_AUTH_SECRET=
+BETTER_AUTH_URL=http://localhost:3000
 
-# Kinde Auth
-KINDE_CLIENT_ID=
-KINDE_CLIENT_SECRET=
-KINDE_ISSUER_URL=
-KINDE_SITE_URL=http://localhost:3000
-KINDE_POST_LOGOUT_REDIRECT_URL=http://localhost:3000
-KINDE_POST_LOGIN_REDIRECT_URL=http://localhost:3000/api/auth/success
-KINDE_DOMAIN=
-KINDE_AUTH_LOGIN_ROUTE=/api/auth
-
-# Kinde Management API (for onboarding sync)
-KINDE_MANAGEMENT_CLIENT_ID=
-KINDE_MANAGEMENT_CLIENT_SECRET=
-
-# Kinde Social Connection IDs
-GOOGLE_CONNECTION_ID=
-GITHUB_CONNECTION_ID=
+# Google OAuth
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
 
 # Database
 DRIZZLE_DATABASE_URL=
 
 # Uploadthing
 UPLOADTHING_TOKEN=
-UPLOADTHING_SECRET=
-UPLOADTHING_APP_ID=
-
-# Demo user (optional)
-NEXT_PUBLIC_DEMO_USERNAME=
-DEMO_USERNAME=
-KINDE_DEMO_EMAIL=
-DEMO_LOGIN_PASSWORD=
-
-# Hosting
-VERCEL_URL=http://localhost:3000
 ```
 
 **3. Push the database schema**
@@ -121,13 +99,13 @@ App runs at `http://localhost:3000`.
 ```
 app/
   (main)/         # Authenticated routes (dashboard, players, users)
+  (public)/       # Public routes (login, landing)
   onboarding/     # Onboarding flow (runs after first login)
   api/            # API routes (auth, users, uploadthing)
 components/       # Shared UI components
-lib/              # Data fetching, utilities, type definitions
+lib/              # Auth config, data fetching, type definitions
 server/
   db/             # Drizzle schema + client
-  kinde/          # Kinde Management API utilities
 middleware.ts     # Auth + onboarding redirect logic
 ```
 
@@ -135,12 +113,41 @@ middleware.ts     # Auth + onboarding redirect logic
 
 ## Auth Flow
 
-1. User registers/logs in via Kinde
-2. Kinde redirects to `/api/auth/success` → user is synced to local DB
-3. Middleware checks `onboarding_completed` claim:
-   - Not completed → redirect to `/onboarding`
-   - Completed → allow access to protected routes
-4. Onboarding completion updates both the local DB and the Kinde user profile
+1. User clicks "Sign in with Google" → Better Auth initiates OAuth flow
+2. Google redirects back → Better Auth creates `users` row with `onboarding_status=false`
+3. Middleware checks session + onboarding status:
+   - No session → redirect to `/login`
+   - Session but not onboarded → redirect to `/onboarding`
+   - Onboarded → allow access to protected routes
+4. Onboarding form POSTs to `/api/users/complete-onboarding` → flips `onboarding_status=true`
+
+## Branching and staging workflow
+
+**Branches:**
+- `main` — production, always stable
+- `staging` — permanent beta environment for live testing before merging to main. Never merges into main.
+- `crt-XX-short-description` — feature branches, always off latest `main`
+
+**Starting a ticket:**
+```bash
+git checkout main && git pull
+git checkout -b crt-XX-short-description
+```
+
+**Before merging a PR — test on staging:**
+```bash
+git checkout staging && git pull
+git merge crt-XX-short-description
+git push                          # triggers Vercel staging deploy
+# verify on staging URL, then merge PR → main
+```
+
+**After merging to main — reset staging:**
+```bash
+git checkout staging
+git reset --hard main
+git push --force                  # staging is now a clean mirror of main
+```
 
 ---
 
