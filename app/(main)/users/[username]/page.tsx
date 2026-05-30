@@ -12,24 +12,31 @@ import {
 import { UserSettings } from '@/components/profile/user-settings-dialog';
 import { EditProfileDialog } from '@/components/profile/edit-profile-dialog';
 import { fetchUserDataByUsername } from '@/lib/data/users';
+import { isFollowing } from '@/lib/data/follows';
 import Watchlist from '@/components/profile/watchlist';
 import UserDialog from '@/components/profile/user-dialog';
 import { FollowButton } from '@/components/profile/follow-button';
 
-// Rest of your page code
 export default async function Page({
   params,
 }: {
   params: Promise<{ username: string }>;
 }) {
+  const { username } = await params;
   const [session, user] = await Promise.all([
     auth.api.getSession({ headers: await headers() }),
-    fetchUserDataByUsername((await params).username),
+    fetchUserDataByUsername(username),
   ]);
   const loggedInUser = session?.user;
 
   if (!user) return notFound();
-  console.log(user);
+
+  const viewingOwnProfile = loggedInUser?.id === user.id;
+  const isFollowingUser =
+    loggedInUser && !viewingOwnProfile
+      ? await isFollowing(loggedInUser.id, user.id)
+      : false;
+
   const defaultImage =
     'https://i.pinimg.com/originals/25/ee/de/25eedef494e9b4ce02b14990c9b5db2d.jpg';
 
@@ -56,14 +63,14 @@ export default async function Page({
             </div>
           </CardHeader>
           <CardContent className="flex w-full grow flex-col justify-center">
-            {user.id === loggedInUser?.id ? (
+            {viewingOwnProfile ? (
               <div className="flex justify-between gap-1">
                 <EditProfileDialog user={user} />
                 <UserSettings user={user} />
               </div>
             ) : (
               <div className="flex justify-between gap-1">
-                <FollowButton />
+                <FollowButton followeeId={user.id} initialIsFollowing={isFollowingUser} />
                 <UserDialog user={user} />
               </div>
             )}

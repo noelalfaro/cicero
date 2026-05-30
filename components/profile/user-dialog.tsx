@@ -9,7 +9,7 @@ import {
   DialogDescription,
 } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
-import { MoreVertical, ShieldX, UserCheck } from 'lucide-react';
+import { MoreVertical, ShieldX } from 'lucide-react';
 import { User } from '@/lib/definitions';
 
 export default function UserDialog({ user }: { user: User }) {
@@ -21,21 +21,8 @@ export default function UserDialog({ user }: { user: User }) {
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle className="">{user.username}'s Account</DialogTitle>
-          <DialogDescription>Follow, Share, Block.</DialogDescription>
+          <DialogDescription>Share or Block.</DialogDescription>
           <div className="grid w-full gap-4 py-4">
-            <div className="flex items-center justify-between gap-4">
-              <div className="flex flex-col items-start">
-                <Label htmlFor="follow" className="mb-1 text-right">
-                  Follow
-                </Label>
-                <p className="text-muted-text text-xs">
-                  Follow @{user.username}
-                </p>
-              </div>
-              <Button variant={'ghost'}>
-                <UserCheck />
-              </Button>
-            </div>
             <div className="flex items-center justify-between gap-4">
               <div className="flex flex-col items-start">
                 <Label htmlFor="share" className="mb-1 text-right">

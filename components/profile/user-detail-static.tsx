@@ -17,10 +17,12 @@ const UserDetailStatic = ({
   user,
   loggedInUser,
   defaultImage,
+  isFollowing = false,
 }: {
   user: User;
   loggedInUser?: { id: string };
   defaultImage: string;
+  isFollowing?: boolean;
 }) => {
   return (
     <Card className="bg-card text-card-foreground col-span-1 flex w-full flex-col items-center justify-start gap-0 rounded-xl border shadow-xs md:col-span-3 lg:col-span-2">
@@ -49,7 +51,7 @@ const UserDetailStatic = ({
           </div>
         ) : (
           <div className="flex justify-between gap-1">
-            <FollowButton />
+            <FollowButton followeeId={user.id} initialIsFollowing={isFollowing} />
             <UserDialog user={user} />
           </div>
         )}

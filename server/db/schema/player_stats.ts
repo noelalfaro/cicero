@@ -6,6 +6,7 @@ import {
   timestamp,
   real,
   index,
+  boolean,
 } from 'drizzle-orm/pg-core';
 import { players } from '@/server/db/schema/players';
 import { sql } from 'drizzle-orm';
@@ -46,6 +47,7 @@ export const playerStats = pgTable(
     prScore: real('prScore'),
     opp: text('opp'),
     gamedate: timestamp('gamedate').notNull(),
+    is_mock: boolean('is_mock').default(false),
     created_at: timestamp('created_at')
       .default(sql`now()`)
       .notNull(),
