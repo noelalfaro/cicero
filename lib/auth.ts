@@ -42,6 +42,10 @@ export const auth = betterAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     },
   },
+  trustedOrigins: [
+    'https://cicero-coral.vercel.app',
+    'https://cicero-git-staging-noel-alfaros-projects.vercel.app',
+  ],
   plugins: [nextCookies()],
 });
 
