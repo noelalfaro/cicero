@@ -12,7 +12,12 @@ import {
 import { UserSettings } from '@/components/profile/user-settings-dialog';
 import { EditProfileDialog } from '@/components/profile/edit-profile-dialog';
 import { fetchUserDataByUsername } from '@/lib/data/users';
-import { isFollowing } from '@/lib/data/follows';
+import {
+  isFollowing,
+  getFollowerCount,
+  getFollowingCount,
+  isFollowedBy,
+} from '@/lib/data/follows';
 import Watchlist from '@/components/profile/watchlist';
 import UserDialog from '@/components/profile/user-dialog';
 import { FollowButton } from '@/components/profile/follow-button';
@@ -32,10 +37,18 @@ export default async function Page({
   if (!user) return notFound();
 
   const viewingOwnProfile = loggedInUser?.id === user.id;
-  const isFollowingUser =
-    loggedInUser && !viewingOwnProfile
-      ? await isFollowing(loggedInUser.id, user.id)
-      : false;
+
+  const [isFollowingUser, followerCount, followingCount, followsYou] =
+    await Promise.all([
+      loggedInUser && !viewingOwnProfile
+        ? isFollowing(loggedInUser.id, user.id)
+        : Promise.resolve(false),
+      getFollowerCount(user.id),
+      getFollowingCount(user.id),
+      loggedInUser && !viewingOwnProfile
+        ? isFollowedBy(user.id, loggedInUser.id)
+        : Promise.resolve(false),
+    ]);
 
   const defaultImage =
     'https://i.pinimg.com/originals/25/ee/de/25eedef494e9b4ce02b14990c9b5db2d.jpg';
@@ -46,7 +59,7 @@ export default async function Page({
       <div className="flex h-fit w-full flex-col gap-2 md:grid md:grid-cols-8 md:grid-rows-[350px_1fr_300px] lg:grid-rows-[350px_1fr_250px]">
         <Card className="bg-card text-card-foreground col-span-1 flex w-full flex-col items-center justify-start gap-0 rounded-xl border shadow-xs md:col-span-3 lg:col-span-2">
           <CardHeader className="flex w-full flex-col items-center justify-center gap-0 pb-0">
-            <div className="relative flex h-[200px] w-[200px]">
+            <div className="relative flex h-[125px] w-[125px]">
               <Image
                 src={user.picture ?? defaultImage}
                 alt={`${user.username}.png`}
@@ -60,9 +73,24 @@ export default async function Page({
             <div className="flex w-full flex-col items-start">
               <CardTitle className="text-2xl">{user.display_name}</CardTitle>
               <CardDescription>@{user.username}</CardDescription>
+              <span
+                className={`bg-muted text-muted-foreground mt-1 rounded-sm px-1.5 py-0.5 text-xs ${followsYou ? 'visible' : 'invisible'}`}
+              >
+                Follows you
+              </span>
             </div>
           </CardHeader>
-          <CardContent className="flex w-full grow flex-col justify-center">
+          <CardContent className="flex w-full grow flex-col justify-evenly">
+            <div className="flex gap-4 text-sm">
+              <span>
+                <span className="font-semibold">{followerCount}</span>{' '}
+                <span className="text-muted-foreground">Followers</span>
+              </span>
+              <span>
+                <span className="font-semibold">{followingCount}</span>{' '}
+                <span className="text-muted-foreground">Following</span>
+              </span>
+            </div>
             {viewingOwnProfile ? (
               <div className="flex justify-between gap-1">
                 <EditProfileDialog user={user} />
@@ -70,7 +98,10 @@ export default async function Page({
               </div>
             ) : (
               <div className="flex justify-between gap-1">
-                <FollowButton followeeId={user.id} initialIsFollowing={isFollowingUser} />
+                <FollowButton
+                  followeeId={user.id}
+                  initialIsFollowing={isFollowingUser}
+                />
                 <UserDialog user={user} />
               </div>
             )}
