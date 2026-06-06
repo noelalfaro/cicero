@@ -59,7 +59,7 @@ export default async function Page({
       <div className="flex h-fit w-full flex-col gap-2 md:grid md:grid-cols-8 md:grid-rows-[350px_1fr_300px] lg:grid-rows-[350px_1fr_250px]">
         <Card className="bg-card text-card-foreground col-span-1 flex w-full flex-col items-center justify-start gap-0 rounded-xl border shadow-xs md:col-span-3 lg:col-span-2">
           <CardHeader className="flex w-full flex-col items-center justify-center gap-0 pb-0">
-            <div className="relative flex h-37.5 w-37.5">
+            <div className="relative flex h-[125px] w-[125px]">
               <Image
                 src={user.picture ?? defaultImage}
                 alt={`${user.username}.png`}
@@ -73,7 +73,9 @@ export default async function Page({
             <div className="flex w-full flex-col items-start">
               <CardTitle className="text-2xl">{user.display_name}</CardTitle>
               <CardDescription>@{user.username}</CardDescription>
-              <span className={`mt-1 rounded-sm bg-muted px-1.5 py-0.5 text-xs text-muted-foreground ${followsYou ? 'visible' : 'invisible'}`}>
+              <span
+                className={`bg-muted text-muted-foreground mt-1 rounded-sm px-1.5 py-0.5 text-xs ${followsYou ? 'visible' : 'invisible'}`}
+              >
                 Follows you
               </span>
             </div>
