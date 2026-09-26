@@ -1,0 +1,14 @@
+---
+description: Official main / staging / feature-branch workflow for Courtside
+alwaysApply: true
+---
+
+# Branching and staging
+
+- Branch off latest `main` as `crt-XX-short-description`. Never develop on `staging`.
+- `main` = production. `staging` = live pre-prod test target only (never merge staging → main).
+- Before merging a PR to `main`: merge the feature branch into `staging`, push, verify on the staging Vercel URL, then merge the PR to `main`.
+- After merge to `main`: reset `staging` to `origin/main` (force-push staging is expected).
+- Every PR must include AC: tested on staging Vercel (not localhost only).
+
+Full commands and env table: see `AGENTS.md`.

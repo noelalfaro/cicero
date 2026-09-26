@@ -1,0 +1,22 @@
+---
+description: Ask-before destructive ops; never touch secrets or committed migrations
+alwaysApply: true
+---
+
+# Safety and ask-first
+
+## Don't touch
+
+- `.env.local` — never read or write. Tell the user what env vars to change.
+- Committed `server/db/drizzle/*.sql` migrations — generate new ones instead.
+- `package-lock.json` — let `npm install` manage it.
+
+## Ask before
+
+- `db:push` / schema changes against live Neon (especially `main`)
+- Deleting or truncating user/auth tables
+- Rotating secrets
+- `git push`, force-push, branch deletion
+- Installing new top-level dependencies
+
+Full constitution: see `AGENTS.md`.
