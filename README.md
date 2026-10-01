@@ -26,7 +26,7 @@ This repo is **Courtside**, the Next.js frontend. The Python backend (Combine) l
 
 ## Prerequisites
 
-- Node.js >= 20
+- Node.js 22.x (see `.nvmrc` / `package.json` `engines`)
 - A Google OAuth app (Client ID + Secret)
 - A [Neon](https://neon.tech) database
 - A [Better Auth](https://better-auth.com) secret
