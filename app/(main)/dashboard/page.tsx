@@ -1,6 +1,5 @@
 import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
-import { LogoutButton } from '@/components/auth/logout-button';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import {
@@ -9,87 +8,84 @@ import {
   CardContent,
   CardTitle,
   CardDescription,
-  CardFooter,
 } from '@/components/ui/card';
-import React from 'react';
-import DashboardTools from '@/components/dashboard/dashboard-tools';
-import ControlCenter from '@/components/dashboard/ControlCenter';
 
-// Add force-dynamic since we're using authentication
 export const dynamic = 'force-dynamic';
+
+const SAMPLE_PLAYERS = [
+  { id: '1629029', name: 'Luka Dončić' },
+  { id: '201142', name: 'Kevin Durant' },
+] as const;
 
 export default async function Page() {
   const session = await auth.api.getSession({ headers: await headers() });
   const user = session?.user;
+  const username = user?.username;
 
   return (
-    <div className="grid w-full grid-cols-1 gap-2 md:grid-cols-8 md:grid-rows-[350px_1fr_250px]">
-      <Card className="col-span-1 row-span-1 overflow-auto md:col-span-5">
-        <CardHeader className="text-3xl font-bold">
-          Dashboard For{' '}
-          <Link href={`/users/${user?.username}`}>
-            <p className="hover:text-primary font-mono hover:underline">
-              @{user?.username}
-            </p>
-          </Link>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-1 pb-0">
-          {/* <TextEffect per="word" as="h3" preset="blur-sm"> */}
-          Welcome to Prospect Portfolio! We're still under active development. I
-          welcome you to navigate to the different pages in the nav above or
-          click on a link below to explore what a player's individual page
-          currently looks like.
-          {/* </TextEffect> */}
-          <div className="flex w-full flex-col justify-start gap-1 md:flex-row md:gap-6">
-            <Link href={'/players/1629029'}>
-              <Button variant={'link'} className="p-0">
-                Link to Lukas's Page
-              </Button>
+    <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
+      <section className="flex flex-col gap-2">
+        <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+        {username ? (
+          <p className="text-muted-foreground text-sm">
+            Signed in as{' '}
+            <Link
+              href={`/users/${username}`}
+              className="text-foreground font-mono hover:underline"
+            >
+              @{username}
             </Link>
-            <Link href={'/players/201142'}>
-              <Button variant={'link'} className="p-0">
-                Link to Durant's Page
-              </Button>
-            </Link>
-            <LogoutButton variant="link" className="p-0 text-red-600">
-              Logout
-            </LogoutButton>
-          </div>
-        </CardContent>
-        <CardFooter>
-          <CardDescription className="text-muted-foreground text-sm">
-            Github:{' '}
-            <Button variant={'link'} className="p-0">
-              <a href="https://github.com/noelalfaro/cicero">
-                {' '}
-                noelalfaro/cicero
-              </a>
-            </Button>
-          </CardDescription>
-        </CardFooter>
-      </Card>
-      <DashboardTools />
-      <ControlCenter />
-      <Card className="row-span-1 w-full md:col-span-8">
+          </p>
+        ) : null}
+        <p className="text-muted-foreground max-w-prose text-sm">
+          Trading and portfolio tracking are not live yet. Use explore and
+          player pages to browse the product while we build holdings.
+        </p>
+      </section>
+
+      <Card>
         <CardHeader>
-          <CardTitle>Summary</CardTitle>
+          <CardTitle>Next steps</CardTitle>
           <CardDescription>
-            AI Summary of your portfolio performance will go here.
+            Real paths that work today — no placeholders.
           </CardDescription>
         </CardHeader>
-        {/* <CardContent>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium
-          impedit pariatur porro expedita officiis, repellat veniam, totam
-          veritatis numquam accusamus magni doloribus distinctio aspernatur
-          eaque ducimus corporis deserunt quo exercitationem sequi omnis animi!
-          Impedit veritatis deleniti facilis id quod doloribus rem, recusandae
-          velit eius architecto facere eaque quisquam fugit? Dolor nulla
-          expedita nostrum facilis quam ad omnis. Fugit nostrum, quidem pariatur
-          dolorem veniam in culpa eum nihil ab est voluptatum blanditiis,
-          reprehenderit iusto expedita nesciunt ratione sint corrupti explicabo
-          et qui cupiditate accusantium dolores nulla. Adipisci modi a explicabo
-          ut?
-        </CardContent> */}
+        <CardContent className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <Button asChild>
+            <Link href="/explore">Explore players</Link>
+          </Button>
+          {username ? (
+            <Button asChild variant="secondary">
+              <Link href={`/users/${username}`}>View your profile</Link>
+            </Button>
+          ) : null}
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Sample players</CardTitle>
+          <CardDescription>
+            Jump into a player page to see stats and PR score.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="flex flex-col gap-2 sm:flex-row sm:gap-4">
+          {SAMPLE_PLAYERS.map((player) => (
+            <Button key={player.id} asChild variant="link" className="h-auto p-0">
+              <Link href={`/players/${player.id}`}>{player.name}</Link>
+            </Button>
+          ))}
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Holdings</CardTitle>
+          <CardDescription>
+            Your positions will show up here once trading ships. Nothing to
+            manage yet.
+          </CardDescription>
+        </CardHeader>
       </Card>
     </div>
   );
