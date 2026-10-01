@@ -63,12 +63,10 @@ function SearchContent() {
     switch (result.type) {
       case 'player':
         return `/players/${result.id}`;
-      case 'team':
-        return `/teams/${result.id}`;
       case 'user':
         return `/users/${result.label}`;
       default:
-        return '/';
+        return '/explore';
     }
   };
 
@@ -76,7 +74,7 @@ function SearchContent() {
     <Command filter={() => 1} className="w-[400px] text-left">
       <CommandInput
         onValueChange={debouncedSearch}
-        placeholder="Search players, users, or teams..."
+        placeholder="Search players or users..."
         autoFocus
       />
       <CommandList>

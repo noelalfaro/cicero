@@ -9,7 +9,7 @@ export default async function Page() {
       <div className="w-full space-y-3 text-center">
         <h1 className="text-6xl font-bold">Explore</h1>
         <h3 className="text-xl font-semibold">
-          Browse Players, view trends, read headlines.
+          Search players and users, or browse the active roster.
         </h3>
         <div className="w-full justify-end">
           <Search />

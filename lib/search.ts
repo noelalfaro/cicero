@@ -2,7 +2,6 @@ import { db } from '@/server/db';
 import { z } from 'zod';
 import { players } from '@/server/db/schema/players';
 import { users } from '@/server/db/schema/users';
-import { teams } from '@/server/db/schema/teams';
 import { sql } from 'drizzle-orm';
 
 export const searchParamsSchema = z.object({
@@ -20,12 +19,6 @@ export type SearchResult =
       meta?: { team?: string; position?: string };
     }
   | {
-      type: 'team';
-      id: number;
-      label: string;
-      meta?: { city?: string; abbr?: string };
-    }
-  | {
       type: 'user';
       id: string;
       label: string;
@@ -41,9 +34,10 @@ export async function search(input: SearchParams): Promise<SearchResponse> {
   const { query, limit } = input;
 
   const q = query.trim().toLowerCase();
-  const per = Math.max(1, Math.floor((limit ?? 10) / 3));
+  // Teams omitted until a /teams/[id] page exists (avoids search → 404).
+  const per = Math.max(1, Math.floor((limit ?? 10) / 2));
 
-  const [playerRows, teamRows, userRows] = await Promise.all([
+  const [playerRows, userRows] = await Promise.all([
     db
       .select({
         id: players.id,
@@ -69,20 +63,6 @@ export async function search(input: SearchParams): Promise<SearchResponse> {
 
     db
       .select({
-        id: teams.team_id,
-        name: teams.name,
-        logo: teams.logo,
-        abbreviation: teams.abbreviation,
-        city: teams.city,
-      })
-      .from(teams)
-      .where(
-        sql`${teams.name} ILIKE ${'%' + q + '%'} OR ${teams.city} ILIKE ${'%' + q + '%'}`,
-      )
-      .limit(per),
-
-    db
-      .select({
         id: users.id,
         username: users.username,
         picture: users.picture,
@@ -101,13 +81,6 @@ export async function search(input: SearchParams): Promise<SearchResponse> {
     meta: { team: p.teamName, position: p.position ?? undefined },
   }));
 
-  const teamResults: SearchResult[] = teamRows.map((t) => ({
-    type: 'team',
-    id: t.id,
-    label: t.name,
-    meta: { abbr: t.abbreviation, city: t.city },
-  }));
-
   const userResults: SearchResult[] = userRows.map((u) => ({
     type: 'user',
     id: u.id,
@@ -115,9 +88,6 @@ export async function search(input: SearchParams): Promise<SearchResponse> {
     meta: { picture: u.picture },
   }));
 
-  const results = [...playerResults, ...teamResults, ...userResults].slice(
-    0,
-    limit ?? 10,
-  );
+  const results = [...playerResults, ...userResults].slice(0, limit ?? 10);
   return { query: q, results };
 }
