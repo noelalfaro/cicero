@@ -40,19 +40,17 @@ import { ThumbsDown, ThumbsUp } from 'lucide-react';
 export function ExploreTableSkeleton() {
   return (
     <>
-      <h2 className="my-2 text-2xl font-bold">Top Trenders</h2>
+      <h2 className="my-2 text-2xl font-bold">Active Players</h2>
       <Table className="w-full gap-4">
         <TableHeader>
           <TableRow>
-            <TableHead>First Name</TableHead>
-            <TableHead>Last Name</TableHead>
-            <TableHead>Is Active?</TableHead>
-            <TableHead>Player Id</TableHead>
+            <TableHead>Name</TableHead>
+            <TableHead>Team</TableHead>
+            <TableHead>Profile</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           <TableRow>
-            <TableCell>Loading</TableCell>
             <TableCell>Loading</TableCell>
             <TableCell>Loading</TableCell>
             <TableCell>Loading</TableCell>
