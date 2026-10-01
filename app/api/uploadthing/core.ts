@@ -22,7 +22,9 @@ export const ourFileRouter = {
         .set({ picture: file.ufsUrl })
         .where(eq(users.id, metadata.userId));
 
-      revalidatePath(`/${metadata.username}`);
+      if (metadata.username) {
+        revalidatePath(`/users/${metadata.username}`);
+      }
       return { uploadedBy: metadata.userId };
     }),
 } satisfies FileRouter;

@@ -29,8 +29,10 @@ import { updateUserProfile } from '@/app/(main)/actions/updateUserProfile';
 import { useState } from 'react';
 import { CustomUpload } from '@/components/profile/custom-upload';
 import { revalidateUserProfile } from '@/app/(main)/actions/actions';
+import { useRouter } from 'next/navigation';
 
 export const EditProfileDialog = ({ user }: { user: User }) => {
+  const router = useRouter();
   const [newProfileImageUrl, setNewProfileImageUrl] = useState<
     string | undefined
   >(undefined);
@@ -62,12 +64,16 @@ export const EditProfileDialog = ({ user }: { user: User }) => {
 
     await updateUserProfile(formData);
     setOpen(false);
+    router.refresh();
   }
 
   const handleUploadComplete = async (url: string) => {
     setNewProfileImageUrl(url);
     form.setValue('picture', url, { shouldValidate: true, shouldDirty: true });
-    await revalidateUserProfile();
+    if (user.username) {
+      await revalidateUserProfile(user.username);
+    }
+    router.refresh();
   };
 
   return (
