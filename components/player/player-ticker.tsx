@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { CardHeader } from '@/components/ui/card';
 import NumberFlow from '@number-flow/react';
 import { ArrowDownIcon, ArrowUpIcon } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { ComingSoonButton } from '@/components/coming-soon';
 
 const PlayerTicker = ({ lastGamePrScore }: { lastGamePrScore: number }) => {
   const [score, setScore] = useState(0);
@@ -18,19 +18,19 @@ const PlayerTicker = ({ lastGamePrScore }: { lastGamePrScore: number }) => {
         <NumberFlow continuous={true} value={score} />
         <div className="text-muted-foreground text-sm">Pulse Rating (PR)</div>
       </CardHeader>
-      <Button
+      <ComingSoonButton
         className="w-full rounded-md text-lg md:h-10 md:text-base"
         size={'lg'}
       >
-        Buy <ArrowUpIcon className="ml-2 h-4 w-4" />
-      </Button>
-      <Button
+        Buy <ArrowUpIcon className="h-4 w-4" />
+      </ComingSoonButton>
+      <ComingSoonButton
         className="w-full rounded-md text-lg md:h-10 md:text-base"
         variant={'destructive'}
         size={'lg'}
       >
-        Sell <ArrowDownIcon className="ml-2 h-4 w-4" />
-      </Button>
+        Sell <ArrowDownIcon className="h-4 w-4" />
+      </ComingSoonButton>
     </div>
   );
 };

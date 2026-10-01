@@ -6,10 +6,10 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { Player } from '@/lib/definitions';
-import * as Avatar from '@radix-ui/react-avatar'; // Import Radix Avatar
+import * as Avatar from '@radix-ui/react-avatar';
+import { ComingSoonButton } from '@/components/coming-soon';
 
 export function PlayerDetailsStatic({ player }: { player: Player }) {
   return (
@@ -45,9 +45,9 @@ export function PlayerDetailsStatic({ player }: { player: Player }) {
         </div>
       </CardHeader>
       <CardContent className="flex w-full grow flex-col justify-center">
-        <Button variant={'secondary'} className="hover:bg-secondary/80">
+        <ComingSoonButton variant="secondary" className="w-full">
           Add to Watchlist
-        </Button>
+        </ComingSoonButton>
       </CardContent>
     </Card>
   );
