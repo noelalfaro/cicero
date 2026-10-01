@@ -21,6 +21,7 @@ import {
 import Watchlist from '@/components/profile/watchlist';
 import UserDialog from '@/components/profile/user-dialog';
 import { FollowButton } from '@/components/profile/follow-button';
+import { ProfileAbout } from '@/components/profile/profile-about';
 
 export default async function Page({
   params,
@@ -80,7 +81,7 @@ export default async function Page({
               </span>
             </div>
           </CardHeader>
-          <CardContent className="flex w-full grow flex-col justify-evenly">
+          <CardContent className="flex w-full grow flex-col justify-evenly gap-4">
             <div className="flex gap-4 text-sm">
               <span>
                 <span className="font-semibold">{followerCount}</span>{' '}
@@ -91,6 +92,7 @@ export default async function Page({
                 <span className="text-muted-foreground">Following</span>
               </span>
             </div>
+            <ProfileAbout user={user} />
             {viewingOwnProfile ? (
               <div className="flex justify-between gap-1">
                 <EditProfileDialog user={user} />

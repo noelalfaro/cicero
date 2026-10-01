@@ -2,6 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 
-export async function revalidateUserProfile() {
-  revalidatePath('/'); // Adjust the path as needed
+export async function revalidateUserProfile(username: string) {
+  if (!username) return;
+  revalidatePath(`/users/${username}`);
 }

@@ -30,8 +30,11 @@ export async function updateUserProfile(formData: FormData) {
       throw new Error('User not found');
     }
 
-    revalidatePath('/');
-    return updatedUsers[0];
+    const updatedUser = updatedUsers[0];
+    if (updatedUser.username) {
+      revalidatePath(`/users/${updatedUser.username}`);
+    }
+    return updatedUser;
   } catch (error) {
     console.error('Error updating user:', error);
     throw error;
